@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:uBookSharing/BackEnd/Datas.dart';
@@ -93,6 +94,14 @@ class _UserProfileState extends State<UserProfile> {
     });
   }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      currentData.profilePicLink = FirebaseAuth.instance.currentUser.photoURL;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,12 +158,24 @@ class _UserProfileState extends State<UserProfile> {
                           color: Color(0xffFB8B24),
                         ),
                         onTap: () async {
+                          // if (FirebaseAuth.instance.currentUser.photoURL ==
+                          //     null) {
                           await UploadIMG().getUserPic();
                           final link = await UploadIMG()
                               .uploadUserPic(UserLogInData.uid);
+
+                          FirebaseAuth.instance.currentUser
+                              .updateProfile(photoURL: link);
                           setState(() {
                             currentData.profilePicLink = link;
                           });
+                          // }
+                          // else {
+                          //   setState(() {
+                          //     currentData.profilePicLink =
+                          //         FirebaseAuth.instance.currentUser.photoURL;
+                          //   });
+                          // }
                         },
                       ),
                     ],
