@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "394266403739",
+    "firebase_url": "https://ubooksharing-ece40.firebaseio.com",
+    "project_id": "ubooksharing-ece40",
+    "storage_bucket": "ubooksharing-ece40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394266403739:android:9348d4449e7b3fedc2773e",
+        "android_client_info": {
+          "package_name": "com.souravAhmed"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "394266403739-7kfsoofrleqd7l6heng2pqv1m294looj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcv0L9luTY_lZhib8Vc4Rg12Si6zIOAf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "394266403739-7kfsoofrleqd7l6heng2pqv1m294looj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
