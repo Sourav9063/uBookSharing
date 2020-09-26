@@ -3,10 +3,12 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/UploadIMG.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
+import 'package:uBookSharing/Constants.dart';
 
 class UserProfile extends StatefulWidget {
   UserProfile({Key key}) : super(key: key);
@@ -96,7 +98,6 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       currentData.profilePicLink = FirebaseAuth.instance.currentUser.photoURL;
@@ -180,13 +181,16 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                     ],
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Container(
-                    height: 1000,
+                    // height: 1000,
                     margin: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.black54,
+                      // color: Colors.black54,
                       border: Border.all(
-                        color: Colors.white24,
+                        color: Colors.white70,
                         width: 5,
                         style: BorderStyle.solid,
                       ),
@@ -200,37 +204,155 @@ class _UserProfileState extends State<UserProfile> {
                         children: [
                           Form(
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                    filled: true,
-
-                                    fillColor: Colors.white70,
-                                    labelText: 'Name',
-                                    prefixIcon: Icon(Icons.account_circle),
-
-                                    // icon: Icon(Icons.account_circle,size:,),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 10.0, horizontal: 20.0),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(50),
-                                    ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    style: TextStyle(fontSize: 18),
+                                    onChanged: (value) {
+                                      currentData.name = value;
+                                    },
+                                    onTap: () => gredianAlign(),
+                                    decoration: kTextFieldDecoration.copyWith(
+                                        prefixIcon: Icon(Icons.account_circle),
+                                        labelText: 'Name',
+                                        hintText: 'Use your real name'),
                                   ),
-                                  onChanged: (value) {
-                                    currentData.versityName = value;
-                                  },
                                 ),
-                                TextFormField(
-                                  onChanged: (value) {
-                                    currentData.name = value;
-                                  },
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    style: TextStyle(fontSize: 18),
+                                    onChanged: (value) {
+                                      currentData.versityName = value;
+                                    },
+                                    onTap: () => gredianAlign(),
+                                    decoration: kTextFieldDecoration.copyWith(
+                                        prefixIcon: Icon(Icons.account_balance),
+                                        labelText: 'University',
+                                        hintText:
+                                            'Abbreviation of your University name'),
+                                  ),
                                 ),
-                                RaisedButton(
-                                  onPressed: () {
-                                    gredianAlign();
-                                    upLoadData();
-                                  },
-                                )
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          style: TextStyle(fontSize: 18),
+                                          keyboardType: TextInputType.datetime,
+                                          onChanged: (value) {
+                                            currentData.admitted = value;
+                                          },
+                                          onTap: () => gredianAlign(),
+                                          decoration:
+                                              kTextFieldDecoration.copyWith(
+                                                  prefixIcon: Icon(
+                                                      Icons.calendar_today),
+                                                  labelText: 'Batch',
+                                                  hintText: 'Year'),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: TextFormField(
+                                          style: TextStyle(fontSize: 18),
+                                          onChanged: (value) {
+                                            currentData.dept = value;
+                                          },
+                                          onTap: () => gredianAlign(),
+                                          decoration: kTextFieldDecoration
+                                              .copyWith(
+                                                  prefixIcon: Icon(Icons
+                                                      .supervised_user_circle),
+                                                  labelText: 'Department',
+                                                  hintText:
+                                                      'Use the abbreviation'),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    style: TextStyle(fontSize: 18),
+                                    keyboardType: TextInputType.number,
+                                    onChanged: (value) {
+                                      currentData.phoneNum = value;
+                                    },
+                                    onTap: () => gredianAlign(),
+                                    decoration: kTextFieldDecoration.copyWith(
+                                        prefixIcon: Icon(Icons.phone),
+                                        labelText: 'Phone',
+                                        hintText:
+                                            'No one will know unless you share it'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    style: TextStyle(fontSize: 18),
+                                    minLines: 1,
+                                    maxLines: 3,
+                                    onChanged: (value) {
+                                      currentData.address = value;
+                                    },
+                                    onTap: () => gredianAlign(),
+                                    decoration: kTextFieldDecoration.copyWith(
+                                        prefixIcon: Icon(Icons.home),
+                                        labelText: 'Address',
+                                        hintText: 'Use your current location'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: RaisedButton(
+                                          onPressed: () {
+                                            gredianAlign();
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 16),
+                                            child: Text(
+                                              'Verify Data',
+                                              style: GoogleFonts.aBeeZee(
+                                                  fontSize: 18,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: RaisedButton(
+                                          color: Colors.greenAccent,
+                                          onPressed: () {
+                                            gredianAlign();
+                                            upLoadData();
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 16),
+                                            child: Text(
+                                              'Upload',
+                                              style: GoogleFonts.aBeeZee(
+                                                  fontSize: 18,
+                                                  color: Colors.black),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
