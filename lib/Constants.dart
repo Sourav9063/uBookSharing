@@ -29,6 +29,7 @@ const kSendButtonTextStyle = TextStyle(
 const kMessageContainerDecoration = BoxDecoration(
     color: Color(0xfff85068),
     borderRadius: BorderRadius.all(Radius.circular(30)));
+
 const kTextFieldDecoration = InputDecoration(
   filled: true,
   fillColor: Colors.white70,
@@ -38,21 +39,22 @@ const kTextFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(30)),
     borderSide: BorderSide(width: 4.0, color: Colors.red),
   ),
+
   border: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(30)),
-    borderSide: BorderSide(width: 4.0),
+    borderRadius: BorderRadius.all(Radius.circular(18)),
+    borderSide: BorderSide(width: 3.0),
   ),
 
-  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+  contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
   // border: OutlineInputBorder(
   //   borderRadius: BorderRadius.all(Radius.circular(5.0)),
   // ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.blueAccent, width: 4.0),
-    borderRadius: BorderRadius.all(Radius.circular(50)),
+    borderSide: BorderSide(color: Colors.blueAccent, width: 3.0),
+    borderRadius: BorderRadius.all(Radius.circular(18)),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 5.0),
+    borderSide: BorderSide(color: Color(0xff7b2cbf), width: 4.0),
     borderRadius: BorderRadius.all(Radius.circular(50.0)),
   ),
 );

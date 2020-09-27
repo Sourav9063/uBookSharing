@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +20,34 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   UserProfileData currentData = UserProfileData();
+
+  List<String> versity = [];
+  // List<String> country = [
+  //   "America",
+  //   "Brazil",
+  //   "Canada",
+  //   "India",
+  //   "Mongalia",
+  //   "USA",
+  //   "China",
+  //   "Russia",
+  //   "Germany"
+  // ];
+
+  getVersityList() async {
+    await FirebaseFirestore.instance
+        .collection('uNiversityList')
+        .get()
+        .then((value) => {
+              value.docs.forEach((element) {
+                versity.add(element.data()['Name']);
+                // Map<String, dynamic> mp;
+                // mp = element.data();
+                // versity.add(mp['Name']);
+                // print(mp['Name']);
+              })
+            });
+  }
 
   upLoadData() async {
     // print(UserLogInData.uid);
@@ -100,6 +129,8 @@ class _UserProfileState extends State<UserProfile> {
   void initState() {
     super.initState();
     setState(() {
+      getVersityList();
+      versity.add('Add your University');
       currentData.profilePicLink = FirebaseAuth.instance.currentUser.photoURL;
     });
   }
@@ -120,18 +151,27 @@ class _UserProfileState extends State<UserProfile> {
                 // Color(0xff14213D),
                 // Color(0xff6F00FF),
 
-                Colors.pink.shade100,
-                // // Colors.pink.shade300,
-                Colors.pink,
-                // // Colors.pinkAccent.shade400,
-                // // rand % 2 == 1 ? Colors.indigo : Colors.red,
-                // Colors.purple.shade900,
-                Color(0xff3C1414),
+                // Colors.pink.shade100,
+
+                // Colors.pink,
+                Color(0xfffb8b24),
+
+                // Color(0xff3C1414),
+
+                // Color(0xffe0aaff),
+                // Colors.red,
+                // Color(0xff7b2cbf),
+
+                Color(0xff3c096c),
+                Color(0xff14213D),
                 Colors.black,
+
                 // Color(0xffa9418b),
                 // Color(0xffFCA311),
 
                 // Colors.white
+                // Color(0xffc0392b),
+            
               ],
               begin: alb,
               end: ale,
@@ -167,6 +207,7 @@ class _UserProfileState extends State<UserProfile> {
 
                           FirebaseAuth.instance.currentUser
                               .updateProfile(photoURL: link);
+                          // FirebaseAuth.instance.currentUser.updateProfile(displayName: );
                           setState(() {
                             currentData.profilePicLink = link;
                           });
@@ -188,7 +229,7 @@ class _UserProfileState extends State<UserProfile> {
                     // height: 1000,
                     margin: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
-                      // color: Colors.black54,
+                      color: Colors.black54,
                       border: Border.all(
                         color: Colors.white70,
                         width: 5,
@@ -208,6 +249,45 @@ class _UserProfileState extends State<UserProfile> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
+                                  // child: TextFormField(
+                                  //   style: TextStyle(fontSize: 18),
+                                  //   onChanged: (value) {
+                                  //     currentData.versityName = value;
+                                  //   },
+                                  //   onTap: () => gredianAlign(),
+                                  //   decoration: kTextFieldDecoration.copyWith(
+                                  //       prefixIcon: Icon(Icons.account_balance),
+                                  //       labelText: 'University',
+                                  //       hintText:
+                                  //           'Abbreviation of your University name'),
+                                  // ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(18),
+                                        border: Border.all(
+                                            color: Colors.purple, width: 4)),
+                                    child: DropDownField(
+                                      textStyle: TextStyle(fontSize: 18),
+                                      itemsVisibleInDropdown: 4,
+                                      // icon: Icon(Icons.account_balance),
+                                      value: currentData.versityName,
+                                      required: true,
+                                      labelText: 'University',
+                                      items: versity,
+                                      onValueChanged: (value) {
+                                        gredianAlign();
+                                        if (value != 'Add your University')
+                                          currentData.versityName = value;
+                                        else {
+                                          Navigator.pop(context);
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
                                   child: TextFormField(
                                     style: TextStyle(fontSize: 18),
                                     onChanged: (value) {
@@ -220,26 +300,11 @@ class _UserProfileState extends State<UserProfile> {
                                         hintText: 'Use your real name'),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    style: TextStyle(fontSize: 18),
-                                    onChanged: (value) {
-                                      currentData.versityName = value;
-                                    },
-                                    onTap: () => gredianAlign(),
-                                    decoration: kTextFieldDecoration.copyWith(
-                                        prefixIcon: Icon(Icons.account_balance),
-                                        labelText: 'University',
-                                        hintText:
-                                            'Abbreviation of your University name'),
-                                  ),
-                                ),
                                 Row(
                                   children: [
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding: const EdgeInsets.all(4.0),
                                         child: TextFormField(
                                           style: TextStyle(fontSize: 18),
                                           keyboardType: TextInputType.datetime,
@@ -258,7 +323,7 @@ class _UserProfileState extends State<UserProfile> {
                                     ),
                                     Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding: const EdgeInsets.all(4.0),
                                         child: TextFormField(
                                           style: TextStyle(fontSize: 18),
                                           onChanged: (value) {
@@ -318,6 +383,7 @@ class _UserProfileState extends State<UserProfile> {
                                         child: RaisedButton(
                                           onPressed: () {
                                             gredianAlign();
+                                            print(currentData.versityName);
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
@@ -331,9 +397,12 @@ class _UserProfileState extends State<UserProfile> {
                                           ),
                                         ),
                                       ),
+                                      SizedBox(
+                                        width: 4,
+                                      ),
                                       Expanded(
                                         child: RaisedButton(
-                                          color: Colors.greenAccent,
+                                          color: Colors.green,
                                           onPressed: () {
                                             gredianAlign();
                                             upLoadData();

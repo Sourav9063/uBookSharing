@@ -82,6 +82,7 @@ class _RegScreenState extends State<RegScreen> {
       await auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
+
       await auth.currentUser.sendEmailVerification();
 
       verifiedCheck();
