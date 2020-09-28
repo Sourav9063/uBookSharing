@@ -40,6 +40,8 @@ dependencies:
   flutter_spinkit: ^4.1.2+1
   vibration: ^1.5.0
   dropdownfield: ^1.0.3
+  lottie: ^0.6.0
+  modal_bottom_sheet: ^0.2.2
   # firebase_ml_vision: ^0.9.6+2
 
 dev_dependencies:
@@ -64,6 +66,8 @@ flutter:
     - assets/flr/BookLoading.flr
     - assets/flr/Background.flr
     - assets/flr/UserIcon.flr
+    - assets/lottie/bookWritting.json
+    - assets/lottie/appBar.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

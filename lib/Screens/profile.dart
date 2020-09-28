@@ -5,6 +5,7 @@ import 'package:dropdownfield/dropdownfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/UploadIMG.dart';
@@ -22,18 +23,8 @@ class _UserProfileState extends State<UserProfile> {
   UserProfileData currentData = UserProfileData();
 
   List<String> versity = [];
-  // List<String> country = [
-  //   "America",
-  //   "Brazil",
-  //   "Canada",
-  //   "India",
-  //   "Mongalia",
-  //   "USA",
-  //   "China",
-  //   "Russia",
-  //   "Germany"
-  // ];
-
+  final _formKey = GlobalKey<FormState>();
+  final _versityName = GlobalKey<FormState>();
   getVersityList() async {
     await FirebaseFirestore.instance
         .collection('uNiversityList')
@@ -51,7 +42,8 @@ class _UserProfileState extends State<UserProfile> {
 
   upLoadData() async {
     // print(UserLogInData.uid);
-    currentData.versityName = currentData.versityName.toUpperCase().trim();
+    currentData.versityName =
+        currentData.versityName.toUpperCase().trim().replaceAll(' ', '');
     try {
       await FirebaseFirestore.instance
           .collection(currentData.versityName)
@@ -125,6 +117,109 @@ class _UserProfileState extends State<UserProfile> {
     });
   }
 
+  bool bl = false;
+  checkVersity() async {
+    await FirebaseFirestore.instance
+        .collection('uNiversityList')
+        .where('TUName', isEqualTo: tmAddversity)
+        .get()
+        .then(
+            (value) => {if (value.docs.isNotEmpty) bl = true else bl = false});
+  }
+
+  String addversity;
+  String tmAddversity;
+  addVersity() {
+    showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        enableDrag: true,
+        isScrollControlled: true,
+        builder: (context) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              color: Colors.white,
+              height: CommonThings.size.height * .80,
+              child: Column(
+                children: [
+                  // Container(
+
+                  Container(
+                      color: Colors.white,
+                      child: Column(
+                        children: [
+                          Text(
+                            'Add Your University',
+                            style: GoogleFonts.abrilFatface(
+                              color: Colors.red.shade300,
+                              fontSize: 28,
+                              // fontWeight: FontWeight.w500,
+                              // fontStyle: FontStyle.italic
+                            ),
+                          ),
+                          Form(
+                            key: _versityName,
+                            child: Padding(
+                              padding: const EdgeInsets.all(14.0),
+                              child: TextFormField(
+                                validator: (value) {
+                                  if (value == null)
+                                    return 'Enter University Name';
+                                  if (bl) return 'University already listed';
+                                  if (value.length < 5)
+                                    return 'Enter full Name';
+                                  return null;
+                                },
+                                onChanged: (value) {
+                                  addversity = value;
+                                },
+                                decoration: kTextFieldDecoration.copyWith(
+                                  labelText: 'University',
+                                  hintText: 'Enter full name',
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            '*This app is based on community.So, use the full name of your University which is known by all. Use your University website.\nWe will check and your ID will be banned if we find any duplicate or hoax name...',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          RaisedButton(
+                            onPressed: () async {
+                              tmAddversity =
+                                  addversity.toUpperCase().replaceAll(' ', '');
+                              print(tmAddversity);
+                              await checkVersity();
+                              bool vali = _versityName.currentState.validate();
+
+                              if (vali) {
+                                await FirebaseFirestore.instance
+                                    .collection('uNiversityList')
+                                    .doc()
+                                    .set({
+                                  'Name': addversity,
+                                  'TUname': tmAddversity,
+                                  'AddedBy': UserLogInData.uid
+                                });
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => UserProfile()),
+                                );
+                              }
+                            },
+                            child: Text('Add'),
+                          )
+                        ],
+                      )),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -171,7 +266,6 @@ class _UserProfileState extends State<UserProfile> {
 
                 // Colors.white
                 // Color(0xffc0392b),
-            
               ],
               begin: alb,
               end: ale,
@@ -188,17 +282,39 @@ class _UserProfileState extends State<UserProfile> {
                       SizedBox(
                         width: 30,
                       ),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Lottie.asset(
+                              'assets/lottie/bookWritting.json',
+                            ),
+                            Text(
+                              'Profile',
+                              style: GoogleFonts.abrilFatface(
+                                color: Color(0xffffe066),
+                                fontSize: 28,
+                                // fontWeight: FontWeight.w500,
+                                // fontStyle: FontStyle.italic
+                              ),
+                            ),
+                            SizedBox(
+                              height: CommonThings.size.width * .20,
+                            )
+                          ],
+                        ),
+                      ),
                       IconAccount(
                         radious: CommonThings.size.width * .40,
                         imglink: currentData.profilePicLink,
                       ),
-                      GestureDetector(
-                        child: Icon(
+                      IconButton(
+                        icon: Icon(
                           Icons.add_photo_alternate,
                           size: 40,
                           color: Color(0xffFB8B24),
                         ),
-                        onTap: () async {
+                        onPressed: () async {
                           // if (FirebaseAuth.instance.currentUser.photoURL ==
                           //     null) {
                           await UploadIMG().getUserPic();
@@ -229,7 +345,7 @@ class _UserProfileState extends State<UserProfile> {
                     // height: 1000,
                     margin: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.black54,
+                      // color: Colors.black54,
                       border: Border.all(
                         color: Colors.white70,
                         width: 5,
@@ -274,13 +390,23 @@ class _UserProfileState extends State<UserProfile> {
                                       value: currentData.versityName,
                                       required: true,
                                       labelText: 'University',
+                                      hintText: 'If not listed, please Add',
                                       items: versity,
                                       onValueChanged: (value) {
                                         gredianAlign();
                                         if (value != 'Add your University')
                                           currentData.versityName = value;
                                         else {
-                                          Navigator.pop(context);
+                                          addVersity();
+                                          // Navigator.pop(context);
+                                          // showBottomSheet(context: context, builder: (context) {
+                                          //   return BottomSheet(onClosing: (){}, builder:(context) {
+                                          //     return Container(
+                                          //       height:CommonThings.size.width*.75,
+
+                                          //     );
+                                          //   },);
+                                          // },);
                                         }
                                       },
                                     ),
