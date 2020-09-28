@@ -6,11 +6,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/UploadIMG.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Constants.dart';
+import 'package:uBookSharing/Screens/mainPage.dart';
 
 class UserProfile extends StatefulWidget {
   UserProfile({Key key}) : super(key: key);
@@ -121,10 +123,11 @@ class _UserProfileState extends State<UserProfile> {
   checkVersity() async {
     await FirebaseFirestore.instance
         .collection('uNiversityList')
-        .where('TUName', isEqualTo: tmAddversity)
+        .where('TUname', isEqualTo: tmAddversity)
         .get()
-        .then(
-            (value) => {if (value.docs.isNotEmpty) bl = true else bl = false});
+        .then((value) => {
+              if (value.docs.isNotEmpty) {bl = true} else {bl = false}
+            });
   }
 
   String addversity;
@@ -472,6 +475,20 @@ class _UserProfileState extends State<UserProfile> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: TextFormField(
                                     style: TextStyle(fontSize: 18),
+                                    onChanged: (value) {
+                                      currentData.registrationNo = value;
+                                    },
+                                    onTap: () => gredianAlign(),
+                                    decoration: kTextFieldDecoration.copyWith(
+                                        prefixIcon: Icon(Icons.account_circle),
+                                        labelText: 'Registration',
+                                        hintText: 'Enter your registration No'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    style: TextStyle(fontSize: 18),
                                     keyboardType: TextInputType.number,
                                     onChanged: (value) {
                                       currentData.phoneNum = value;
@@ -532,6 +549,12 @@ class _UserProfileState extends State<UserProfile> {
                                           onPressed: () {
                                             gredianAlign();
                                             upLoadData();
+                                            Navigator.pushReplacement(
+                                                context,
+                                                PageTransition(
+                                                    child: MainPage(),
+                                                    type: PageTransitionType
+                                                        .leftToRightWithFade));
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(

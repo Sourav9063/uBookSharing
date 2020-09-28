@@ -22,6 +22,7 @@ class AllKeys {
   static const String emailKey = 'EmailKey';
   static const String admittedKey = 'AdmittedKey';
   static const String addressKey = 'AddressKey';
+  static const String registrationNo = 'RegistrarionNoKey';
 }
 
 class UserProfileData {
@@ -33,7 +34,7 @@ class UserProfileData {
   String phoneNum;
   String email;
   String address;
-  
+  String registrationNo;
 
   // Map<String, dynamic> userMapData;
 
@@ -69,6 +70,7 @@ class UserProfileData {
     userMapData[AllKeys.profilePicLinkKey] = this.profilePicLink;
     userMapData[AllKeys.emailKey] = email;
     userMapData[AllKeys.addressKey] = address;
+    userMapData[AllKeys.registrationNo] = registrationNo;
     print(userMapData);
     return userMapData;
   }
