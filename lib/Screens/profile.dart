@@ -29,6 +29,7 @@ class _UserProfileState extends State<UserProfile> {
   final _versityName = GlobalKey<FormState>();
 
   bool validated = false;
+  bool versityNameValidation = false;
   getVersityList() async {
     await FirebaseFirestore.instance
         .collection('uNiversityList')
@@ -207,7 +208,7 @@ class _UserProfileState extends State<UserProfile> {
                                   'Name': addversity,
                                   'TUname': tmAddversity,
                                   'AddedBy':
-                                      FirebaseAuth.instance.currentUser.uid
+                                      FirebaseAuth.instance.currentUser.email
                                 });
                                 Navigator.pushReplacement(
                                   context,
@@ -383,19 +384,11 @@ class _UserProfileState extends State<UserProfile> {
                                   items: versity,
                                   onValueChanged: (value) {
                                     gredianAlign();
-                                    if (value != 'Add your University')
+                                    if (value != 'Add your University') {
                                       currentData.versityName = value;
-                                    else {
+                                      versityNameValidation = true;
+                                    } else {
                                       addVersity();
-                                      // Navigator.pop(context);
-                                      // showBottomSheet(context: context, builder: (context) {
-                                      //   return BottomSheet(onClosing: (){}, builder:(context) {
-                                      //     return Container(
-                                      //       height:CommonThings.size.width*.75,
-
-                                      //     );
-                                      //   },);
-                                      // },);
                                     }
                                   },
                                 ),
@@ -405,6 +398,11 @@ class _UserProfileState extends State<UserProfile> {
                               padding: const EdgeInsets.all(8.0),
                               child: TextFormField(
                                 style: TextStyle(fontSize: 18),
+                                validator: (value) {
+                                  if (value == null || value == '')
+                                    return 'This field cannot be empty!';
+                                  return null;
+                                },
                                 onChanged: (value) {
                                   currentData.name = value;
                                   FirebaseAuth.instance.currentUser
@@ -423,6 +421,15 @@ class _UserProfileState extends State<UserProfile> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(4.0),
                                     child: TextFormField(
+                                      validator: (value) {
+                                        if (value == null || value == '') {
+                                          return 'This field cannot be empty!';
+                                        }
+                                        if (value.length != 4)
+                                          return 'Must be a Year';
+
+                                        return null;
+                                      },
                                       style: TextStyle(fontSize: 18),
                                       keyboardType: TextInputType.datetime,
                                       onChanged: (value) {
@@ -441,6 +448,11 @@ class _UserProfileState extends State<UserProfile> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(4.0),
                                     child: TextFormField(
+                                      validator: (value) {
+                                        if (value == null || value == '')
+                                          return 'This field cannot be empty!';
+                                        return null;
+                                      },
                                       style: TextStyle(fontSize: 18),
                                       onChanged: (value) {
                                         currentData.dept = value;
@@ -459,6 +471,11 @@ class _UserProfileState extends State<UserProfile> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: TextFormField(
+                                validator: (value) {
+                                  if (value == null || value == '')
+                                    return 'This field cannot be empty!';
+                                  return null;
+                                },
                                 style: TextStyle(fontSize: 18),
                                 onChanged: (value) {
                                   currentData.registrationNo = value;
@@ -473,6 +490,13 @@ class _UserProfileState extends State<UserProfile> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: TextFormField(
+                                validator: (value) {
+                                  if (value == null || value == '')
+                                    return 'This field cannot be empty!';
+                                  if (value.length != 11)
+                                    return 'Must be 11 digits';
+                                  return null;
+                                },
                                 style: TextStyle(fontSize: 18),
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
@@ -482,13 +506,17 @@ class _UserProfileState extends State<UserProfile> {
                                 decoration: kTextFieldDecoration.copyWith(
                                     prefixIcon: Icon(Icons.phone),
                                     labelText: 'Phone',
-                                    hintText:
-                                        'No one will know unless you share it'),
+                                    hintText: 'It\'s secured'),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: TextFormField(
+                                validator: (value) {
+                                  if (value == null || value == '')
+                                    return 'This field cannot be empty!';
+                                  return null;
+                                },
                                 style: TextStyle(fontSize: 18),
                                 minLines: 1,
                                 maxLines: 3,
@@ -513,7 +541,9 @@ class _UserProfileState extends State<UserProfile> {
                                         currentData.email = FirebaseAuth
                                             .instance.currentUser.email;
                                         gredianAlign();
-                                        _formKey.currentState.validate();
+                                        validated =
+                                            _formKey.currentState.validate();
+
                                         print(currentData.versityName);
                                       },
                                       child: Padding(
@@ -535,12 +565,13 @@ class _UserProfileState extends State<UserProfile> {
                                     flex: validated ? 2 : 1,
                                     child: RaisedButton(
                                       color: Colors.green,
-                                      onPressed: !validated
-                                          ? null
-                                          : () {
-                                              gredianAlign();
-                                              upLoadData();
-                                            },
+                                      onPressed:
+                                          !validated && !versityNameValidation
+                                              ? null
+                                              : () {
+                                                  gredianAlign();
+                                                  upLoadData();
+                                                },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 16),
