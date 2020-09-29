@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
+import 'package:uBookSharing/Components/CompoundWidgets.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
@@ -14,6 +15,9 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CustomDrawer(
+        
+      ),
       body: SafeArea(
         child: CustomScrollView(
           slivers: <Widget>[

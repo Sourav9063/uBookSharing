@@ -64,6 +64,27 @@ class IconAccount extends StatelessWidget {
   }
 }
 
+class CustomDrawer extends StatelessWidget {
+  const CustomDrawer({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: CommonThings.size.height,
+      width: CommonThings.size.width * .80,
+      color: Color(0xff061d56),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Stack(
+            children: [Positioned(child: IconAccount(radious: 150))],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class AnimetedGredian extends StatefulWidget {
   AnimetedGredian({Key key, this.child, this.listColor, this.function})
       : super(key: key);

@@ -48,12 +48,14 @@ class _UserProfileState extends State<UserProfile> {
         currentData.versityName.toUpperCase().trim().replaceAll(' ', '');
     try {
       await FirebaseFirestore.instance
-          .collection(currentData.versityName)
-          .doc('USER')
-          .collection('UserCollections')
-          .doc(UserLogInData.uid)
+          .collection(AllKeys.userCollectionKey)
+          .doc(FirebaseAuth.instance.currentUser.uid)
           .set(currentData.getMap());
 
+      Navigator.pushReplacement(
+          context,
+          PageTransition(
+              child: MainPage(), type: PageTransitionType.leftToRightWithFade));
       // currentData.name, currentData.versityName,
       // 'profilePicLink', 'admitted', 'dept', 'phoneNum', 'email'
 
@@ -203,7 +205,7 @@ class _UserProfileState extends State<UserProfile> {
                                     .set({
                                   'Name': addversity,
                                   'TUname': tmAddversity,
-                                  'AddedBy': UserLogInData.uid
+                                  'AddedBy': FirebaseAuth.instance.currentUser.uid
                                 });
                                 Navigator.pushReplacement(
                                   context,
@@ -244,22 +246,7 @@ class _UserProfileState extends State<UserProfile> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                // Color(0xff000000),
-                // // Color(0xff373b5f),
-                // Color(0xff14213D),
-                // Color(0xff6F00FF),
-
-                // Colors.pink.shade100,
-
-                // Colors.pink,
                 Color(0xfffb8b24),
-
-                // Color(0xff3C1414),
-
-                // Color(0xffe0aaff),
-                // Colors.red,
-                // Color(0xff7b2cbf),
-
                 Color(0xff3c096c),
                 Color(0xff14213D),
                 Colors.black,
@@ -267,7 +254,6 @@ class _UserProfileState extends State<UserProfile> {
                 // Color(0xffa9418b),
                 // Color(0xffFCA311),
 
-                // Colors.white
                 // Color(0xffc0392b),
               ],
               begin: alb,
@@ -322,7 +308,7 @@ class _UserProfileState extends State<UserProfile> {
                           //     null) {
                           await UploadIMG().getUserPic();
                           final link = await UploadIMG()
-                              .uploadUserPic(UserLogInData.uid);
+                              .uploadUserPic(FirebaseAuth.instance.currentUser.uid);
 
                           FirebaseAuth.instance.currentUser
                               .updateProfile(photoURL: link);
@@ -359,222 +345,215 @@ class _UserProfileState extends State<UserProfile> {
                     // color: Colors.white30,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Form(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  // child: TextFormField(
-                                  //   style: TextStyle(fontSize: 18),
-                                  //   onChanged: (value) {
-                                  //     currentData.versityName = value;
-                                  //   },
-                                  //   onTap: () => gredianAlign(),
-                                  //   decoration: kTextFieldDecoration.copyWith(
-                                  //       prefixIcon: Icon(Icons.account_balance),
-                                  //       labelText: 'University',
-                                  //       hintText:
-                                  //           'Abbreviation of your University name'),
-                                  // ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(18),
-                                        border: Border.all(
-                                            color: Colors.purple, width: 4)),
-                                    child: DropDownField(
-                                      textStyle: TextStyle(fontSize: 18),
-                                      itemsVisibleInDropdown: 4,
-                                      // icon: Icon(Icons.account_balance),
-                                      value: currentData.versityName,
-                                      required: true,
-                                      labelText: 'University',
-                                      hintText: 'If not listed, please Add',
-                                      items: versity,
-                                      onValueChanged: (value) {
-                                        gredianAlign();
-                                        if (value != 'Add your University')
-                                          currentData.versityName = value;
-                                        else {
-                                          addVersity();
-                                          // Navigator.pop(context);
-                                          // showBottomSheet(context: context, builder: (context) {
-                                          //   return BottomSheet(onClosing: (){}, builder:(context) {
-                                          //     return Container(
-                                          //       height:CommonThings.size.width*.75,
+                      child: Form(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              // child: TextFormField(
+                              //   style: TextStyle(fontSize: 18),
+                              //   onChanged: (value) {
+                              //     currentData.versityName = value;
+                              //   },
+                              //   onTap: () => gredianAlign(),
+                              //   decoration: kTextFieldDecoration.copyWith(
+                              //       prefixIcon: Icon(Icons.account_balance),
+                              //       labelText: 'University',
+                              //       hintText:
+                              //           'Abbreviation of your University name'),
+                              // ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(18),
+                                    border: Border.all(
+                                        color: Colors.purple, width: 4)),
+                                child: DropDownField(
+                                  textStyle: TextStyle(fontSize: 18),
+                                  itemsVisibleInDropdown: 4,
+                                  // icon: Icon(Icons.account_balance),
+                                  value: currentData.versityName,
+                                  required: true,
+                                  labelText: 'University',
+                                  hintText: 'If not listed, please Add',
+                                  items: versity,
+                                  onValueChanged: (value) {
+                                    gredianAlign();
+                                    if (value != 'Add your University')
+                                      currentData.versityName = value;
+                                    else {
+                                      addVersity();
+                                      // Navigator.pop(context);
+                                      // showBottomSheet(context: context, builder: (context) {
+                                      //   return BottomSheet(onClosing: (){}, builder:(context) {
+                                      //     return Container(
+                                      //       height:CommonThings.size.width*.75,
 
-                                          //     );
-                                          //   },);
-                                          // },);
-                                        }
+                                      //     );
+                                      //   },);
+                                      // },);
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                style: TextStyle(fontSize: 18),
+                                onChanged: (value) {
+                                  currentData.name = value;
+                                },
+                                onTap: () => gredianAlign(),
+                                decoration: kTextFieldDecoration.copyWith(
+                                    prefixIcon: Icon(Icons.account_circle),
+                                    labelText: 'Name',
+                                    hintText: 'Use your real name'),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: TextFormField(
+                                      style: TextStyle(fontSize: 18),
+                                      keyboardType: TextInputType.datetime,
+                                      onChanged: (value) {
+                                        currentData.admitted = value;
                                       },
+                                      onTap: () => gredianAlign(),
+                                      decoration: kTextFieldDecoration.copyWith(
+                                          prefixIcon:
+                                              Icon(Icons.calendar_today),
+                                          labelText: 'Batch',
+                                          hintText: 'Year'),
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    style: TextStyle(fontSize: 18),
-                                    onChanged: (value) {
-                                      currentData.name = value;
-                                    },
-                                    onTap: () => gredianAlign(),
-                                    decoration: kTextFieldDecoration.copyWith(
-                                        prefixIcon: Icon(Icons.account_circle),
-                                        labelText: 'Name',
-                                        hintText: 'Use your real name'),
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: TextFormField(
-                                          style: TextStyle(fontSize: 18),
-                                          keyboardType: TextInputType.datetime,
-                                          onChanged: (value) {
-                                            currentData.admitted = value;
-                                          },
-                                          onTap: () => gredianAlign(),
-                                          decoration:
-                                              kTextFieldDecoration.copyWith(
-                                                  prefixIcon: Icon(
-                                                      Icons.calendar_today),
-                                                  labelText: 'Batch',
-                                                  hintText: 'Year'),
-                                        ),
-                                      ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: TextFormField(
+                                      style: TextStyle(fontSize: 18),
+                                      onChanged: (value) {
+                                        currentData.dept = value;
+                                      },
+                                      onTap: () => gredianAlign(),
+                                      decoration: kTextFieldDecoration.copyWith(
+                                          prefixIcon: Icon(
+                                              Icons.supervised_user_circle),
+                                          labelText: 'Department',
+                                          hintText: 'Use the abbreviation'),
                                     ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: TextFormField(
-                                          style: TextStyle(fontSize: 18),
-                                          onChanged: (value) {
-                                            currentData.dept = value;
-                                          },
-                                          onTap: () => gredianAlign(),
-                                          decoration: kTextFieldDecoration
-                                              .copyWith(
-                                                  prefixIcon: Icon(Icons
-                                                      .supervised_user_circle),
-                                                  labelText: 'Department',
-                                                  hintText:
-                                                      'Use the abbreviation'),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    style: TextStyle(fontSize: 18),
-                                    onChanged: (value) {
-                                      currentData.registrationNo = value;
-                                    },
-                                    onTap: () => gredianAlign(),
-                                    decoration: kTextFieldDecoration.copyWith(
-                                        prefixIcon: Icon(Icons.account_circle),
-                                        labelText: 'Registration',
-                                        hintText: 'Enter your registration No'),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    style: TextStyle(fontSize: 18),
-                                    keyboardType: TextInputType.number,
-                                    onChanged: (value) {
-                                      currentData.phoneNum = value;
-                                    },
-                                    onTap: () => gredianAlign(),
-                                    decoration: kTextFieldDecoration.copyWith(
-                                        prefixIcon: Icon(Icons.phone),
-                                        labelText: 'Phone',
-                                        hintText:
-                                            'No one will know unless you share it'),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    style: TextStyle(fontSize: 18),
-                                    minLines: 1,
-                                    maxLines: 3,
-                                    onChanged: (value) {
-                                      currentData.address = value;
-                                    },
-                                    onTap: () => gredianAlign(),
-                                    decoration: kTextFieldDecoration.copyWith(
-                                        prefixIcon: Icon(Icons.home),
-                                        labelText: 'Address',
-                                        hintText: 'Use your current location'),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: RaisedButton(
-                                          onPressed: () {
-                                            gredianAlign();
-                                            print(currentData.versityName);
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 16),
-                                            child: Text(
-                                              'Verify Data',
-                                              style: GoogleFonts.aBeeZee(
-                                                  fontSize: 18,
-                                                  color: Colors.white),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 4,
-                                      ),
-                                      Expanded(
-                                        child: RaisedButton(
-                                          color: Colors.green,
-                                          onPressed: () {
-                                            gredianAlign();
-                                            upLoadData();
-                                            Navigator.pushReplacement(
-                                                context,
-                                                PageTransition(
-                                                    child: MainPage(),
-                                                    type: PageTransitionType
-                                                        .leftToRightWithFade));
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 16),
-                                            child: Text(
-                                              'Upload',
-                                              style: GoogleFonts.aBeeZee(
-                                                  fontSize: 18,
-                                                  color: Colors.black),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                style: TextStyle(fontSize: 18),
+                                onChanged: (value) {
+                                  currentData.registrationNo = value;
+                                },
+                                onTap: () => gredianAlign(),
+                                decoration: kTextFieldDecoration.copyWith(
+                                    prefixIcon: Icon(Icons.account_circle),
+                                    labelText: 'Registration',
+                                    hintText: 'Enter your registration No'),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                style: TextStyle(fontSize: 18),
+                                keyboardType: TextInputType.number,
+                                onChanged: (value) {
+                                  currentData.phoneNum = value;
+                                },
+                                onTap: () => gredianAlign(),
+                                decoration: kTextFieldDecoration.copyWith(
+                                    prefixIcon: Icon(Icons.phone),
+                                    labelText: 'Phone',
+                                    hintText:
+                                        'No one will know unless you share it'),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                style: TextStyle(fontSize: 18),
+                                minLines: 1,
+                                maxLines: 3,
+                                onChanged: (value) {
+                                  currentData.address = value;
+                                },
+                                onTap: () => gredianAlign(),
+                                decoration: kTextFieldDecoration.copyWith(
+                                    prefixIcon: Icon(Icons.home),
+                                    labelText: 'Address',
+                                    hintText: 'Use your current location'),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: RaisedButton(
+                                      onPressed: () {
+                                        gredianAlign();
+                                        print(currentData.versityName);
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 16),
+                                        child: Text(
+                                          'Verify Data',
+                                          style: GoogleFonts.aBeeZee(
+                                              fontSize: 18,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 4,
+                                  ),
+                                  Expanded(
+                                    child: RaisedButton(
+                                      color: Colors.green,
+                                      onPressed: () {
+                                        gredianAlign();
+                                        upLoadData();
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 16),
+                                        child: Text(
+                                          'Upload',
+                                          style: GoogleFonts.aBeeZee(
+                                              fontSize: 18,
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            RaisedButton(onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  PageTransition(
+                                      child: MainPage(),
+                                      type: PageTransitionType
+                                          .leftToRightWithFade));
+                            })
+                          ],
+                        ),
                       ),
                     ),
                   ),

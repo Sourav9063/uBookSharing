@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:uBookSharing/BackEnd/Datas.dart';
+// import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 // import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Constants.dart';
@@ -55,16 +55,18 @@ class _LoginScreenState extends State<LoginScreen> {
       //       auth.currentUser.uid);
       //   animationUnloack = true;
       if (auth.currentUser.emailVerified && auth.currentUser != null) {
-        await UserDataSavedEmailPassword.saveuidSharedPref(
-            auth.currentUser.uid);
-        animationUnloack = true;
-        await UserDataSavedEmailPassword.saveuidSharedPref(
-            auth.currentUser.uid);
-        UserLogInData.uid = await UserDataSavedEmailPassword.getuidSharedPref();
-        Navigator.pushReplacement(
-            context,
-            PageTransition(
-                child: UserProfile(), type: PageTransitionType.downToUp));
+        spinnerState(false);
+
+        // await UserDataSavedEmailPassword.saveuidSharedPref(
+        //     auth.currentUser.uid);
+        setState(() {
+          animationUnloack = true;
+        });
+
+        // Future.delayed(Duration(milliseconds: 2000));
+        // await UserDataSavedEmailPassword.saveuidSharedPref(
+        //     auth.currentUser.uid);
+        // UserLogInData.updateUID();
       } else {
         await auth.currentUser.sendEmailVerification();
 
@@ -134,6 +136,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       'assets/flr/lockStates.flr',
                       animation: !animationUnloack ? 'play_lock' : 'unlock',
                       color: Colors.pinkAccent.shade400,
+                      callback: (name) {
+                        if (name == 'unlock') {
+                          Navigator.pushReplacement(
+                              context,
+                              PageTransition(
+                                  duration: Duration(milliseconds: 400),
+                                  child: UserProfile(),
+                                  type: PageTransitionType.downToUp));
+                        }
+                      },
                     )),
                 Expanded(
                     flex: 1,

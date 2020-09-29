@@ -104,7 +104,7 @@ class _RegScreenState extends State<RegScreen> {
             );
           });
 
-      UserDataSavedEmailPassword.saveuidSharedPref(auth.currentUser.uid);
+      // UserDataSavedEmailPassword.saveuidSharedPref(auth.currentUser.uid);
     } catch (e) {
       spinnerState(false);
       showDialog(
@@ -144,8 +144,8 @@ class _RegScreenState extends State<RegScreen> {
   void initState() {
     super.initState();
     FirebaseAuth.instance.signOut();
-    UserDataSavedEmailPassword.clearuidSharedPref();
-    UserLogInData.updateUID();
+    // UserDataSavedEmailPassword.clearuidSharedPref();
+    // UserLogInData.updateUID();
   }
 
   @override
@@ -333,9 +333,9 @@ class _RegScreenState extends State<RegScreen> {
                               onPressed: !verified
                                   ? null
                                   : () async {
-                                      UserLogInData.uid =
-                                          await UserDataSavedEmailPassword
-                                              .getuidSharedPref();
+                                      // UserLogInData.uid =
+                                      //     await UserDataSavedEmailPassword
+                                      //         .getuidSharedPref();
                                       Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(

@@ -5,17 +5,21 @@ class CommonThings {
   static Size size;
 }
 
-class UserLogInData {
-  static String email;
-  static String uid;
-  static updateUID() async {
-    UserLogInData.uid = await UserDataSavedEmailPassword.getuidSharedPref();
-  }
-}
+// class UserLogInData {
+//   static String email;
+//   static String uid;
+//   static updateUID() async {
+//     UserLogInData.uid = await UserDataSavedEmailPassword.getuidSharedPref();
+//   }
+// }
+
+class GetUserAllInfo {}
 
 class AllKeys {
+  static const String userCollectionKey = 'UserCollectionAll';
   static const String nameKey = 'NameKey';
   static const String versityNameKey = 'VersityNameKey';
+  static const String tmVersityKey = 'TUname';
   static const String profilePicLinkKey = 'ProfileLinkKey';
   static const String deptKey = 'DeptKey';
   static const String phnNumKey = 'PhoneKey';
@@ -28,6 +32,7 @@ class AllKeys {
 class UserProfileData {
   String name;
   String versityName;
+  String tmVersity;
   String profilePicLink;
   String admitted;
   String dept;
@@ -101,23 +106,23 @@ class UserDataSavedEmailPassword {
     return prefs.getString(emailKey);
   }
 
-  static Future<bool> saveuidSharedPref(String uid) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  // static Future<bool> saveuidSharedPref(String uid) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return prefs.setString(uidKey, uid);
-  }
+  //   return prefs.setString(uidKey, uid);
+  // }
 
-  static Future<String> getuidSharedPref() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  // static Future<String> getuidSharedPref() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return prefs.getString(uidKey);
-  }
+  //   return prefs.getString(uidKey);
+  // }
 
-  static Future<bool> clearuidSharedPref() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  // static Future<bool> clearuidSharedPref() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return prefs.remove(uidKey);
-  }
+  //   return prefs.remove(uidKey);
+  // }
 
   static Future<bool> savePasswordSharedPref(String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

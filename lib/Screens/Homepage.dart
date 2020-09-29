@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
+// import 'package:uBookSharing/BackEnd/FireBase.dart';
 // import 'package:uBookSharing/Constants.dart';
 import 'package:uBookSharing/Screens/LoginScreen.dart';
 import 'package:uBookSharing/Screens/Registration.dart';
@@ -22,7 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-    UserLogInData.updateUID();
+    // UserLogInData.updateUID();
   }
 
   @override
@@ -41,11 +43,12 @@ class _MyHomePageState extends State<MyHomePage> {
               top: 0,
               onEnd: () {
                 print("navigate to sign in");
+                print(FirebaseAuth.instance.currentUser);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => navSignIn
-                            ? UserLogInData.uid == null
+                            ? FirebaseAuth.instance.currentUser == null
                                 ? LoginScreen()
                                 : UserProfile()
                             : RegScreen()));
