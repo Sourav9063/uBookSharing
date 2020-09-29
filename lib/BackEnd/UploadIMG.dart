@@ -24,7 +24,7 @@ class UploadIMG {
 
   uploadUserPic(String uid) async {
     StorageReference userPic =
-        FirebaseStorage.instance.ref().child('User').child(uid);
+        FirebaseStorage.instance.ref().child('User').child(uid).child(uid);
     await userPic.putFile(imageUser).onComplete;
     return await userPic.getDownloadURL();
   }

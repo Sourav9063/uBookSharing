@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -69,15 +70,24 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: CommonThings.size.height,
-      width: CommonThings.size.width * .80,
-      color: Color(0xff061d56),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Stack(
-            children: [Positioned(child: IconAccount(radious: 150))],
+    return Drawer(
+      
+          child: Container(
+        height: CommonThings.size.height,
+        width: CommonThings.size.width * .80,
+        color: Color(0xff000247),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+              children: [
+                Positioned(
+                    child: IconAccount(
+                  radious: 130,
+                  imglink: FirebaseAuth.instance.currentUser.photoURL,
+                ))
+              ],
+            ),
           ),
         ),
       ),

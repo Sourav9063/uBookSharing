@@ -21,11 +21,12 @@ class _RegScreenState extends State<RegScreen> {
   bool spinner = false;
   bool animationUnloack = false;
   String _email = '';
+  String _userName = '';
   String _password = '';
   bool verified = false;
   double aPEmail = 50;
   double aPPassword = 50;
-
+  double aPUsername = 50;
   String verifyButtonText = 'Verify Email';
   final _formKey = GlobalKey<FormState>();
 
@@ -82,6 +83,7 @@ class _RegScreenState extends State<RegScreen> {
       await auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
+      await auth.currentUser.updateProfile(displayName: _userName);
 
       await auth.currentUser.sendEmailVerification();
 
@@ -180,174 +182,212 @@ class _RegScreenState extends State<RegScreen> {
             //   fit: BoxFit.cover,
             // ),
             SafeArea(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 10),
-                      child: Center(
-                        // right: CommonThings.size.width * .05,
-                        // top: 200,
-                        child: IconAccount(
-                          radious: CommonThings.size.width * .40,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20.0),
-                      child: Center(
-                        child: Text(
-                          'Sign Up',
-                          style: GoogleFonts.abrilFatface(
-                            fontSize: 38,
-                            // fontWeight: FontWeight.bold,
-
-                            color: Colors.pinkAccent.shade400,
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 10),
+                        child: Center(
+                          // right: CommonThings.size.width * .05,
+                          // top: 200,
+                          child: IconAccount(
+                            radious: CommonThings.size.width * .40,
                           ),
                         ),
                       ),
-                    ),
-                    AnimatedPadding(
-                      duration: Duration(milliseconds: 500),
-                      curve: Curves.fastOutSlowIn,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: aPEmail, vertical: 0),
-                      child: TextFormField(
-                        // autovalidate: true,
-                        validator: (value) {
-                          if (value == '' || value == null)
-                            return 'Enter Email address';
-                          else if (!RegExp(
-                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                              .hasMatch(value)) return 'Invalid Email';
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: Center(
+                          child: Text(
+                            'Sign Up',
+                            style: GoogleFonts.abrilFatface(
+                              fontSize: 38,
+                              // fontWeight: FontWeight.bold,
 
-                          return null;
-                        },
-                        onTap: () {
-                          setState(() {
-                            aPEmail = 10;
-                            //  aPEmail = 50;
-                            aPPassword = 50;
-                          });
-                        },
-
-                        keyboardType: TextInputType.emailAddress,
-                        textAlign: TextAlign.center,
-                        onChanged: (value) {
-                          _email = value;
-                        },
-                        decoration: kTextFieldDecoration.copyWith(
-                            hintText: 'Enter your email', labelText: 'Email'),
+                              color: Colors.pinkAccent.shade400,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    AnimatedPadding(
-                      duration: Duration(milliseconds: 500),
-                      curve: Curves.fastOutSlowIn,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: aPPassword, vertical: 8),
-                      child: TextFormField(
-                        onTap: () {
-                          setState(() {
-                            aPPassword = 10;
-                            aPEmail = 50;
-                            // aPPassword = 50;
-                          });
-                        },
-                        validator: (value) {
-                          if (value.length < 6)
-                            return 'Can\'t you read!? At least 6 characters';
+                      AnimatedPadding(
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.fastOutSlowIn,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: aPUsername, vertical: 8),
+                        child: TextFormField(
+                          // autovalidate: true,
+                          validator: (value) {
+                            if (value == '' || value == null)
+                              return 'Your name is required';
+                            else if (value.length < 4) return 'Too short';
 
-                          return null;
-                        },
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: true,
-                        textAlign: TextAlign.center,
-                        onChanged: (value) {
-                          _password = value;
-                        },
-                        decoration: kTextFieldDecoration.copyWith(
-                            // errorText: _email,
+                            return null;
+                          },
+                          onTap: () {
+                            setState(() {
+                              aPEmail = 50;
+                              //  aPEmail = 50;
+                              aPUsername = 10;
+                              aPPassword = 50;
+                            });
+                          },
 
-                            hintText: 'Enter your password(atleast 6 digits)',
-                            labelText: 'Password'),
+                          keyboardType: TextInputType.emailAddress,
+                          textAlign: TextAlign.center,
+                          onChanged: (value) {
+                            _userName = value;
+                          },
+                          decoration: kTextFieldDecoration.copyWith(
+                              hintText: 'Enter your name',
+                              labelText: 'Username'),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 50),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            // duration: Duration(milliseconds: 200),
-                            flex: 2,
-                            child: RaisedButton(
-                              // focusColor: Colors.pinkAccent.shade400,
+                      AnimatedPadding(
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.fastOutSlowIn,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: aPEmail, vertical: 4),
+                        child: TextFormField(
+                          // autovalidate: true,
+                          validator: (value) {
+                            if (value == '' || value == null)
+                              return 'Your email is required';
+                            else if (!RegExp(
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                .hasMatch(value)) return 'Invalid Email';
 
-                              // focusColor: Colors.pinkAccent.shade400,
+                            return null;
+                          },
+                          onTap: () {
+                            setState(() {
+                              aPEmail = 10;
+                              //  aPEmail = 50;
+                              aPUsername = 50;
+                              aPPassword = 50;
+                            });
+                          },
 
-                              child: Center(
+                          keyboardType: TextInputType.emailAddress,
+                          textAlign: TextAlign.center,
+                          onChanged: (value) {
+                            _email = value;
+                          },
+                          decoration: kTextFieldDecoration.copyWith(
+                              hintText: 'Enter your email', labelText: 'Email'),
+                        ),
+                      ),
+                      AnimatedPadding(
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.fastOutSlowIn,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: aPPassword, vertical: 8),
+                        child: TextFormField(
+                          onTap: () {
+                            setState(() {
+                              aPPassword = 10;
+                              aPEmail = 50;
+                              aPUsername = 50;
+                              // aPPassword = 50;
+                            });
+                          },
+                          validator: (value) {
+                            if (value.length < 6)
+                              return 'Can\'t you read!? At least 6 characters';
+
+                            return null;
+                          },
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: true,
+                          textAlign: TextAlign.center,
+                          onChanged: (value) {
+                            _password = value;
+                          },
+                          decoration: kTextFieldDecoration.copyWith(
+                              // errorText: _email,
+
+                              hintText: 'Enter your password(atleast 6 digits)',
+                              labelText: 'Password'),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 50),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              // duration: Duration(milliseconds: 200),
+                              flex: 2,
+                              child: RaisedButton(
+                                // focusColor: Colors.pinkAccent.shade400,
+
+                                // focusColor: Colors.pinkAccent.shade400,
+
+                                child: Center(
+                                  child: Text(
+                                    verifyButtonText,
+                                    style: GoogleFonts.aBeeZee(
+                                        fontSize: 18, color: Colors.white),
+                                  ),
+                                ),
+
+                                padding: EdgeInsets.only(top: 15, bottom: 15),
+                                onPressed: verified
+                                    ? null
+                                    : () {
+                                        setState(() {
+                                          aPEmail = 50;
+                                          aPPassword = 50;
+                                        });
+                                        bool isAlright =
+                                            _formKey.currentState.validate();
+                                        // print(auth.currentUser.uid);
+                                        // auth.currentUser.uid != null
+                                        //     ? signUn(_email, _password)
+                                        //     : verifiedCheck();
+                                        if (isAlright)
+                                          signUn(_email, _password);
+                                      },
+                              ),
+                            ),
+                            Expanded(
+                              flex: verified ? 2 : 1,
+                              // duration: Duration(milliseconds: 200),
+                              child: RaisedButton(
+                                // focusColor: Colors.pinkAccent.shade400,
+
+                                // focusColor: Colors.pinkAccent.shade400,
+
                                 child: Text(
-                                  verifyButtonText,
+                                  'Next',
                                   style: GoogleFonts.aBeeZee(
                                       fontSize: 18, color: Colors.white),
                                 ),
+                                color: Colors.green,
+
+                                padding: EdgeInsets.only(top: 15, bottom: 15),
+                                onPressed: !verified
+                                    ? null
+                                    : () async {
+                                        // UserLogInData.uid =
+                                        //     await UserDataSavedEmailPassword
+                                        //         .getuidSharedPref();
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    UserProfile()));
+                                      },
                               ),
-
-                              padding: EdgeInsets.only(top: 15, bottom: 15),
-                              onPressed: verified
-                                  ? null
-                                  : () {
-                                      setState(() {
-                                        aPEmail = 50;
-                                        aPPassword = 50;
-                                      });
-                                      bool isAlright =
-                                          _formKey.currentState.validate();
-                                      // print(auth.currentUser.uid);
-                                      // auth.currentUser.uid != null
-                                      //     ? signUn(_email, _password)
-                                      //     : verifiedCheck();
-                                      if (isAlright) signUn(_email, _password);
-                                    },
                             ),
-                          ),
-                          Expanded(
-                            flex: verified ? 2 : 1,
-                            // duration: Duration(milliseconds: 200),
-                            child: RaisedButton(
-                              // focusColor: Colors.pinkAccent.shade400,
-
-                              // focusColor: Colors.pinkAccent.shade400,
-
-                              child: Text(
-                                'Next',
-                                style: GoogleFonts.aBeeZee(
-                                    fontSize: 18, color: Colors.white),
-                              ),
-                              color: Colors.green,
-
-                              padding: EdgeInsets.only(top: 15, bottom: 15),
-                              onPressed: !verified
-                                  ? null
-                                  : () async {
-                                      // UserLogInData.uid =
-                                      //     await UserDataSavedEmailPassword
-                                      //         .getuidSharedPref();
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  UserProfile()));
-                                    },
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             )

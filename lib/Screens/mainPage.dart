@@ -15,9 +15,8 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: CustomDrawer(
-        
-      ),
+      drawer: CustomDrawer(),
+      
       body: SafeArea(
         child: CustomScrollView(
           slivers: <Widget>[
@@ -39,11 +38,11 @@ class _MainPageState extends State<MainPage> {
                       color: Color(0xff02effc), fontSize: 25),
                 ),
                 background: Container(
-                  child: Lottie.asset(
-                    'assets/lottie/appBar.json',
-                    reverse: true,
-                  ),
-                ),
+                    child: Lottie.asset(
+                      'assets/lottie/appBar.json',
+                      reverse: true,
+                    ),
+                    ),
               ),
             ),
             SliverFillRemaining(

@@ -27,6 +27,8 @@ class _UserProfileState extends State<UserProfile> {
   List<String> versity = [];
   final _formKey = GlobalKey<FormState>();
   final _versityName = GlobalKey<FormState>();
+
+  bool validated = false;
   getVersityList() async {
     await FirebaseFirestore.instance
         .collection('uNiversityList')
@@ -44,18 +46,17 @@ class _UserProfileState extends State<UserProfile> {
 
   upLoadData() async {
     // print(UserLogInData.uid);
-    currentData.versityName =
-        currentData.versityName.toUpperCase().trim().replaceAll(' ', '');
+    currentData.tmVersity = tmAddversity;
     try {
       await FirebaseFirestore.instance
           .collection(AllKeys.userCollectionKey)
-          .doc(FirebaseAuth.instance.currentUser.uid)
+          .doc(FirebaseAuth.instance.currentUser.email)
           .set(currentData.getMap());
 
       Navigator.pushReplacement(
           context,
           PageTransition(
-              child: MainPage(), type: PageTransitionType.leftToRightWithFade));
+              child: MainPage(), type: PageTransitionType.rightToLeftWithFade));
       // currentData.name, currentData.versityName,
       // 'profilePicLink', 'admitted', 'dept', 'phoneNum', 'email'
 
@@ -125,7 +126,7 @@ class _UserProfileState extends State<UserProfile> {
   checkVersity() async {
     await FirebaseFirestore.instance
         .collection('uNiversityList')
-        .where('TUname', isEqualTo: tmAddversity)
+        .where(AllKeys.tmVersityKey, isEqualTo: tmAddversity)
         .get()
         .then((value) => {
               if (value.docs.isNotEmpty) {bl = true} else {bl = false}
@@ -205,7 +206,8 @@ class _UserProfileState extends State<UserProfile> {
                                     .set({
                                   'Name': addversity,
                                   'TUname': tmAddversity,
-                                  'AddedBy': FirebaseAuth.instance.currentUser.uid
+                                  'AddedBy':
+                                      FirebaseAuth.instance.currentUser.uid
                                 });
                                 Navigator.pushReplacement(
                                   context,
@@ -307,8 +309,8 @@ class _UserProfileState extends State<UserProfile> {
                           // if (FirebaseAuth.instance.currentUser.photoURL ==
                           //     null) {
                           await UploadIMG().getUserPic();
-                          final link = await UploadIMG()
-                              .uploadUserPic(FirebaseAuth.instance.currentUser.uid);
+                          final link = await UploadIMG().uploadUserPic(
+                              FirebaseAuth.instance.currentUser.email);
 
                           FirebaseAuth.instance.currentUser
                               .updateProfile(photoURL: link);
@@ -346,6 +348,7 @@ class _UserProfileState extends State<UserProfile> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Form(
+                        key: _formKey,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -404,6 +407,8 @@ class _UserProfileState extends State<UserProfile> {
                                 style: TextStyle(fontSize: 18),
                                 onChanged: (value) {
                                   currentData.name = value;
+                                  FirebaseAuth.instance.currentUser
+                                      .updateProfile(displayName: value);
                                 },
                                 onTap: () => gredianAlign(),
                                 decoration: kTextFieldDecoration.copyWith(
@@ -502,9 +507,13 @@ class _UserProfileState extends State<UserProfile> {
                               child: Row(
                                 children: [
                                   Expanded(
+                                    flex: 2,
                                     child: RaisedButton(
                                       onPressed: () {
+                                        currentData.email = FirebaseAuth
+                                            .instance.currentUser.email;
                                         gredianAlign();
+                                        _formKey.currentState.validate();
                                         print(currentData.versityName);
                                       },
                                       child: Padding(
@@ -523,12 +532,15 @@ class _UserProfileState extends State<UserProfile> {
                                     width: 4,
                                   ),
                                   Expanded(
+                                    flex: validated ? 2 : 1,
                                     child: RaisedButton(
                                       color: Colors.green,
-                                      onPressed: () {
-                                        gredianAlign();
-                                        upLoadData();
-                                      },
+                                      onPressed: !validated
+                                          ? null
+                                          : () {
+                                              gredianAlign();
+                                              upLoadData();
+                                            },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 16),
@@ -536,13 +548,16 @@ class _UserProfileState extends State<UserProfile> {
                                           'Upload',
                                           style: GoogleFonts.aBeeZee(
                                               fontSize: 18,
-                                              color: Colors.black),
+                                              color: Colors.white),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
+                            ),
+                            SizedBox(
+                              width: 8,
                             ),
                             RaisedButton(onPressed: () {
                               Navigator.pushReplacement(
