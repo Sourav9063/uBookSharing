@@ -38,7 +38,7 @@ class IconAccount extends StatelessWidget {
               color: Colors.white,
             )
           : Padding(
-              padding: const EdgeInsets.all(13.0),
+              padding: const EdgeInsets.all(10.0),
               child: ClipOval(
                 child: Image.network(
                   imglink,
@@ -70,22 +70,29 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var kDrawerTextStyle = TextStyle(color: Colors.tealAccent, fontSize: 18);
     return Drawer(
-      
-          child: Container(
+      child: Container(
         height: CommonThings.size.height,
         width: CommonThings.size.width * .80,
         color: Color(0xff000247),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Stack(
+            child: Column(
               children: [
-                Positioned(
-                    child: IconAccount(
-                  radious: 130,
-                  imglink: FirebaseAuth.instance.currentUser.photoURL,
-                ))
+                Row(
+                  children: [
+                    IconAccount(
+                      radious: CommonThings.size.width * .35,
+                      imglink: FirebaseAuth.instance.currentUser.photoURL,
+                    ),
+                    Text(
+                      UserProfileData.name,
+                      style: kDrawerTextStyle,
+                    )
+                  ],
+                )
               ],
             ),
           ),

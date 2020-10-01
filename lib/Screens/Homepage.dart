@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
-// import 'package:uBookSharing/BackEnd/FireBase.dart';
-// import 'package:uBookSharing/Constants.dart';
+
+
 import 'package:uBookSharing/Screens/LoginScreen.dart';
 import 'package:uBookSharing/Screens/Registration.dart';
+import 'package:uBookSharing/Screens/mainPage.dart';
 import 'package:uBookSharing/Screens/profile.dart';
-// import 'package:uBookSharing/Screens/profile.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         builder: (context) => navSignIn
                             ? FirebaseAuth.instance.currentUser == null
                                 ? LoginScreen()
-                                : UserProfile()
+                                : MainPage()
                             : RegScreen()));
               },
               child: Image.asset(

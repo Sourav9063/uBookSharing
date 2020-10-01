@@ -13,6 +13,7 @@ import 'package:uBookSharing/BackEnd/UploadIMG.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Constants.dart';
 import 'package:uBookSharing/Screens/mainPage.dart';
+import 'package:vibration/vibration.dart';
 
 class UserProfile extends StatefulWidget {
   UserProfile({Key key}) : super(key: key);
@@ -22,8 +23,6 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  UserProfileData currentData = UserProfileData();
-
   List<String> versity = [];
   final _formKey = GlobalKey<FormState>();
   final _versityName = GlobalKey<FormState>();
@@ -36,7 +35,9 @@ class _UserProfileState extends State<UserProfile> {
         .get()
         .then((value) => {
               value.docs.forEach((element) {
-                versity.add(element.data()['Name']);
+                var nv = element.data()['Name'];
+
+                versity.add(nv.toString());
                 // Map<String, dynamic> mp;
                 // mp = element.data();
                 // versity.add(mp['Name']);
@@ -47,21 +48,21 @@ class _UserProfileState extends State<UserProfile> {
 
   upLoadData() async {
     // print(UserLogInData.uid);
-    currentData.tmVersity = tmAddversity;
+    UserProfileData.tmVersity = tmAddversity;
     try {
       await FirebaseFirestore.instance
           .collection(AllKeys.userCollectionKey)
           .doc(FirebaseAuth.instance.currentUser.email)
-          .set(currentData.getMap());
+          .set(UserProfileData.getMap());
 
       Navigator.pushReplacement(
           context,
           PageTransition(
               child: MainPage(), type: PageTransitionType.rightToLeftWithFade));
-      // currentData.name, currentData.versityName,
+      //  UserProfileData.name,  UserProfileData.versityName,
       // 'profilePicLink', 'admitted', 'dept', 'phoneNum', 'email'
 
-      // Map afda = currentData.getMap(currentData.name, currentData.versityName,
+      // Map afda =  UserProfileData.getMap( UserProfileData.name,  UserProfileData.versityName,
       //     'profilePicLink', 'admitted', 'dept', 'phoneNum', 'email');
       // print(afda[AllKeys.nameKey]);
     } catch (e) {
@@ -234,7 +235,8 @@ class _UserProfileState extends State<UserProfile> {
     setState(() {
       getVersityList();
       versity.add('Add your University');
-      currentData.profilePicLink = FirebaseAuth.instance.currentUser.photoURL;
+      UserProfileData.profilePicLink =
+          FirebaseAuth.instance.currentUser.photoURL;
     });
   }
 
@@ -298,7 +300,7 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       IconAccount(
                         radious: CommonThings.size.width * .40,
-                        imglink: currentData.profilePicLink,
+                        imglink: UserProfileData.profilePicLink,
                       ),
                       IconButton(
                         icon: Icon(
@@ -317,12 +319,12 @@ class _UserProfileState extends State<UserProfile> {
                               .updateProfile(photoURL: link);
                           // FirebaseAuth.instance.currentUser.updateProfile(displayName: );
                           setState(() {
-                            currentData.profilePicLink = link;
+                            UserProfileData.profilePicLink = link;
                           });
                           // }
                           // else {
                           //   setState(() {
-                          //     currentData.profilePicLink =
+                          //      UserProfileData.profilePicLink =
                           //         FirebaseAuth.instance.currentUser.photoURL;
                           //   });
                           // }
@@ -358,7 +360,7 @@ class _UserProfileState extends State<UserProfile> {
                               // child: TextFormField(
                               //   style: TextStyle(fontSize: 18),
                               //   onChanged: (value) {
-                              //     currentData.versityName = value;
+                              //      UserProfileData.versityName = value;
                               //   },
                               //   onTap: () => gredianAlign(),
                               //   decoration: kTextFieldDecoration.copyWith(
@@ -377,7 +379,7 @@ class _UserProfileState extends State<UserProfile> {
                                   textStyle: TextStyle(fontSize: 18),
                                   itemsVisibleInDropdown: 4,
                                   // icon: Icon(Icons.account_balance),
-                                  value: currentData.versityName,
+                                  value: UserProfileData.versityName,
                                   required: true,
                                   labelText: 'University',
                                   hintText: 'If not listed, please Add',
@@ -385,7 +387,7 @@ class _UserProfileState extends State<UserProfile> {
                                   onValueChanged: (value) {
                                     gredianAlign();
                                     if (value != 'Add your University') {
-                                      currentData.versityName = value;
+                                      UserProfileData.versityName = value;
                                       versityNameValidation = true;
                                     } else {
                                       addVersity();
@@ -404,7 +406,7 @@ class _UserProfileState extends State<UserProfile> {
                                   return null;
                                 },
                                 onChanged: (value) {
-                                  currentData.name = value;
+                                  UserProfileData.name = value;
                                   FirebaseAuth.instance.currentUser
                                       .updateProfile(displayName: value);
                                 },
@@ -427,13 +429,16 @@ class _UserProfileState extends State<UserProfile> {
                                         }
                                         if (value.length != 4)
                                           return 'Must be a Year';
+                                        if (int.parse(value) < 2000 ||
+                                            int.parse(value) > 2051)
+                                          return 'Must be a valid year';
 
                                         return null;
                                       },
                                       style: TextStyle(fontSize: 18),
                                       keyboardType: TextInputType.datetime,
                                       onChanged: (value) {
-                                        currentData.admitted = value;
+                                        UserProfileData.admitted = value;
                                       },
                                       onTap: () => gredianAlign(),
                                       decoration: kTextFieldDecoration.copyWith(
@@ -455,7 +460,7 @@ class _UserProfileState extends State<UserProfile> {
                                       },
                                       style: TextStyle(fontSize: 18),
                                       onChanged: (value) {
-                                        currentData.dept = value;
+                                        UserProfileData.dept = value;
                                       },
                                       onTap: () => gredianAlign(),
                                       decoration: kTextFieldDecoration.copyWith(
@@ -478,7 +483,7 @@ class _UserProfileState extends State<UserProfile> {
                                 },
                                 style: TextStyle(fontSize: 18),
                                 onChanged: (value) {
-                                  currentData.registrationNo = value;
+                                  UserProfileData.registrationNo = value;
                                 },
                                 onTap: () => gredianAlign(),
                                 decoration: kTextFieldDecoration.copyWith(
@@ -500,7 +505,7 @@ class _UserProfileState extends State<UserProfile> {
                                 style: TextStyle(fontSize: 18),
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
-                                  currentData.phoneNum = value;
+                                  UserProfileData.phoneNum = value;
                                 },
                                 onTap: () => gredianAlign(),
                                 decoration: kTextFieldDecoration.copyWith(
@@ -521,7 +526,7 @@ class _UserProfileState extends State<UserProfile> {
                                 minLines: 1,
                                 maxLines: 3,
                                 onChanged: (value) {
-                                  currentData.address = value;
+                                  UserProfileData.address = value;
                                 },
                                 onTap: () => gredianAlign(),
                                 decoration: kTextFieldDecoration.copyWith(
@@ -538,13 +543,19 @@ class _UserProfileState extends State<UserProfile> {
                                     flex: 2,
                                     child: RaisedButton(
                                       onPressed: () {
-                                        currentData.email = FirebaseAuth
+                                        UserProfileData.email = FirebaseAuth
                                             .instance.currentUser.email;
                                         gredianAlign();
-                                        validated =
-                                            _formKey.currentState.validate();
+                                        setState(() {
+                                          validated =
+                                              _formKey.currentState.validate();
+                                        });
+                                        print(validated);
 
-                                        print(currentData.versityName);
+                                        validated
+                                            ? Vibration.vibrate(duration: 50)
+                                            : Vibration.vibrate(duration: 200);
+                                        // print( UserProfileData.versityName);
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(

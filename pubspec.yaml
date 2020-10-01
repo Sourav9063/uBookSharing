@@ -42,6 +42,7 @@ dependencies:
   dropdownfield: ^1.0.3
   lottie: ^0.6.0
   modal_bottom_sheet: ^0.2.2
+  url_launcher: ^5.7.2
   # firebase_ml_vision: ^0.9.6+2
 
 dev_dependencies:

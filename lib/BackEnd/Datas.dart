@@ -13,7 +13,6 @@ class CommonThings {
 //   }
 // }
 
-class GetUserAllInfo {}
 
 class AllKeys {
   static const String userCollectionKey = 'UserCollectionAll';
@@ -30,16 +29,16 @@ class AllKeys {
 }
 
 class UserProfileData {
-  String name;
-  String versityName;
-  String tmVersity;
-  String profilePicLink;
-  String admitted;
-  String dept;
-  String phoneNum;
-  String email;
-  String address;
-  String registrationNo;
+  static String name;
+  static String versityName;
+  static String tmVersity;
+  static String profilePicLink;
+  static String admitted;
+  static String dept;
+  static String phoneNum;
+  static String email;
+  static String address;
+  static String registrationNo;
 
   // Map<String, dynamic> userMapData;
 
@@ -56,7 +55,7 @@ class UserProfileData {
 
   //   return userMapData;
   // }
-  Map<String, dynamic> getMap()
+  static Map<String, dynamic> getMap()
   // String name,
   // String versityName,
   // String profilePicLink,
@@ -67,12 +66,13 @@ class UserProfileData {
   {
     Map userMapData = Map<String, dynamic>();
 
-    userMapData[AllKeys.nameKey] = this.name;
-    userMapData[AllKeys.phnNumKey] = this.phoneNum;
-    userMapData[AllKeys.versityNameKey] = this.versityName;
-    userMapData[AllKeys.admittedKey] = this.admitted;
-    userMapData[AllKeys.deptKey] = this.dept;
-    userMapData[AllKeys.profilePicLinkKey] = this.profilePicLink;
+    userMapData[AllKeys.nameKey] = name;
+    userMapData[AllKeys.phnNumKey] = phoneNum;
+    userMapData[AllKeys.versityNameKey] = versityName;
+    userMapData[AllKeys.tmVersityKey] = tmVersity;
+    userMapData[AllKeys.admittedKey] = admitted;
+    userMapData[AllKeys.deptKey] = dept;
+    userMapData[AllKeys.profilePicLinkKey] = profilePicLink;
     userMapData[AllKeys.emailKey] = email;
     userMapData[AllKeys.addressKey] = address;
     userMapData[AllKeys.registrationNo] = registrationNo;
