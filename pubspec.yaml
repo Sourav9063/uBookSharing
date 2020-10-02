@@ -63,8 +63,6 @@ flutter:
     - assets/img/BookBack.jpg
     - assets/img/bookSharingBlue.jpg
     - assets/img/bookSharingPink.jpg
-    - assets/img/uSearch.jpg
-    - assets/img/uSearch2.jpg
     - assets/flr/lockStates.flr
     - assets/flr/BookLoading.flr
     - assets/flr/Background.flr

@@ -6,6 +6,50 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 
+class BookImg extends StatelessWidget {
+  final String imglink;
+  final double radious;
+  const BookImg({Key key, this.imglink, this.radious}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      height: radious,
+      width: radious,
+      child: imglink == null
+          ? ColorFiltered(
+              colorFilter: ColorFilter.mode(Colors.white, BlendMode.color),
+              child: Image.asset(
+                'assets/img/bookSharingPink.jpg',
+                fit: BoxFit.cover,
+              ),
+            )
+          : Image.network(
+              imglink,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 7,
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes
+                        : null,
+                  ),
+                );
+              },
+              fit: BoxFit.cover,
+              height: radious,
+              width: radious,
+            ),
+    );
+  }
+}
+
 class IconAccount extends StatelessWidget {
   const IconAccount({
     @required this.radious,
@@ -105,81 +149,81 @@ class CustomDrawer extends StatelessWidget {
   }
 }
 
-class AnimetedGredian extends StatefulWidget {
-  AnimetedGredian({Key key, this.child, this.listColor, this.function})
-      : super(key: key);
-  final Widget child;
-  final List<Color> listColor;
-  final Function function;
+// class AnimetedGredian extends StatefulWidget {
+//   AnimetedGredian({Key key, this.child, this.listColor, this.function})
+//       : super(key: key);
+//   final Widget child;
+//   final List<Color> listColor;
+//   final Function function;
 
-  @override
-  _AnimetedGredianState createState() => _AnimetedGredianState();
-}
+//   @override
+//   _AnimetedGredianState createState() => _AnimetedGredianState();
+// }
 
-class _AnimetedGredianState extends State<AnimetedGredian> {
-  int rand = 1;
-  Alignment alb = Alignment.bottomLeft;
-  Alignment ale = Alignment.topRight;
-  void gredianAlign() {
-    rand = Random().nextInt(5) + 1;
+// class _AnimetedGredianState extends State<AnimetedGredian> {
+//   int rand = 1;
+//   Alignment alb = Alignment.bottomLeft;
+//   Alignment ale = Alignment.topRight;
+//   void gredianAlign() {
+//     rand = Random().nextInt(5) + 1;
 
-    setState(() {
-      if (rand == 1) {
-        alb = Alignment.bottomLeft;
-        ale = Alignment.topRight;
-      }
+//     setState(() {
+//       if (rand == 1) {
+//         alb = Alignment.bottomLeft;
+//         ale = Alignment.topRight;
+//       }
 
-      if (rand == 2) {
-        ale = Alignment.bottomLeft;
-        alb = Alignment.topRight;
-      }
+//       if (rand == 2) {
+//         ale = Alignment.bottomLeft;
+//         alb = Alignment.topRight;
+//       }
 
-      if (rand == 3) {
-        alb = Alignment.bottomRight;
-        ale = Alignment.topLeft;
-      }
-      if (rand == 4) {
-        ale = Alignment.bottomRight;
-        alb = Alignment.topLeft;
-      }
-      if (rand == 5) {
-        ale = Alignment.centerLeft;
-      }
-      if (rand == 6) {
-        alb = Alignment.centerRight;
-      }
-    });
-  }
+//       if (rand == 3) {
+//         alb = Alignment.bottomRight;
+//         ale = Alignment.topLeft;
+//       }
+//       if (rand == 4) {
+//         ale = Alignment.bottomRight;
+//         alb = Alignment.topLeft;
+//       }
+//       if (rand == 5) {
+//         ale = Alignment.centerLeft;
+//       }
+//       if (rand == 6) {
+//         alb = Alignment.centerRight;
+//       }
+//     });
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 700),
-      curve: Curves.fastOutSlowIn,
-      height: CommonThings.size.height,
-      width: CommonThings.size.width,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: widget.listColor == null
-              ? [
-                  Color(0xff000000),
-                  Color(0xff14213D),
-                  rand % 2 == 1 ? Colors.indigo : Colors.red,
+//   @override
+//   Widget build(BuildContext context) {
+//     return AnimatedContainer(
+//       duration: Duration(milliseconds: 700),
+//       curve: Curves.fastOutSlowIn,
+//       height: CommonThings.size.height,
+//       width: CommonThings.size.width,
+//       decoration: BoxDecoration(
+//         gradient: LinearGradient(
+//           colors: widget.listColor == null
+//               ? [
+//                   Color(0xff000000),
+//                   Color(0xff14213D),
+//                   rand % 2 == 1 ? Colors.indigo : Colors.red,
 
-                  Color(0xffFCA311),
+//                   Color(0xffFCA311),
 
-                  // Colors.white
-                ]
-              : widget.listColor,
-          begin: alb,
-          end: ale,
-        ),
-      ),
-      child: widget.child,
-      onEnd: widget.function,
-    );
-  }
-}
+//                   // Colors.white
+//                 ]
+//               : widget.listColor,
+//           begin: alb,
+//           end: ale,
+//         ),
+//       ),
+//       child: widget.child,
+//       onEnd: widget.function,
+//     );
+//   }
+// }
 
 class AlertsCompound extends StatelessWidget {
   final Color color;
