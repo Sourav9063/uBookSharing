@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 
 class GetUserData {
-  Future<String> getUserData(email) async {
+  static Future<String> getUserData(email) async {
     try {
       await FirebaseFirestore.instance
           .collection(AllKeys.userCollectionKey)
@@ -18,9 +18,11 @@ class GetUserData {
                 UserProfileData.admitted = value.data()[AllKeys.admittedKey],
                 UserProfileData.dept = value.data()[AllKeys.deptKey],
               });
+      if (UserProfileData.name == null) return 'empty';
+      return 'done';
     } catch (e) {
       return e.message;
     }
-    return 'Something went wrong';
+    // return 'Something went wrong';
   }
 }

@@ -85,7 +85,10 @@ class CustomDrawer extends StatelessWidget {
                   children: [
                     IconAccount(
                       radious: CommonThings.size.width * .35,
-                      imglink: FirebaseAuth.instance.currentUser.photoURL,
+                      imglink:
+                          FirebaseAuth.instance.currentUser.photoURL == null
+                              ? null
+                              : FirebaseAuth.instance.currentUser.photoURL,
                     ),
                     Text(
                       UserProfileData.name,

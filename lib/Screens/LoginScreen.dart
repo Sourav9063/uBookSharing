@@ -9,7 +9,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 // import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Constants.dart';
-import 'package:uBookSharing/Screens/profile.dart';
+import 'package:uBookSharing/Screens/mainPage.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -142,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               context,
                               PageTransition(
                                   duration: Duration(milliseconds: 400),
-                                  child: UserProfile(),
+                                  child: MainPage(),
                                   type: PageTransitionType.downToUp));
                         }
                       },

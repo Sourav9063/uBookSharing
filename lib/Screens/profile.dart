@@ -9,6 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:uBookSharing/BackEnd/Datas.dart';
+import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/BackEnd/UploadIMG.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Constants.dart';
@@ -229,9 +230,20 @@ class _UserProfileState extends State<UserProfile> {
         });
   }
 
+  isProfileComplete() async {
+    String val =
+        await GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
+    if (val == 'done') {
+      Navigator.pushReplacement(context,
+          PageTransition(child: MainPage(), type: PageTransitionType.fade));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    // isProfileComplete();
+
     setState(() {
       getVersityList();
       versity.add('Add your University');
@@ -547,8 +559,9 @@ class _UserProfileState extends State<UserProfile> {
                                             .instance.currentUser.email;
                                         gredianAlign();
                                         setState(() {
-                                          validated =
-                                              _formKey.currentState.validate();
+                                          validated = _formKey.currentState
+                                                  .validate() &&
+                                              versityNameValidation;
                                         });
                                         print(validated);
 
@@ -576,13 +589,12 @@ class _UserProfileState extends State<UserProfile> {
                                     flex: validated ? 2 : 1,
                                     child: RaisedButton(
                                       color: Colors.green,
-                                      onPressed:
-                                          !validated && !versityNameValidation
-                                              ? null
-                                              : () {
-                                                  gredianAlign();
-                                                  upLoadData();
-                                                },
+                                      onPressed: !validated
+                                          ? null
+                                          : () {
+                                              gredianAlign();
+                                              upLoadData();
+                                            },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 16),
@@ -604,10 +616,8 @@ class _UserProfileState extends State<UserProfile> {
                             RaisedButton(onPressed: () {
                               Navigator.pushReplacement(
                                   context,
-                                  PageTransition(
-                                      child: MainPage(),
-                                      type: PageTransitionType
-                                          .leftToRightWithFade));
+                                  MaterialPageRoute(
+                                      builder: (context) => MainPage()));
                             })
                           ],
                         ),

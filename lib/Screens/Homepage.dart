@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 
-
 import 'package:uBookSharing/Screens/LoginScreen.dart';
 import 'package:uBookSharing/Screens/Registration.dart';
 import 'package:uBookSharing/Screens/mainPage.dart';
@@ -17,13 +16,22 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool pic = true;
   double animatedPadding = 10;
+
   // double animatedPicCont = -200;
   bool navSignIn = false;
   double animatedPicContleft = 00;
+
+  checkAuth() async {
+    Future.delayed(Duration(milliseconds: 500));
+    if (FirebaseAuth.instance.currentUser != null) {
+ 
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-
+    checkAuth();
     // UserLogInData.updateUID();
   }
 
@@ -43,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
               top: 0,
               onEnd: () {
                 print("navigate to sign in");
-                print(FirebaseAuth.instance.currentUser);
+                // print(FirebaseAuth.instance.currentUser);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
