@@ -48,20 +48,41 @@ class _AddBookScreenState extends State<AddBookScreen> {
             width: CommonThings.size.width,
             child: Container(
               decoration: BoxDecoration(
-                  color: Color(0xfff4f1de),
+                  color: Color(0xffffffff),
                   borderRadius: BorderRadius.circular(16)),
-              child: Column(
-                children: [
-                  Text(
-                    'Add Book',
-                    style: GoogleFonts.abrilFatface(
-                      color: Color(0xffffe066),
-                      fontSize: 38,
-                      // fontWeight: FontWeight.w500,
-                      // fontStyle: FontStyle.italic
+              child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Color(0xfff4f1de),
+                      borderRadius: BorderRadius.circular(16)),
+                  child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Add Book',
+                          style: GoogleFonts.abrilFatface(
+                            color: Color(0xffffe066),
+                            fontSize: 38,
+                            // fontWeight: FontWeight.w500,
+                            // fontStyle: FontStyle.italic
+                          ),
+                        ),
+                        Form(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ),
@@ -72,7 +93,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               child: Container(
                 color: Theme.of(context).accentColor,
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(5.0),
                   child: IconButton(
                     icon: Icon(Icons.add_a_photo),
                     onPressed: () async {
@@ -84,7 +105,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                       });
                     },
                     color: Colors.white,
-                    iconSize: CommonThings.size.width * .10,
+                    iconSize: CommonThings.size.width * .09,
                   ),
                 ),
               ),
@@ -95,8 +116,13 @@ class _AddBookScreenState extends State<AddBookScreen> {
             right: 0,
             height: CommonThings.size.width * .25,
             width: CommonThings.size.width * .25,
-            child:
-                Lottie.asset('assets/lottie/AddLottie.json', fit: BoxFit.cover),
+            child: GestureDetector(
+              child: Lottie.asset(
+                'assets/lottie/AddLottie.json',
+                fit: BoxFit.cover,
+              ),
+              onTap: () {},
+            ),
           ),
         ],
       ),

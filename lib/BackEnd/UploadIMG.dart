@@ -32,8 +32,8 @@ class UploadIMG {
   uploadBookPic(String bookID) async {
     StorageReference bookPic = FirebaseStorage.instance
         .ref()
-        .child('User')
-        .child('Book')
+        .child('Books')
+        .child(bookID)
         .child(bookID);
     await bookPic.putFile(imageBook).onComplete;
     print('upload Complete book');

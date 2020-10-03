@@ -17,6 +17,7 @@ class GetUserData {
                 UserProfileData.address = value.data()[AllKeys.addressKey],
                 UserProfileData.admitted = value.data()[AllKeys.admittedKey],
                 UserProfileData.dept = value.data()[AllKeys.deptKey],
+                UserProfileData.email = value.data()[AllKeys.emailKey],
               });
       if (UserProfileData.name == null) return 'empty';
       return 'done';

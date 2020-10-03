@@ -613,12 +613,12 @@ class _UserProfileState extends State<UserProfile> {
                             SizedBox(
                               width: 8,
                             ),
-                            RaisedButton(onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MainPage()));
-                            })
+                            // RaisedButton(onPressed: () {
+                            //   Navigator.pushReplacement(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //           builder: (context) => MainPage()));
+                            // })
                           ],
                         ),
                       ),

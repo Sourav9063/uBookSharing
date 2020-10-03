@@ -4,7 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
+import 'package:uBookSharing/Screens/profile.dart';
 
 class BookImg extends StatelessWidget {
   final String imglink;
@@ -121,11 +123,14 @@ class CustomDrawer extends StatelessWidget {
         width: CommonThings.size.width * .80,
         color: Color(0xff000247),
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  // mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     IconAccount(
                       radious: CommonThings.size.width * .35,
@@ -134,14 +139,47 @@ class CustomDrawer extends StatelessWidget {
                               ? null
                               : FirebaseAuth.instance.currentUser.photoURL,
                     ),
-                    Text(
-                      UserProfileData.name,
-                      style: kDrawerTextStyle,
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: Text(
+                        UserProfileData.name,
+                        style: kDrawerTextStyle.copyWith(fontSize: 22),
+                      ),
                     )
                   ],
-                )
-              ],
-            ),
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  RaisedButton(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                    color: Color(0x00000000),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0)),
+                    onPressed: () {
+                      Navigator.push(context,
+                          PageTransition(child: UserProfile(), type: PageTransitionType.leftToRight));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.account_circle,
+                          color: Colors.tealAccent,
+                        ),
+                        Text(
+                          'Profile',
+                          style: kDrawerTextStyle,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              )
+            ],
           ),
         ),
       ),
