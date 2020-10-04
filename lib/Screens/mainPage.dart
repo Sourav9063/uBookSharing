@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
@@ -20,8 +19,9 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-
-    GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
+    setState(() {
+      GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
+    });
   }
 
   @override

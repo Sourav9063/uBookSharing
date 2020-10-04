@@ -18,6 +18,8 @@ class GetUserData {
                 UserProfileData.admitted = value.data()[AllKeys.admittedKey],
                 UserProfileData.dept = value.data()[AllKeys.deptKey],
                 UserProfileData.email = value.data()[AllKeys.emailKey],
+                UserProfileData.profilePicLink =
+                    value.data()[AllKeys.profilePicLinkKey],
                 UserProfileData.registrationNo =
                     value.data()[AllKeys.registrationNoKey],
                 UserProfileData.uploadedBookNo =

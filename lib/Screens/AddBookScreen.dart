@@ -1,9 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
-import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/BackEnd/UploadIMG.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 
@@ -79,6 +77,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextFormField(),
                               ),
+                              
+                            
                             ],
                           ),
                         )

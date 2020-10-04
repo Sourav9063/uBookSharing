@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -14,6 +13,7 @@ class BookImg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print(imglink);
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),

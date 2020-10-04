@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               PageTransition(
                                   duration: Duration(milliseconds: 400),
                                   child: MainPage(),
-                                  type: PageTransitionType.downToUp));
+                                  type: PageTransitionType.bottomToTop));
                         }
                       },
                     )),
