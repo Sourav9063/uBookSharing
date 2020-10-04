@@ -13,7 +13,6 @@ class CommonThings {
 //   }
 // }
 
-
 class AllKeys {
   static const String userCollectionKey = 'UserCollectionAll';
   static const String nameKey = 'NameKey';
@@ -25,7 +24,9 @@ class AllKeys {
   static const String emailKey = 'EmailKey';
   static const String admittedKey = 'AdmittedKey';
   static const String addressKey = 'AddressKey';
-  static const String registrationNo = 'RegistrarionNoKey';
+  static const String registrationNoKey = 'RegistrarionNoKey';
+
+  static const String upLoadedBookNoKey = 'UploadedNoKey';
 }
 
 class UserProfileData {
@@ -39,6 +40,7 @@ class UserProfileData {
   static String email;
   static String address;
   static String registrationNo;
+  static String uploadedBookNo;
 
   // Map<String, dynamic> userMapData;
 
@@ -75,7 +77,13 @@ class UserProfileData {
     userMapData[AllKeys.profilePicLinkKey] = profilePicLink;
     userMapData[AllKeys.emailKey] = email;
     userMapData[AllKeys.addressKey] = address;
-    userMapData[AllKeys.registrationNo] = registrationNo;
+    userMapData[AllKeys.registrationNoKey] = registrationNo;
+
+    if (uploadedBookNo == null)
+      userMapData[AllKeys.upLoadedBookNoKey] = '0';
+    else
+      userMapData[AllKeys.upLoadedBookNoKey] = uploadedBookNo;
+
     print(userMapData);
     return userMapData;
   }

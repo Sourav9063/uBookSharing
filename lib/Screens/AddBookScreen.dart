@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
+import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/BackEnd/UploadIMG.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 
@@ -15,6 +16,8 @@ class AddBookScreen extends StatefulWidget {
 
 class _AddBookScreenState extends State<AddBookScreen> {
   String bookImgLink;
+  String bookId =
+      UserProfileData.email + UserProfileData.uploadedBookNo.toString();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,8 +101,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                     icon: Icon(Icons.add_a_photo),
                     onPressed: () async {
                       await UploadIMG().getBookPic();
-                      bookImgLink = await UploadIMG().uploadBookPic(
-                          FirebaseAuth.instance.currentUser.email);
+                      bookImgLink = await UploadIMG().uploadBookPic(bookId);
                       setState(() {
                         bookImgLink = bookImgLink;
                       });
@@ -116,12 +118,17 @@ class _AddBookScreenState extends State<AddBookScreen> {
             right: 0,
             height: CommonThings.size.width * .25,
             width: CommonThings.size.width * .25,
-            child: GestureDetector(
+            child: InkWell(
               child: Lottie.asset(
                 'assets/lottie/AddLottie.json',
                 fit: BoxFit.cover,
               ),
-              onTap: () {},
+              onTap: null
+              //  () async {
+              //   print(UserProfileData.uploadedBookNo);
+              //   GetUserData.setUploadedBookNo();
+              // }
+              ,
             ),
           ),
         ],

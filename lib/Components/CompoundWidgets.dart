@@ -1,9 +1,8 @@
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/Screens/profile.dart';
@@ -22,13 +21,16 @@ class BookImg extends StatelessWidget {
       height: radious,
       width: radious,
       child: imglink == null
-          ? ColorFiltered(
-              colorFilter: ColorFilter.mode(Colors.white, BlendMode.color),
-              child: Image.asset(
-                'assets/img/bookSharingPink.jpg',
-                fit: BoxFit.cover,
-              ),
-            )
+          ? Lottie.network(
+              'https://assets2.lottiefiles.com/packages/lf20_4XmSkB.json',
+              fit: BoxFit.cover)
+          //  ColorFiltered(
+          //     colorFilter: ColorFilter.mode(Colors.white, BlendMode.color),
+          //     child: Image.asset(
+          //       'assets/img/bookSharingPink.jpg',
+          //       fit: BoxFit.cover,
+          //     ),
+          //   )
           : Image.network(
               imglink,
               loadingBuilder: (BuildContext context, Widget child,
@@ -134,17 +136,16 @@ class CustomDrawer extends StatelessWidget {
                   children: [
                     IconAccount(
                       radious: CommonThings.size.width * .35,
-                      imglink:
-                          FirebaseAuth.instance.currentUser.photoURL == null
-                              ? null
-                              : FirebaseAuth.instance.currentUser.photoURL,
+                      imglink: UserProfileData.profilePicLink,
                     ),
                     SizedBox(
                       width: 8,
                     ),
                     Expanded(
                       child: Text(
-                        UserProfileData.name,
+                        UserProfileData.name == null
+                            ? 'You need to restart'
+                            : UserProfileData.name,
                         style: kDrawerTextStyle.copyWith(fontSize: 22),
                       ),
                     )
@@ -160,8 +161,11 @@ class CustomDrawer extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0)),
                     onPressed: () {
-                      Navigator.push(context,
-                          PageTransition(child: UserProfile(), type: PageTransitionType.leftToRight));
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              child: UserProfile(),
+                              type: PageTransitionType.leftToRight));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

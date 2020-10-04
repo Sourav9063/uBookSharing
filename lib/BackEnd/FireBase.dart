@@ -18,6 +18,10 @@ class GetUserData {
                 UserProfileData.admitted = value.data()[AllKeys.admittedKey],
                 UserProfileData.dept = value.data()[AllKeys.deptKey],
                 UserProfileData.email = value.data()[AllKeys.emailKey],
+                UserProfileData.registrationNo =
+                    value.data()[AllKeys.registrationNoKey],
+                UserProfileData.uploadedBookNo =
+                    value.data()[AllKeys.upLoadedBookNoKey],
               });
       if (UserProfileData.name == null) return 'empty';
       return 'done';
@@ -25,5 +29,15 @@ class GetUserData {
       return e.message;
     }
     // return 'Something went wrong';
+  }
+
+  static setUploadedBookNo() async {
+    int num = int.parse(UserProfileData.uploadedBookNo);
+    num++;
+    UserProfileData.uploadedBookNo = num.toString();
+    await FirebaseFirestore.instance
+        .collection(AllKeys.userCollectionKey)
+        .doc(UserProfileData.email)
+        .update({AllKeys.upLoadedBookNoKey: UserProfileData.uploadedBookNo});
   }
 }

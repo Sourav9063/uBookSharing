@@ -49,7 +49,9 @@ class _UserProfileState extends State<UserProfile> {
 
   upLoadData() async {
     // print(UserLogInData.uid);
-    UserProfileData.tmVersity = tmAddversity;
+    UserProfileData.tmVersity =
+        UserProfileData.versityName.replaceAll(' ', '').trim().toUpperCase();
+
     try {
       await FirebaseFirestore.instance
           .collection(AllKeys.userCollectionKey)
@@ -344,12 +346,57 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 20,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserProfile()));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Material(
+                              borderRadius: BorderRadius.circular(100),
+                              color: Theme.of(context).accentColor,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.replay,
+                                  size: 40,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Expanded(
+                          child: RaisedButton(
+                            color: Colors.purple.shade900,
+                            onPressed: () {
+                              addVersity();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              child: Text(
+                                'Add Your University',
+                                style: GoogleFonts.aBeeZee(
+                                    fontSize: 18, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Container(
                     // height: 1000,
-                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                     decoration: BoxDecoration(
                       // color: Colors.black54,
                       border: Border.all(
@@ -408,6 +455,7 @@ class _UserProfileState extends State<UserProfile> {
                                 ),
                               ),
                             ),
+
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: TextFormField(
