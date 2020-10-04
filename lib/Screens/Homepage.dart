@@ -60,12 +60,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                 : MainPage()
                             : RegScreen()));
               },
-              child: Image.asset(
-                "assets/img/bookSharingBlue.jpg",
-                // alignment: Alignment.topCenter,
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-                isAntiAlias: true,
+              child: Hero(
+                tag: 'Book',
+                              child: Image.asset(
+                  "assets/img/bookSharingBlue.jpg",
+                  // alignment: Alignment.topCenter,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
+                  isAntiAlias: true,
+                ),
               )),
           Padding(
             padding: const EdgeInsets.all(18.0),

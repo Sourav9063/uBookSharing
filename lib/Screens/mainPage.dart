@@ -69,9 +69,12 @@ class _MainPageState extends State<MainPage> {
                       color: Color(0xff02effc), fontSize: 25),
                 ),
                 background: Container(
-                  child: Image.asset(
-                    'assets/img/bookSharingPink.jpg',
-                    fit: BoxFit.cover,
+                  child: Hero(
+                    tag: 'Book',
+                    child: Image.asset(
+                      'assets/img/bookSharingPink.jpg',
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   // child: Lottie.asset(
                   //   'assets/lottie/appBar.json',

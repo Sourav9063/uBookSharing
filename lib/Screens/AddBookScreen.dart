@@ -16,73 +16,100 @@ class _AddBookScreenState extends State<AddBookScreen> {
   String bookImgLink;
   String bookId =
       UserProfileData.email + UserProfileData.uploadedBookNo.toString();
+  bool visible = true;
+  double picHeight = CommonThings.size.height * .60 + 20;
+  double formTop = CommonThings.size.height * .60;
+  riseForm() {
+    setState(() {
+      visible = false;
+      picHeight = CommonThings.size.height * .20 + 20;
+      formTop = CommonThings.size.height * .20;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          Positioned(
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 600),
+            curve: Curves.fastOutSlowIn,
             top: 0,
             left: 0,
-            height: CommonThings.size.height * .40 + 20,
-            child: Container(
-              width: CommonThings.size.width,
-              child: BookImg(
-                radious: CommonThings.size.height * .40 + 20,
-                imglink: bookImgLink,
+            height: picHeight,
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  visible = true;
+                  picHeight = CommonThings.size.height * .60 + 20;
+                  formTop = CommonThings.size.height * .60;
+                });
+              },
+              child: Container(
+                width: CommonThings.size.width,
+                child: BookImg(
+                  radious: CommonThings.size.height * .60 + 20,
+                  imglink: bookImgLink,
+                ),
+                // child: bookImgLink != null
+                //     ? Image.network(
+                //         bookImgLink,
+                //         fit: BoxFit.cover,
+                //       )
+                //     : Image.asset(
+                //         'assets/img/bookSharingPink.jpg',
+                //         fit: BoxFit.cover,
+                //       ),
               ),
-              // child: bookImgLink != null
-              //     ? Image.network(
-              //         bookImgLink,
-              //         fit: BoxFit.cover,
-              //       )
-              //     : Image.asset(
-              //         'assets/img/bookSharingPink.jpg',
-              //         fit: BoxFit.cover,
-              //       ),
             ),
           ),
-          Positioned(
-            top: CommonThings.size.height * .40,
+          AnimatedPositioned(
+            curve: Curves.fastOutSlowIn,
+            duration: Duration(milliseconds: 400),
+            top: formTop,
             right: 0,
             width: CommonThings.size.width,
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Color(0xffffffff),
-                  borderRadius: BorderRadius.circular(16)),
-              child: Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Color(0xfff4f1de),
-                      borderRadius: BorderRadius.circular(16)),
-                  child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Add Book',
-                          style: GoogleFonts.abrilFatface(
-                            color: Color(0xffffe066),
-                            fontSize: 38,
-                            // fontWeight: FontWeight.w500,
-                            // fontStyle: FontStyle.italic
+            child: InkWell(
+              onTap: () {
+                riseForm();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Color(0xffffffff),
+                    borderRadius: BorderRadius.circular(16)),
+                child: Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Color(0xfff4f1de),
+                        borderRadius: BorderRadius.circular(16)),
+                    child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Add Book',
+                            style: GoogleFonts.abrilFatface(
+                              color: Color(0xffffe066),
+                              fontSize: 38,
+                              // fontWeight: FontWeight.w500,
+                              // fontStyle: FontStyle.italic
+                            ),
                           ),
-                        ),
-                        Form(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(),
-                              ),
-                              
-                            
-                            ],
-                          ),
-                        )
-                      ],
+                          Form(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -91,23 +118,27 @@ class _AddBookScreenState extends State<AddBookScreen> {
           ),
           Positioned(
             right: 8,
-            top: CommonThings.size.height * .40 - 30,
-            child: ClipOval(
-              child: Container(
-                color: Theme.of(context).accentColor,
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: IconButton(
-                    icon: Icon(Icons.add_a_photo),
-                    onPressed: () async {
-                      await UploadIMG().getBookPic();
-                      bookImgLink = await UploadIMG().uploadBookPic(bookId);
-                      setState(() {
-                        bookImgLink = bookImgLink;
-                      });
-                    },
-                    color: Colors.white,
-                    iconSize: CommonThings.size.width * .09,
+            top: CommonThings.size.height * .60 - 30,
+            child: Visibility(
+              visible: visible,
+              child: ClipOval(
+                child: Container(
+                  color: Theme.of(context).accentColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: IconButton(
+                      icon: Icon(Icons.add_a_photo),
+                      onPressed: () async {
+                        await UploadIMG().getBookPic();
+                        bookImgLink = await UploadIMG().uploadBookPic(bookId);
+                        setState(() {
+                          bookImgLink = bookImgLink;
+                          visible = false;
+                        });
+                      },
+                      color: Colors.white,
+                      iconSize: CommonThings.size.width * .09,
+                    ),
                   ),
                 ),
               ),
