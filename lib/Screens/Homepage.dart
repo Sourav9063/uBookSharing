@@ -14,23 +14,24 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool pic = true;
-  double animatedPadding = 10;
+  // double animatedPadding = 10;
 
   // double animatedPicCont = -200;
   bool navSignIn = false;
   double animatedPicContleft = 00;
 
   checkAuth() async {
-    Future.delayed(Duration(milliseconds: 500));
+    Future.delayed(Duration(seconds: 2));
     if (FirebaseAuth.instance.currentUser != null) {
- 
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => MainPage()));
     }
   }
 
   @override
   void initState() {
     super.initState();
-    checkAuth();
+    // checkAuth();
     // UserLogInData.updateUID();
   }
 
@@ -43,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
         overflow: Overflow.clip,
         children: [
           AnimatedPositioned(
-              curve: Curves.easeInOutCubic,
+              curve: Curves.fastOutSlowIn,
               duration: Duration(milliseconds: 400),
               left: animatedPicContleft,
               // bottom: 00,
@@ -62,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Hero(
                 tag: 'Book',
-                              child: Image.asset(
+                child: Image.asset(
                   "assets/img/bookSharingBlue.jpg",
                   // alignment: Alignment.topCenter,
                   fit: BoxFit.cover,

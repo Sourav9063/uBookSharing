@@ -1,4 +1,6 @@
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +10,7 @@ import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Screens/Homepage.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   // WidgetsFlutterBinding.ensureInitialized();
@@ -53,10 +56,12 @@ class _FutureBuilderRouteFirebaseState
   // bool loading = true;
   bool ini = false;
   bool error = false;
+  bool connected = true;
   String errorMsg;
   void intFirebase() async {
     try {
       await Firebase.initializeApp();
+
       setState(() {
         ini = true;
       });
@@ -68,9 +73,25 @@ class _FutureBuilderRouteFirebaseState
     }
   }
 
+  void checkConnection() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        setState(() {
+          connected = true;
+        });
+      }
+    } on SocketException catch (_) {
+      setState(() {
+        connected = false;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    checkConnection();
     intFirebase();
   }
 
@@ -90,6 +111,10 @@ class _FutureBuilderRouteFirebaseState
     //     return LoadingState();
     //   },
     // );
+    if (!connected)
+      return SomethingWentWrong(
+        errorMsg: 'No Internet Connection',
+      );
     if (error)
       return SomethingWentWrong(
         errorMsg: errorMsg,
@@ -139,7 +164,7 @@ class SomethingWentWrong extends StatelessWidget {
               'Error',
               style: TextStyle(
                   color: Colors.white,
-                  fontSize: 20,
+                  fontSize: 25,
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(
@@ -149,8 +174,21 @@ class SomethingWentWrong extends StatelessWidget {
               errorMsg == null
                   ? 'Something Went Wrong. Restart the App.'
                   : errorMsg,
-              style: TextStyle(color: Colors.white, fontSize: 14),
+              style: TextStyle(color: Colors.white, fontSize: 18),
             ),
+            IconButton(
+              icon: Icon(
+                Icons.replay_rounded,
+                color: Colors.white,
+                size: 50,
+              ),
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FutureBuilderRouteFirebase()));
+              },
+            )
           ],
         ),
       ),

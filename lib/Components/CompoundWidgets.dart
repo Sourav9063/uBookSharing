@@ -18,12 +18,10 @@ class BookImg extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
       ),
-      height: radious,
+      height: radious + radious * .30,
       width: radious,
       child: imglink == null
-          ? Lottie.network(
-              'https://assets2.lottiefiles.com/packages/lf20_4XmSkB.json',
-              fit: BoxFit.cover)
+          ? Lottie.asset('assets/lottie/bookLoading.json', fit: BoxFit.contain)
           //  ColorFiltered(
           //     colorFilter: ColorFilter.mode(Colors.white, BlendMode.color),
           //     child: Image.asset(

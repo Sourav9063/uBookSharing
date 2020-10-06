@@ -338,6 +338,7 @@ class _RegScreenState extends State<RegScreen> {
                                 onPressed: verified
                                     ? null
                                     : () {
+                                        FocusScope.of(context).unfocus();
                                         setState(() {
                                           aPEmail = 50;
                                           aPPassword = 50;

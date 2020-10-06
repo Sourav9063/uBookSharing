@@ -19,7 +19,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
   bool visible = true;
   double picHeight = CommonThings.size.height * .60 + 20;
   double formTop = CommonThings.size.height * .60;
-  riseForm() {
+  void riseForm() {
     setState(() {
       visible = false;
       picHeight = CommonThings.size.height * .20 + 20;
@@ -103,7 +103,20 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(),
+                                  child: TextFormField(
+                                    onTap: () {
+                                      riseForm();
+                                    },
+                                    decoration: InputDecoration(
+                                      labelText: 'Book\'s Name',
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xff001a54),
+                                        ),
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),

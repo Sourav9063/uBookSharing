@@ -51,6 +51,7 @@ class _UserProfileState extends State<UserProfile> {
     // print(UserLogInData.uid);
     UserProfileData.tmVersity =
         UserProfileData.versityName.replaceAll(' ', '').trim().toUpperCase();
+    UserProfileData.uid = FirebaseAuth.instance.currentUser.uid;
 
     try {
       await FirebaseFirestore.instance
@@ -603,6 +604,7 @@ class _UserProfileState extends State<UserProfile> {
                                     flex: 2,
                                     child: RaisedButton(
                                       onPressed: () {
+                                        FocusScope.of(context).unfocus();
                                         UserProfileData.email = FirebaseAuth
                                             .instance.currentUser.email;
                                         gredianAlign();

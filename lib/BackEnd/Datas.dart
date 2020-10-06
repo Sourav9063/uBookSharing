@@ -25,8 +25,53 @@ class AllKeys {
   static const String admittedKey = 'AdmittedKey';
   static const String addressKey = 'AddressKey';
   static const String registrationNoKey = 'RegistrarionNoKey';
-
+  static const String uidKey = 'UidKey';
   static const String upLoadedBookNoKey = 'UploadedNoKey';
+
+//book keys
+  static const String bookNameKey = 'BookNameKey';
+  static const String bookWriterNameKey = 'WriterNameKey';
+  static const String bookEditionKey = 'EditionKey';
+  static const String bookForKey = 'ForKey';
+  static const String bookImgKey = 'ImgKey';
+  static const String bookDesKey = 'DescriptionKey';
+  static const String bookPriceKey = 'PriceKey';
+
+  static const String bookUploaderNameKey = 'UploaderNameKey';
+  static const String bookUploaderEmailKey = 'UploaderEmailKey';
+  static const String bookUploaderBatchKey = 'UploaderBatchKey';
+  static const String bookUploaderDeptKey = 'UploaderDeptKey';
+  static const String bookUploaderImgKey = 'UploaderDeptImgKey';
+}
+
+class BookData {
+  static String bookName;
+  static String bookWriter;
+  static String bookEdition;
+  static String bookFor;
+  static String bookDes;
+  static String bookImgLink;
+  static String bookPrice;
+
+  static Map<String, dynamic> getBookMap() {
+    Map bookMapData = Map<String, dynamic>();
+
+    bookMapData[AllKeys.bookNameKey] = bookName;
+    bookMapData[AllKeys.bookWriterNameKey] = bookWriter;
+    bookMapData[AllKeys.bookEditionKey] = bookEdition;
+    bookMapData[AllKeys.bookForKey] = bookFor;
+    bookMapData[AllKeys.bookDesKey] = bookDes;
+    bookMapData[AllKeys.bookImgKey] = bookImgLink;
+    bookMapData[AllKeys.bookPriceKey] = bookPrice;
+    bookMapData[AllKeys.bookUploaderNameKey] = UserProfileData.name;
+    bookMapData[AllKeys.bookUploaderDeptKey] = UserProfileData.dept;
+    bookMapData[AllKeys.bookUploaderBatchKey] = UserProfileData.admitted;
+    bookMapData[AllKeys.bookUploaderEmailKey] = UserProfileData.email;
+    bookMapData[AllKeys.bookUploaderImgKey] = UserProfileData.profilePicLink;
+
+    print(bookMapData);
+    return bookMapData;
+  }
 }
 
 class UserProfileData {
@@ -41,31 +86,9 @@ class UserProfileData {
   static String address;
   static String registrationNo;
   static String uploadedBookNo;
+  static String uid;
 
-  // Map<String, dynamic> userMapData;
-
-  // UserProfileData(
-  //     {this.name,
-  //     this.versityName,
-  //     this.admitted,
-  //     this.dept,
-  //     this.email,
-  //     this.phoneNum,
-  //     this.profilePicLink});
-
-  //   userMapData[AllKeys.nameKey] = name;
-
-  //   return userMapData;
-  // }
-  static Map<String, dynamic> getMap()
-  // String name,
-  // String versityName,
-  // String profilePicLink,
-  // String admitted,
-  // String dept,
-  // String phoneNum,
-  // String email)
-  {
+  static Map<String, dynamic> getMap() {
     Map userMapData = Map<String, dynamic>();
 
     userMapData[AllKeys.nameKey] = name;
@@ -78,7 +101,7 @@ class UserProfileData {
     userMapData[AllKeys.emailKey] = email;
     userMapData[AllKeys.addressKey] = address;
     userMapData[AllKeys.registrationNoKey] = registrationNo;
-
+    userMapData[AllKeys.uidKey] = uid;
     if (uploadedBookNo == null)
       userMapData[AllKeys.upLoadedBookNoKey] = '0';
     else

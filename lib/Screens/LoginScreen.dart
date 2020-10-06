@@ -262,6 +262,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                   padding: EdgeInsets.only(top: 15, bottom: 15),
                                   onPressed: () {
+                                    FocusScope.of(context).unfocus();
                                     setState(() {
                                       aPEmail = 50;
                                       aPPassword = 50;
