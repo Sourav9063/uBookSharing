@@ -189,6 +189,55 @@ class CustomDrawer extends StatelessWidget {
   }
 }
 
+class BookFormField extends StatelessWidget {
+  final String lebel;
+  final String hintText;
+  final Function validate;
+  final Function onChanged;
+  final Function raiseForm;
+  const BookFormField({
+    Key key,
+    @required this.validate,
+    @required this.onChanged,
+    this.raiseForm,
+    this.lebel,
+    this.hintText,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: TextFormField(
+        cursorColor: Theme.of(context).accentColor,
+        onTap: raiseForm,
+        onChanged: onChanged,
+        validator: validate,
+        style: TextStyle(fontSize: 18),
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Color(0xffffffff),
+          labelText: lebel,
+          hintText: hintText,
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xff001a54),
+            ),
+            borderRadius: BorderRadius.circular(14),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              width: 2,
+              color: Color(0xff6F00FF),
+            ),
+            borderRadius: BorderRadius.circular(14),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 // class AnimetedGredian extends StatefulWidget {
 //   AnimetedGredian({Key key, this.child, this.listColor, this.function})
 //       : super(key: key);

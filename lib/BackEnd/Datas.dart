@@ -36,7 +36,9 @@ class AllKeys {
   static const String bookImgKey = 'ImgKey';
   static const String bookDesKey = 'DescriptionKey';
   static const String bookPriceKey = 'PriceKey';
+  static const String bookTimeKey = 'TimeKey';
 
+  static const String bookTimeUploadKey = 'UploadTimeKey';
   static const String bookUploaderNameKey = 'UploaderNameKey';
   static const String bookUploaderEmailKey = 'UploaderEmailKey';
   static const String bookUploaderBatchKey = 'UploaderBatchKey';
@@ -52,7 +54,7 @@ class BookData {
   static String bookDes;
   static String bookImgLink;
   static String bookPrice;
-
+  static String bookTime;
   static Map<String, dynamic> getBookMap() {
     Map bookMapData = Map<String, dynamic>();
 
@@ -63,6 +65,8 @@ class BookData {
     bookMapData[AllKeys.bookDesKey] = bookDes;
     bookMapData[AllKeys.bookImgKey] = bookImgLink;
     bookMapData[AllKeys.bookPriceKey] = bookPrice;
+    bookMapData[AllKeys.bookTimeKey] = bookTime;
+    bookMapData[AllKeys.bookTimeUploadKey] = DateTime.now();
     bookMapData[AllKeys.bookUploaderNameKey] = UserProfileData.name;
     bookMapData[AllKeys.bookUploaderDeptKey] = UserProfileData.dept;
     bookMapData[AllKeys.bookUploaderBatchKey] = UserProfileData.admitted;
