@@ -58,3 +58,22 @@ const kTextFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(50.0)),
   ),
 );
+
+const kBookFormFieldDec = InputDecoration(
+  filled: true,
+  fillColor: Color(0xffffffff),
+  labelText: '',
+  hintText: '',
+  border: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: Color(0xff001a54),
+      ),
+      borderRadius: BorderRadius.all(Radius.circular(14))),
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+      width: 2,
+      color: Color(0xff6F00FF),
+    ),
+    borderRadius: BorderRadius.all(Radius.circular(14)),
+  ),
+);

@@ -209,6 +209,7 @@ class BookFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: TextFormField(
+        
         cursorColor: Theme.of(context).accentColor,
         onTap: raiseForm,
         onChanged: onChanged,

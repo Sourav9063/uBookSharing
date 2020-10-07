@@ -613,7 +613,7 @@ class _UserProfileState extends State<UserProfile> {
                                                   .validate() &&
                                               versityNameValidation;
                                         });
-                                        print(validated);
+                                     
 
                                         validated
                                             ? Vibration.vibrate(duration: 50)
