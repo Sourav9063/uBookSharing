@@ -43,7 +43,7 @@ class AllKeys {
   static const String bookUploaderEmailKey = 'UploaderEmailKey';
   static const String bookUploaderBatchKey = 'UploaderBatchKey';
   static const String bookUploaderDeptKey = 'UploaderDeptKey';
-  static const String bookUploaderImgKey = 'UploaderDeptImgKey';
+  static const String bookUploaderImgKey = 'UploaderImgKey';
 }
 
 class BookData {
