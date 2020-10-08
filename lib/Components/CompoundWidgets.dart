@@ -21,8 +21,13 @@ class BookImg extends StatelessWidget {
       height: radious + radious * .30,
       width: radious,
       child: imglink == null
-          ? Lottie.asset('assets/lottie/bookLoading.json', fit: BoxFit.contain)
-          //  ColorFiltered(
+          ?
+          //  Image.asset(
+          //     'assets/img/AddBookImgL.png',
+          //     fit: BoxFit.contain,
+          //   )
+          Lottie.asset('assets/lottie/bookLoading.json', fit: BoxFit.contain)
+          // ColorFiltered(
           //     colorFilter: ColorFilter.mode(Colors.white, BlendMode.color),
           //     child: Image.asset(
           //       'assets/img/bookSharingPink.jpg',
@@ -48,6 +53,19 @@ class BookImg extends StatelessWidget {
               height: radious,
               width: radious,
             ),
+    );
+  }
+}
+
+class BookCard extends StatelessWidget {
+  final size;
+  const BookCard({Key key, this.size}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size * 1.6,
     );
   }
 }
@@ -209,7 +227,6 @@ class BookFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: TextFormField(
-        
         cursorColor: Theme.of(context).accentColor,
         onTap: raiseForm,
         onChanged: onChanged,

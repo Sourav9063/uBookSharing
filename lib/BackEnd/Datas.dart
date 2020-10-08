@@ -47,15 +47,23 @@ class AllKeys {
 }
 
 class BookData {
-  static String bookName;
-  static String bookWriter;
-  static String bookEdition;
-  static String bookFor;
-  static String bookDes;
-  static String bookImgLink;
-  static String bookPrice;
-  static String bookTime;
-  static Map<String, dynamic> getBookMap() {
+  String bookName;
+  String bookWriter;
+  String bookEdition;
+  String bookFor;
+  String bookDes;
+  String bookImgLink;
+  String bookPrice;
+  String bookTime;
+
+  String bookTimeUpload;
+  String bookUploaderName;
+  String bookUploaderEmailKey;
+  String bookUploaderBatchKey;
+  String bookUploaderDeptKey;
+  String bookUploaderImgKey;
+
+  Map<String, dynamic> getBookMap() {
     Map bookMapData = Map<String, dynamic>();
 
     bookMapData[AllKeys.bookNameKey] = bookName;
@@ -73,7 +81,7 @@ class BookData {
     bookMapData[AllKeys.bookUploaderEmailKey] = UserProfileData.email;
     bookMapData[AllKeys.bookUploaderImgKey] = UserProfileData.profilePicLink;
 
-    print(bookMapData);
+    // print(bookMapData);
     return bookMapData;
   }
 }

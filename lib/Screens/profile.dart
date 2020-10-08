@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dropdownfield/dropdownfield.dart';
+import 'package:dropdown_search/dropdown_search.dart';
+// import 'package:dropdownfield/dropdownfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +30,7 @@ class _UserProfileState extends State<UserProfile> {
   final _versityName = GlobalKey<FormState>();
 
   bool validated = false;
-  bool versityNameValidation = false;
+  // bool versityNameValidation = false;
   getVersityList() async {
     await FirebaseFirestore.instance
         .collection('uNiversityList')
@@ -397,7 +398,7 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                   Container(
                     // height: 1000,
-                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                    margin: EdgeInsets.symmetric(horizontal: 8, vertical: 0),
                     decoration: BoxDecoration(
                       // color: Colors.black54,
                       border: Border.all(
@@ -409,56 +410,103 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                     // color: Colors.white30,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(4.0),
                       child: Form(
                         key: _formKey,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              // child: TextFormField(
-                              //   style: TextStyle(fontSize: 18),
-                              //   onChanged: (value) {
-                              //      UserProfileData.versityName = value;
-                              //   },
-                              //   onTap: () => gredianAlign(),
-                              //   decoration: kTextFieldDecoration.copyWith(
-                              //       prefixIcon: Icon(Icons.account_balance),
-                              //       labelText: 'University',
-                              //       hintText:
-                              //           'Abbreviation of your University name'),
-                              // ),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(18),
-                                    border: Border.all(
-                                        color: Colors.purple, width: 4)),
-                                child: DropDownField(
-                                  textStyle: TextStyle(fontSize: 18),
-                                  itemsVisibleInDropdown: 4,
-                                  // icon: Icon(Icons.account_balance),
-                                  value: UserProfileData.versityName,
-                                  required: true,
-                                  labelText: 'University',
+                              padding: const EdgeInsets.all(4.0),
+                              child: DropdownSearch<String>(
+                                popupTitle: Center(
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'Listed University',
+                                    style: GoogleFonts.abrilFatface(
+                                      fontSize: 30,
+                                    ),
+                                  ),
+                                )),
+                                mode: Mode.BOTTOM_SHEET,
+                                popupShape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16)),
+                                validator: (value) {
+                                  if (value == null || value == '') {
+                                    return 'Must Give your University name';
+                                  }
+                                  return null;
+                                },
+                                label: 'University',
+                                items: versity,
+                                dropdownSearchDecoration: kTextFieldDecoration,
+                                showSearchBox: true,
+                                searchBoxDecoration:
+                                    kTextFieldDecoration.copyWith(
+                                  labelText: 'Search',
                                   hintText: 'If not listed, please Add',
-                                  items: versity,
-                                  onValueChanged: (value) {
-                                    gredianAlign();
-                                    if (value != 'Add your University') {
-                                      UserProfileData.versityName = value;
-                                      versityNameValidation = true;
-                                    } else {
-                                      addVersity();
-                                    }
-                                  },
                                 ),
+                                onChanged: (value) {
+                                  gredianAlign();
+                                  if (value != 'Add your University') {
+                                    UserProfileData.versityName = value;
+                                    // versityNameValidation = true;
+                                    print(UserProfileData.versityName);
+                                  } else {
+                                    addVersity();
+                                  }
+                                },
+                                selectedItem: UserProfileData.versityName,
                               ),
                             ),
 
+                            // Padding(
+                            //   padding: const EdgeInsets.all(8.0),
+                            //   //   // child: TextFormField(
+                            //   //   //   style: TextStyle(fontSize: 18),
+                            //   //   //   onChanged: (value) {
+                            //   //   //      UserProfileData.versityName = value;
+                            //   //   //   },
+                            //   //   //   onTap: () => gredianAlign(),
+                            //   //   //   decoration: kTextFieldDecoration.copyWith(
+                            //   //   //       prefixIcon: Icon(Icons.account_balance),
+                            //   //   //       labelText: 'University',
+                            //   //   //       hintText:
+                            //   //   //           'Abbreviation of your University name'),
+                            //   //   // ),
+                            //   child: Container(
+                            //     decoration: BoxDecoration(
+                            //         color: Colors.white,
+                            //         borderRadius: BorderRadius.circular(18),
+                            //         border: Border.all(
+                            //             color: Colors.purple, width: 4)),
+                            //     child: DropDownField(
+                            //       textStyle: TextStyle(fontSize: 18),
+                            //       itemsVisibleInDropdown: 4,
+                            //       // icon: Icon(Icons.account_balance),
+                            //       value: UserProfileData.versityName,
+                            //       required: true,
+
+                            //       labelText: 'University',
+                            //       hintText: 'If not listed, please Add',
+                            //       items: versity,
+
+                            //       onValueChanged: (value) {
+                            //         gredianAlign();
+                            //         if (value != 'Add your University') {
+                            //           UserProfileData.versityName = value;
+                            //           versityNameValidation = true;
+                            //         } else {
+                            //           addVersity();
+                            //         }
+                            //       },
+                            //     ),
+                            //   ),
+                            // ),
+
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(4.0),
                               child: TextFormField(
                                 style: TextStyle(fontSize: 18),
                                 validator: (value) {
@@ -609,11 +657,9 @@ class _UserProfileState extends State<UserProfile> {
                                             .instance.currentUser.email;
                                         gredianAlign();
                                         setState(() {
-                                          validated = _formKey.currentState
-                                                  .validate() &&
-                                              versityNameValidation;
+                                          validated =
+                                              _formKey.currentState.validate();
                                         });
-                                     
 
                                         validated
                                             ? Vibration.vibrate(duration: 50)

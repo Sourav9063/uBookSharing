@@ -29,11 +29,11 @@ class UploadIMG {
     return await userPic.getDownloadURL();
   }
 
-  uploadBookPic(String bookID) async {
+  uploadBookPic(String bookID, String email) async {
     StorageReference bookPic = FirebaseStorage.instance
         .ref()
         .child('Books')
-        .child(bookID)
+        .child(email)
         .child(bookID);
     await bookPic.putFile(imageBook).onComplete;
     print('upload Complete book');

@@ -27,13 +27,49 @@ class _AddBookScreenState extends State<AddBookScreen> {
   double keyboardHeight = 0;
   bool forTime = false;
   bool forPrice = false;
+  BookData bookData = BookData();
   void riseForm() {
     setState(() {
-      keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
       visible = false;
       picHeight = CommonThings.size.height * .20 + 20;
       formTop = CommonThings.size.height * .20;
+
+      keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+      // if (keyboardHeight == 0) {
+      //   // keyboardHeight = CommonThings.size.height * .10;
+      // }
     });
+  }
+
+  ScrollController controller;
+  scrlLstnr() {
+    // print(controller.offset);
+    if (controller.offset > 15) {
+      riseForm();
+    } else if (controller.offset == 0) {
+      setState(() {
+        // FocusScope.of(context).unfocus();
+        keyboardHeight = 0;
+        visible = true;
+        picHeight = CommonThings.size.height * .60 + 20;
+        formTop = CommonThings.size.height * .60;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    controller = ScrollController();
+    controller.addListener(() {
+      scrlLstnr();
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -53,6 +89,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               height: picHeight,
               child: InkWell(
                 onTap: () {
+                  //  print(bookId);
                   setState(() {
                     visible = true;
                     picHeight = CommonThings.size.height * .60 + 20;
@@ -104,6 +141,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                       color: Color(0xffF8F4FF),
                       borderRadius: BorderRadius.circular(16)),
                   child: SingleChildScrollView(
+                    controller: controller,
                     child: Form(
                       key: _formKeyBook,
                       child: Column(
@@ -137,7 +175,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               riseForm();
                             },
                             onChanged: (value) {
-                              BookData.bookName = value;
+                              bookData.bookName = value;
                             },
                             validate: (value) {
                               if (value == null || value == '')
@@ -152,7 +190,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               riseForm();
                             },
                             onChanged: (value) {
-                              BookData.bookWriter = value;
+                              bookData.bookWriter = value;
                             },
                             validate: (value) {
                               if (value == null || value == '')
@@ -174,7 +212,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                         .bottom);
                                   },
                                   onChanged: (value) {
-                                    BookData.bookEdition = value;
+                                    bookData.bookEdition = value;
                                   },
                                   validate: (value) {
                                     if (value == null || value == '')
@@ -239,7 +277,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                   ],
                                   onChanged: (value) {
                                     setState(() {
-                                      BookData.bookFor = value;
+                                      bookData.bookFor = value;
                                       if (value == 'For Share') {
                                         forTime = true;
                                         forPrice = false;
@@ -269,7 +307,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                   riseForm();
                                 },
                                 onChanged: (value) {
-                                  BookData.bookPrice = value;
+                                  bookData.bookPrice = value;
                                 },
                                 validate: (value) {
                                   if (value == null || value == '')
@@ -292,7 +330,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                   riseForm();
                                 },
                                 onChanged: (value) {
-                                  BookData.bookTime = value;
+                                  bookData.bookTime = value;
                                 },
                                 validate: (value) {
                                   if (value == null || value == '')
@@ -309,7 +347,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                 return null;
                               },
                               onChanged: (value) {
-                                BookData.bookDes = value;
+                                bookData.bookDes = value;
                               }),
                           SizedBox(
                             height: 10,
@@ -323,6 +361,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               Checkbox(
                                   value: agree,
                                   onChanged: (val) {
+                                    FocusScope.of(context).unfocus();
                                     riseForm();
                                     setState(() {
                                       agree = val;
@@ -369,6 +408,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: CommonThings.size.height * .10,
+                          )
                         ],
                       ),
                     ),
@@ -402,8 +444,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                   content: Text('Image Uploading'),
                                 ),
                               );
-                              bookImgLink =
-                                  await UploadIMG().uploadBookPic(bookId);
+
+                              bookImgLink = await UploadIMG()
+                                  .uploadBookPic(UserProfileData.email, bookId);
                               if (bookImgLink != null) {
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(
@@ -417,7 +460,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                 bookImgLink = bookImgLink;
                                 visible = false;
                               });
-                              BookData.bookImgLink = bookImgLink;
+                              bookData.bookImgLink = bookImgLink;
                             } catch (e) {
                               Scaffold.of(context).showSnackBar(
                                 SnackBar(
@@ -443,48 +486,53 @@ class _AddBookScreenState extends State<AddBookScreen> {
               right: 0,
               height: CommonThings.size.width * .25,
               width: CommonThings.size.width * .25,
-              child: Visibility(
-                visible: valdated && bookImgLink != null,
-                child: InkWell(
-                  child: Lottie.asset(
-                    'assets/lottie/AddLottie.json',
-                    fit: BoxFit.cover,
-                  ),
-                  onTap: () async {
-                    FocusScope.of(context).unfocus();
-                    // print(BookData.bookName);
-                    try {
-                      await FirebaseFirestore.instance
-                          .collection(UserProfileData.tmVersity)
-                          .doc('AllBooks')
-                          .collection('AllBooks')
-                          .doc(bookId)
-                          .set(BookData.getBookMap());
+              child: AnimatedOpacity(
+                duration: Duration(milliseconds: 600),
+                opacity: valdated && bookImgLink != null ? 1 : 0,
+                child: Visibility(
+                  visible: valdated && bookImgLink != null,
+                  child: InkWell(
+                    child: Lottie.asset(
+                      'assets/lottie/AddLottie.json',
+                      fit: BoxFit.cover,
+                    ),
+                    onTap: () async {
+                      FocusScope.of(context).unfocus();
+                      // print(   bookData.bookName);
+                      try {
+                        await FirebaseFirestore.instance
+                            .collection(UserProfileData.tmVersity)
+                            .doc('AllBooks')
+                            .collection('AllBooks')
+                            .doc(bookId)
+                            .set(bookData.getBookMap());
 
-                      GetUserData.setUploadedBookNo();
-                      Scaffold.of(context).showSnackBar(
-                        SnackBar(
-                          // width: CommonThings.size.width * .1,
-                          backgroundColor: Colors.teal.shade800,
-                          content: Text('Your book has been added'),
-                        ),
-                      );
-                    } catch (e) {
-                      Scaffold.of(context).showSnackBar(
-                        SnackBar(
-                          // width: CommonThings.size.width * .1,
-                          backgroundColor: Colors.redAccent.shade700,
-                          content:
-                              Text('Couldn\'t upload you book. Try again.'),
-                        ),
-                      );
+                        GetUserData.setUploadedBookNo();
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            // width: CommonThings.size.width * .1,
+                            backgroundColor: Colors.teal.shade800,
+                            content: Text('Your book has been added'),
+                          ),
+                        );
+                        Navigator.pop(context);
+                      } catch (e) {
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            // width: CommonThings.size.width * .1,
+                            backgroundColor: Colors.redAccent.shade700,
+                            content:
+                                Text('Couldn\'t upload you book. Try again.'),
+                          ),
+                        );
+                      }
                     }
-                  }
-                  //  () async {
-                  //   print(UserProfileData.uploadedBookNo);
-                  //   GetUserData.setUploadedBookNo();
-                  // }
-                  ,
+                    //  () async {
+                    //   print(UserProfileData.uploadedBookNo);
+                    //   GetUserData.setUploadedBookNo();
+                    // }
+                    ,
+                  ),
                 ),
               ),
             ),
