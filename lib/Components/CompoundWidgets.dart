@@ -18,7 +18,7 @@ class BookImg extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
       ),
-      height: radious + radious * .30,
+      height: radious * 4 / 3,
       width: radious,
       child: imglink == null
           ?
@@ -58,14 +58,64 @@ class BookImg extends StatelessWidget {
 }
 
 class BookCard extends StatelessWidget {
-  final size;
-  const BookCard({Key key, this.size}) : super(key: key);
+  final double width;
+  final BookData bookData;
+  const BookCard({
+    Key key,
+    this.bookData,
+    this.width,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: size,
-      height: size * 1.6,
+      color: Color(0x00000000),
+      height: width * .753, //.95 * .618,
+      width: width,
+      child: Stack(
+        children: [
+          Positioned(
+            right: 0,
+            top: 0,
+            child: Container(
+              // height: ,
+              height: width * .753,
+              width: width * .753,
+              decoration: BoxDecoration(
+                color: Color(0xFFe8a76f),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(3, 3),
+                    blurRadius: 8,
+                    color: Color(0xaa000000),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: width * .087 / 2,
+            width: width * .50,
+            height: width * .50 * 4 / 3,
+            child: Container(
+                decoration: BoxDecoration(
+                  color: Color(0xff6F00FF),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(3, 3),
+                      blurRadius: 8,
+                      color: Color(0xaa000000),
+                    ),
+                  ],
+                ),
+                child: BookImg(
+                  radious: width * .50,
+                  imglink:UserProfileData.profilePicLink
+                      // 'https://firebasestorage.googleapis.com/v0/b/ubooksharing-ece40.appspot.com/o/Books%2Fsourav.ahmed5654%40gmail.com5%2Fsourav.ahmed5654%40gmail.com5?alt=media&token=d3482de0-ccb1-40f4-9848-4b8911a80ab6',
+                )),
+          ),
+        ],
+      ),
     );
   }
 }

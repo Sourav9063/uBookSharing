@@ -29,7 +29,6 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         isExtended: true,
-        
         onPressed: () {
           Navigator.push(
             context,
@@ -86,34 +85,9 @@ class _MainPageState extends State<MainPage> {
             ),
             SliverFillRemaining(
               child: Center(
-                child: RaisedButton(
-                  elevation: 10,
-                  child: Icon(Icons.mail_outline),
-                  onPressed: () async {
-                    final Uri launchEmailData = Uri(
-                        scheme: 'mailto',
-                        path: 'sourav68@student.sust.edu',
-                        query:
-                            'subject=uBookSharing response&body=Hi {lender name},\n I\'m ${UserProfileData.name}. I\'m a student of ${UserProfileData.versityName}, department ${UserProfileData.dept}, year ${UserProfileData.admitted}. My registration number is ${UserProfileData.registrationNo}.\n Would you please share you book{book name}  with me. My personal phone Number is ${UserProfileData.phoneNum}. I currently live in ${UserProfileData.address}.\n Thanks for your contribution'
-                        // queryParameters: {
-                        //   'subject': 'uBookSharing+response ',
-                        //   'body':
-                        //       'Hi {lender name},\n I\'m ${UserProfileData.name}. I\'m a student of ${UserProfileData.versityName}, department ${UserProfileData.dept}, year${UserProfileData.admitted}. My registration no. ${UserProfileData.registrationNo}.\n Would you please share you book{book name}  with me. My personal phone No. ${UserProfileData.phoneNum}. I currently live in ${UserProfileData.address}. Thanks for your contribution'
-                        // },
-
-                        );
-                    String launchEmailUrl = launchEmailData.toString();
-                    if (await canLaunch(launchEmailUrl)) {
-                      await launch(launchEmailUrl);
-                    } else {
-                      print('hwwww');
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                              "Can\'t send automated email. Try sending manually")));
-                    }
-                  },
-                ),
-              ),
+                  child: BookCard(
+                width: CommonThings.size.width,
+              )),
             )
           ],
         ),
@@ -121,3 +95,31 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
+
+// RaisedButton(
+//                   elevation: 10,
+//                   child: Icon(Icons.mail_outline),
+//                   onPressed: () async {
+//                     final Uri launchEmailData = Uri(
+//                         scheme: 'mailto',
+//                         path: 'sourav68@student.sust.edu',
+//                         query:
+//                             'subject=uBookSharing response&body=Hi {lender name},\n I\'m ${UserProfileData.name}. I\'m a student of ${UserProfileData.versityName}, department ${UserProfileData.dept}, year ${UserProfileData.admitted}. My registration number is ${UserProfileData.registrationNo}.\n Would you please share you book{book name}  with me. My personal phone Number is ${UserProfileData.phoneNum}. I currently live in ${UserProfileData.address}.\n Thanks for your contribution'
+//                         // queryParameters: {
+//                         //   'subject': 'uBookSharing+response ',
+//                         //   'body':
+//                         //       'Hi {lender name},\n I\'m ${UserProfileData.name}. I\'m a student of ${UserProfileData.versityName}, department ${UserProfileData.dept}, year${UserProfileData.admitted}. My registration no. ${UserProfileData.registrationNo}.\n Would you please share you book{book name}  with me. My personal phone No. ${UserProfileData.phoneNum}. I currently live in ${UserProfileData.address}. Thanks for your contribution'
+//                         // },
+
+//                         );
+//                     String launchEmailUrl = launchEmailData.toString();
+//                     if (await canLaunch(launchEmailUrl)) {
+//                       await launch(launchEmailUrl);
+//                     } else {
+//                       print('hwwww');
+//                       Scaffold.of(context).showSnackBar(SnackBar(
+//                           content: Text(
+//                               "Can\'t send automated email. Try sending manually")));
+//                     }
+//                   },
+//                 ),

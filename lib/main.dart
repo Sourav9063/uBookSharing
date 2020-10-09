@@ -125,6 +125,21 @@ class _FutureBuilderRouteFirebaseState
   }
 }
 
+class Tex extends StatelessWidget {
+  const Tex({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: BookCard(
+          width: CommonThings.size.width,
+        ),
+      ),
+    );
+  }
+}
+
 class LoadingState extends StatelessWidget {
   const LoadingState({Key key}) : super(key: key);
 
