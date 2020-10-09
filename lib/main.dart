@@ -216,7 +216,7 @@ class SomethingWentWrong extends StatelessWidget {
 //   // final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 //   @override
 //   Widget build(BuildContext context) {
-//     CommonThings.size = MediaQuery.of(context).size;
+//     CommonThings.size = CommonThings.size;
 // return FutureBuilder(
 //       builder: (context, snapshot) {
 // if (snapshot.hasData)

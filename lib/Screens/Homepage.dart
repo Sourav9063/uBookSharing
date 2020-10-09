@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    CommonThings.size = MediaQuery.of(context).size;
+    CommonThings.size = CommonThings.size;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(

@@ -110,9 +110,18 @@ class BookCard extends StatelessWidget {
                 ),
                 child: BookImg(
                   radious: width * .50,
-                  imglink:UserProfileData.profilePicLink
-                      // 'https://firebasestorage.googleapis.com/v0/b/ubooksharing-ece40.appspot.com/o/Books%2Fsourav.ahmed5654%40gmail.com5%2Fsourav.ahmed5654%40gmail.com5?alt=media&token=d3482de0-ccb1-40f4-9848-4b8911a80ab6',
+                  // imglink: UserProfileData.profilePicLink
+                  // 'https://firebasestorage.googleapis.com/v0/b/ubooksharing-ece40.appspot.com/o/Books%2Fsourav.ahmed5654%40gmail.com5%2Fsourav.ahmed5654%40gmail.com5?alt=media&token=d3482de0-ccb1-40f4-9848-4b8911a80ab6',
                 )),
+          ),
+          Positioned(
+            top: 0,
+            right: 0,
+            width: width * .50,
+            height: width * .753,
+            child: Container(
+              color: Colors.white54,
+            ),
           ),
         ],
       ),
@@ -469,7 +478,7 @@ class ErrorState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CommonThings.size = MediaQuery.of(context).size;
+    // CommonThings.size = CommonThings.size;
     return Scaffold(
       body: Container(
         height: CommonThings.size.height,

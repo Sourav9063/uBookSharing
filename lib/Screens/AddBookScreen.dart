@@ -134,7 +134,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
                   riseForm();
                 },
                 child: Container(
-                  height: CommonThings.size.height * .8 - keyboardHeight,
+                  height:
+                      CommonThings.size.height * .8 - keyboardHeight,
                   padding:
                       EdgeInsets.only(top: 24, left: 12, right: 12, bottom: 12),
                   decoration: BoxDecoration(
@@ -207,9 +208,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                   hintText: 'Edition or released year',
                                   raiseForm: () {
                                     riseForm();
-                                    print(MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom);
+                                    // print(MediaQuery.of(context).viewInsets.bottom);
                                   },
                                   onChanged: (value) {
                                     bookData.bookEdition = value;
@@ -395,8 +394,12 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                     setState(() {
                                       visible = true;
                                       picHeight =
-                                          CommonThings.size.height * .60 + 20;
-                                      formTop = CommonThings.size.height * .60;
+                                          CommonThings.size.height *
+                                                  .60 +
+                                              20;
+                                      formTop =
+                                          CommonThings.size.height *
+                                              .60;
                                     });
                                   }
                                 },

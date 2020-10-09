@@ -6,7 +6,7 @@ import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Screens/AddBookScreen.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
@@ -86,7 +86,7 @@ class _MainPageState extends State<MainPage> {
             SliverFillRemaining(
               child: Center(
                   child: BookCard(
-                width: CommonThings.size.width,
+                width: CommonThings.size.width*.8,
               )),
             )
           ],
