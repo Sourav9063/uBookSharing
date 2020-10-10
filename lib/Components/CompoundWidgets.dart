@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
+import 'package:uBookSharing/Screens/Homepage.dart';
 import 'package:uBookSharing/Screens/profile.dart';
 
 class BookImg extends StatelessWidget {
@@ -219,7 +221,7 @@ class CustomDrawer extends StatelessWidget {
                     Expanded(
                       child: Text(
                         UserProfileData.name == null
-                            ? 'You need to restart'
+                            ? 'Loading..'
                             : UserProfileData.name,
                         style: kDrawerTextStyle.copyWith(fontSize: 22),
                       ),
@@ -243,14 +245,39 @@ class CustomDrawer extends StatelessWidget {
                               type: PageTransitionType.leftToRight));
                     },
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Icon(
                           Icons.account_circle,
-                          color: Colors.tealAccent,
+                          color: Colors.white,
+                          // size: 30,
                         ),
+                        SizedBox(width: 18),
                         Text(
                           'Profile',
+                          style: kDrawerTextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                  RaisedButton(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                    color: Color(0x00000000),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0)),
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => MyHomePage()),
+                          (Route<dynamic> route) => false);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(Icons.exit_to_app, color: Colors.white),
+                        SizedBox(width: 18),
+                        Text(
+                          'Sign out',
                           style: kDrawerTextStyle,
                         ),
                       ],

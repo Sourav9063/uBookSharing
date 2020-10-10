@@ -7,7 +7,6 @@ import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Screens/AddBookScreen.dart';
 
-
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
 
@@ -16,34 +15,70 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  bool favVis = false;
+
+  loadUser() async {
+    String msg =
+        await GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
+
+    if (msg == 'done') {
+      setState(() {
+        favVis = true;
+      });
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertsCompound(
+            msg: 'Something Wrong',
+            color: Colors.red.shade200,
+            des: 'Try again',
+            buttonTxt: 'OK',
+            function: () {
+              // spinner = false;
+              Navigator.pop(context);
+            },
+          );
+        },
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    setState(() {
-      GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
-    });
+    loadUser();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        isExtended: true,
-        onPressed: () {
-          Navigator.push(
-            context,
-            PageTransition(
-              child: AddBookScreen(),
-              type: PageTransitionType.scale,
-              alignment: Alignment.bottomRight,
-              curve: Curves.easeIn,
+      floatingActionButton: AnimatedOpacity(
+        duration: Duration(milliseconds: 400),
+        opacity: favVis ? 1 : 0,
+        child: Visibility(
+          visible: favVis,
+          child: FloatingActionButton(
+            isExtended: true,
+            onPressed: () {
+              Navigator.push(
+                context,
+                PageTransition(
+                  // duration: Duration(seconds:),
+                  // settings: RouteSettings(),
+                  child: AddBookScreen(),
+                  type: PageTransitionType.rightToLeftWithFade,
+                  alignment: Alignment.bottomRight,
+                  curve: Curves.fastOutSlowIn,
+                ),
+              );
+            },
+            backgroundColor: Color(0xfffb8b24),
+            child: Icon(
+              Icons.book,
+              color: Colors.white,
             ),
-          );
-        },
-        backgroundColor: Color(0xfffb8b24),
-        child: Icon(
-          Icons.book,
-          color: Colors.white,
+          ),
         ),
       ),
       drawer: CustomDrawer(),
@@ -86,7 +121,7 @@ class _MainPageState extends State<MainPage> {
             SliverFillRemaining(
               child: Center(
                   child: BookCard(
-                width: CommonThings.size.width*.8,
+                width: CommonThings.size.width * .8,
               )),
             )
           ],
