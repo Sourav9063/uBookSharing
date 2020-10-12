@@ -24,7 +24,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
   double picHeight = CommonThings.size.height * .60 + 20;
   double formTop = CommonThings.size.height * .60;
   final _formKeyBook = GlobalKey<FormState>();
-  double keyboardHeight = 0;
+  // double keyboardHeight = 0;
   bool forTime = false;
   bool forPrice = false;
   BookData bookData = BookData();
@@ -34,7 +34,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
       picHeight = CommonThings.size.height * .20 + 20;
       formTop = CommonThings.size.height * .20;
 
-      keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+      // keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
       // if (keyboardHeight == 0) {
       //   // keyboardHeight = CommonThings.size.height * .10;
       // }
@@ -49,7 +49,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     } else if (controller.offset == 0) {
       setState(() {
         // FocusScope.of(context).unfocus();
-        keyboardHeight = 0;
+        // keyboardHeight = 0;
         visible = true;
         picHeight = CommonThings.size.height * .60 + 20;
         formTop = CommonThings.size.height * .60;
@@ -60,9 +60,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
   @override
   void initState() {
     controller = ScrollController();
-    controller.addListener(() {
-      scrlLstnr();
-    });
+    // controller.addListener(() {
+    //   scrlLstnr();
+    // });
     super.initState();
   }
 
@@ -120,6 +120,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
               top: formTop,
               right: 0,
               width: CommonThings.size.width,
+              bottom: MediaQuery.of(context).viewInsets.bottom,
               child: GestureDetector(
                 onPanUpdate: (details) {
                   if (details.delta.dy > 0) {
@@ -134,15 +135,15 @@ class _AddBookScreenState extends State<AddBookScreen> {
                   riseForm();
                 },
                 child: Container(
-                  height:
-                      CommonThings.size.height * .8 - keyboardHeight,
+                  // height: CommonThings.size.height * .8 -
+                  //     MediaQuery.of(context).viewInsets.bottom,
                   padding:
                       EdgeInsets.only(top: 24, left: 12, right: 12, bottom: 12),
                   decoration: BoxDecoration(
                       color: Color(0xffF8F4FF),
                       borderRadius: BorderRadius.circular(16)),
                   child: SingleChildScrollView(
-                    controller: controller,
+                    // controller: controller,
                     child: Form(
                       key: _formKeyBook,
                       child: Column(
@@ -340,6 +341,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
                             ),
                           ),
                           BookFormField(
+                              raiseForm: () {
+                                riseForm();
+                              },
                               lebel: 'Description',
                               hintText: 'Extra optional information',
                               validate: (value) {
@@ -394,12 +398,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                     setState(() {
                                       visible = true;
                                       picHeight =
-                                          CommonThings.size.height *
-                                                  .60 +
-                                              20;
-                                      formTop =
-                                          CommonThings.size.height *
-                                              .60;
+                                          CommonThings.size.height * .60 + 20;
+                                      formTop = CommonThings.size.height * .60;
                                     });
                                   }
                                 },
@@ -509,6 +509,18 @@ class _AddBookScreenState extends State<AddBookScreen> {
                             .collection('AllBooks')
                             .doc(bookId)
                             .set(bookData.getBookMap());
+
+                        await FirebaseFirestore.instance
+                            .collection(UserProfileData.tmVersity)
+                            .doc('AllBooks')
+                            .collection('IINNDDEEXX')
+                            .doc()
+                            .set({
+                          'Name': bookData.bookName,
+                          'TmName': bookData.bookName
+                              .replaceAll(' ', '')
+                              .toUpperCase()
+                        });
 
                         GetUserData.setUploadedBookNo();
                         Scaffold.of(context).showSnackBar(

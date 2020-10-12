@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 
-
 class GetUserData {
   static Future<String> getUserData(email) async {
     try {
@@ -42,5 +41,35 @@ class GetUserData {
         .collection(AllKeys.userCollectionKey)
         .doc(UserProfileData.email)
         .update({AllKeys.upLoadedBookNoKey: UserProfileData.uploadedBookNo});
+  }
+}
+
+class GetBookData {
+  static Future<List<BookData>> getRecent10Books() async {
+    List<BookData> recentDataList = [];
+    
+    await FirebaseFirestore.instance
+        .collection(UserProfileData.tmVersity)
+        .doc('AllBooks')
+        .collection('AllBooks')
+        .orderBy(AllKeys.bookTimeUploadKey, descending: true)
+        .limit(10)
+        .get()
+        .then((value) => {
+              // print(value.docs.),
+
+              value.docs.forEach((element) {
+                BookData bookData = BookData();
+                // print(element.data()[AllKeys.bookNameKey]);
+                bookData.bookName = element.data()[AllKeys.bookNameKey];
+                bookData.bookImgLink = element.data()[AllKeys.bookImgKey];
+                bookData.bookUploaderName =
+                    element.data()[AllKeys.bookUploaderNameKey];
+                bookData.bookUploaderEmailKey =
+                    element.data()[AllKeys.bookUploaderEmailKey];
+                recentDataList.add(bookData);
+              }),
+            });
+    return recentDataList;
   }
 }

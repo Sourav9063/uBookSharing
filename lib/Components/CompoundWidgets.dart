@@ -65,7 +65,7 @@ class BookCard extends StatelessWidget {
   const BookCard({
     Key key,
     this.bookData,
-    this.width,
+    @required this.width,
   }) : super(key: key);
 
   @override
@@ -112,6 +112,11 @@ class BookCard extends StatelessWidget {
                 ),
                 child: BookImg(
                   radious: width * .50,
+                  imglink: bookData == null
+                      ?
+                      // ? 'https://firebasestorage.googleapis.com/v0/b/ubooksharing-ece40.appspot.com/o/Books%2Fsourav.ahmed5654%40gmail.com5%2Fsourav.ahmed5654%40gmail.com5?alt=media&token=d3482de0-ccb1-40f4-9848-4b8911a80ab6'
+                      null
+                      : bookData.bookImgLink,
                   // imglink: UserProfileData.profilePicLink
                   // 'https://firebasestorage.googleapis.com/v0/b/ubooksharing-ece40.appspot.com/o/Books%2Fsourav.ahmed5654%40gmail.com5%2Fsourav.ahmed5654%40gmail.com5?alt=media&token=d3482de0-ccb1-40f4-9848-4b8911a80ab6',
                 )),
@@ -122,7 +127,13 @@ class BookCard extends StatelessWidget {
             width: width * .50,
             height: width * .753,
             child: Container(
-              color: Colors.white54,
+              // color: Colors.white54,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(bookData.bookName),
+                ],
+              ),
             ),
           ),
         ],

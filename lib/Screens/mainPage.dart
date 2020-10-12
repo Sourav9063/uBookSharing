@@ -120,9 +120,30 @@ class _MainPageState extends State<MainPage> {
             ),
             SliverFillRemaining(
               child: Center(
-                  child: BookCard(
-                width: CommonThings.size.width * .8,
-              )),
+                  child: FutureBuilder(
+                      future: GetBookData.getRecent10Books(),
+                      builder: (context, bookList) {
+                        if (bookList.hasData) {
+                          if (bookList.data.length == 0)
+                            return Text(
+                              'There are no Books 😞',
+                              style: TextStyle(fontSize: 20),
+                            );
+                          return ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: bookList.data.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: BookCard(
+                                    bookData: bookList.data[index],
+                                    width: CommonThings.size.width * .80,
+                                  ),
+                                );
+                              });
+                        }
+                        return SpinkitFading();
+                      })),
             )
           ],
         ),
