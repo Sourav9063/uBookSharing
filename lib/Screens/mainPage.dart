@@ -6,6 +6,7 @@ import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Screens/AddBookScreen.dart';
+import 'package:uBookSharing/Screens/mainPage2.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
@@ -92,6 +93,8 @@ class _MainPageState extends State<MainPage> {
               //       color: Color(0xff02effc), fontSize: 25),
               // ),
               pinned: true,
+              // snap: true,
+              // floating: true,
               backgroundColor: Color(0xff343669),
               expandedHeight: CommonThings.size.width * 16 / 19,
 
@@ -119,31 +122,50 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
             SliverFillRemaining(
-              child: Center(
-                  child: FutureBuilder(
-                      future: GetBookData.getRecent10Books(),
-                      builder: (context, bookList) {
-                        if (bookList.hasData) {
-                          if (bookList.data.length == 0)
-                            return Text(
-                              'There are no Books 😞',
-                              style: TextStyle(fontSize: 20),
-                            );
-                          return ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: bookList.data.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: BookCard(
-                                    bookData: bookList.data[index],
-                                    width: CommonThings.size.width * .80,
-                                  ),
+              child: SafeArea(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: CommonThings.size.height * .065,
+                    ),
+                    Expanded(child: Text('New Books')),
+                    Expanded(
+              
+                      child: FutureBuilder(
+                          future: GetBookData.getRecent10Books(),
+                          builder: (context, bookList) {
+                            if (bookList.hasData) {
+                              if (bookList.data.length == 0)
+                                return Text(
+                                  'There are no Books 😞',
+                                  style: TextStyle(fontSize: 20),
                                 );
-                              });
-                        }
-                        return SpinkitFading();
-                      })),
+                              return ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: bookList.data.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: BookCard(
+                                        tap: () {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                            return Mainpage2();
+                                          }));
+                                        },
+                                        bookData: bookList.data[index],
+                                        width: CommonThings.size.width * .80,
+                                      ),
+                                    );
+                                  });
+                            }
+                            return SpinkitFading();
+                          }),
+                    ),
+                  ],
+                ),
+              ),
             )
           ],
         ),

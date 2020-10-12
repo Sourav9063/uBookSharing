@@ -62,46 +62,33 @@ class BookImg extends StatelessWidget {
 class BookCard extends StatelessWidget {
   final double width;
   final BookData bookData;
+  final GestureTapCallback tap;
   const BookCard({
     Key key,
     this.bookData,
     @required this.width,
+    this.tap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Color(0x00000000),
-      height: width * .753, //.95 * .618,
-      width: width,
-      child: Stack(
-        children: [
-          Positioned(
-            right: 0,
-            top: 0,
-            child: Container(
-              // height: ,
-              height: width * .753,
-              width: width * .753,
-              decoration: BoxDecoration(
-                color: Color(0xFFe8a76f),
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset(3, 3),
-                    blurRadius: 8,
-                    color: Color(0xaa000000),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: width * .087 / 2,
-            width: width * .50,
-            height: width * .50 * 4 / 3,
-            child: Container(
+    return InkWell(
+      onTap: tap,
+      child: Container(
+        color: Color(0x00000000),
+        height: width * .753, //.95 * .618,
+        width: width,
+        child: Stack(
+          children: [
+            Positioned(
+              right: 0,
+              top: 0,
+              child: Container(
+                // height: ,
+                height: width * .753,
+                width: width * .753,
                 decoration: BoxDecoration(
-                  color: Color(0xff6F00FF),
+                  color: Color(0xFFe8a76f),
                   boxShadow: [
                     BoxShadow(
                       offset: Offset(3, 3),
@@ -110,33 +97,51 @@ class BookCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: BookImg(
-                  radious: width * .50,
-                  imglink: bookData == null
-                      ?
-                      // ? 'https://firebasestorage.googleapis.com/v0/b/ubooksharing-ece40.appspot.com/o/Books%2Fsourav.ahmed5654%40gmail.com5%2Fsourav.ahmed5654%40gmail.com5?alt=media&token=d3482de0-ccb1-40f4-9848-4b8911a80ab6'
-                      null
-                      : bookData.bookImgLink,
-                  // imglink: UserProfileData.profilePicLink
-                  // 'https://firebasestorage.googleapis.com/v0/b/ubooksharing-ece40.appspot.com/o/Books%2Fsourav.ahmed5654%40gmail.com5%2Fsourav.ahmed5654%40gmail.com5?alt=media&token=d3482de0-ccb1-40f4-9848-4b8911a80ab6',
-                )),
-          ),
-          Positioned(
-            top: 0,
-            right: 0,
-            width: width * .50,
-            height: width * .753,
-            child: Container(
-              // color: Colors.white54,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(bookData.bookName),
-                ],
               ),
             ),
-          ),
-        ],
+            Positioned(
+              top: width * .087 / 2,
+              width: width * .50,
+              height: width * .50 * 4 / 3,
+              child: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xff6F00FF),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(3, 3),
+                        blurRadius: 8,
+                        color: Color(0xaa000000),
+                      ),
+                    ],
+                  ),
+                  child: BookImg(
+                    radious: width * .50,
+                    imglink: bookData == null
+                        ?
+                        // ? 'https://firebasestorage.googleapis.com/v0/b/ubooksharing-ece40.appspot.com/o/Books%2Fsourav.ahmed5654%40gmail.com5%2Fsourav.ahmed5654%40gmail.com5?alt=media&token=d3482de0-ccb1-40f4-9848-4b8911a80ab6'
+                        null
+                        : bookData.bookImgLink,
+                    // imglink: UserProfileData.profilePicLink
+                    // 'https://firebasestorage.googleapis.com/v0/b/ubooksharing-ece40.appspot.com/o/Books%2Fsourav.ahmed5654%40gmail.com5%2Fsourav.ahmed5654%40gmail.com5?alt=media&token=d3482de0-ccb1-40f4-9848-4b8911a80ab6',
+                  )),
+            ),
+            Positioned(
+              top: 0,
+              right: 0,
+              width: width * .50,
+              height: width * .753,
+              child: Container(
+                // color: Colors.white54,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(bookData.bookName),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
