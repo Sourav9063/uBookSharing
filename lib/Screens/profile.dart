@@ -583,7 +583,7 @@ class _UserProfileState extends State<UserProfile> {
                               ],
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(4.0),
                               child: TextFormField(
                                 validator: (value) {
                                   if (value == null || value == '')
@@ -602,7 +602,7 @@ class _UserProfileState extends State<UserProfile> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(4.0),
                               child: TextFormField(
                                 validator: (value) {
                                   if (value == null || value == '')
@@ -624,7 +624,7 @@ class _UserProfileState extends State<UserProfile> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(4.0),
                               child: TextFormField(
                                 validator: (value) {
                                   if (value == null || value == '')

@@ -32,9 +32,9 @@ dependencies:
   firebase_core: ^0.5.0
   firebase_storage: ^4.0.0
   flare_flutter: ^2.0.6
-
   flutter_spinkit: ^4.1.2+1
   google_fonts: ^1.1.0
+  hawk_fab_menu: ^0.3.2
   image_picker: ^0.6.7+7
   lottie: ^0.6.0
   modal_bottom_sheet: ^0.2.2
@@ -45,9 +45,9 @@ dependencies:
   vibration: ^1.5.0
 
 dev_dependencies:
-  flutter_launcher_icons: ^0.8.1
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.8.1
 
 flutter_icons:
   android: true
@@ -76,6 +76,7 @@ flutter:
     - assets/lottie/bookWritting.json
     - assets/lottie/AddLottie.json
     - assets/lottie/bookLoading.json
+    - assets/lottie/appBar.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

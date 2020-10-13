@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -56,12 +57,12 @@ class BookData {
   String bookPrice;
   String bookTime;
 
-  String bookTimeUpload;
+  Timestamp bookTimeUpload;
   String bookUploaderName;
-  String bookUploaderEmailKey;
-  String bookUploaderBatchKey;
-  String bookUploaderDeptKey;
-  String bookUploaderImgKey;
+  String bookUploaderEmail;
+  String bookUploaderBatch;
+  String bookUploaderDept;
+  String bookUploaderImg;
 
   Map<String, dynamic> getBookMap() {
     Map bookMapData = Map<String, dynamic>();

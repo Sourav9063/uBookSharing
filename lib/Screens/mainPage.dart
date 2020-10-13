@@ -1,12 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hawk_fab_menu/hawk_fab_menu.dart';
+import 'package:lottie/lottie.dart';
+
 import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Screens/AddBookScreen.dart';
-import 'package:uBookSharing/Screens/mainPage2.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
@@ -54,120 +57,224 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: AnimatedOpacity(
-        duration: Duration(milliseconds: 400),
-        opacity: favVis ? 1 : 0,
-        child: Visibility(
-          visible: favVis,
-          child: FloatingActionButton(
-            isExtended: true,
-            onPressed: () {
-              Navigator.push(
-                context,
-                PageTransition(
-                  // duration: Duration(seconds:),
-                  // settings: RouteSettings(),
-                  child: AddBookScreen(),
-                  type: PageTransitionType.rightToLeftWithFade,
-                  alignment: Alignment.bottomRight,
-                  curve: Curves.fastOutSlowIn,
-                ),
-              );
-            },
-            backgroundColor: Color(0xfffb8b24),
-            child: Icon(
-              Icons.book,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
+      // floatingActionButton: AnimatedOpacity(
+      //   duration: Duration(milliseconds: 400),
+      //   opacity: favVis ? 1 : 0,
+      //   child: Visibility(
+      //     visible: favVis,
+      //     child: FloatingActionButton(
+      //       isExtended: true,
+      //       onPressed: () {
+      //         Navigator.push(
+      //           context,
+      //           PageTransition(
+      //             // duration: Duration(seconds:),
+      //             // settings: RouteSettings(),
+      //             child: AddBookScreen(),
+      //             type: PageTransitionType.rightToLeftWithFade,
+      //             alignment: Alignment.bottomRight,
+      //             curve: Curves.fastOutSlowIn,
+      //           ),
+      //         );
+      //       },
+      //       backgroundColor: Color(0xfffb8b24),
+      //       child: Icon(
+      //         Icons.book,
+      //         color: Colors.white,
+      //       ),
+      //     ),
+      //   ),
+      // ),
       drawer: CustomDrawer(),
       body: Builder(
-        builder: (context) => CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              // title: Text(
-              //   'uBookSharing',
-              //   style: GoogleFonts.abrilFatface(
-              //       color: Color(0xff02effc), fontSize: 25),
-              // ),
-              pinned: true,
-              // snap: true,
-              // floating: true,
-              backgroundColor: Color(0xff343669),
-              expandedHeight: CommonThings.size.width * 16 / 19,
-
-              flexibleSpace: FlexibleSpaceBar(
-                // titlePadding: EdgeInsets.only(
-                // bottom: CommonThings.size.width * 98 / 160 / 2, left: 20),
-                title: Text(
-                  'uBookSharing',
-                  style: GoogleFonts.abrilFatface(
-                      color: Color(0xff02effc), fontSize: 25),
-                ),
-                background: Container(
-                  child: Hero(
-                    tag: 'Book',
-                    child: Image.asset(
-                      'assets/img/bookSharingPink.jpg',
-                      fit: BoxFit.cover,
+        builder: (context) => HawkFabMenu(
+          blur: 20,
+          iconColor: Colors.white,
+          fabColor: Theme.of(context).accentColor,
+          icon: AnimatedIcons.menu_arrow,
+          items: [
+            HawkFabMenuItem(
+                label: 'Upload Book',
+                ontap: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      // duration: Duration(seconds:),
+                      // settings: RouteSettings(),
+                      child: AddBookScreen(),
+                      type: PageTransitionType.rightToLeftWithFade,
+                      alignment: Alignment.bottomRight,
+                      curve: Curves.fastOutSlowIn,
                     ),
-                  ),
-                  // child: Lottie.asset(
-                  //   'assets/lottie/appBar.json',
-                  //   reverse: true,
-                  // ),
+                  );
+                },
+                icon: Icon(
+                  Icons.book,
+                  color: Colors.white,
                 ),
+                color: Color(0xff144552),
+                labelColor: Colors.white,
+                labelBackgroundColor: Color(0xff144552)),
+            HawkFabMenuItem(
+              label: 'Add a request',
+              ontap: () {},
+              icon: Icon(
+                Icons.sentiment_satisfied_outlined,
+                color: Colors.white,
               ),
-            ),
-            SliverFillRemaining(
-              child: SafeArea(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: CommonThings.size.height * .065,
-                    ),
-                    Expanded(child: Text('New Books')),
-                    Expanded(
-              
-                      child: FutureBuilder(
-                          future: GetBookData.getRecent10Books(),
-                          builder: (context, bookList) {
-                            if (bookList.hasData) {
-                              if (bookList.data.length == 0)
-                                return Text(
-                                  'There are no Books 😞',
-                                  style: TextStyle(fontSize: 20),
-                                );
-                              return ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: bookList.data.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: BookCard(
-                                        tap: () {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return Mainpage2();
-                                          }));
-                                        },
-                                        bookData: bookList.data[index],
-                                        width: CommonThings.size.width * .80,
-                                      ),
-                                    );
-                                  });
-                            }
-                            return SpinkitFading();
-                          }),
-                    ),
-                  ],
-                ),
-              ),
+              color: Color(0xff6F00FF),
+              labelColor: Colors.white,
+              labelBackgroundColor: Color(0xff6F00FF),
             )
           ],
+          body: CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                // title: Text(
+                //   'uBookSharing',
+                //   style: GoogleFonts.abrilFatface(
+                //       color: Color(0xff02effc), fontSize: 25),
+                // ),
+                pinned: true,
+                // snap: true,
+                // floating: true,
+                backgroundColor: Color(0xff343669),
+                expandedHeight: CommonThings.size.width * 16 / 19,
+
+                flexibleSpace: FlexibleSpaceBar(
+                  // titlePadding: EdgeInsets.only(
+                  // bottom: CommonThings.size.width * 98 / 160 / 2, left: 20),
+                  title: Text(
+                    'uBookSharing',
+                    style: GoogleFonts.abrilFatface(
+                        color: Color(0xff02effc), fontSize: 25),
+                  ),
+                  background: Container(
+                    child: Hero(
+                      tag: 'Book',
+                      child: Image.asset(
+                        'assets/img/bookSharingPink.jpg',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    // child: Lottie.asset(
+                    //   'assets/lottie/appBar.json',
+                    //   reverse: true,
+                    // ),
+                  ),
+                ),
+              ),
+              SliverFillRemaining(
+                child: SafeArea(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: CommonThings.size.height * .065,
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text('New Books'),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: StreamBuilder(
+                          stream:
+                              GetBookData.getRecentBookStream(20, 'AllBooks'),
+                          builder: (context, AsyncSnapshot<QuerySnapshot> snp) {
+                            if (snp.data.size == 0) {
+                              return Text('There are no requests');
+                            } else if (snp.hasData) {
+                              List<BookData> recentDataList;
+
+                              recentDataList =
+                                  GetBookData.getBookDataObjFromQuerySnapshot(
+                                      snp.data);
+
+                              List<Widget> bookcard = [];
+                              for (BookData bookData in recentDataList) {
+                                bookcard.add(Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: BookCard(
+                                    width: CommonThings.size.width * .60,
+                                    bookData: bookData,
+                                  ),
+                                ));
+                              }
+
+                              bookcard.add(Icon(Icons.add));
+
+                              return ListView(
+                                // shrinkWrap: true,
+
+                                scrollDirection: Axis.horizontal,
+                                padding: EdgeInsets.all(8),
+                                // itemExtent: CommonThings.size.width * .40,
+                                children: bookcard,
+                              );
+                            } else if (snp.hasError) {
+                              return Text(
+                                  'Something went wrong. Restart the app');
+                            } else
+                              return SpinkitFading();
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text('New Requests'),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: StreamBuilder(
+                          stream:
+                              GetBookData.getRecentBookStream(20, 'Requests'),
+                          builder: (context, AsyncSnapshot<QuerySnapshot> snp) {
+                            if (snp.data.size == 0) {
+                              return Text('There are no requests');
+                            } else if (snp.hasData) {
+                              List<BookData> recentDataList;
+
+                              recentDataList =
+                                  GetBookData.getBookDataObjFromQuerySnapshot(
+                                      snp.data);
+
+                              List<Widget> bookcard = [];
+                              for (BookData bookData in recentDataList) {
+                                bookcard.add(Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: BookCard(
+                                    width: CommonThings.size.width * .60,
+                                    bookData: bookData,
+                                  ),
+                                ));
+                              }
+
+                              bookcard.add(Icon(Icons.add));
+
+                              return ListView(
+                                // shrinkWrap: true,
+
+                                scrollDirection: Axis.horizontal,
+                                padding: EdgeInsets.all(8),
+                                // itemExtent: CommonThings.size.width * .40,
+                                children: bookcard,
+                              );
+                            } else if (snp.hasError) {
+                              return Text(
+                                  'Something went wrong. Restart the app');
+                            } else
+                              return SpinkitFading();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -201,3 +308,37 @@ class _MainPageState extends State<MainPage> {
 //                     }
 //                   },
 //                 ),
+
+//  Expanded(
+//     child: FutureBuilder(
+//         future: GetBookData.getRecent10Books(),
+//         builder: (context, bookList) {
+//           if (bookList.hasData) {
+//             if (bookList.data.length == 0)
+//               return Text(
+//                 'There are no Books 😞',
+//                 style: TextStyle(fontSize: 20),
+//               );
+//             return ListView.builder(
+//                 scrollDirection: Axis.horizontal,
+//                 itemCount: bookList.data.length,
+//                 itemBuilder: (context, index) {
+//                   return Padding(
+//                     padding: const EdgeInsets.all(8.0),
+//                     child: BookCard(
+//                       tap: () {
+//                         Navigator.push(context,
+//                             MaterialPageRoute(
+//                                 builder: (context) {
+//                           return Mainpage2();
+//                         }));
+//                       },
+//                       bookData: bookList.data[index],
+//                       width: CommonThings.size.width * .80,
+//                     ),
+//                   );
+//                 });
+//           }
+//           return SpinkitFading();
+//         }),
+//   ),

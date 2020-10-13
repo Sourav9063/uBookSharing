@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
+import 'package:uBookSharing/BackEnd/FireBase.dart';
 
 import 'package:uBookSharing/Screens/LoginScreen.dart';
 import 'package:uBookSharing/Screens/Registration.dart';
@@ -36,6 +37,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void dispose() async {
+    if (FirebaseAuth.instance.currentUser != null)
+      await GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     CommonThings.size = CommonThings.size;
     return Scaffold(
@@ -50,8 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
               // bottom: 00,
               top: 0,
               onEnd: () {
-                print("navigate to sign in");
                 // print(FirebaseAuth.instance.currentUser);
+
                 Navigator.push(
                     context,
                     MaterialPageRoute(

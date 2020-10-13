@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/BackEnd/UploadIMG.dart';
@@ -498,6 +499,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                     child: Lottie.asset(
                       'assets/lottie/AddLottie.json',
                       fit: BoxFit.cover,
+                      repeat: false,
                     ),
                     onTap: () async {
                       FocusScope.of(context).unfocus();
@@ -531,6 +533,17 @@ class _AddBookScreenState extends State<AddBookScreen> {
                           ),
                         );
                         Navigator.pop(context);
+                        // Navigator.pushAndRemoveUntil(
+                        //     context,
+                        //     PageTransition(
+                        //       // duration: Duration(seconds:),
+                        //       // settings: RouteSettings(),
+                        //       child: MainPage(),
+                        //       type: PageTransitionType.rightToLeftWithFade,
+                        //       alignment: Alignment.bottomRight,
+                        //       curve: Curves.fastOutSlowIn,
+                        //     ),
+                        //     (Route<dynamic> route) => false);
                       } catch (e) {
                         Scaffold.of(context).showSnackBar(
                           SnackBar(
