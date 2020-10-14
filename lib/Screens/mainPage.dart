@@ -166,7 +166,7 @@ class _MainPageState extends State<MainPage> {
                       tag: 'Book',
                       child: Image.asset(
                         'assets/img/bookSharingPink.jpg',
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                       ),
                     ),
                     // child: Lottie.asset(
