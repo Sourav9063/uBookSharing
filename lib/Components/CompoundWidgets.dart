@@ -131,11 +131,39 @@ class BookCard extends StatelessWidget {
               width: width * .50,
               height: width * .753,
               child: Container(
+                padding: EdgeInsets.all(6),
                 // color: Colors.white54,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(bookData.bookName),
+                    Expanded(
+                      child: Text(
+                        bookData.bookName,
+                        style: TextStyle(fontSize: width * .075),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        bookData.bookWriter,
+                        style: TextStyle(fontSize: width * .06),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        bookData.bookFor,
+                        style: TextStyle(fontSize: width * .055),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        bookData.bookTimeUpload.toDate().day.toString() +
+                            '/' +
+                            bookData.bookTimeUpload.toDate().month.toString() +
+                            '/' +
+                            bookData.bookTimeUpload.toDate().year.toString(),
+                        style: TextStyle(fontSize: width * .075),
+                      ),
+                    ),
                   ],
                 ),
               ),

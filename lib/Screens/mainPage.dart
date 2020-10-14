@@ -3,13 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hawk_fab_menu/hawk_fab_menu.dart';
-import 'package:lottie/lottie.dart';
 
 import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Screens/AddBookScreen.dart';
+import 'package:uBookSharing/Screens/AddRequest.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
@@ -117,7 +117,19 @@ class _MainPageState extends State<MainPage> {
                 labelBackgroundColor: Color(0xff144552)),
             HawkFabMenuItem(
               label: 'Add a request',
-              ontap: () {},
+              ontap: () {
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    // duration: Duration(seconds:),
+                    // settings: RouteSettings(),
+                    child: AddRequestScreen(),
+                    type: PageTransitionType.rightToLeftWithFade,
+                    alignment: Alignment.bottomRight,
+                    curve: Curves.fastOutSlowIn,
+                  ),
+                );
+              },
               icon: Icon(
                 Icons.sentiment_satisfied_outlined,
                 color: Colors.white,
@@ -139,7 +151,7 @@ class _MainPageState extends State<MainPage> {
                 // snap: true,
                 // floating: true,
                 backgroundColor: Color(0xff343669),
-                expandedHeight: CommonThings.size.width * 16 / 19,
+                expandedHeight: CommonThings.size.width * 12 / 19,
 
                 flexibleSpace: FlexibleSpaceBar(
                   // titlePadding: EdgeInsets.only(
@@ -165,26 +177,25 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
               SliverFillRemaining(
-                child: SafeArea(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: CommonThings.size.height * .065,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: CommonThings.size.height * .065,
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: Text('New Books'),
                       ),
-                      Expanded(
-                        child: Center(
-                          child: Text('New Books'),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: StreamBuilder(
-                          stream:
-                              GetBookData.getRecentBookStream(20, 'AllBooks'),
-                          builder: (context, AsyncSnapshot<QuerySnapshot> snp) {
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: StreamBuilder(
+                        stream: GetBookData.getRecentBookStream(20, 'AllBooks'),
+                        builder: (context, AsyncSnapshot<QuerySnapshot> snp) {
+                          if (snp.hasData) {
                             if (snp.data.size == 0) {
                               return Text('There are no requests');
-                            } else if (snp.hasData) {
+                            } else {
                               List<BookData> recentDataList;
 
                               recentDataList =
@@ -194,7 +205,7 @@ class _MainPageState extends State<MainPage> {
                               List<Widget> bookcard = [];
                               for (BookData bookData in recentDataList) {
                                 bookcard.add(Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(5.0),
                                   child: BookCard(
                                     width: CommonThings.size.width * .60,
                                     bookData: bookData,
@@ -212,28 +223,29 @@ class _MainPageState extends State<MainPage> {
                                 // itemExtent: CommonThings.size.width * .40,
                                 children: bookcard,
                               );
-                            } else if (snp.hasError) {
-                              return Text(
-                                  'Something went wrong. Restart the app');
-                            } else
-                              return SpinkitFading();
-                          },
-                        ),
+                            }
+                          } else if (snp.hasError) {
+                            return Text(
+                                'Something went wrong. Restart the app');
+                          } else
+                            return SpinkitFading();
+                        },
                       ),
-                      Expanded(
-                        child: Center(
-                          child: Text('New Requests'),
-                        ),
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: Text('New Requests'),
                       ),
-                      Expanded(
-                        flex: 4,
-                        child: StreamBuilder(
-                          stream:
-                              GetBookData.getRecentBookStream(20, 'Requests'),
-                          builder: (context, AsyncSnapshot<QuerySnapshot> snp) {
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: StreamBuilder(
+                        stream: GetBookData.getRecentBookStream(20, 'Requests'),
+                        builder: (context, AsyncSnapshot<QuerySnapshot> snp) {
+                          if (snp.hasData) {
                             if (snp.data.size == 0) {
                               return Text('There are no requests');
-                            } else if (snp.hasData) {
+                            } else {
                               List<BookData> recentDataList;
 
                               recentDataList =
@@ -243,7 +255,7 @@ class _MainPageState extends State<MainPage> {
                               List<Widget> bookcard = [];
                               for (BookData bookData in recentDataList) {
                                 bookcard.add(Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(5.0),
                                   child: BookCard(
                                     width: CommonThings.size.width * .60,
                                     bookData: bookData,
@@ -261,16 +273,16 @@ class _MainPageState extends State<MainPage> {
                                 // itemExtent: CommonThings.size.width * .40,
                                 children: bookcard,
                               );
-                            } else if (snp.hasError) {
-                              return Text(
-                                  'Something went wrong. Restart the app');
-                            } else
-                              return SpinkitFading();
-                          },
-                        ),
+                            }
+                          } else if (snp.hasError) {
+                            return Text(
+                                'Something went wrong. Restart the app');
+                          } else
+                            return SpinkitFading();
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               )
             ],

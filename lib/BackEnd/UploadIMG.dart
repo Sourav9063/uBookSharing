@@ -33,9 +33,22 @@ class UploadIMG {
     StorageReference bookPic = FirebaseStorage.instance
         .ref()
         .child('Books')
+        .child('Upload')
         .child(email)
         .child(bookID);
     await bookPic.putFile(imageBook).onComplete;
+    print('upload Complete book');
+    return await bookPic.getDownloadURL();
+  }
+
+  uploadRequstPic(String bookID, String email) async {
+    StorageReference bookPic = FirebaseStorage.instance
+        .ref()
+        .child('Books')
+        .child('Request')
+        .child(email)
+        .child(bookID);
+    await bookPic.putFile(imageUser).onComplete;
     print('upload Complete book');
     return await bookPic.getDownloadURL();
   }
