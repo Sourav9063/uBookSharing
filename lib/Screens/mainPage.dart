@@ -58,7 +58,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfffff1e6),
+      backgroundColor: Color(0xffffffff),
       // floatingActionButton: AnimatedOpacity(
       //   duration: Duration(milliseconds: 400),
       //   opacity: favVis ? 1 : 0,
@@ -164,11 +164,11 @@ class _MainPageState extends State<MainPage> {
                         color: Color(0xff02effc), fontSize: 25),
                   ),
                   background: SafeArea(
-                                      child: FlareActor(
-                                        'assets/flr/sittingBook.flr',
-                                        fit: BoxFit.contain,
-                                        animation: 'Untitled',
-                                      ),
+                    child: FlareActor(
+                      'assets/flr/sittingBook.flr',
+                      fit: BoxFit.contain,
+                      animation: 'Untitled',
+                    ),
                   ),
                 ),
               ),
@@ -243,7 +243,7 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                     SizedBox(
-                      height: CommonThings.size.width * .40,
+                      height: CommonThings.size.width * .50,
                       child: StreamBuilder(
                         stream: GetBookData.getRecentBookStream(20, 'Requests'),
                         builder: (context, AsyncSnapshot<QuerySnapshot> snp) {
@@ -262,7 +262,7 @@ class _MainPageState extends State<MainPage> {
                                 bookcard.add(Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: BookCard(
-                                    width: CommonThings.size.width * .40,
+                                    width: CommonThings.size.width * .50,
                                     bookData: bookData,
                                   ),
                                 ));
@@ -360,15 +360,14 @@ class _MainPageState extends State<MainPage> {
 //         }),
 //   ),
 
-
-   // child: Hero(
-                      //   tag: 'Book',
-                      //   child: Image.asset(
-                      //     'assets/img/bookSharingPink.jpg',
-                      //     fit: BoxFit.fill,
-                      //   ),
-                      // ),
-                      // child: Lottie.asset(
-                      //   'assets/lottie/appBar.json',
-                      //   reverse: true,
-                      // ),
+// child: Hero(
+//   tag: 'Book',
+//   child: Image.asset(
+//     'assets/img/bookSharingPink.jpg',
+//     fit: BoxFit.fill,
+//   ),
+// ),
+// child: Lottie.asset(
+//   'assets/lottie/appBar.json',
+//   reverse: true,
+// ),
