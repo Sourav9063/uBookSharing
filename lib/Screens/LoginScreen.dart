@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   duration: Duration(milliseconds: 400),
                                   child: UserProfileData.tmVersity != null
                                       ? MainPage()
-                                      : UserProfile(nm,./),
+                                      : UserProfile(),
                                   type: PageTransitionType.bottomToTop));
                         }
                       },
