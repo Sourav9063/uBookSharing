@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:uBookSharing/BackEnd/Datas.dart';
+import 'package:uBookSharing/BackEnd/FireBase.dart';
 // import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 // import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Constants.dart';
 import 'package:uBookSharing/Screens/mainPage.dart';
+import 'package:uBookSharing/Screens/profile.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -56,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
       //   animationUnloack = true;
       if (auth.currentUser.emailVerified && auth.currentUser != null) {
         spinnerState(false);
-
+        GetUserData.getUserData(email);
         // await UserDataSavedEmailPassword.saveuidSharedPref(
         //     auth.currentUser.uid);
         setState(() {
@@ -142,7 +145,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               context,
                               PageTransition(
                                   duration: Duration(milliseconds: 400),
-                                  child: MainPage(),
+                                  child: UserProfileData.tmVersity != null
+                                      ? MainPage()
+                                      : UserProfile(nm,./),
                                   type: PageTransitionType.bottomToTop));
                         }
                       },
@@ -267,6 +272,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       aPEmail = 50;
                                       aPPassword = 50;
                                     });
+
                                     bool isAlright =
                                         _formKey.currentState.validate();
                                     // print(auth.currentUser.uid);

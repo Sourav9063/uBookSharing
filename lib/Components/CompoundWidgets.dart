@@ -88,7 +88,7 @@ class BookCard extends StatelessWidget {
                 height: width * .753,
                 width: width * .753,
                 decoration: BoxDecoration(
-                  color: Color(0xFFe8a76f),
+                  color: Color(0xFFffffff),
                   boxShadow: [
                     BoxShadow(
                       offset: Offset(3, 3),

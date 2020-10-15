@@ -73,6 +73,7 @@ flutter:
     - assets/flr/BookLoading.flr
     - assets/flr/Background.flr
     - assets/flr/UserIcon.flr
+    - assets/flr/sittingBook.flr
     - assets/lottie/bookWritting.json
     - assets/lottie/AddLottie.json
     - assets/lottie/bookLoading.json

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hawk_fab_menu/hawk_fab_menu.dart';
@@ -57,6 +58,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xfffff1e6),
       // floatingActionButton: AnimatedOpacity(
       //   duration: Duration(milliseconds: 400),
       //   opacity: favVis ? 1 : 0,
@@ -150,8 +152,8 @@ class _MainPageState extends State<MainPage> {
                 pinned: true,
                 // snap: true,
                 // floating: true,
-                backgroundColor: Color(0xff343669),
-                expandedHeight: CommonThings.size.width * 12 / 19,
+                backgroundColor: Color(0xff6F00FF),
+                expandedHeight: CommonThings.size.width * .5,
 
                 flexibleSpace: FlexibleSpaceBar(
                   // titlePadding: EdgeInsets.only(
@@ -161,18 +163,12 @@ class _MainPageState extends State<MainPage> {
                     style: GoogleFonts.abrilFatface(
                         color: Color(0xff02effc), fontSize: 25),
                   ),
-                  background: Container(
-                    child: Hero(
-                      tag: 'Book',
-                      child: Image.asset(
-                        'assets/img/bookSharingPink.jpg',
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    // child: Lottie.asset(
-                    //   'assets/lottie/appBar.json',
-                    //   reverse: true,
-                    // ),
+                  background: SafeArea(
+                                      child: FlareActor(
+                                        'assets/flr/sittingBook.flr',
+                                        fit: BoxFit.contain,
+                                        animation: 'Untitled',
+                                      ),
                   ),
                 ),
               ),
@@ -187,8 +183,8 @@ class _MainPageState extends State<MainPage> {
                         child: Text('New Books'),
                       ),
                     ),
-                    Expanded(
-                      flex: 4,
+                    SizedBox(
+                      height: CommonThings.size.width * .60 * .9,
                       child: StreamBuilder(
                         stream: GetBookData.getRecentBookStream(20, 'AllBooks'),
                         builder: (context, AsyncSnapshot<QuerySnapshot> snp) {
@@ -213,7 +209,16 @@ class _MainPageState extends State<MainPage> {
                                 ));
                               }
 
-                              bookcard.add(Icon(Icons.add));
+                              bookcard.add(
+                                InkWell(
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text('And many more'),
+                                    ),
+                                  ),
+                                ),
+                              );
 
                               return ListView(
                                 // shrinkWrap: true,
@@ -237,8 +242,8 @@ class _MainPageState extends State<MainPage> {
                         child: Text('New Requests'),
                       ),
                     ),
-                    Expanded(
-                      flex: 4,
+                    SizedBox(
+                      height: CommonThings.size.width * .40,
                       child: StreamBuilder(
                         stream: GetBookData.getRecentBookStream(20, 'Requests'),
                         builder: (context, AsyncSnapshot<QuerySnapshot> snp) {
@@ -257,7 +262,7 @@ class _MainPageState extends State<MainPage> {
                                 bookcard.add(Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: BookCard(
-                                    width: CommonThings.size.width * .60,
+                                    width: CommonThings.size.width * .40,
                                     bookData: bookData,
                                   ),
                                 ));
@@ -354,3 +359,16 @@ class _MainPageState extends State<MainPage> {
 //           return SpinkitFading();
 //         }),
 //   ),
+
+
+   // child: Hero(
+                      //   tag: 'Book',
+                      //   child: Image.asset(
+                      //     'assets/img/bookSharingPink.jpg',
+                      //     fit: BoxFit.fill,
+                      //   ),
+                      // ),
+                      // child: Lottie.asset(
+                      //   'assets/lottie/appBar.json',
+                      //   reverse: true,
+                      // ),

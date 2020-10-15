@@ -7,6 +7,7 @@ import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Screens/LoginScreen.dart';
 import 'package:uBookSharing/Screens/Registration.dart';
 import 'package:uBookSharing/Screens/mainPage.dart';
+import 'package:uBookSharing/Screens/profile.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -20,6 +21,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // double animatedPicCont = -200;
   bool navSignIn = false;
   double animatedPicContleft = 00;
+  String buttonMsg = 'Sign In';
 
   checkAuth() async {
     Future.delayed(Duration(seconds: 2));
@@ -34,6 +36,14 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     // checkAuth();
     // UserLogInData.updateUID();
+
+    if (FirebaseAuth.instance.currentUser != null) {
+      setState(() {
+        buttonMsg = 'Explore';
+      });
+
+      GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
+    }
   }
 
   @override
@@ -66,7 +76,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         builder: (context) => navSignIn
                             ? FirebaseAuth.instance.currentUser == null
                                 ? LoginScreen()
-                                : MainPage()
+                                : FirebaseAuth
+                                        .instance.currentUser.emailVerified
+                                    ? UserProfileData.tmVersity != null
+                                        ? MainPage()
+                                        : UserProfile()
+                                    : LoginScreen()
                             : RegScreen()));
               },
               child: Hero(
@@ -114,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     // focusColor: Colors.pinkAccent.shade400,
                     child: Text(
-                      'Sign In',
+                      buttonMsg,
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
 
