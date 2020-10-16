@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
@@ -15,7 +16,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool pic = true;
+  bool animatee = false;
   // double animatedPadding = 10;
 
   // double animatedPicCont = -200;
@@ -50,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void dispose() async {
     if (FirebaseAuth.instance.currentUser != null)
       await GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
+
     super.dispose();
   }
 
@@ -61,39 +63,77 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Stack(
         overflow: Overflow.clip,
         children: [
-          AnimatedPositioned(
-              curve: Curves.fastOutSlowIn,
-              duration: Duration(milliseconds: 400),
-              left: animatedPicContleft,
-              // bottom: 00,
-              top: 0,
-              onEnd: () {
-                // print(FirebaseAuth.instance.currentUser);
+          Positioned(
+            top: 0,
+            left: 0,
+            height: CommonThings.size.height * .80,
+            width: CommonThings.size.width,
+            child: Material(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.elliptical(
+                      CommonThings.size.width, CommonThings.size.width * .30)),
+              color: Colors.lightBlue.shade700,
+              child: FlareActor(
+                'assets/flr/BookGive.flr',
+                alignment: Alignment.topCenter,
+                fit: BoxFit.contain,
+                animation: animatee ? 'Give' : 'Idle',
+                callback: (value) {
+                  if (value == 'Give') {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => navSignIn
+                                ? FirebaseAuth.instance.currentUser == null
+                                    ? LoginScreen()
+                                    : FirebaseAuth
+                                            .instance.currentUser.emailVerified
+                                        ? UserProfileData.tmVersity != null
+                                            ? MainPage()
+                                            : UserProfile()
+                                        : LoginScreen()
+                                : RegScreen()));
+                    setState(() {
+                      animatee = false;
+                    });
+                  }
+                },
+              ),
+            ),
+          ),
+          // AnimatedPositioned(
+          //     curve: Curves.fastOutSlowIn,
+          //     duration: Duration(milliseconds: 400),
+          //     left: animatedPicContleft,
+          //     // bottom: 00,
+          //     top: 0,
+          //     onEnd: () {
+          //       // print(FirebaseAuth.instance.currentUser);
 
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => navSignIn
-                            ? FirebaseAuth.instance.currentUser == null
-                                ? LoginScreen()
-                                : FirebaseAuth
-                                        .instance.currentUser.emailVerified
-                                    ? UserProfileData.tmVersity != null
-                                        ? MainPage()
-                                        : UserProfile()
-                                    : LoginScreen()
-                            : RegScreen()));
-              },
-              child: Hero(
-                tag: 'Book',
-                child: Image.asset(
-                  "assets/img/bookSharingBlue.jpg",
-                  // alignment: Alignment.topCenter,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.topCenter,
-                  isAntiAlias: true,
-                ),
-              )),
+          //       Navigator.push(
+          //           context,
+          //           MaterialPageRoute(
+          //               builder: (context) => navSignIn
+          //                   ? FirebaseAuth.instance.currentUser == null
+          //                       ? LoginScreen()
+          //                       : FirebaseAuth
+          //                               .instance.currentUser.emailVerified
+          //                           ? UserProfileData.tmVersity != null
+          //                               ? MainPage()
+          //                               : UserProfile()
+          //                           : LoginScreen()
+          //                   : RegScreen()));
+          //     },
+          //     child: Hero(
+          //       tag: 'Book',
+          //       child: Image.asset(
+          //         "assets/img/bookSharingBlue.jpg",
+          //         // alignment: Alignment.topCenter,
+          //         fit: BoxFit.cover,
+          //         alignment: Alignment.topCenter,
+          //         isAntiAlias: true,
+          //       ),
+          //     )),
           Padding(
             padding: const EdgeInsets.all(18.0),
             child: Column(
@@ -137,10 +177,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       navSignIn = true;
                       setState(() {
+                        animatee = true;
                         // animatedPadding = animatedPadding == 10 ? 120 : 10;
                         // animatedPicCont = animatedPicCont == -200 ? -100 : -200;
-                        animatedPicContleft =
-                            animatedPicContleft == 0 ? -150 : 0;
+                        // animatedPicContleft =
+                        //     animatedPicContleft == 0 ? -150 : 0;
                       });
                       // Navigator.push(
                       //   context,
@@ -167,10 +208,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         onTap: () {
                           navSignIn = false;
                           setState(() {
+                            animatee = true;
                             // animatedPadding = animatedPadding == 10 ? 120 : 10;
                             // animatedPicCont = animatedPicCont == -200 ? -100 : -200;
-                            animatedPicContleft =
-                                animatedPicContleft == 0 ? -150 : 0;
+                            // animatedPicContleft =
+                            //     animatedPicContleft == 0 ? -150 : 0;
                           });
                           // Navigator.push(
                           //     context,

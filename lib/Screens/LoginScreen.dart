@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
       //   animationUnloack = true;
       if (auth.currentUser.emailVerified && auth.currentUser != null) {
         spinnerState(false);
-        GetUserData.getUserData(email);
+       await GetUserData.getUserData(email);
         // await UserDataSavedEmailPassword.saveuidSharedPref(
         //     auth.currentUser.uid);
         setState(() {
@@ -111,6 +111,8 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     }
   }
+
+ 
 
   @override
   Widget build(BuildContext context) {
