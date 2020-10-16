@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:lottie/lottie.dart';
+
 import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
+import 'package:uBookSharing/Screens/BookDetailsPage.dart';
 import 'package:uBookSharing/Screens/Homepage.dart';
 import 'package:uBookSharing/Screens/profile.dart';
 
@@ -28,7 +29,12 @@ class BookImg extends StatelessWidget {
           //     'assets/img/AddBookImgL.png',
           //     fit: BoxFit.contain,
           //   )
-          Lottie.asset('assets/lottie/bookLoading.json', fit: BoxFit.contain)
+          // Lottie.asset('assets/lottie/bookLoading.json', fit: BoxFit.contain)
+          FlareActor(
+              'assets/flr/BookLoadingLottie.flr',
+              fit: BoxFit.cover,
+              animation: 'Animations',
+            )
           // ColorFiltered(
           //     colorFilter: ColorFilter.mode(Colors.white, BlendMode.color),
           //     child: Image.asset(
@@ -43,7 +49,8 @@ class BookImg extends StatelessWidget {
                 if (loadingProgress == null) return child;
                 return Center(
                   child: CircularProgressIndicator(
-                    strokeWidth: 7,
+                    
+                    strokeWidth: 4,
                     value: loadingProgress.expectedTotalBytes != null
                         ? loadingProgress.cumulativeBytesLoaded /
                             loadingProgress.expectedTotalBytes
@@ -62,22 +69,25 @@ class BookImg extends StatelessWidget {
 class BookCard extends StatelessWidget {
   final double width;
   final BookData bookData;
-  final GestureTapCallback tap;
+
   const BookCard({
     Key key,
-    this.bookData,
+    @required this.bookData,
     @required this.width,
-    this.tap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: tap,
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return BookDetailsPage(bookData: bookData);
+        }));
+      },
       child: Container(
         color: Color(0x00000000),
         height: width * .753, //.95 * .618,
-        width: width,
+        width: width * 1.20,
         child: Stack(
           children: [
             Positioned(
@@ -86,7 +96,7 @@ class BookCard extends StatelessWidget {
               child: Container(
                 // height: ,
                 height: width * .753,
-                width: width * .753,
+                width: width * .953,
                 decoration: BoxDecoration(
                   color: Color(0xFFe8a76f),
                   boxShadow: [
@@ -128,11 +138,11 @@ class BookCard extends StatelessWidget {
             Positioned(
               top: 0,
               right: 0,
-              width: width * .50,
+              width: width * .50 * 1.38,
               height: width * .753,
               child: Container(
                 padding: EdgeInsets.all(6),
-                // color: Colors.white54,
+                color: Colors.white54,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

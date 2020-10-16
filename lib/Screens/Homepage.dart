@@ -16,7 +16,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool animatee = false;
+  String animatee = 'Idle';
   // double animatedPadding = 10;
 
   // double animatedPicCont = -200;
@@ -37,6 +37,9 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     // checkAuth();
     // UserLogInData.updateUID();
+    setState(() {
+      animatee = 'Idle';
+    });
 
     if (FirebaseAuth.instance.currentUser != null) {
       setState(() {
@@ -77,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 'assets/flr/BookGive.flr',
                 alignment: Alignment.topCenter,
                 fit: BoxFit.contain,
-                animation: animatee ? 'Give' : 'Idle',
+                animation: animatee,
                 callback: (value) {
                   if (value == 'Give') {
                     Navigator.push(
@@ -94,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                         : LoginScreen()
                                 : RegScreen()));
                     setState(() {
-                      animatee = false;
+                      animatee = 'Idle';
                     });
                   }
                 },
@@ -177,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       navSignIn = true;
                       setState(() {
-                        animatee = true;
+                        animatee = 'Give';
                         // animatedPadding = animatedPadding == 10 ? 120 : 10;
                         // animatedPicCont = animatedPicCont == -200 ? -100 : -200;
                         // animatedPicContleft =
@@ -208,7 +211,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         onTap: () {
                           navSignIn = false;
                           setState(() {
-                            animatee = true;
+                            animatee = 'Give';
                             // animatedPadding = animatedPadding == 10 ? 120 : 10;
                             // animatedPicCont = animatedPicCont == -200 ? -100 : -200;
                             // animatedPicContleft =

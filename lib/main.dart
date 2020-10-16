@@ -94,6 +94,7 @@ class _FutureBuilderRouteFirebaseState
     checkConnection();
     intFirebase();
   }
+
 //helloooo vsCode  git check
   @override
   Widget build(BuildContext context) {
@@ -122,21 +123,6 @@ class _FutureBuilderRouteFirebaseState
     if (ini == false) return LoadingState();
 
     return MyHomePage();
-  }
-}
-
-class Tex extends StatelessWidget {
-  const Tex({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: BookCard(
-          width: CommonThings.size.width,
-        ),
-      ),
-    );
   }
 }
 

@@ -153,7 +153,7 @@ class _MainPageState extends State<MainPage> {
                 // snap: true,
                 // floating: true,
                 backgroundColor: Color(0xff6F00FF),
-                expandedHeight: CommonThings.size.width * .5,
+                expandedHeight: CommonThings.size.width * .6,
 
                 flexibleSpace: FlexibleSpaceBar(
                   // titlePadding: EdgeInsets.only(
@@ -184,7 +184,7 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                     SizedBox(
-                      height: CommonThings.size.width * .60 * .9,
+                      height: CommonThings.size.width * .70 * .9,
                       child: StreamBuilder(
                         stream: GetBookData.getRecentBookStream(20, 'AllBooks'),
                         builder: (context, AsyncSnapshot<QuerySnapshot> snp) {
@@ -203,7 +203,7 @@ class _MainPageState extends State<MainPage> {
                                 bookcard.add(Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: BookCard(
-                                    width: CommonThings.size.width * .60,
+                                    width: CommonThings.size.width * .70,
                                     bookData: bookData,
                                   ),
                                 ));
@@ -242,8 +242,8 @@ class _MainPageState extends State<MainPage> {
                         child: Text('New Requests'),
                       ),
                     ),
-                    SizedBox(
-                      height: CommonThings.size.width * .50,
+                    Expanded(
+                      flex: 3,
                       child: StreamBuilder(
                         stream: GetBookData.getRecentBookStream(20, 'Requests'),
                         builder: (context, AsyncSnapshot<QuerySnapshot> snp) {
@@ -262,7 +262,7 @@ class _MainPageState extends State<MainPage> {
                                 bookcard.add(Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: BookCard(
-                                    width: CommonThings.size.width * .50,
+                                    width: CommonThings.size.width * .7,
                                     bookData: bookData,
                                   ),
                                 ));
@@ -271,9 +271,9 @@ class _MainPageState extends State<MainPage> {
                               bookcard.add(Icon(Icons.add));
 
                               return ListView(
-                                // shrinkWrap: true,
+                                shrinkWrap: true,
 
-                                scrollDirection: Axis.horizontal,
+                                // scrollDirection: Axis.horizontal,
                                 padding: EdgeInsets.all(8),
                                 // itemExtent: CommonThings.size.width * .40,
                                 children: bookcard,
