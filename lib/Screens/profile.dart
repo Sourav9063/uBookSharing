@@ -12,6 +12,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/BackEnd/UploadIMG.dart';
+
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Constants.dart';
 import 'package:uBookSharing/Screens/mainPage.dart';
@@ -38,8 +39,10 @@ class _UserProfileState extends State<UserProfile> {
         .then((value) => {
               value.docs.forEach((element) {
                 var nv = element.data()['Name'];
+                setState(() {
+                  versity.add(nv.toString());
+                });
 
-                versity.add(nv.toString());
                 // Map<String, dynamic> mp;
                 // mp = element.data();
                 // versity.add(mp['Name']);
@@ -216,14 +219,18 @@ class _UserProfileState extends State<UserProfile> {
                                   'AddedBy':
                                       FirebaseAuth.instance.currentUser.email
                                 });
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => UserProfile()),
-                                );
+                                // Navigator.pushReplacement(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => UserProfile()));
+
+                                await getVersityList();
+                                Navigator.pop(context);
                               }
                             },
-                            child: Text('Add'),
+                            child: Text('Add',
+                                style: GoogleFonts.aBeeZee(
+                                    fontSize: 18, color: Colors.white)),
                           )
                         ],
                       )),

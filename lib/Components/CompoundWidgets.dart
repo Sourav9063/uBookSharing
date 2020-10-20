@@ -49,7 +49,6 @@ class BookImg extends StatelessWidget {
                 if (loadingProgress == null) return child;
                 return Center(
                   child: CircularProgressIndicator(
-                    
                     strokeWidth: 4,
                     value: loadingProgress.expectedTotalBytes != null
                         ? loadingProgress.cumulativeBytesLoaded /
@@ -373,6 +372,7 @@ class BookFormField extends StatelessWidget {
         validator: validate,
         style: TextStyle(fontSize: 18),
         decoration: InputDecoration(
+          // contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
           filled: true,
           fillColor: Color(0xffffffff),
           labelText: lebel,

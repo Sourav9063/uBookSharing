@@ -152,6 +152,7 @@ class _MainPageState extends State<MainPage> {
                 pinned: true,
                 // snap: true,
                 // floating: true,
+              
                 backgroundColor: Color(0xff6F00FF),
                 expandedHeight: CommonThings.size.width * .6,
 
@@ -161,9 +162,10 @@ class _MainPageState extends State<MainPage> {
                   title: Text(
                     'uBookSharing',
                     style: GoogleFonts.abrilFatface(
-                        color: Color(0xff02effc), fontSize: 25),
+                        color: Color(0xff02effc), fontSize: 20),
                   ),
-                  background: SafeArea(
+                  background: Padding(
+                    padding: const EdgeInsets.only(bottom: 25.0, top: 8),
                     child: FlareActor(
                       'assets/flr/sittingBook.flr',
                       fit: BoxFit.contain,
@@ -306,7 +308,7 @@ class _MainPageState extends State<MainPage> {
 //                         scheme: 'mailto',
 //                         path: 'sourav68@student.sust.edu',
 //                         query:
-//                             'subject=uBookSharing response&body=Hi {lender name},\n I\'m ${UserProfileData.name}. I\'m a student of ${UserProfileData.versityName}, department ${UserProfileData.dept}, year ${UserProfileData.admitted}. My registration number is ${UserProfileData.registrationNo}.\n Would you please share you book{book name}  with me. My personal phone Number is ${UserProfileData.phoneNum}. I currently live in ${UserProfileData.address}.\n Thanks for your contribution'
+                            // 'subject=uBookSharing response&body=Hi {lender name},\n I\'m ${UserProfileData.name}. I\'m a student of ${UserProfileData.versityName}, department ${UserProfileData.dept}, year ${UserProfileData.admitted}. My registration number is ${UserProfileData.registrationNo}.\n Would you please share you book{book name}  with me. My personal phone Number is ${UserProfileData.phoneNum}. I currently live in ${UserProfileData.address}.\n Thanks for your contribution'
 //                         // queryParameters: {
 //                         //   'subject': 'uBookSharing+response ',
 //                         //   'body':

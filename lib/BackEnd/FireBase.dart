@@ -61,7 +61,7 @@ class GetBookData {
     return recentDataList;
   }
 
-  static Stream<QuerySnapshot> getRecentBookStream(int n,String req) {
+  static Stream<QuerySnapshot> getRecentBookStream(int n, String req) {
     if (UserProfileData.tmVersity != null)
       return FirebaseFirestore.instance
           .collection(UserProfileData.tmVersity)
@@ -78,6 +78,7 @@ class GetBookData {
     List<BookData> recentDataList = [];
     value.docs.forEach((element) {
       BookData bookData = BookData();
+
       // print(element.data()[AllKeys.bookNameKey]);
       bookData.bookName = element.data()[AllKeys.bookNameKey];
       bookData.bookWriter = element.data()[AllKeys.bookWriterNameKey];

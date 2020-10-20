@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -7,6 +8,7 @@ import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/BackEnd/UploadIMG.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
+import 'package:uBookSharing/Constants.dart';
 
 class AddBookScreen extends StatefulWidget {
   AddBookScreen({Key key}) : super(key: key);
@@ -16,6 +18,7 @@ class AddBookScreen extends StatefulWidget {
 }
 
 class _AddBookScreenState extends State<AddBookScreen> {
+  List<dynamic> bookNameList;
   String bookImgLink;
   String bookId =
       UserProfileData.email + UserProfileData.uploadedBookNo.toString();
@@ -25,6 +28,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
   double picHeight = CommonThings.size.height * .60 + 20;
   double formTop = CommonThings.size.height * .60;
   final _formKeyBook = GlobalKey<FormState>();
+  final _bookNameListformKey = GlobalKey<FormState>();
   // double keyboardHeight = 0;
   bool forTime = false;
   bool forPrice = false;
@@ -42,40 +46,154 @@ class _AddBookScreenState extends State<AddBookScreen> {
     });
   }
 
-  ScrollController controller;
-  scrlLstnr() {
-    // print(controller.offset);
-    if (controller.offset > 15) {
-      riseForm();
-    } else if (controller.offset == 0) {
+  // ScrollController controller;
+  // scrlLstnr() {
+  //   // print(controller.offset);
+  //   if (controller.offset > 15) {
+  //     riseForm();
+  //   } else if (controller.offset == 0) {
+  //     setState(() {
+  //       // FocusScope.of(context).unfocus();
+  //       // keyboardHeight = 0;
+  //       visible = true;
+  //       picHeight = CommonThings.size.height * .60 + 20;
+  //       formTop = CommonThings.size.height * .60;
+  //     });
+  //   }
+  // }
+
+  getBookNameList() async {
+    await FirebaseFirestore.instance
+        .collection(UserProfileData.tmVersity)
+        .doc('AllBooks')
+        .get()
+        .then((value) {
       setState(() {
-        // FocusScope.of(context).unfocus();
-        // keyboardHeight = 0;
-        visible = true;
-        picHeight = CommonThings.size.height * .60 + 20;
-        formTop = CommonThings.size.height * .60;
+        bookNameList = value.data()['FullNameArray'];
       });
-    }
+    });
+    bookNameList.sort();
+  }
+
+  bool bl = false;
+  checkBook() {
+    bl = bookNameList.contains(addBookNametoList);
+  }
+
+  String addBookNametoList;
+
+  addBookInList() {
+    showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        enableDrag: true,
+        isScrollControlled: true,
+        builder: (context) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              color: Colors.white,
+              height: CommonThings.size.height * .80,
+              child: Column(
+                children: [
+                  // Container(
+
+                  Container(
+                      color: Colors.white,
+                      child: Column(
+                        children: [
+                          Text(
+                            'Enlist Your Book',
+                            style: GoogleFonts.abrilFatface(
+                              color: Colors.red.shade300,
+                              fontSize: 28,
+                              // fontWeight: FontWeight.w500,
+                              // fontStyle: FontStyle.italic
+                            ),
+                          ),
+                          Form(
+                            key: _bookNameListformKey,
+                            child: Padding(
+                              padding: const EdgeInsets.all(14.0),
+                              child: TextFormField(
+                                keyboardType: TextInputType.name,
+                                validator: (value) {
+                                  if (value == null)
+                                    return 'Enter Book\'s Name';
+                                  if (bl) return 'Book already listed';
+                                  if (value.length < 5)
+                                    return 'Enter full Name';
+                                  return null;
+                                },
+                                onChanged: (value) {
+                                  addBookNametoList = value;
+                                },
+                                decoration: kTextFieldDecoration.copyWith(
+                                  labelText: 'Book\'s Name',
+                                  hintText: 'Please be careful.',
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            '*This app is based on community.So, use the full name of your Book which is known by all. Please be careful and do not use unnecessary spaces or punctuations.\nWe will check and your ID will be banned if we find any hoax name...',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                          RaisedButton(
+                            onPressed: () async {
+                              // tmAddversity =
+                              //     addversity.toUpperCase().replaceAll(' ', '');
+                              // print(tmAddversity);
+                              addBookNametoList = addBookNametoList.trim();
+                              await checkBook();
+                              bool vali =
+                                  _bookNameListformKey.currentState.validate();
+
+                              if (vali) {
+                                bookNameList.add(addBookNametoList);
+
+                                await FirebaseFirestore.instance
+                                    .collection(UserProfileData.tmVersity)
+                                    .doc('AllBooks')
+                                    .set({'FullNameArray': bookNameList});
+
+                                await getBookNameList();
+                                Navigator.pop(context);
+                              }
+                            },
+                            child: Text('Add',
+                                style: GoogleFonts.aBeeZee(
+                                    fontSize: 18, color: Colors.white)),
+                          )
+                        ],
+                      )),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   @override
   void initState() {
-    controller = ScrollController();
+    // controller = ScrollController();
     // controller.addListener(() {
     //   scrlLstnr();
     // });
+    getBookNameList();
+
     super.initState();
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    // controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // print(keyboardHeight);
+    print(bookNameList);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
@@ -171,21 +289,92 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               ),
                             ),
                           ),
-                          BookFormField(
-                            lebel: 'Book\'s Name',
-                            hintText: 'Please provide the right name',
-                            raiseForm: () {
-                              riseForm();
-                            },
-                            onChanged: (value) {
-                              bookData.bookName = value;
-                            },
-                            validate: (value) {
-                              if (value == null || value == '')
-                                return 'This field cannot be empty';
+
+                          DropdownSearch<dynamic>(
+                            popupTitle: Center(
+                                child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Listed Books',
+                                    style: GoogleFonts.abrilFatface(
+                                      fontSize: 30,
+                                    ),
+                                  ),
+                                  RaisedButton(
+                                    onPressed: () {
+                                      addBookInList();
+                                    },
+                                    child: Text(
+                                      'Add a new Book',
+                                      style: GoogleFonts.aBeeZee(
+                                          fontSize: 18, color: Colors.white),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )),
+                            mode: Mode.BOTTOM_SHEET,
+                            popupShape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16)),
+                            validator: (value) {
+                              if (value == null || value == '') {
+                                return 'Must Select your Book\'s name';
+                              }
                               return null;
                             },
+                            label: 'Book\'s Name',
+                            items: bookNameList,
+                            dropdownSearchDecoration: InputDecoration(
+                              filled: true,
+                              fillColor: Color(0xffffffff),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xff001a54),
+                                ),
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2,
+                                  color: Color(0xff6F00FF),
+                                ),
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                            ),
+                            showSearchBox: true,
+                            searchBoxDecoration: kTextFieldDecoration.copyWith(
+                              labelText: 'Search',
+                              hintText: 'If not listed, please Add',
+                            ),
+                            onChanged: (value) {
+                              riseForm();
+                              if (value != "Add A New Book") {
+                                bookData.bookName = value;
+                                // versityNameValidation = true;
+
+                              } else {
+                                addBookInList();
+                              }
+                            },
+                            selectedItem: bookData.bookName,
                           ),
+                          // BookFormField(
+                          //   lebel: 'Book\'s Name',
+                          //   hintText: 'Please provide the right name',
+                          //   raiseForm: () {
+                          //     riseForm();
+                          //   },
+                          //   onChanged: (value) {
+                          //     bookData.bookName = value;
+                          //   },
+                          //   validate: (value) {
+                          //     if (value == null || value == '')
+                          //       return 'This field cannot be empty';
+                          //     return null;
+                          //   },
+                          // ),
                           BookFormField(
                             lebel: 'Writer',
                             hintText: 'The main writer\'s name',
@@ -405,10 +594,12 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                   }
                                 },
                                 child: Center(
-                                    child: Text('Verify',
-                                        style: GoogleFonts.aBeeZee(
-                                            fontSize: 18,
-                                            color: Colors.white))),
+                                  child: Text(
+                                    'Verify',
+                                    style: GoogleFonts.aBeeZee(
+                                        fontSize: 18, color: Colors.white),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -504,25 +695,21 @@ class _AddBookScreenState extends State<AddBookScreen> {
                     onTap: () async {
                       FocusScope.of(context).unfocus();
                       // print(   bookData.bookName);
+                      bookNameList.add(bookData.bookName);
                       try {
                         await FirebaseFirestore.instance
                             .collection(UserProfileData.tmVersity)
                             .doc('AllBooks')
-                            .collection('AllBooks')
+                            .collection(bookData.bookName)
                             .doc(bookId)
                             .set(bookData.getBookMap());
 
                         await FirebaseFirestore.instance
                             .collection(UserProfileData.tmVersity)
                             .doc('AllBooks')
-                            .collection('IINNDDEEXX')
-                            .doc()
-                            .set({
-                          'Name': bookData.bookName,
-                          'TmName': bookData.bookName
-                              .replaceAll(' ', '')
-                              .toUpperCase()
-                        });
+                            .collection('AllBooks')
+                            .doc(bookId)
+                            .set(bookData.getBookMap());
 
                         GetUserData.setUploadedBookNo();
                         Scaffold.of(context).showSnackBar(
