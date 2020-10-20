@@ -105,7 +105,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                           Text(
                             'Enlist Your Book',
                             style: GoogleFonts.abrilFatface(
-                              color: Colors.red.shade300,
+                              color: Colors.red.shade700,
                               fontSize: 28,
                               // fontWeight: FontWeight.w500,
                               // fontStyle: FontStyle.italic
