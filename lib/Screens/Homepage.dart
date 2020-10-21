@@ -47,6 +47,10 @@ class _MyHomePageState extends State<MyHomePage> {
       });
 
       GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
+    } else {
+      setState(() {
+        buttonMsg = 'Sign In';
+      });
     }
   }
 

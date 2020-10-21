@@ -3,12 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hawk_fab_menu/hawk_fab_menu.dart';
+
 
 import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
+import 'package:uBookSharing/Components/favCustom.dart';
 import 'package:uBookSharing/Screens/AddBookScreen.dart';
 import 'package:uBookSharing/Screens/AddRequest.dart';
 
@@ -89,13 +90,13 @@ class _MainPageState extends State<MainPage> {
       // ),
       drawer: CustomDrawer(),
       body: Builder(
-        builder: (context) => HawkFabMenu(
+        builder: (context) => FabMenu(
           blur: 20,
           iconColor: Colors.white,
           fabColor: Theme.of(context).accentColor,
-          icon: AnimatedIcons.menu_arrow,
+          icon: AnimatedIcons.menu_close,
           items: [
-            HawkFabMenuItem(
+           FabMenuItem(
                 label: 'Upload Book',
                 ontap: () {
                   Navigator.push(
@@ -117,7 +118,7 @@ class _MainPageState extends State<MainPage> {
                 color: Color(0xff144552),
                 labelColor: Colors.white,
                 labelBackgroundColor: Color(0xff144552)),
-            HawkFabMenuItem(
+           FabMenuItem(
               label: 'Add a request',
               ontap: () {
                 Navigator.push(
@@ -152,7 +153,7 @@ class _MainPageState extends State<MainPage> {
                 pinned: true,
                 // snap: true,
                 // floating: true,
-              
+
                 backgroundColor: Color(0xff6F00FF),
                 expandedHeight: CommonThings.size.width * .6,
 
@@ -308,7 +309,7 @@ class _MainPageState extends State<MainPage> {
 //                         scheme: 'mailto',
 //                         path: 'sourav68@student.sust.edu',
 //                         query:
-                            // 'subject=uBookSharing response&body=Hi {lender name},\n I\'m ${UserProfileData.name}. I\'m a student of ${UserProfileData.versityName}, department ${UserProfileData.dept}, year ${UserProfileData.admitted}. My registration number is ${UserProfileData.registrationNo}.\n Would you please share you book{book name}  with me. My personal phone Number is ${UserProfileData.phoneNum}. I currently live in ${UserProfileData.address}.\n Thanks for your contribution'
+// 'subject=uBookSharing response&body=Hi {lender name},\n I\'m ${UserProfileData.name}. I\'m a student of ${UserProfileData.versityName}, department ${UserProfileData.dept}, year ${UserProfileData.admitted}. My registration number is ${UserProfileData.registrationNo}.\n Would you please share you book{book name}  with me. My personal phone Number is ${UserProfileData.phoneNum}. I currently live in ${UserProfileData.address}.\n Thanks for your contribution'
 //                         // queryParameters: {
 //                         //   'subject': 'uBookSharing+response ',
 //                         //   'body':
