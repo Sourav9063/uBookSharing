@@ -218,7 +218,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                 child: Container(
                   width: CommonThings.size.width,
                   child: BookImg(
-                    radious: CommonThings.size.height * .60 + 20,
+                    width: CommonThings.size.height * .60 + 20,
                     imglink: bookImgLink,
                   ),
                   // child: bookImgLink != null

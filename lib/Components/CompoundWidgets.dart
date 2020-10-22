@@ -11,8 +11,10 @@ import 'package:uBookSharing/Screens/profile.dart';
 
 class BookImg extends StatelessWidget {
   final String imglink;
-  final double radious;
-  const BookImg({Key key, this.imglink, this.radious}) : super(key: key);
+  final double width;
+  final TransformationController transformationController =
+      TransformationController();
+  BookImg({Key key, this.imglink, @required this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +23,8 @@ class BookImg extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
       ),
-      height: radious * 4 / 3,
-      width: radious,
+      height: width * 4 / 3,
+      width: width,
       child: imglink == null
           ?
           //  Image.asset(
@@ -42,24 +44,31 @@ class BookImg extends StatelessWidget {
           //       fit: BoxFit.cover,
           //     ),
           //   )
-          : Image.network(
-              imglink,
-              loadingBuilder: (BuildContext context, Widget child,
-                  ImageChunkEvent loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 4,
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes
-                        : null,
-                  ),
-                );
+          : InteractiveViewer(
+              transformationController: transformationController,
+              maxScale: 5,
+              onInteractionEnd: (details) {
+                transformationController.value = Matrix4.identity();
               },
-              fit: BoxFit.cover,
-              height: radious,
-              width: radious,
+              child: Image.network(
+                imglink,
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 4,
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes
+                          : null,
+                    ),
+                  );
+                },
+                fit: BoxFit.cover,
+                height: width,
+                width: width,
+              ),
             ),
     );
   }
@@ -124,7 +133,7 @@ class BookCard extends StatelessWidget {
                     ],
                   ),
                   child: BookImg(
-                    radious: width * .50,
+                    width: width * .50,
                     imglink: bookData == null
                         ?
                         // ? 'https://firebasestorage.googleapis.com/v0/b/ubooksharing-ece40.appspot.com/o/Books%2Fsourav.ahmed5654%40gmail.com5%2Fsourav.ahmed5654%40gmail.com5?alt=media&token=d3482de0-ccb1-40f4-9848-4b8911a80ab6'
@@ -216,7 +225,7 @@ class IconAccount extends StatelessWidget {
               color: Colors.white,
             )
           : Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(11.0),
               child: ClipOval(
                 child: Image.network(
                   imglink,
@@ -234,8 +243,8 @@ class IconAccount extends StatelessWidget {
                     );
                   },
                   fit: BoxFit.cover,
-                  height: radious - 8,
-                  width: radious - 8,
+                  height: radious,
+                  width: radious,
                 ),
               ),
             ),
