@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 
-
 class BookDetailsPage extends StatefulWidget {
   final BookData bookData;
 
@@ -43,8 +42,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
               },
               child: Hero(
                 tag: 'BookImg',
-                
-                              child: BookImg(
+                child: BookImg(
                   width: CommonThings.size.width,
                   imglink: widget.bookData.bookImgLink,
                 ),
@@ -68,12 +66,89 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                 smallPic();
               },
               child: Container(
-                color: Colors.white,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                ),
                 width: CommonThings.size.width,
-                height: CommonThings.size.width,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Text(widget.bookData.bookName),
+                height: CommonThings.size.height - CommonThings.size.width * .6,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(
+                            vertical: CommonThings.size.width * .04),
+                        height: 7,
+                        width: CommonThings.size.width * .23,
+                        decoration: BoxDecoration(
+                            color: Colors.black26,
+                            borderRadius: BorderRadius.circular(20)),
+                      ),
+                      FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          widget.bookData.bookName,
+                          style: GoogleFonts.abrilFatface(
+                            color: Color(0xff001a54),
+                            fontSize: 28,
+                            // fontWeight: FontWeight.w500,
+                            // fontStyle: FontStyle.italic
+                          ),
+                        ),
+                      ),
+                      FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          widget.bookData.bookWriter,
+                          style: TextStyle(
+                            color: Color(0xff001a54),
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                'Edition: ${widget.bookData.bookEdition}',
+                                style: TextStyle(
+                                  color: Color(0xff001a54),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                'Uploaded: ${widget.bookData.bookTimeUpload.toDate().day.toString()}/${widget.bookData.bookTimeUpload.toDate().month.toString()}/${widget.bookData.bookTimeUpload.toDate().year.toString().substring(2, 4)}',
+                                style: TextStyle(
+                                  color: Color(0xff001a54),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      forWhat(widget.bookData.bookFor),
+                      widget.bookData.bookDes != null
+                          ? Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Text(
+                                  'Description: ${widget.bookData.bookDes}'),
+                            )
+                          : null,
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -81,10 +156,10 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
           AnimatedPositioned(
             duration: Duration(milliseconds: 650),
             curve: Curves.easeOutBack,
-            top: picHeight - CommonThings.size.width * .28 / 1.5,
+            top: picHeight - CommonThings.size.width * .26 / 1.5,
             right: 0,
             child: IconAccount(
-              radious: CommonThings.size.width * .28,
+              radious: CommonThings.size.width * .25,
               imglink: widget.bookData.bookUploaderImg,
             ),
           ),
@@ -112,6 +187,70 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                 ),
               )),
         ],
+      ),
+    );
+  }
+
+  Widget forWhat(String forWhat) {
+    if (forWhat == 'For Rent') {
+      return Padding(
+        padding: const EdgeInsets.all(4),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                'Price: ${widget.bookData.bookPrice}',
+                style: TextStyle(
+                  color: Color(0xff001a54),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                'Time: ${widget.bookData.bookTime}',
+                style: TextStyle(
+                  color: Color(0xff001a54),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else if (forWhat == 'For Share') {
+      return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: FittedBox(
+          fit: BoxFit.fitWidth,
+          child: Text(
+            'Time: ${widget.bookData.bookTime}',
+            style: TextStyle(
+              color: Color(0xff001a54),
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      );
+    }
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: FittedBox(
+        fit: BoxFit.fitWidth,
+        child: Text(
+          'Price: ${widget.bookData.bookPrice}',
+          style: TextStyle(
+            color: Color(0xff001a54),
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
     );
   }

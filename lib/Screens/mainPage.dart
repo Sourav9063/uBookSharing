@@ -206,12 +206,9 @@ class _MainPageState extends State<MainPage> {
                               for (BookData bookData in recentDataList) {
                                 bookcardList.add(Padding(
                                   padding: const EdgeInsets.all(5.0),
-                                  child: Hero(
-                                    tag: 'BookImg',
-                                    child: BookCard(
-                                      width: CommonThings.size.width * .70,
-                                      bookData: bookData,
-                                    ),
+                                  child: BookCard(
+                                    width: CommonThings.size.width * .70,
+                                    bookData: bookData,
                                   ),
                                 ));
                               }

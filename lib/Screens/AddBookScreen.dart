@@ -491,6 +491,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                             child: Visibility(
                               visible: forPrice,
                               child: BookFormField(
+                                
                                 lebel: 'Price',
                                 hintText: 'Enter fair amount',
                                 raiseForm: () {

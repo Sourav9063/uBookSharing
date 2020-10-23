@@ -160,6 +160,12 @@ class BookCard extends StatelessWidget {
                         style: TextStyle(fontSize: width * .075),
                       ),
                     ),
+                    //   FittedBox(
+                    //          fit: BoxFit.fitWidth,             child: Text(
+                    //     bookData.bookName,
+                    //     style: TextStyle(fontSize: width * .075),
+                    //   ),
+                    // ),
                     Expanded(
                       child: Text(
                         bookData.bookWriter,

@@ -86,6 +86,7 @@ class GetBookData {
       bookData.bookDes = element.data()[AllKeys.bookDesKey];
       bookData.bookImgLink = element.data()[AllKeys.bookImgKey];
       bookData.bookPrice = element.data()[AllKeys.bookPriceKey];
+      bookData.bookEdition = element.data()[AllKeys.bookEditionKey];
       bookData.bookTime = element.data()[AllKeys.bookTimeKey];
       bookData.bookTimeUpload = element.data()[AllKeys.bookTimeUploadKey];
 
