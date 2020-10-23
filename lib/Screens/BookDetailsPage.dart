@@ -146,7 +146,10 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                               child: Text(
                                   'Description: ${widget.bookData.bookDes}'),
                             )
-                          : null,
+                          : Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Text('No Description available'),
+                            ),
                     ],
                   ),
                 ),
