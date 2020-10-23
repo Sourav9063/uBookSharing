@@ -4,7 +4,6 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
@@ -22,6 +21,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   bool favVis = false;
+  int lim = 10;
 
   loadUser() async {
     String msg =
@@ -96,7 +96,7 @@ class _MainPageState extends State<MainPage> {
           fabColor: Theme.of(context).accentColor,
           icon: AnimatedIcons.menu_close,
           items: [
-           FabMenuItem(
+            FabMenuItem(
                 label: 'Upload Book',
                 ontap: () {
                   Navigator.push(
@@ -118,7 +118,7 @@ class _MainPageState extends State<MainPage> {
                 color: Color(0xff144552),
                 labelColor: Colors.white,
                 labelBackgroundColor: Color(0xff144552)),
-           FabMenuItem(
+            FabMenuItem(
               label: 'Add a request',
               ontap: () {
                 Navigator.push(
@@ -189,7 +189,8 @@ class _MainPageState extends State<MainPage> {
                     SizedBox(
                       height: CommonThings.size.width * .70 * .9,
                       child: StreamBuilder(
-                        stream: GetBookData.getRecentBookStream(20, 'AllBooks'),
+                        stream:
+                            GetBookData.getRecentBookStream(lim, 'AllBooks'),
                         builder: (context, AsyncSnapshot<QuerySnapshot> snp) {
                           if (snp.hasData) {
                             if (snp.data.size == 0) {
@@ -201,23 +202,35 @@ class _MainPageState extends State<MainPage> {
                                   GetBookData.getBookDataObjFromQuerySnapshot(
                                       snp.data);
 
-                              List<Widget> bookcard = [];
+                              List<Widget> bookcardList = [];
                               for (BookData bookData in recentDataList) {
-                                bookcard.add(Padding(
+                                bookcardList.add(Padding(
                                   padding: const EdgeInsets.all(5.0),
-                                  child: BookCard(
-                                    width: CommonThings.size.width * .70,
-                                    bookData: bookData,
+                                  child: Hero(
+                                    tag: 'BookImg',
+                                    child: BookCard(
+                                      width: CommonThings.size.width * .70,
+                                      bookData: bookData,
+                                    ),
                                   ),
                                 ));
                               }
 
-                              bookcard.add(
+                              bookcardList.add(
                                 InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      lim = lim + 10;
+                                    });
+                                  },
                                   child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text('And many more'),
+                                    child: ClipOval(
+                                      child: Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text('Tap to see more'),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -229,7 +242,7 @@ class _MainPageState extends State<MainPage> {
                                 scrollDirection: Axis.horizontal,
                                 padding: EdgeInsets.all(8),
                                 // itemExtent: CommonThings.size.width * .40,
-                                children: bookcard,
+                                children: bookcardList,
                               );
                             }
                           } else if (snp.hasError) {

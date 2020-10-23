@@ -34,7 +34,7 @@ class BookImg extends StatelessWidget {
           // Lottie.asset('assets/lottie/bookLoading.json', fit: BoxFit.contain)
           FlareActor(
               'assets/flr/BookLoadingLottie.flr',
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
               animation: 'Animations',
             )
           // ColorFiltered(

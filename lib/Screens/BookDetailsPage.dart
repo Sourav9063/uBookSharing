@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 class BookDetailsPage extends StatefulWidget {
   final BookData bookData;
@@ -41,26 +41,18 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
               onTap: () {
                 bigPic();
               },
-              child: Container(
-                width: CommonThings.size.width,
-                child: BookImg(
+              child: Hero(
+                tag: 'BookImg',
+                
+                              child: BookImg(
                   width: CommonThings.size.width,
                   imglink: widget.bookData.bookImgLink,
                 ),
-                // child: bookImgLink != null
-                //     ? Image.network(
-                //         bookImgLink,
-                //         fit: BoxFit.cover,
-                //       )
-                //     : Image.asset(
-                //         'assets/img/bookSharingPink.jpg',
-                //         fit: BoxFit.cover,
-                //       ),
               ),
             ),
           ),
           AnimatedPositioned(
-            duration: Duration(milliseconds: 500),
+            duration: Duration(milliseconds: 450),
             curve: Curves.fastOutSlowIn,
             top: picHeight - 20,
             child: GestureDetector(
