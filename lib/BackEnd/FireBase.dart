@@ -100,4 +100,18 @@ class GetBookData {
 
     return recentDataList;
   }
+
+  static Future<List<dynamic>> getBookNameListFirebase() async {
+    List<dynamic> bookNameList;
+    await FirebaseFirestore.instance
+        .collection(UserProfileData.tmVersity)
+        .doc('AllBooks')
+        .get()
+        .then((value) {
+      bookNameList = value.data()['FullNameArray'];
+    });
+    bookNameList.sort();
+    // print(bookNameList);
+    return bookNameList;
+  }
 }

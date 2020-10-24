@@ -62,18 +62,18 @@ class _AddBookScreenState extends State<AddBookScreen> {
   //   }
   // }
 
-  getBookNameList() async {
-    await FirebaseFirestore.instance
-        .collection(UserProfileData.tmVersity)
-        .doc('AllBooks')
-        .get()
-        .then((value) {
-      setState(() {
-        bookNameList = value.data()['FullNameArray'];
-      });
-    });
-    bookNameList.sort();
-  }
+  // getBookNameList() async {
+  //   await FirebaseFirestore.instance
+  //       .collection(UserProfileData.tmVersity)
+  //       .doc('AllBooks')
+  //       .get()
+  //       .then((value) {
+  //     setState(() {
+  //       bookNameList = value.data()['FullNameArray'];
+  //     });
+  //   });
+  //   bookNameList.sort();
+  // }
 
   bool bl = false;
   checkBook() {
@@ -156,7 +156,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                     .collection(UserProfileData.tmVersity)
                                     .doc('AllBooks')
                                     .set({'FullNameArray': bookNameList});
-
+                                bookNameList =
+                                    await GetBookData.getBookNameListFirebase();
                                 await getBookNameList();
                                 Navigator.pop(context);
                               }
@@ -172,6 +173,11 @@ class _AddBookScreenState extends State<AddBookScreen> {
             ),
           );
         });
+  }
+
+  getBookNameList() async {
+    bookNameList = await GetBookData.getBookNameListFirebase();
+    setState(() {});
   }
 
   @override
@@ -304,6 +310,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                   ),
                                   RaisedButton(
                                     onPressed: () {
+                                      Navigator.pop(context);
                                       addBookInList();
                                     },
                                     child: Text(

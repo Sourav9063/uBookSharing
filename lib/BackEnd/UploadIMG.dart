@@ -12,13 +12,17 @@ class UploadIMG {
 
   getUserPic() async {
     pickedImage =
-        await _picker.getImage(source: ImageSource.gallery, imageQuality: 20);
+        await _picker.getImage(source: ImageSource.gallery, imageQuality: 15);
     imageUser = File(pickedImage.path);
+
+    // String dir = (await getApplicationDocumentsDirectory()).path;
+    // String newPath = path.join(dir, 'case01wd03id01.jpg');
+    // imageUser = await File(pickedImage.path).copy(newPath);
   }
 
   getBookPic() async {
     pickedImage =
-        await _picker.getImage(source: ImageSource.camera, imageQuality: 20);
+        await _picker.getImage(source: ImageSource.camera, imageQuality: 15);
     imageBook = File(pickedImage.path);
   }
 
