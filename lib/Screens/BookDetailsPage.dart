@@ -343,7 +343,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                                         '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Contact me to get this book.\nThanks for your contribution.'
                                     : 'subject=uBookSharing response&body=Hi ${widget.bookData.bookUploaderName},\n I\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted}.\nRegistration number ${UserProfileData.registrationNo}.' +
                                         '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor.toLowerCase()}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me' +
-                                        '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a Email or Message containing your phone number and current address.\nThanks for your contribution.'
+                                        '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a mail or Message containing your phone number and current address.\nThanks for your contribution.'
 
                                 // queryParameters: {
                                 //   'subject': 'uBookSharing+response ',
