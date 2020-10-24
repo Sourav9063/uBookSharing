@@ -560,8 +560,8 @@ class _UserProfileState extends State<UserProfile> {
                                       decoration: kTextFieldDecoration.copyWith(
                                           prefixIcon:
                                               Icon(Icons.calendar_today),
-                                          labelText: 'Batch',
-                                          hintText: 'Year'),
+                                          labelText: 'Year',
+                                          hintText: 'Admission year'),
                                     ),
                                   ),
                                 ),

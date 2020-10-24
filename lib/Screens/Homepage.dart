@@ -80,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   bottomLeft: Radius.elliptical(
                       CommonThings.size.width, CommonThings.size.width * .30)),
               color: Colors.lightBlue.shade700,
+              // color: Color(0xfff01a54),
               child: FlareActor(
                 'assets/flr/BookGive.flr',
                 alignment: Alignment.topCenter,

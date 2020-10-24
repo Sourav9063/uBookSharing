@@ -181,10 +181,15 @@ class BookCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         bookData.bookTimeUpload.toDate().day.toString() +
-                            '/' +
-                            bookData.bookTimeUpload.toDate().month.toString() +
-                            '/' +
-                            bookData.bookTimeUpload.toDate().year.toString(),
+                            ' ' +
+                            UsableData.getMonthName(
+                                bookData.bookTimeUpload.toDate().month) +
+                            ', ' +
+                            bookData.bookTimeUpload
+                                .toDate()
+                                .year
+                                .toString()
+                                .substring(2, 4),
                         style: TextStyle(fontSize: width * .075),
                       ),
                     ),

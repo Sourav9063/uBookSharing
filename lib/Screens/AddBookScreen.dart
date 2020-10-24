@@ -490,21 +490,61 @@ class _AddBookScreenState extends State<AddBookScreen> {
                             opacity: forPrice ? 1 : 0,
                             child: Visibility(
                               visible: forPrice,
-                              child: BookFormField(
-                                
-                                lebel: 'Price',
-                                hintText: 'Enter fair amount',
-                                raiseForm: () {
-                                  riseForm();
-                                },
-                                onChanged: (value) {
-                                  bookData.bookPrice = value;
-                                },
-                                validate: (value) {
-                                  if (value == null || value == '')
-                                    return 'This field cannot be empty. Input 0 taka';
-                                  return null;
-                                },
+                              // child: BookFormField(
+
+                              //   lebel: 'Price',
+                              //   hintText: 'Enter fair amount',
+                              //   raiseForm: () {
+                              //     riseForm();
+                              //   },
+                              //   onChanged: (value) {
+                              //     bookData.bookPrice = value;
+                              //   },
+                              //   validate: (value) {
+                              //     if (value == null || value == '')
+                              //       return 'This field cannot be empty. Input 0 taka';
+                              //     return null;
+                              //   },
+                              // ),
+
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4.0),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(fontSize: 18),
+                                  onTap: () {
+                                    riseForm();
+                                  },
+                                  onChanged: (value) {
+                                    bookData.bookPrice = value;
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value == '')
+                                      return 'This field cannot be empty. Input 0 taka';
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                    // contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                    filled: true,
+                                    fillColor: Color(0xffffffff),
+                                    labelText: 'Price',
+                                    hintText: 'Enter fair amount',
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xff001a54),
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 2,
+                                        color: Color(0xff6F00FF),
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -696,7 +736,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
                     onTap: () async {
                       FocusScope.of(context).unfocus();
                       // print(   bookData.bookName);
-                      bookNameList.add(bookData.bookName);
+                      bookData.bookPrice = bookData.bookPrice + ' Taka';
+                      // bookNameList.add(bookData.bookName);
                       try {
                         await FirebaseFirestore.instance
                             .collection(UserProfileData.tmVersity)

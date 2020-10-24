@@ -93,7 +93,7 @@ class GetBookData {
       bookData.bookUploaderName = element.data()[AllKeys.bookUploaderNameKey];
       bookData.bookUploaderEmail = element.data()[AllKeys.bookUploaderEmailKey];
       bookData.bookUploaderBatch = element.data()[AllKeys.bookUploaderBatchKey];
-      bookData.bookUploaderDept = element.data()[AllKeys.deptKey];
+      bookData.bookUploaderDept = element.data()[AllKeys.bookUploaderDeptKey];
       bookData.bookUploaderImg = element.data()[AllKeys.bookUploaderImgKey];
       recentDataList.add(bookData);
     });

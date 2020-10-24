@@ -14,6 +14,28 @@ class CommonThings {
 //   }
 // }
 
+class UsableData {
+ static List<String> monthName = [
+    'Not availabel',
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+
+  static getMonthName(int n) {
+    return monthName[n];
+  }
+}
+
 class AllKeys {
   static const String userCollectionKey = 'UserCollectionAll';
   static const String nameKey = 'NameKey';

@@ -238,7 +238,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                     filled: true,
                                     fillColor: Color(0xffffffff),
                                     labelText: 'Want to',
-                                    hintText: 'Rent or Sell',
+                                    hintText: 'Rent or Buy',
                                     border: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0xff001a54),
@@ -274,13 +274,13 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                     setState(() {
                                       bookData.bookFor = value;
                                       if (value == 'Buy') {
-                                        forTime = true;
-                                        forPrice = false;
+                                        forTime = false;
+                                        forPrice = true;
                                       } else if (value == 'Rent') {
                                         forPrice = true;
                                         forTime = true;
                                       } else {
-                                        forPrice = true;
+                                        forPrice = false;
                                         forTime = false;
                                       }
                                     });
@@ -295,20 +295,60 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                             opacity: forPrice ? 1 : 0,
                             child: Visibility(
                               visible: forPrice,
-                              child: BookFormField(
-                                lebel: 'Price',
-                                hintText: 'Enter fair amount',
-                                raiseForm: () {
-                                  riseForm();
-                                },
-                                onChanged: (value) {
-                                  bookData.bookPrice = value;
-                                },
-                                validate: (value) {
-                                  if (value == null || value == '')
-                                    return 'This field cannot be empty. Input 0 taka';
-                                  return null;
-                                },
+                              // child: BookFormField(
+                              //   lebel: 'Price',
+                              //   hintText: 'Enter fair amount',
+                              //   raiseForm: () {
+                              //     riseForm();
+                              //   },
+                              //   onChanged: (value) {
+                              //     bookData.bookPrice = value;
+                              //   },
+                              //   validate: (value) {
+                              //     if (value == null || value == '')
+                              //       return 'This field cannot be empty. Input 0 taka';
+                              //     return null;
+                              //   },
+                              // ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4.0),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(fontSize: 18),
+                                  onTap: () {
+                                    riseForm();
+                                  },
+                                  onChanged: (value) {
+                                    bookData.bookPrice = value;
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value == '')
+                                      return 'This field cannot be empty. Input 0 taka';
+                                    return null;
+                                  },
+                                  decoration: InputDecoration(
+                                    // contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                    filled: true,
+                                    fillColor: Color(0xffffffff),
+                                    labelText: 'Price',
+                                    hintText:
+                                        'Enter the amount you want to pay',
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xff001a54),
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 2,
+                                        color: Color(0xff6F00FF),
+                                      ),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -506,6 +546,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                     ),
                     onTap: () async {
                       FocusScope.of(context).unfocus();
+                      bookData.bookPrice = bookData.bookPrice + ' Taka';
                       // print(   bookData.bookName);
                       try {
                         await FirebaseFirestore.instance
