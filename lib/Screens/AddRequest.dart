@@ -403,7 +403,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                     riseForm();
                                     setState(() {
                                       agree = val;
-                                      print(agree);
+                                      // print(agree);
                                     });
                                   }),
                               Text('I agree to share these information.')

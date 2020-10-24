@@ -27,8 +27,10 @@ class UploadIMG {
   }
 
   uploadUserPic(String uid) async {
+   String id = new DateTime.now().millisecondsSinceEpoch.toString();
     StorageReference userPic =
-        FirebaseStorage.instance.ref().child('User').child(uid).child(uid);
+        FirebaseStorage.instance.ref().child('User').child(uid).child(id);
+       
     await userPic.putFile(imageUser).onComplete;
     return await userPic.getDownloadURL();
   }
@@ -41,7 +43,7 @@ class UploadIMG {
         .child(email)
         .child(bookID);
     await bookPic.putFile(imageBook).onComplete;
-    print('upload Complete book');
+    // print('upload Complete book');
     return await bookPic.getDownloadURL();
   }
 
@@ -53,7 +55,7 @@ class UploadIMG {
         .child(email)
         .child(bookID);
     await bookPic.putFile(imageUser).onComplete;
-    print('upload Complete book');
+    // print('upload Complete book');
     return await bookPic.getDownloadURL();
   }
 }

@@ -141,7 +141,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                                     'Edition: ${widget.bookData.bookEdition}',
                                     style: TextStyle(
                                       color: Color(0xffFFFFFF),
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       // fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -169,7 +169,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                                             .toString(),
                                     style: TextStyle(
                                       color: Color(0xffFFFFFF),
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       // fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -222,19 +222,21 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                                       ? 'Requested By'
                                       : 'Owner Information',
                                   style: GoogleFonts.abrilFatface(
-                                      fontSize: 22, color: Colors.white),
+                                      fontSize: 24, color: Colors.white70),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
-                                child: FittedBox(
-                                  fit: BoxFit.fitWidth,
-                                  child: Text(
-                                    widget.bookData.bookUploaderName,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w700),
+                                child: Center(
+                                  child: FittedBox(
+                                    fit: BoxFit.fitWidth,
+                                    child: Text(
+                                      widget.bookData.bookUploaderName,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -253,7 +255,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                                               widget.bookData.bookUploaderEmail,
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: 18),
+                                              fontSize: 16),
                                         ),
                                       ),
                                     ),
@@ -261,7 +263,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                                       icon: Icon(
                                         Icons.content_copy_sharp,
                                         color: Colors.white,
-                                        size: 22,
+                                        size: 20,
                                       ),
                                       onPressed: () {
                                         Clipboard.setData(ClipboardData(
@@ -284,7 +286,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                                 padding: const EdgeInsets.all(4.0),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     FittedBox(
                                       fit: BoxFit.fitWidth,
@@ -293,7 +295,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                                             widget.bookData.bookUploaderDept,
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           // fontWeight: FontWeight.w700,
                                         ),
                                       ),
@@ -305,7 +307,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                                             widget.bookData.bookUploaderBatch,
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 20,
+                                          fontSize: 16,
                                         ),
                                       ),
                                     ),
@@ -338,12 +340,12 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                                 path: widget.bookData.bookUploaderEmail,
                                 query: widget.bookData.bookFor == 'Buy' ||
                                         widget.bookData.bookFor == 'Rent'
-                                    ? 'subject=uBookSharing response&body=Hi ${widget.bookData.bookUploaderName},\n I\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted}.\nRegistration number ${UserProfileData.registrationNo}.' +
+                                    ? 'subject=uBookSharing response&body=Hi ${widget.bookData.bookUploaderName},\n I\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
                                         'You have requested for a book name \"${widget.bookData.bookName}\" to ${widget.bookData.bookFor.toLowerCase()}.\nI have the book' +
                                         '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Contact me to get this book.\nThanks for your contribution.'
-                                    : 'subject=uBookSharing response&body=Hi ${widget.bookData.bookUploaderName},\n I\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted}.\nRegistration number ${UserProfileData.registrationNo}.' +
-                                        '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor.toLowerCase()}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me' +
-                                        '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a mail or Message containing your phone number and current address.\nThanks for your contribution.'
+                                    : 'subject=uBookSharing response&body=Hi ${widget.bookData.bookUploaderName},\n I\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
+                                        '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor.toLowerCase()}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me.' +
+                                        '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a mail or message containing your phone number and current address.\nThanks for your contribution.'
 
                                 // queryParameters: {
                                 //   'subject': 'uBookSharing+response ',
@@ -427,7 +429,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                 'Price: ${widget.bookData.bookPrice}',
                 style: TextStyle(
                   color: Color(0xffFFFFFF),
-                  fontSize: 18,
+                  fontSize: 17,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -438,7 +440,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                 'Time: ${widget.bookData.bookTime}',
                 style: TextStyle(
                   color: Color(0xffFFFFFF),
-                  fontSize: 18,
+                  fontSize: 17,
                   fontWeight: FontWeight.w500,
                 ),
               ),

@@ -101,6 +101,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                   Container(
                       color: Colors.white,
                       child: Column(
+                        // crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(
                             'Enlist Your Book',
@@ -136,7 +137,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                             ),
                           ),
                           Text(
-                            '*This app is based on community.So, use the full name of your Book which is known by all. Please be careful and do not use unnecessary spaces or punctuations.\nWe will check and your ID will be banned if we find any hoax name...',
+                            '*This app is based on community.So, use the full name of your Book which is known by all. Please be careful and do not use unnecessary spaces or punctuations.\nWe will check and your ID will be banned if we find any hoax name.',
                             style: TextStyle(color: Colors.red),
                           ),
                           RaisedButton(
@@ -150,21 +151,26 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                   _bookNameListformKey.currentState.validate();
 
                               if (vali) {
-                                bookNameList.add(addBookNametoList);
+                                setState(() {
+                                  bookNameList.add(addBookNametoList);
+                                });
 
                                 await FirebaseFirestore.instance
                                     .collection(UserProfileData.tmVersity)
                                     .doc('AllBooks')
                                     .set({'FullNameArray': bookNameList});
+
                                 bookNameList =
                                     await GetBookData.getBookNameListFirebase();
-                                await getBookNameList();
+                                // await getBookNameList();
                                 Navigator.pop(context);
                               }
                             },
-                            child: Text('Add',
-                                style: GoogleFonts.aBeeZee(
-                                    fontSize: 18, color: Colors.white)),
+                            child: Center(
+                              child: Text('Add to Database',
+                                  style: GoogleFonts.aBeeZee(
+                                      fontSize: 18, color: Colors.white)),
+                            ),
                           )
                         ],
                       )),
@@ -199,7 +205,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(bookNameList);
+    // print(bookNameList);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
@@ -606,7 +612,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                     riseForm();
                                     setState(() {
                                       agree = val;
-                                      print(agree);
+                                      // print(agree);
                                     });
                                   }),
                               Text('I agree to share these information.')
@@ -746,12 +752,12 @@ class _AddBookScreenState extends State<AddBookScreen> {
                       bookData.bookPrice = bookData.bookPrice + ' Taka';
                       // bookNameList.add(bookData.bookName);
                       try {
-                        await FirebaseFirestore.instance
-                            .collection(UserProfileData.tmVersity)
-                            .doc('AllBooks')
-                            .collection(bookData.bookName)
-                            .doc(bookId)
-                            .set(bookData.getBookMap());
+                        // await FirebaseFirestore.instance
+                        //     .collection(UserProfileData.tmVersity)
+                        //     .doc('AllBooks')
+                        //     .collection(bookData.bookName)
+                        //     .doc(bookId)
+                        //     .set(bookData.getBookMap());
 
                         await FirebaseFirestore.instance
                             .collection(UserProfileData.tmVersity)

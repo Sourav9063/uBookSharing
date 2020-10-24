@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
@@ -47,11 +48,21 @@ class BookImg extends StatelessWidget {
           : InteractiveViewer(
               transformationController: transformationController,
               maxScale: 5,
-              onInteractionEnd: (details) {
+              onInteractionEnd: (details) async {
+                await Future.delayed(Duration(seconds: 1));
                 transformationController.value = Matrix4.identity();
               },
               child: Image.network(
                 imglink,
+                errorBuilder: (context, error, stackTrace) {
+                  return Center(
+                    child: Icon(
+                      Icons.error,
+                      color: Colors.red,
+                      size: width / 2,
+                    ),
+                  );
+                },
                 loadingBuilder: (BuildContext context, Widget child,
                     ImageChunkEvent loadingProgress) {
                   if (loadingProgress == null) return child;
@@ -106,7 +117,8 @@ class BookCard extends StatelessWidget {
                 height: width * .753,
                 width: width * .953,
                 decoration: BoxDecoration(
-                  color: Color(0xFFe8a76f),
+                  color: Color(0xff001a5f),
+                  // color: Colors.pinkAccent.shade700,
                   boxShadow: [
                     BoxShadow(
                       offset: Offset(3, 3),
@@ -149,15 +161,17 @@ class BookCard extends StatelessWidget {
               width: width * .50 * 1.38,
               height: width * .753,
               child: Container(
-                padding: EdgeInsets.all(6),
-                color: Colors.white54,
+                padding: EdgeInsets.all(4),
+                // color: Colors.white54,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Expanded(
+                    FittedBox(
+                      fit: BoxFit.fitWidth,
                       child: Text(
                         bookData.bookName,
-                        style: TextStyle(fontSize: width * .075),
+                        style: GoogleFonts.abrilFatface(
+                            fontSize: width * .06, color: Colors.white),
                       ),
                     ),
                     //   FittedBox(
@@ -166,31 +180,39 @@ class BookCard extends StatelessWidget {
                     //     style: TextStyle(fontSize: width * .075),
                     //   ),
                     // ),
-                    Expanded(
+                    FittedBox(
+                      fit: BoxFit.fitWidth,
                       child: Text(
                         bookData.bookWriter,
-                        style: TextStyle(fontSize: width * .06),
+                        style: TextStyle(
+                            fontSize: width * .05, color: Colors.white),
                       ),
                     ),
-                    Expanded(
-                      child: Text(
-                        bookData.bookFor,
-                        style: TextStyle(fontSize: width * .055),
+                    Container(
+                      color: Theme.of(context).accentColor,
+                      child: Center(
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Text(
+                            bookData.bookFor,
+                            style: TextStyle(
+                                fontSize: width * .055, color: Colors.white),
+                          ),
+                        ),
                       ),
                     ),
-                    Expanded(
+                    FittedBox(
+                      fit: BoxFit.fitWidth,
                       child: Text(
-                        bookData.bookTimeUpload.toDate().day.toString() +
+                        'Uploaded: ' +
+                            bookData.bookTimeUpload.toDate().day.toString() +
                             ' ' +
                             UsableData.getMonthName(
                                 bookData.bookTimeUpload.toDate().month) +
                             ', ' +
-                            bookData.bookTimeUpload
-                                .toDate()
-                                .year
-                                .toString()
-                                .substring(2, 4),
-                        style: TextStyle(fontSize: width * .075),
+                            bookData.bookTimeUpload.toDate().year.toString(),
+                        style: TextStyle(
+                            fontSize: width * .055, color: Colors.white),
                       ),
                     ),
                   ],
@@ -240,6 +262,13 @@ class IconAccount extends StatelessWidget {
               child: ClipOval(
                 child: Image.network(
                   imglink,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Icon(
+                      Icons.error,
+                      color: Colors.white,
+                      size: radious / 1.5,
+                    );
+                  },
                   loadingBuilder: (BuildContext context, Widget child,
                       ImageChunkEvent loadingProgress) {
                     if (loadingProgress == null) return child;

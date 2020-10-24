@@ -89,7 +89,7 @@ class _UserProfileState extends State<UserProfile> {
           );
         },
       );
-      print(e.code);
+      // print(e.code);
     }
   }
 
@@ -101,7 +101,7 @@ class _UserProfileState extends State<UserProfile> {
     int rn = Random().nextInt(5) + 1;
     while (rand == rn) {
       rn = Random().nextInt(5) + 1;
-      print(rn);
+      // print(rn);
     }
     rand = rn;
     setState(() {
@@ -205,7 +205,7 @@ class _UserProfileState extends State<UserProfile> {
                             onPressed: () async {
                               tmAddversity =
                                   addversity.toUpperCase().replaceAll(' ', '');
-                              print(tmAddversity);
+                              // print(tmAddversity);
                               await checkVersity();
                               bool vali = _versityName.currentState.validate();
 
@@ -459,7 +459,7 @@ class _UserProfileState extends State<UserProfile> {
                                   if (value != 'Add your University') {
                                     UserProfileData.versityName = value;
                                     // versityNameValidation = true;
-                                    print(UserProfileData.versityName);
+                                    // print(UserProfileData.versityName);
                                   } else {
                                     addVersity();
                                   }
