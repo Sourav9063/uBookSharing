@@ -47,10 +47,14 @@ class BookImg extends StatelessWidget {
           //   )
           : InteractiveViewer(
               transformationController: transformationController,
+              
               maxScale: 5,
               onInteractionEnd: (details) async {
-                await Future.delayed(Duration(seconds: 1));
+                await Future.delayed(Duration(seconds: 2));
+
                 transformationController.value = Matrix4.identity();
+           
+              
               },
               child: Image.network(
                 imglink,

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 
+
 class GetUserData {
   static Future<String> getUserData(email) async {
     try {
@@ -24,6 +25,7 @@ class GetUserData {
                     value.data()[AllKeys.registrationNoKey],
                 UserProfileData.uploadedBookNo =
                     value.data()[AllKeys.upLoadedBookNoKey],
+                UserProfileData.myBookList = value.data()[AllKeys.myBookListKey]
               });
       if (UserProfileData.name == null) return 'empty';
       return 'done';
@@ -33,14 +35,24 @@ class GetUserData {
     // return 'Something went wrong';
   }
 
-  static setUploadedBookNo() async {
+  static Future<String> setUploadedBookNo() async {
     int num = int.parse(UserProfileData.uploadedBookNo);
     num++;
     UserProfileData.uploadedBookNo = num.toString();
-    await FirebaseFirestore.instance
-        .collection(AllKeys.userCollectionKey)
-        .doc(UserProfileData.email)
-        .update({AllKeys.upLoadedBookNoKey: UserProfileData.uploadedBookNo});
+    try {
+      await FirebaseFirestore.instance
+          .collection(AllKeys.userCollectionKey)
+          .doc(UserProfileData.email)
+          .update({AllKeys.upLoadedBookNoKey: UserProfileData.uploadedBookNo});
+
+      await FirebaseFirestore.instance
+          .collection(AllKeys.userCollectionKey)
+          .doc(UserProfileData.email)
+          .update({AllKeys.myBookListKey: UserProfileData.myBookList});
+      return 'done';
+    } catch (e) {
+      return e.message;
+    }
   }
 }
 
@@ -78,27 +90,34 @@ class GetBookData {
     List<BookData> recentDataList = [];
     value.docs.forEach((element) {
       BookData bookData = BookData();
+      bookData = getBookDataFromDocumentSnapshot(element);
 
-      // print(element.data()[AllKeys.bookNameKey]);
-      bookData.bookName = element.data()[AllKeys.bookNameKey];
-      bookData.bookWriter = element.data()[AllKeys.bookWriterNameKey];
-      bookData.bookFor = element.data()[AllKeys.bookForKey];
-      bookData.bookDes = element.data()[AllKeys.bookDesKey];
-      bookData.bookImgLink = element.data()[AllKeys.bookImgKey];
-      bookData.bookPrice = element.data()[AllKeys.bookPriceKey];
-      bookData.bookEdition = element.data()[AllKeys.bookEditionKey];
-      bookData.bookTime = element.data()[AllKeys.bookTimeKey];
-      bookData.bookTimeUpload = element.data()[AllKeys.bookTimeUploadKey];
-
-      bookData.bookUploaderName = element.data()[AllKeys.bookUploaderNameKey];
-      bookData.bookUploaderEmail = element.data()[AllKeys.bookUploaderEmailKey];
-      bookData.bookUploaderBatch = element.data()[AllKeys.bookUploaderBatchKey];
-      bookData.bookUploaderDept = element.data()[AllKeys.bookUploaderDeptKey];
-      bookData.bookUploaderImg = element.data()[AllKeys.bookUploaderImgKey];
       recentDataList.add(bookData);
     });
 
     return recentDataList;
+  }
+
+  static BookData getBookDataFromDocumentSnapshot(DocumentSnapshot element) {
+    BookData bookData = BookData();
+
+    // print(element.data()[AllKeys.bookNameKey]);
+    bookData.bookName = element.data()[AllKeys.bookNameKey];
+    bookData.bookWriter = element.data()[AllKeys.bookWriterNameKey];
+    bookData.bookFor = element.data()[AllKeys.bookForKey];
+    bookData.bookDes = element.data()[AllKeys.bookDesKey];
+    bookData.bookImgLink = element.data()[AllKeys.bookImgKey];
+    bookData.bookPrice = element.data()[AllKeys.bookPriceKey];
+    bookData.bookEdition = element.data()[AllKeys.bookEditionKey];
+    bookData.bookTime = element.data()[AllKeys.bookTimeKey];
+    bookData.bookTimeUpload = element.data()[AllKeys.bookTimeUploadKey];
+
+    bookData.bookUploaderName = element.data()[AllKeys.bookUploaderNameKey];
+    bookData.bookUploaderEmail = element.data()[AllKeys.bookUploaderEmailKey];
+    bookData.bookUploaderBatch = element.data()[AllKeys.bookUploaderBatchKey];
+    bookData.bookUploaderDept = element.data()[AllKeys.bookUploaderDeptKey];
+    bookData.bookUploaderImg = element.data()[AllKeys.bookUploaderImgKey];
+    return bookData;
   }
 
   static Future<List<dynamic>> getBookNameListFirebase() async {
@@ -113,5 +132,11 @@ class GetBookData {
     bookNameList.sort();
     // print(bookNameList);
     return bookNameList;
+  }
+
+  static Future<BookData> bookDataFromRef(String ref) async {
+    var dataRromRef = await FirebaseFirestore.instance.doc(ref).get();
+
+    return getBookDataFromDocumentSnapshot(dataRromRef);
   }
 }

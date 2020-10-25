@@ -546,7 +546,8 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                     ),
                     onTap: () async {
                       FocusScope.of(context).unfocus();
-                      bookData.bookPrice = bookData.bookPrice + ' Taka';
+                      if (bookData.bookPrice != null)
+                        bookData.bookPrice = bookData.bookPrice + ' Taka';
                       // print(   bookData.bookName);
                       try {
                         await FirebaseFirestore.instance
@@ -555,6 +556,14 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                             .collection('Requests')
                             .doc(bookId)
                             .set(bookData.getBookMap());
+                        String reqRef = FirebaseFirestore.instance
+                            .collection(UserProfileData.tmVersity)
+                            .doc('Requests')
+                            .collection('Requests')
+                            .doc(bookId)
+                            .path;
+
+                        UserProfileData.myBookList.add(reqRef);
 
                         // await FirebaseFirestore.instance
                         //     .collection(UserProfileData.tmVersity)
@@ -568,7 +577,8 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                         //       .toUpperCase()
                         // });
 
-                        GetUserData.setUploadedBookNo();
+                        String msg = await GetUserData.setUploadedBookNo();
+                        print(msg);
                         Scaffold.of(context).showSnackBar(
                           SnackBar(
                             // width: CommonThings.size.width * .1,

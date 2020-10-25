@@ -748,9 +748,11 @@ class _AddBookScreenState extends State<AddBookScreen> {
                     ),
                     onTap: () async {
                       FocusScope.of(context).unfocus();
-                      // print(   bookData.bookName);
-                      bookData.bookPrice = bookData.bookPrice + ' Taka';
+
+                      if (bookData.bookPrice != null)
+                        bookData.bookPrice = bookData.bookPrice + ' Taka';
                       // bookNameList.add(bookData.bookName);
+
                       try {
                         // await FirebaseFirestore.instance
                         //     .collection(UserProfileData.tmVersity)
@@ -766,7 +768,17 @@ class _AddBookScreenState extends State<AddBookScreen> {
                             .doc(bookId)
                             .set(bookData.getBookMap());
 
-                        GetUserData.setUploadedBookNo();
+                        String bookPathFirestore = FirebaseFirestore.instance
+                            .collection(UserProfileData.tmVersity)
+                            .doc('AllBooks')
+                            .collection('AllBooks')
+                            .doc(bookId)
+                            .path;
+                        print(bookPathFirestore);
+                        UserProfileData.myBookList.add(bookPathFirestore);
+
+                        String msg = await GetUserData.setUploadedBookNo();
+                        print(msg);
                         Scaffold.of(context).showSnackBar(
                           SnackBar(
                             // width: CommonThings.size.width * .1,

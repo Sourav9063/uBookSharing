@@ -44,8 +44,8 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                 onTap: () {
                   bigPic();
                 },
-                child: Hero(
-                  tag: 'BookImg',
+                child: Container(
+                  width: CommonThings.size.width,
                   child: BookImg(
                     width: CommonThings.size.width,
                     imglink: widget.bookData.bookImgLink,
@@ -244,10 +244,9 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                                 padding: const EdgeInsets.all(4.0),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Expanded(
-                                      // fit: BoxFit.fitWidth,
                                       child: FittedBox(
                                         fit: BoxFit.fitWidth,
                                         child: SelectableText(
@@ -263,7 +262,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                                       icon: Icon(
                                         Icons.content_copy_sharp,
                                         color: Colors.white,
-                                        size: 20,
+                                        size: 22,
                                       ),
                                       onPressed: () {
                                         Clipboard.setData(ClipboardData(

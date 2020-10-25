@@ -15,7 +15,7 @@ class CommonThings {
 // }
 
 class UsableData {
- static List<String> monthName = [
+  static List<String> monthName = [
     'Not availabel',
     'Jan',
     'Feb',
@@ -50,6 +50,7 @@ class AllKeys {
   static const String registrationNoKey = 'RegistrarionNoKey';
   static const String uidKey = 'UidKey';
   static const String upLoadedBookNoKey = 'UploadedNoKey';
+  static const String myBookListKey = 'MybookListKey';
 
 //book keys
   static const String bookNameKey = 'BookNameKey';
@@ -122,6 +123,7 @@ class UserProfileData {
   static String registrationNo;
   static String uploadedBookNo;
   static String uid;
+  static List<dynamic> myBookList;
 
   static Map<String, dynamic> getMap() {
     Map userMapData = Map<String, dynamic>();
@@ -137,6 +139,11 @@ class UserProfileData {
     userMapData[AllKeys.addressKey] = address;
     userMapData[AllKeys.registrationNoKey] = registrationNo;
     userMapData[AllKeys.uidKey] = uid;
+    if (myBookList == null)
+      userMapData[AllKeys.myBookListKey] = [];
+    else
+      userMapData[AllKeys.myBookListKey] = myBookList;
+    // userMapData[AllKeys.myBookReqListKey] = myBookReqList;
     if (uploadedBookNo == null)
       userMapData[AllKeys.upLoadedBookNoKey] = '0';
     else
