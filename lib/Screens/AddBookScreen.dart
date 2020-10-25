@@ -20,8 +20,8 @@ class AddBookScreen extends StatefulWidget {
 class _AddBookScreenState extends State<AddBookScreen> {
   List<dynamic> bookNameList;
   String bookImgLink;
-  String bookId =
-      UserProfileData.email + UserProfileData.uploadedBookNo.toString();
+  // String bookId =
+  //     UserProfileData.email + UserProfileData.uploadedBookNo.toString();
   bool visible = true;
   bool agree = false;
   bool valdated = false;
@@ -646,6 +646,15 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                       formTop = CommonThings.size.height * .60;
                                     });
                                   }
+                                  if (valdated && bookImgLink != null) {
+                                    Scaffold.of(context).showSnackBar(
+                                      SnackBar(
+                                        backgroundColor: Colors.green,
+                                        content: Text(
+                                            'Varified. Click the Add icon to upload'),
+                                      ),
+                                    );
+                                  }
                                 },
                                 child: Center(
                                   child: Text(
@@ -695,7 +704,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               );
 
                               bookImgLink = await UploadIMG()
-                                  .uploadBookPic(UserProfileData.email, bookId);
+                                  .uploadBookPic(UserProfileData.email);
                               if (bookImgLink != null) {
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(
@@ -731,15 +740,17 @@ class _AddBookScreenState extends State<AddBookScreen> {
               ),
             ),
             Positioned(
-              bottom: 0,
+              bottom: CommonThings.size.width * .04,
               right: 0,
               height: CommonThings.size.width * .25,
               width: CommonThings.size.width * .25,
               child: AnimatedOpacity(
                 duration: Duration(milliseconds: 600),
                 opacity: valdated && bookImgLink != null ? 1 : 0,
+                // opacity: 1,
                 child: Visibility(
                   visible: valdated && bookImgLink != null,
+                  // visible: true,
                   child: InkWell(
                     child: Lottie.asset(
                       'assets/lottie/AddLottie.json',
@@ -765,20 +776,20 @@ class _AddBookScreenState extends State<AddBookScreen> {
                             .collection(UserProfileData.tmVersity)
                             .doc('AllBooks')
                             .collection('AllBooks')
-                            .doc(bookId)
+                            .doc()
                             .set(bookData.getBookMap());
 
-                        String bookPathFirestore = FirebaseFirestore.instance
-                            .collection(UserProfileData.tmVersity)
-                            .doc('AllBooks')
-                            .collection('AllBooks')
-                            .doc(bookId)
-                            .path;
-                        print(bookPathFirestore);
-                        UserProfileData.myBookList.add(bookPathFirestore);
+                        // String bookPathFirestore = FirebaseFirestore.instance
+                        //     .collection(UserProfileData.tmVersity)
+                        //     .doc('AllBooks')
+                        //     .collection('AllBooks')
+                        //     .doc()
+                        //     .path;
+                        // print(bookPathFirestore);
+                        // UserProfileData.myBookList.add(bookPathFirestore);
 
-                        String msg = await GetUserData.setUploadedBookNo();
-                        print(msg);
+                        // String msg = await GetUserData.setUploadedBookNo();
+                        // print(msg);
                         Scaffold.of(context).showSnackBar(
                           SnackBar(
                             // width: CommonThings.size.width * .1,

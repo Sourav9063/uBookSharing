@@ -49,8 +49,9 @@ class BookImg extends StatelessWidget {
               transformationController: transformationController,
               
               maxScale: 5,
+  
               onInteractionEnd: (details) async {
-                await Future.delayed(Duration(seconds: 2));
+                await Future.delayed(Duration(seconds: 3));
 
                 transformationController.value = Matrix4.identity();
            

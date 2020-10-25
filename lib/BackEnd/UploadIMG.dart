@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uBookSharing/BackEnd/Datas.dart';
 
 class UploadIMG {
   static PickedFile pickedImage;
@@ -26,34 +27,41 @@ class UploadIMG {
     imageBook = File(pickedImage.path);
   }
 
-  uploadUserPic(String uid) async {
-   String id = new DateTime.now().millisecondsSinceEpoch.toString();
-    StorageReference userPic =
-        FirebaseStorage.instance.ref().child('User').child(uid).child(id);
-       
+  uploadUserPic(String email) async {
+    // String id = UsableData.getMillisecondsId();
+    StorageReference userPic = FirebaseStorage.instance
+        .ref()
+        .child('User')
+        .child(email)
+        .child(UsableData.getMillisecondsId());
+
     await userPic.putFile(imageUser).onComplete;
     return await userPic.getDownloadURL();
   }
 
-  uploadBookPic(String bookID, String email) async {
+  uploadBookPic(String email) async {
+    String id = UsableData.getMillisecondsId();
     StorageReference bookPic = FirebaseStorage.instance
         .ref()
         .child('Books')
         .child('Upload')
         .child(email)
-        .child(bookID);
+        // .child(id)
+        .child(id);
     await bookPic.putFile(imageBook).onComplete;
     // print('upload Complete book');
     return await bookPic.getDownloadURL();
   }
 
-  uploadRequstPic(String bookID, String email) async {
+  uploadRequstPic(String email) async {
+    String id = UsableData.getMillisecondsId();
     StorageReference bookPic = FirebaseStorage.instance
         .ref()
         .child('Books')
         .child('Request')
         .child(email)
-        .child(bookID);
+        // .child(id)
+        .child(id);
     await bookPic.putFile(imageUser).onComplete;
     // print('upload Complete book');
     return await bookPic.getDownloadURL();

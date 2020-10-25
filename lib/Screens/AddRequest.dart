@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:uBookSharing/BackEnd/Datas.dart';
-import 'package:uBookSharing/BackEnd/FireBase.dart';
+// import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/BackEnd/UploadIMG.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 
@@ -17,8 +17,8 @@ class AddRequestScreen extends StatefulWidget {
 
 class _AddRequestScreenState extends State<AddRequestScreen> {
   String bookImgLink;
-  String bookId =
-      UserProfileData.email + UserProfileData.uploadedBookNo.toString();
+  // String bookId =
+  //     UserProfileData.email + UserProfileData.uploadedBookNo.toString();
   bool visible = true;
   bool agree = false;
   bool valdated = false;
@@ -492,8 +492,8 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                 ),
                               );
 
-                              bookImgLink = await UploadIMG().uploadRequstPic(
-                                  UserProfileData.email, bookId);
+                              bookImgLink = await UploadIMG()
+                                  .uploadRequstPic(UserProfileData.email);
                               if (bookImgLink != null) {
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(
@@ -529,7 +529,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
               ),
             ),
             Positioned(
-              bottom: 0,
+              bottom: CommonThings.size.width * .04,
               right: 0,
               height: CommonThings.size.width * .25,
               width: CommonThings.size.width * .25,
@@ -554,16 +554,16 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                             .collection(UserProfileData.tmVersity)
                             .doc('Requests')
                             .collection('Requests')
-                            .doc(bookId)
+                            .doc()
                             .set(bookData.getBookMap());
-                        String reqRef = FirebaseFirestore.instance
-                            .collection(UserProfileData.tmVersity)
-                            .doc('Requests')
-                            .collection('Requests')
-                            .doc(bookId)
-                            .path;
+                        // String reqRef = FirebaseFirestore.instance
+                        //     .collection(UserProfileData.tmVersity)
+                        //     .doc('Requests')
+                        //     .collection('Requests')
+                        //     .doc()
+                        //     .path;
 
-                        UserProfileData.myBookList.add(reqRef);
+                        // UserProfileData.myBookList.add(reqRef);
 
                         // await FirebaseFirestore.instance
                         //     .collection(UserProfileData.tmVersity)
@@ -577,8 +577,8 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                         //       .toUpperCase()
                         // });
 
-                        String msg = await GetUserData.setUploadedBookNo();
-                        print(msg);
+                        // String msg = await GetUserData.setUploadedBookNo();
+                        // print(msg);
                         Scaffold.of(context).showSnackBar(
                           SnackBar(
                             // width: CommonThings.size.width * .1,

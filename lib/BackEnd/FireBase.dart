@@ -25,7 +25,7 @@ class GetUserData {
                     value.data()[AllKeys.registrationNoKey],
                 UserProfileData.uploadedBookNo =
                     value.data()[AllKeys.upLoadedBookNoKey],
-                UserProfileData.myBookList = value.data()[AllKeys.myBookListKey]
+                // UserProfileData.myBookList = value.data()[AllKeys.myBookListKey]
               });
       if (UserProfileData.name == null) return 'empty';
       return 'done';
@@ -35,25 +35,25 @@ class GetUserData {
     // return 'Something went wrong';
   }
 
-  static Future<String> setUploadedBookNo() async {
-    int num = int.parse(UserProfileData.uploadedBookNo);
-    num++;
-    UserProfileData.uploadedBookNo = num.toString();
-    try {
-      await FirebaseFirestore.instance
-          .collection(AllKeys.userCollectionKey)
-          .doc(UserProfileData.email)
-          .update({AllKeys.upLoadedBookNoKey: UserProfileData.uploadedBookNo});
+  // static Future<String> setUploadedBookNo() async {
+  //   int num = int.parse(UserProfileData.uploadedBookNo);
+  //   num++;
+  //   UserProfileData.uploadedBookNo = num.toString();
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection(AllKeys.userCollectionKey)
+  //         .doc(UserProfileData.email)
+  //         .update({AllKeys.upLoadedBookNoKey: UserProfileData.uploadedBookNo});
 
-      await FirebaseFirestore.instance
-          .collection(AllKeys.userCollectionKey)
-          .doc(UserProfileData.email)
-          .update({AllKeys.myBookListKey: UserProfileData.myBookList});
-      return 'done';
-    } catch (e) {
-      return e.message;
-    }
-  }
+  //     await FirebaseFirestore.instance
+  //         .collection(AllKeys.userCollectionKey)
+  //         .doc(UserProfileData.email)
+  //         .update({AllKeys.myBookListKey: UserProfileData.myBookList});
+  //     return 'done';
+  //   } catch (e) {
+  //     return e.message;
+  //   }
+  // }
 }
 
 class GetBookData {
