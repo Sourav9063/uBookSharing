@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 
-
 class GetUserData {
   static Future<String> getUserData(email) async {
     try {
@@ -119,19 +118,24 @@ class GetBookData {
     bookData.bookUploaderImg = element.data()[AllKeys.bookUploaderImgKey];
     return bookData;
   }
- static List<dynamic> bookNameList;
+
+  static List<dynamic> bookNameList;
   static Future<List<dynamic>> getBookNameListFirebase() async {
-  
-    await FirebaseFirestore.instance
-        .collection(UserProfileData.tmVersity)
-        .doc('AllBooks')
-        .get()
-        .then((value) {
-      bookNameList = value.data()['FullNameArray'];
-    });
-    bookNameList.sort();
+    try {
+      await FirebaseFirestore.instance
+          .collection(UserProfileData.tmVersity)
+          .doc('AllBooks')
+          .get()
+          .then((value) {
+        bookNameList = value.data()['FullNameArray'];
+      });
+      bookNameList.sort();
+      return bookNameList;
+    } catch (e) {
+      bookNameList.add(e.message);
+      return bookNameList;
+    }
     // print(bookNameList);
-    return bookNameList;
   }
 
   static Future<BookData> bookDataFromRef(String ref) async {
