@@ -44,8 +44,8 @@ class SearchPageTest extends SearchDelegate {
 
   @override
   TextStyle get searchFieldStyle => GoogleFonts.abrilFatface(
-        color: Color(0xaaffffff),
-        fontSize: 22,
+        color: Color(0xbbffffff),
+        fontSize: 20,
         // fontWeight: FontWeight.w500,
         // fontStyle: FontStyle.italic
       );
@@ -79,8 +79,28 @@ class SearchPageTest extends SearchDelegate {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'No Books Found',
+                      'No Book is Found',
                       style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RaisedButton(
+                      onPressed: () async {
+                        var data = await GetBookData.bookDataSearch(
+                            AllKeys.bookNameKey, query);
+
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                curve: Curves.fastOutSlowIn,
+                                child: ListOfBooksScreen(
+                                  snapshot: data,
+                                  searchName: query,
+                                ),
+                                type: PageTransitionType.rightToLeft));
+                      },
+                      child: Text('Search entair database'),
                     ),
                   )
                 ],
@@ -91,7 +111,10 @@ class SearchPageTest extends SearchDelegate {
             padding: const EdgeInsets.all(8.0),
             child: ListView.builder(
                 itemCount: tmpList.length,
-                itemBuilder: (context, index) {
+                itemBuilder: (
+                  context,
+                  index,
+                ) {
                   return Card(
                     color: Colors.white,
                     elevation: 8,
@@ -105,6 +128,7 @@ class SearchPageTest extends SearchDelegate {
                         Navigator.push(
                             context,
                             PageTransition(
+                                curve: Curves.fastOutSlowIn,
                                 child: ListOfBooksScreen(
                                   snapshot: data,
                                   searchName: tmpList[index],

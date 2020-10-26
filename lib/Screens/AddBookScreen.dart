@@ -18,7 +18,7 @@ class AddBookScreen extends StatefulWidget {
 }
 
 class _AddBookScreenState extends State<AddBookScreen> {
-  List<dynamic> bookNameList;
+  // List<dynamic> bookNameList = [];
   String bookImgLink;
 
   // String bookId =
@@ -80,7 +80,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
   bool bl = false;
   checkBook() {
-    bl = bookNameList.contains(addBookNametoList);
+    bl = GetBookData.bookNameList.contains(addBookNametoList);
   }
 
   String addBookNametoList;
@@ -88,7 +88,6 @@ class _AddBookScreenState extends State<AddBookScreen> {
   addBookInList() {
     showModalBottomSheet(
         context: context,
-
         enableDrag: true,
         isScrollControlled: true,
         builder: (context) {
@@ -155,16 +154,19 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
                               if (vali) {
                                 setState(() {
-                                  bookNameList.add(addBookNametoList);
+                                  GetBookData.bookNameList
+                                      .add(addBookNametoList);
                                 });
 
                                 await FirebaseFirestore.instance
                                     .collection(UserProfileData.tmVersity)
                                     .doc('AllBooks')
-                                    .set({'FullNameArray': bookNameList});
+                                    .set({
+                                  'FullNameArray': GetBookData.bookNameList
+                                });
 
-                                bookNameList =
-                                    await GetBookData.getBookNameListFirebase();
+                                // GetBookData.bookNameList =
+                                //     await GetBookData.getBookNameListFirebase();
                                 // await getBookNameList();
                                 Navigator.pop(context);
                               }
@@ -185,7 +187,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
   }
 
   getBookNameList() async {
-    bookNameList = await GetBookData.getBookNameListFirebase();
+    await GetBookData.getBookNameListFirebase();
     setState(() {});
   }
 
@@ -361,7 +363,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                       return null;
                                     },
                                     label: 'Book\'s Name',
-                                    items: bookNameList,
+                                    items: GetBookData.bookNameList,
                                     dropdownSearchDecoration: InputDecoration(
                                       filled: true,
                                       fillColor: Color(0xffffffff),
@@ -387,10 +389,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                     ),
                                     onChanged: (value) {
                                       riseForm();
-                                      addBookInList();
+                                      // addBookInList();
                                       // if (value != "Add A New Book") {
-                                      //   bookData.bookName = value;
-                                      //   // versityNameValidation = true;
+                                      bookData.bookName = value;
 
                                       // } else {
 
@@ -848,7 +849,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                         Navigator.pop(context);
                         // Navigator.pushAndRemoveUntil(
                         //     context,
-                        //     PageTransition(
+                        //     PageTransition(curve: Curves.fastOutSlowIn,
                         //       // duration: Duration(seconds:),
                         //       // settings: RouteSettings(),
                         //       child: MainPage(),

@@ -314,27 +314,27 @@ class CustomDrawer extends StatelessWidget {
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(
+                child: Column(
                   // mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     IconAccount(
                       radious: CommonThings.size.width * .35,
                       imglink: UserProfileData.profilePicLink,
                     ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                        UserProfileData.name == null
-                            ? 'Loading..'
-                            : UserProfileData.name,
-                        style: kDrawerTextStyle.copyWith(fontSize: 22),
+                    Center(
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          UserProfileData.name == null
+                              ? 'Loading..'
+                              : UserProfileData.name,
+                          style: kDrawerTextStyle.copyWith(fontSize: 22),
+                        ),
                       ),
                     )
                   ],
@@ -352,6 +352,7 @@ class CustomDrawer extends StatelessWidget {
                       Navigator.push(
                           context,
                           PageTransition(
+                              curve: Curves.fastOutSlowIn,
                               child: ProfileEditScreen(),
                               type: PageTransitionType.leftToRight));
                     },
@@ -383,6 +384,7 @@ class CustomDrawer extends StatelessWidget {
                       Navigator.push(
                           context,
                           PageTransition(
+                              curve: Curves.fastOutSlowIn,
                               child: ListOfBooksScreen(
                                 snapshot: snp,
                                 searchName: 'My Books',

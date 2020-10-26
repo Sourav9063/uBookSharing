@@ -29,7 +29,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   List<String> versity = [];
   final _formKey = GlobalKey<FormState>();
   final _versityName = GlobalKey<FormState>();
-
+  bool imgAdded = false;
   bool validated = false;
   // bool versityNameValidation = false;
   getVersityList() async {
@@ -66,6 +66,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       Navigator.pushReplacement(
           context,
           PageTransition(
+              curve: Curves.fastOutSlowIn,
               child: MainScreen(),
               type: PageTransitionType.rightToLeftWithFade));
       //  UserProfileData.name,  UserProfileData.versityName,
@@ -245,8 +246,12 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     String val =
         await GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
     if (val == 'done') {
-      Navigator.pushReplacement(context,
-          PageTransition(child: MainScreen(), type: PageTransitionType.fade));
+      Navigator.pushReplacement(
+          context,
+          PageTransition(
+              curve: Curves.fastOutSlowIn,
+              child: MainScreen(),
+              type: PageTransitionType.fade));
     }
   }
 
@@ -266,471 +271,525 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnimatedContainer(
-          duration: Duration(milliseconds: 1000),
-          curve: Curves.fastOutSlowIn,
-          height: CommonThings.size.height,
-          width: CommonThings.size.width,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xfffb8b24),
-                Color(0xff3c096c),
-                Color(0xff14213D),
-                Colors.black,
+      body: Builder(builder: (context) {
+        return AnimatedContainer(
+            duration: Duration(milliseconds: 1000),
+            curve: Curves.fastOutSlowIn,
+            height: CommonThings.size.height,
+            width: CommonThings.size.width,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xfffb8b24),
+                  Color(0xff3c096c),
+                  Color(0xff14213D),
+                  Colors.black,
 
-                // Color(0xffa9418b),
-                // Color(0xffFCA311),
+                  // Color(0xffa9418b),
+                  // Color(0xffFCA311),
 
-                // Color(0xffc0392b),
-              ],
-              begin: alb,
-              end: ale,
+                  // Color(0xffc0392b),
+                ],
+                begin: alb,
+                end: ale,
+              ),
             ),
-          ),
-          child: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 30,
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Lottie.asset(
-                              'assets/lottie/bookWritting.json',
-                            ),
-                            Text(
-                              'Profile',
-                              style: GoogleFonts.abrilFatface(
-                                color: Color(0xffffe066),
-                                fontSize: 28,
-                                // fontWeight: FontWeight.w500,
-                                // fontStyle: FontStyle.italic
-                              ),
-                            ),
-                            SizedBox(
-                              height: CommonThings.size.width * .20,
-                            )
-                          ],
-                        ),
-                      ),
-                      IconAccount(
-                        radious: CommonThings.size.width * .40,
-                        imglink: UserProfileData.profilePicLink,
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.add_photo_alternate,
-                          size: 40,
-                          color: Color(0xffFB8B24),
-                        ),
-                        onPressed: () async {
-                          // if (FirebaseAuth.instance.currentUser.photoURL ==
-                          //     null) {
-                          await UploadIMG().getUserPic();
-                          final link = await UploadIMG().uploadUserPic(
-                              FirebaseAuth.instance.currentUser.email);
-
-                          FirebaseAuth.instance.currentUser
-                              .updateProfile(photoURL: link);
-                          // FirebaseAuth.instance.currentUser.updateProfile(displayName: );
-                          setState(() {
-                            UserProfileData.profilePicLink = link;
-                          });
-                          // }
-                          // else {
-                          //   setState(() {
-                          //      UserProfileData.profilePicLink =
-                          //         FirebaseAuth.instance.currentUser.photoURL;
-                          //   });
-                          // }
-                        },
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Row(
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ProfileEditScreen()));
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: Material(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Theme.of(context).accentColor,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  Icons.replay,
-                                  size: 40,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
                         SizedBox(
-                          width: 4,
+                          width: 30,
                         ),
                         Expanded(
-                          child: RaisedButton(
-                            color: Colors.purple.shade900,
-                            onPressed: () {
-                              addVersity();
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              child: Text(
-                                'Add Your University',
-                                style: GoogleFonts.aBeeZee(
-                                    fontSize: 18, color: Colors.white),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Lottie.asset(
+                                'assets/lottie/bookWritting.json',
                               ),
-                            ),
+                              Text(
+                                'Profile',
+                                style: GoogleFonts.abrilFatface(
+                                  color: Color(0xffffe066),
+                                  fontSize: 28,
+                                  // fontWeight: FontWeight.w500,
+                                  // fontStyle: FontStyle.italic
+                                ),
+                              ),
+                              SizedBox(
+                                height: CommonThings.size.width * .20,
+                              )
+                            ],
                           ),
+                        ),
+                        IconAccount(
+                          radious: CommonThings.size.width * .40,
+                          imglink: UserProfileData.profilePicLink,
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.add_photo_alternate,
+                            size: 40,
+                            color: Color(0xffFB8B24),
+                          ),
+                          onPressed: () async {
+                            // if (FirebaseAuth.instance.currentUser.photoURL ==
+                            //     null) {
+                            try {
+                              await UploadIMG().getUserPic();
+                              final link = await UploadIMG().uploadUserPic(
+                                  FirebaseAuth.instance.currentUser.email);
+
+                              await FirebaseAuth.instance.currentUser
+                                  .updateProfile(photoURL: link);
+                              // FirebaseAuth.instance.currentUser.updateProfile(displayName: );
+                              setState(() {
+                                UserProfileData.profilePicLink = link;
+                                imgAdded = true;
+                              });
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: Colors.teal.shade800,
+                                  content: Text('Image Uploaded Successfully'),
+                                ),
+                              );
+                            } catch (e) {
+                              Scaffold.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content:
+                                      Text('Couldn\'t upload profile picture'),
+                                ),
+                              );
+                            }
+                            // }
+                            // else {
+                            //   setState(() {
+                            //      UserProfileData.profilePicLink =
+                            //         FirebaseAuth.instance.currentUser.photoURL;
+                            //   });
+                            // }
+                          },
                         ),
                       ],
                     ),
-                  ),
-                  Container(
-                    // height: 1000,
-                    margin: EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-                    decoration: BoxDecoration(
-                      // color: Colors.black54,
-                      border: Border.all(
-                        color: Colors.white70,
-                        width: 5,
-                        style: BorderStyle.solid,
-                      ),
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                    // color: Colors.white30,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: DropdownSearch<String>(
-                                popupTitle: Center(
-                                    child: Padding(
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ProfileEditScreen()));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: Material(
+                                borderRadius: BorderRadius.circular(100),
+                                color: Theme.of(context).accentColor,
+                                child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Listed University',
-                                    style: GoogleFonts.abrilFatface(
-                                      fontSize: 30,
-                                    ),
-                                  ),
-                                )),
-                                mode: Mode.BOTTOM_SHEET,
-                                popupShape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16)),
-                                validator: (value) {
-                                  if (value == null || value == '') {
-                                    return 'Must Give your University name';
-                                  }
-                                  return null;
-                                },
-                                label: 'University',
-                                items: versity,
-                                dropdownSearchDecoration: kTextFieldDecoration,
-                                showSearchBox: true,
-                                searchBoxDecoration:
-                                    kTextFieldDecoration.copyWith(
-                                  labelText: 'Search',
-                                  hintText: 'If not listed, please Add',
-                                ),
-                                onChanged: (value) {
-                                  gredianAlign();
-                                  if (value != 'Add your University') {
-                                    UserProfileData.versityName = value;
-                                    // versityNameValidation = true;
-                                    // print(UserProfileData.versityName);
-                                  } else {
-                                    addVersity();
-                                  }
-                                },
-                                selectedItem: UserProfileData.versityName,
-                              ),
-                            ),
-
-                            // Padding(
-                            //   padding: const EdgeInsets.all(8.0),
-                            //   //   // child: TextFormField(
-                            //   //   //   style: TextStyle(fontSize: 18),
-                            //   //   //   onChanged: (value) {
-                            //   //   //      UserProfileData.versityName = value;
-                            //   //   //   },
-                            //   //   //   onTap: () => gredianAlign(),
-                            //   //   //   decoration: kTextFieldDecoration.copyWith(
-                            //   //   //       prefixIcon: Icon(Icons.account_balance),
-                            //   //   //       labelText: 'University',
-                            //   //   //       hintText:
-                            //   //   //           'Abbreviation of your University name'),
-                            //   //   // ),
-                            //   child: Container(
-                            //     decoration: BoxDecoration(
-                            //         color: Colors.white,
-                            //         borderRadius: BorderRadius.circular(18),
-                            //         border: Border.all(
-                            //             color: Colors.purple, width: 4)),
-                            //     child: DropDownField(
-                            //       textStyle: TextStyle(fontSize: 18),
-                            //       itemsVisibleInDropdown: 4,
-                            //       // icon: Icon(Icons.account_balance),
-                            //       value: UserProfileData.versityName,
-                            //       required: true,
-
-                            //       labelText: 'University',
-                            //       hintText: 'If not listed, please Add',
-                            //       items: versity,
-
-                            //       onValueChanged: (value) {
-                            //         gredianAlign();
-                            //         if (value != 'Add your University') {
-                            //           UserProfileData.versityName = value;
-                            //           versityNameValidation = true;
-                            //         } else {
-                            //           addVersity();
-                            //         }
-                            //       },
-                            //     ),
-                            //   ),
-                            // ),
-
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: TextFormField(
-                                style: TextStyle(fontSize: 18),
-                                validator: (value) {
-                                  if (value == null || value == '')
-                                    return 'This field cannot be empty!';
-                                  return null;
-                                },
-                                onChanged: (value) {
-                                  UserProfileData.name = value;
-                                  FirebaseAuth.instance.currentUser
-                                      .updateProfile(displayName: value);
-                                },
-                                onTap: () => gredianAlign(),
-                                decoration: kTextFieldDecoration.copyWith(
-                                    prefixIcon: Icon(Icons.account_circle),
-                                    labelText: 'Name',
-                                    hintText: 'Use your real name'),
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        if (value == null || value == '') {
-                                          return 'This field cannot be empty!';
-                                        }
-                                        if (value.length != 4)
-                                          return 'Must be a Year';
-                                        if (int.parse(value) < 2000 ||
-                                            int.parse(value) > 2051)
-                                          return 'Must be a valid year';
-
-                                        return null;
-                                      },
-                                      style: TextStyle(fontSize: 18),
-                                      keyboardType: TextInputType.datetime,
-                                      onChanged: (value) {
-                                        UserProfileData.admitted = value;
-                                      },
-                                      onTap: () => gredianAlign(),
-                                      decoration: kTextFieldDecoration.copyWith(
-                                          prefixIcon:
-                                              Icon(Icons.calendar_today),
-                                          labelText: 'Year',
-                                          hintText: 'Admission year'),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Navigator.pushReplacement(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return ProfileEditScreen();
+                                      }));
+                                    },
+                                    icon: Icon(
+                                      Icons.replay,
+                                      color: Colors.white,
+                                      size: 30,
                                     ),
                                   ),
                                 ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: TextFormField(
-                                      validator: (value) {
-                                        if (value == null || value == '')
-                                          return 'This field cannot be empty!';
-                                        return null;
-                                      },
-                                      style: TextStyle(fontSize: 18),
-                                      onChanged: (value) {
-                                        UserProfileData.dept = value;
-                                      },
-                                      onTap: () => gredianAlign(),
-                                      decoration: kTextFieldDecoration.copyWith(
-                                          prefixIcon: Icon(
-                                              Icons.supervised_user_circle),
-                                          labelText: 'Department',
-                                          hintText: 'Use the abbreviation'),
-                                    ),
-                                  ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Expanded(
+                            child: RaisedButton(
+                              color: Colors.purple.shade900,
+                              onPressed: () {
+                                addVersity();
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
+                                child: Text(
+                                  'Add Your University',
+                                  style: GoogleFonts.aBeeZee(
+                                      fontSize: 18, color: Colors.white),
                                 ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value == null || value == '')
-                                    return 'This field cannot be empty!';
-                                  return null;
-                                },
-                                style: TextStyle(fontSize: 18),
-                                onChanged: (value) {
-                                  UserProfileData.registrationNo = value;
-                                },
-                                onTap: () => gredianAlign(),
-                                decoration: kTextFieldDecoration.copyWith(
-                                    prefixIcon: Icon(Icons.account_circle),
-                                    labelText: 'Registration',
-                                    hintText: 'Enter your registration No'),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value == null || value == '')
-                                    return 'This field cannot be empty!';
-                                  if (value.length != 11)
-                                    return 'Must be 11 digits';
-                                  return null;
-                                },
-                                style: TextStyle(fontSize: 18),
-                                keyboardType: TextInputType.number,
-                                onChanged: (value) {
-                                  UserProfileData.phoneNum = value;
-                                },
-                                onTap: () => gredianAlign(),
-                                decoration: kTextFieldDecoration.copyWith(
-                                    prefixIcon: Icon(Icons.phone),
-                                    labelText: 'Phone',
-                                    hintText: 'It\'s secured'),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      // height: 1000,
+                      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+                      decoration: BoxDecoration(
+                        // color: Colors.black54,
+                        border: Border.all(
+                          color: Colors.white70,
+                          width: 5,
+                          style: BorderStyle.solid,
+                        ),
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      // color: Colors.white30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: DropdownSearch<String>(
+                                  popupTitle: Center(
+                                      child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Listed University',
+                                      style: GoogleFonts.abrilFatface(
+                                        fontSize: 30,
+                                      ),
+                                    ),
+                                  )),
+                                  mode: Mode.BOTTOM_SHEET,
+                                  popupShape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16)),
+                                  validator: (value) {
+                                    if (value == null || value == '') {
+                                      return 'Must Give your University name';
+                                    }
+                                    return null;
+                                  },
+                                  label: 'University',
+                                  items: versity,
+                                  dropdownSearchDecoration:
+                                      kTextFieldDecoration,
+                                  showSearchBox: true,
+                                  searchBoxDecoration:
+                                      kTextFieldDecoration.copyWith(
+                                    labelText: 'Search',
+                                    hintText: 'If not listed, please Add',
+                                  ),
+                                  onChanged: (value) {
+                                    gredianAlign();
+                                    if (value != 'Add your University') {
+                                      UserProfileData.versityName = value;
+                                      // versityNameValidation = true;
+                                      // print(UserProfileData.versityName);
+                                    } else {
+                                      addVersity();
+                                    }
+                                  },
+                                  selectedItem: UserProfileData.versityName,
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value == null || value == '')
-                                    return 'This field cannot be empty!';
-                                  return null;
-                                },
-                                style: TextStyle(fontSize: 18),
-                                minLines: 1,
-                                maxLines: 3,
-                                onChanged: (value) {
-                                  UserProfileData.address = value;
-                                },
-                                onTap: () => gredianAlign(),
-                                decoration: kTextFieldDecoration.copyWith(
-                                    prefixIcon: Icon(Icons.home),
-                                    labelText: 'Address',
-                                    hintText: 'Use your current location'),
+
+                              // Padding(
+                              //   padding: const EdgeInsets.all(8.0),
+                              //   //   // child: TextFormField(
+                              //   //   //   style: TextStyle(fontSize: 18),
+                              //   //   //   onChanged: (value) {
+                              //   //   //      UserProfileData.versityName = value;
+                              //   //   //   },
+                              //   //   //   onTap: () => gredianAlign(),
+                              //   //   //   decoration: kTextFieldDecoration.copyWith(
+                              //   //   //       prefixIcon: Icon(Icons.account_balance),
+                              //   //   //       labelText: 'University',
+                              //   //   //       hintText:
+                              //   //   //           'Abbreviation of your University name'),
+                              //   //   // ),
+                              //   child: Container(
+                              //     decoration: BoxDecoration(
+                              //         color: Colors.white,
+                              //         borderRadius: BorderRadius.circular(18),
+                              //         border: Border.all(
+                              //             color: Colors.purple, width: 4)),
+                              //     child: DropDownField(
+                              //       textStyle: TextStyle(fontSize: 18),
+                              //       itemsVisibleInDropdown: 4,
+                              //       // icon: Icon(Icons.account_balance),
+                              //       value: UserProfileData.versityName,
+                              //       required: true,
+
+                              //       labelText: 'University',
+                              //       hintText: 'If not listed, please Add',
+                              //       items: versity,
+
+                              //       onValueChanged: (value) {
+                              //         gredianAlign();
+                              //         if (value != 'Add your University') {
+                              //           UserProfileData.versityName = value;
+                              //           versityNameValidation = true;
+                              //         } else {
+                              //           addVersity();
+                              //         }
+                              //       },
+                              //     ),
+                              //   ),
+                              // ),
+
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: TextFormField(
+                                  style: TextStyle(fontSize: 18),
+                                  validator: (value) {
+                                    if (value == null || value == '')
+                                      return 'This field cannot be empty!';
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    UserProfileData.name = value;
+                                    FirebaseAuth.instance.currentUser
+                                        .updateProfile(displayName: value);
+                                  },
+                                  onTap: () => gredianAlign(),
+                                  decoration: kTextFieldDecoration.copyWith(
+                                      prefixIcon: Icon(Icons.account_circle),
+                                      labelText: 'Name',
+                                      hintText: 'Use your real name'),
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: Row(
+                              Row(
                                 children: [
                                   Expanded(
-                                    flex: 2,
-                                    child: RaisedButton(
-                                      onPressed: () {
-                                        FocusScope.of(context).unfocus();
-                                        UserProfileData.email = FirebaseAuth
-                                            .instance.currentUser.email;
-                                        gredianAlign();
-                                        setState(() {
-                                          validated =
-                                              _formKey.currentState.validate();
-                                        });
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: TextFormField(
+                                        validator: (value) {
+                                          if (value == null || value == '') {
+                                            return 'This field cannot be empty!';
+                                          }
+                                          if (value.length != 4)
+                                            return 'Must be a Year';
+                                          if (int.parse(value) < 2000 ||
+                                              int.parse(value) > 2051)
+                                            return 'Must be a valid year';
 
-                                        validated
-                                            ? Vibration.vibrate(duration: 50)
-                                            : Vibration.vibrate(duration: 200);
-                                        // print( UserProfileData.versityName);
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 16),
-                                        child: Text(
-                                          'Verify Data',
-                                          style: GoogleFonts.aBeeZee(
-                                              fontSize: 18,
-                                              color: Colors.white),
-                                        ),
+                                          return null;
+                                        },
+                                        style: TextStyle(fontSize: 18),
+                                        keyboardType: TextInputType.datetime,
+                                        onChanged: (value) {
+                                          UserProfileData.admitted = value;
+                                        },
+                                        onTap: () => gredianAlign(),
+                                        decoration:
+                                            kTextFieldDecoration.copyWith(
+                                                prefixIcon:
+                                                    Icon(Icons.calendar_today),
+                                                labelText: 'Year',
+                                                hintText: 'Admission year'),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 4,
-                                  ),
                                   Expanded(
-                                    flex: validated ? 2 : 1,
-                                    child: RaisedButton(
-                                      color: Colors.green,
-                                      onPressed: !validated
-                                          ? null
-                                          : () {
-                                              gredianAlign();
-                                              upLoadData();
-                                            },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 16),
-                                        child: Text(
-                                          'Upload',
-                                          style: GoogleFonts.aBeeZee(
-                                              fontSize: 18,
-                                              color: Colors.white),
-                                        ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: TextFormField(
+                                        validator: (value) {
+                                          if (value == null || value == '')
+                                            return 'This field cannot be empty!';
+                                          return null;
+                                        },
+                                        style: TextStyle(fontSize: 18),
+                                        onChanged: (value) {
+                                          UserProfileData.dept = value;
+                                        },
+                                        onTap: () => gredianAlign(),
+                                        decoration: kTextFieldDecoration
+                                            .copyWith(
+                                                prefixIcon: Icon(Icons
+                                                    .supervised_user_circle),
+                                                labelText: 'Department',
+                                                hintText:
+                                                    'Use the abbreviation'),
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            // RaisedButton(onPressed: () {
-                            //   Navigator.pushReplacement(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //           builder: (context) => MainPage()));
-                            // })
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: TextFormField(
+                                  validator: (value) {
+                                    if (value == null || value == '')
+                                      return 'This field cannot be empty!';
+                                    return null;
+                                  },
+                                  style: TextStyle(fontSize: 18),
+                                  onChanged: (value) {
+                                    UserProfileData.registrationNo = value;
+                                  },
+                                  onTap: () => gredianAlign(),
+                                  decoration: kTextFieldDecoration.copyWith(
+                                      prefixIcon: Icon(Icons.account_circle),
+                                      labelText: 'Registration',
+                                      hintText: 'Enter your registration No'),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: TextFormField(
+                                  validator: (value) {
+                                    if (value == null || value == '')
+                                      return 'This field cannot be empty!';
+                                    if (value.length != 11)
+                                      return 'Must be 11 digits';
+                                    return null;
+                                  },
+                                  style: TextStyle(fontSize: 18),
+                                  keyboardType: TextInputType.phone,
+                                  onChanged: (value) {
+                                    UserProfileData.phoneNum = value;
+                                  },
+                                  onTap: () => gredianAlign(),
+                                  decoration: kTextFieldDecoration.copyWith(
+                                      prefixIcon: Icon(Icons.phone),
+                                      labelText: 'Phone',
+                                      hintText: 'It\'s secured'),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: TextFormField(
+                                  validator: (value) {
+                                    if (value == null || value == '')
+                                      return 'This field cannot be empty!';
+                                    return null;
+                                  },
+                                  style: TextStyle(fontSize: 18),
+                                  minLines: 1,
+                                  maxLines: 3,
+                                  onChanged: (value) {
+                                    UserProfileData.address = value;
+                                  },
+                                  onTap: () => gredianAlign(),
+                                  decoration: kTextFieldDecoration.copyWith(
+                                      prefixIcon: Icon(Icons.home),
+                                      labelText: 'Address',
+                                      hintText: 'Use your current location'),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: RaisedButton(
+                                        onPressed: () {
+                                          FocusScope.of(context).unfocus();
+                                          UserProfileData.email = FirebaseAuth
+                                              .instance.currentUser.email;
+                                          gredianAlign();
+                                          setState(() {
+                                            validated = _formKey.currentState
+                                                .validate();
+                                          });
+                                          if (validated &&
+                                              UserProfileData.profilePicLink ==
+                                                  null) {
+                                            Scaffold.of(context).showSnackBar(
+                                              SnackBar(
+                                                backgroundColor:
+                                                    Colors.teal.shade800,
+                                                content: Text(
+                                                    'Please upload an image'),
+                                              ),
+                                            );
+                                          }
+                                          validated
+                                              ? Vibration.vibrate(duration: 50)
+                                              : Vibration.vibrate(
+                                                  duration: 200);
+                                          // print( UserProfileData.versityName);
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 16),
+                                          child: Text(
+                                            'Verify Data',
+                                            style: GoogleFonts.aBeeZee(
+                                                fontSize: 18,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 4,
+                                    ),
+                                    Expanded(
+                                      flex: validated &&
+                                              UserProfileData.profilePicLink !=
+                                                  null
+                                          ? 2
+                                          : 1,
+                                      child: RaisedButton(
+                                        color: Colors.green,
+                                        onPressed: validated &&
+                                                UserProfileData
+                                                        .profilePicLink !=
+                                                    null
+                                            ? () {
+                                                gredianAlign();
+                                                upLoadData();
+                                              }
+                                            : null,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 16),
+                                          child: Text(
+                                            'Upload',
+                                            style: GoogleFonts.aBeeZee(
+                                                fontSize: 18,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              // RaisedButton(onPressed: () {
+                              //   Navigator.pushReplacement(
+                              //       context,
+                              //       MaterialPageRoute(
+                              //           builder: (context) => MainPage()));
+                              // })
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          )),
+            ));
+      }),
     );
   }
 }

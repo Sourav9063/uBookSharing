@@ -132,7 +132,9 @@ class GetBookData {
       bookNameList.sort();
       return bookNameList;
     } catch (e) {
-      bookNameList.add(e.message);
+      // bookNameList.add('No data');
+      bookNameList = [];
+
       return bookNameList;
     }
     // print(bookNameList);
@@ -150,7 +152,8 @@ class GetBookData {
         .collection(UserProfileData.tmVersity)
         .doc('AllBooks')
         .collection('AllBooks')
-        .where(field, isEqualTo: search)
+        .where(field, isGreaterThanOrEqualTo: search)
+        // .where(field, isLessThanOrEqualTo: search)
         .get();
   }
 }

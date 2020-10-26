@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import 'package:page_transition/page_transition.dart';
@@ -36,6 +37,9 @@ class _MainScreenState extends State<MainScreen> {
         favVis = true;
       });
     } else {
+      setState(() {
+        favVis = false;
+      });
       showDialog(
         context: context,
         builder: (context) {
@@ -74,7 +78,7 @@ class _MainScreenState extends State<MainScreen> {
       //       onPressed: () {
       //         Navigator.push(
       //           context,
-      //           PageTransition(
+      //           PageTransition(curve: Curves.fastOutSlowIn,
       //             // duration: Duration(seconds:),
       //             // settings: RouteSettings(),
       //             child: AddBookScreen(),
@@ -111,12 +115,12 @@ class _MainScreenState extends State<MainScreen> {
                     Navigator.push(
                       context,
                       PageTransition(
+                        curve: Curves.fastOutSlowIn,
                         // duration: Duration(seconds:),
                         // settings: RouteSettings(),
                         child: AddBookScreen(),
                         type: PageTransitionType.rightToLeftWithFade,
                         alignment: Alignment.bottomRight,
-                        curve: Curves.fastOutSlowIn,
                       ),
                     );
                   },
@@ -133,12 +137,12 @@ class _MainScreenState extends State<MainScreen> {
                   Navigator.push(
                     context,
                     PageTransition(
+                      curve: Curves.fastOutSlowIn,
                       // duration: Duration(seconds:),
                       // settings: RouteSettings(),
                       child: AddRequestScreen(),
                       type: PageTransitionType.rightToLeftWithFade,
                       alignment: Alignment.bottomRight,
-                      curve: Curves.fastOutSlowIn,
                     ),
                   );
                 },
@@ -165,11 +169,18 @@ class _MainScreenState extends State<MainScreen> {
                   // floating: true,
                   actions: [
                     IconButton(
-                        icon: Icon(Icons.search),
+                        icon: Icon(
+                          Icons.search_rounded,
+                          color: Colors.white,
+                        ),
                         onPressed: () {
                           showSearch(
                               context: context, delegate: SearchPageTest());
-                        })
+                        }),
+                    Lottie.network(
+                      'https://assets1.lottiefiles.com/packages/lf20_rnszl1.json',
+                      // repeat: false,
+                    )
                   ],
 
                   backgroundColor: Color(0xff6F00FF),
@@ -225,7 +236,19 @@ class _MainScreenState extends State<MainScreen> {
                                 (context, AsyncSnapshot<QuerySnapshot> snp) {
                               if (snp.hasData) {
                                 if (snp.data.size == 0) {
-                                  return Text('There are no requests');
+                                  return Column(
+                                    children: [
+                                      Container(
+                                        height: CommonThings.size.width * .50,
+                                        // fit: BoxFit.contain,
+                                        child: FlareActor(
+                                          'assets/flr/Not found.flr',
+                                          animation: 'idle',
+                                        ),
+                                      ),
+                                      Text('There are no Books'),
+                                    ],
+                                  );
                                 } else {
                                   List<BookData> recentDataList;
 
@@ -285,7 +308,7 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                         Container(
                           margin: EdgeInsets.all(4),
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.all(15),
                           color: Color(0xfff01a54),
                           child: Text(
                             'New Requests',
@@ -320,8 +343,7 @@ class _MainScreenState extends State<MainScreen> {
                                     ));
                                   }
 
-                                  bookcard.add(Icon(Icons.add));
-
+                               
                                   return ListView(
                                     // crossAxisCount: 2,
                                     shrinkWrap: true,
