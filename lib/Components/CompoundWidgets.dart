@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
-import 'package:uBookSharing/Screens/BookDetailsPage.dart';
+import 'package:uBookSharing/Screens/BookDetailsScreen.dart';
 import 'package:uBookSharing/Screens/Homepage.dart';
-import 'package:uBookSharing/Screens/profile.dart';
+import 'package:uBookSharing/Screens/ProfileEditScreen.dart';
 
 class BookImg extends StatelessWidget {
   final String imglink;
@@ -101,7 +103,7 @@ class BookCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return BookDetailsPage(bookData: bookData);
+          return BookDetailsScreen(bookData: bookData);
         }));
       },
       child: Container(
@@ -347,7 +349,7 @@ class CustomDrawer extends StatelessWidget {
                       Navigator.push(
                           context,
                           PageTransition(
-                              child: UserProfile(),
+                              child: ProfileEditScreen(),
                               type: PageTransitionType.leftToRight));
                     },
                     child: Row(
@@ -482,34 +484,63 @@ class AlertsCompound extends StatelessWidget {
 
 class SpinkitFading extends StatelessWidget {
   final String msg;
+
   const SpinkitFading({Key key, this.msg}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      // crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Stack(
       children: [
-        Expanded(
-          child: Center(
-            child: SpinKitFadingCube(
-              size: CommonThings.size.width * .2,
-              itemBuilder: (BuildContext context, int index) {
-                return DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: index % 3 == 0 ? Colors.red : Color(0xffffb8b24),
-                  ),
-                );
-              },
+        Positioned(
+          top: 0,
+          left: 0,
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+            child: Container(
+              height: CommonThings.size.height,
+              width: CommonThings.size.width,
+              color: Colors.black.withOpacity(.7),
             ),
           ),
         ),
-        Expanded(
-          child: Text(
-            msg == null ? 'Loading...' : msg,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+        Align(
+          alignment: Alignment.center,
+          child: Container(
+            height: CommonThings.size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Center(
+                    child: SpinKitFadingCube(
+                      size: CommonThings.size.width * .17,
+                      itemBuilder: (BuildContext context, int index) {
+                        return DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: index % 3 == 0
+                                ? Colors.red
+                                : Color(0xffffb8b24),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    msg == null ? 'Loading...' : msg,
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white),
+                  ),
+                )
+              ],
+            ),
           ),
-        )
+        ),
       ],
     );
   }

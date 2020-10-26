@@ -5,15 +5,15 @@ import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class BookDetailsPage extends StatefulWidget {
+class BookDetailsScreen extends StatefulWidget {
   final BookData bookData;
 
-  const BookDetailsPage({Key key, @required this.bookData}) : super(key: key);
+  const BookDetailsScreen({Key key, @required this.bookData}) : super(key: key);
   @override
-  _BookDetailsPageState createState() => _BookDetailsPageState();
+  _BookDetailsScreenState createState() => _BookDetailsScreenState();
 }
 
-class _BookDetailsPageState extends State<BookDetailsPage> {
+class _BookDetailsScreenState extends State<BookDetailsScreen> {
   double picHeight = CommonThings.size.width * 4 / 3;
   void smallPic() {
     setState(() {

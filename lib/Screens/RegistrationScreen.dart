@@ -11,7 +11,7 @@ import 'package:uBookSharing/Components/CompoundWidgets.dart';
 
 import 'package:uBookSharing/Constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uBookSharing/Screens/profile.dart';
+import 'package:uBookSharing/Screens/ProfileEditScreen.dart';
 
 class RegScreen extends StatefulWidget {
   RegScreen({Key key}) : super(key: key);
@@ -398,7 +398,7 @@ class _RegScreenState extends State<RegScreen> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      UserProfile()));
+                                                      ProfileEditScreen()));
                                         },
                                 ),
                               ),

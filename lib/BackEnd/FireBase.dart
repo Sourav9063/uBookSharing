@@ -119,9 +119,9 @@ class GetBookData {
     bookData.bookUploaderImg = element.data()[AllKeys.bookUploaderImgKey];
     return bookData;
   }
-
+ static List<dynamic> bookNameList;
   static Future<List<dynamic>> getBookNameListFirebase() async {
-    List<dynamic> bookNameList;
+  
     await FirebaseFirestore.instance
         .collection(UserProfileData.tmVersity)
         .doc('AllBooks')

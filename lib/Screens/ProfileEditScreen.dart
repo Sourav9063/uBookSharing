@@ -15,17 +15,17 @@ import 'package:uBookSharing/BackEnd/UploadIMG.dart';
 
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Constants.dart';
-import 'package:uBookSharing/Screens/mainPage.dart';
+import 'package:uBookSharing/Screens/MainScreen.dart';
 import 'package:vibration/vibration.dart';
 
-class UserProfile extends StatefulWidget {
-  UserProfile({Key key}) : super(key: key);
+class ProfileEditScreen extends StatefulWidget {
+  ProfileEditScreen({Key key}) : super(key: key);
 
   @override
-  _UserProfileState createState() => _UserProfileState();
+  _ProfileEditScreenState createState() => _ProfileEditScreenState();
 }
 
-class _UserProfileState extends State<UserProfile> {
+class _ProfileEditScreenState extends State<ProfileEditScreen> {
   List<String> versity = [];
   final _formKey = GlobalKey<FormState>();
   final _versityName = GlobalKey<FormState>();
@@ -66,7 +66,7 @@ class _UserProfileState extends State<UserProfile> {
       Navigator.pushReplacement(
           context,
           PageTransition(
-              child: MainPage(), type: PageTransitionType.rightToLeftWithFade));
+              child: MainScreen(), type: PageTransitionType.rightToLeftWithFade));
       //  UserProfileData.name,  UserProfileData.versityName,
       // 'profilePicLink', 'admitted', 'dept', 'phoneNum', 'email'
 
@@ -246,7 +246,7 @@ class _UserProfileState extends State<UserProfile> {
         await GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
     if (val == 'done') {
       Navigator.pushReplacement(context,
-          PageTransition(child: MainPage(), type: PageTransitionType.fade));
+          PageTransition(child: MainScreen(), type: PageTransitionType.fade));
     }
   }
 
@@ -364,7 +364,7 @@ class _UserProfileState extends State<UserProfile> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => UserProfile()));
+                                    builder: (context) => ProfileEditScreen()));
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20),
