@@ -47,15 +47,11 @@ class BookImg extends StatelessWidget {
           //   )
           : InteractiveViewer(
               transformationController: transformationController,
-              
               maxScale: 5,
-  
               onInteractionEnd: (details) async {
                 await Future.delayed(Duration(seconds: 3));
 
                 transformationController.value = Matrix4.identity();
-           
-              
               },
               child: Image.network(
                 imglink,
@@ -198,10 +194,13 @@ class BookCard extends StatelessWidget {
                       child: Center(
                         child: FittedBox(
                           fit: BoxFit.fitWidth,
-                          child: Text(
-                            bookData.bookFor,
-                            style: TextStyle(
-                                fontSize: width * .055, color: Colors.white),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                              bookData.bookFor,
+                              style: TextStyle(
+                                  fontSize: width * .055, color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
@@ -494,7 +493,7 @@ class SpinkitFading extends StatelessWidget {
         Expanded(
           child: Center(
             child: SpinKitFadingCube(
-              size: 80,
+              size: CommonThings.size.width * .2,
               itemBuilder: (BuildContext context, int index) {
                 return DecoratedBox(
                   decoration: BoxDecoration(

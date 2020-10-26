@@ -19,6 +19,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
   String bookImgLink;
   // String bookId =
   //     UserProfileData.email + UserProfileData.uploadedBookNo.toString();
+  bool ignore = true;
   bool visible = true;
   bool agree = false;
   bool valdated = false;
@@ -31,6 +32,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
   BookData bookData = BookData();
   void riseForm() {
     setState(() {
+      ignore = false;
       visible = false;
       picHeight = CommonThings.size.height * .20 + 20;
       formTop = CommonThings.size.height * .20;
@@ -60,7 +62,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
 
   @override
   void initState() {
-    controller = ScrollController();
+    // controller = ScrollController();
     // controller.addListener(() {
     //   scrlLstnr();
     // });
@@ -86,6 +88,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                 onTap: () {
                   //  print(bookId);
                   setState(() {
+                    ignore = true;
                     visible = true;
                     picHeight = CommonThings.size.height * .60 + 20;
                     formTop = CommonThings.size.height * .60;
@@ -117,15 +120,16 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
               width: CommonThings.size.width,
               bottom: MediaQuery.of(context).viewInsets.bottom,
               child: GestureDetector(
-                // onPanUpdate: (details) {
-                //   if (details.delta.dy > 0) {
-                //     setState(() {
-                //       visible = true;
-                //       picHeight = CommonThings.size.height * .60 + 20;
-                //       formTop = CommonThings.size.height * .60;
-                //     });
-                //   } else if (details.delta.dy < 0) riseForm();
-                // },
+                onPanUpdate: (details) {
+                  if (details.delta.dy > 0) {
+                    setState(() {
+                      ignore = false;
+                      visible = true;
+                      picHeight = CommonThings.size.height * .60 + 20;
+                      formTop = CommonThings.size.height * .60;
+                    });
+                  } else if (details.delta.dy < 0) riseForm();
+                },
                 onTap: () {
                   riseForm();
                 },
@@ -133,334 +137,371 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                   // height: CommonThings.size.height * .8 -
                   //     MediaQuery.of(context).viewInsets.bottom,
                   padding:
-                      EdgeInsets.only(top: 24, left: 12, right: 12, bottom: 12),
+                      EdgeInsets.only(top: 16, left: 12, right: 12, bottom: 12),
                   decoration: BoxDecoration(
                       color: Color(0xffF8F4FF),
                       borderRadius: BorderRadius.circular(16)),
-                  child: SingleChildScrollView(
-                    // controller: controller,
-                    child: Form(
-                      key: _formKeyBook,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Center(
-                          //   child: ClipRRect(
-                          //     borderRadius: BorderRadius.circular(20),
-                          //     child: Container(
-                          //       color: Color(0x33001a54),
-                          //       height: 5,
-                          //       width: 40,
-                          //     ),
-                          //   ),
-                          // ),
-                          Center(
-                            child: Text(
-                              'Request',
-                              style: GoogleFonts.abrilFatface(
-                                color: Color(0xff001a54),
-                                fontSize: 38,
-                                // fontWeight: FontWeight.w500,
-                                // fontStyle: FontStyle.italic
-                              ),
-                            ),
-                          ),
-                          BookFormField(
-                            lebel: 'Book\'s Name',
-                            hintText: 'Please provide the right name',
-                            raiseForm: () {
-                              riseForm();
-                            },
-                            onChanged: (value) {
-                              bookData.bookName = value;
-                            },
-                            validate: (value) {
-                              if (value == null || value == '')
-                                return 'This field cannot be empty';
-                              return null;
-                            },
-                          ),
-                          BookFormField(
-                            lebel: 'Writer',
-                            hintText: 'The main writer\'s name',
-                            raiseForm: () {
-                              riseForm();
-                            },
-                            onChanged: (value) {
-                              bookData.bookWriter = value;
-                            },
-                            validate: (value) {
-                              if (value == null || value == '')
-                                return 'This field cannot be empty';
-                              return null;
-                            },
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: BookFormField(
-                                  lebel: 'Edition',
-                                  hintText: 'Edition or released year',
-                                  raiseForm: () {
-                                    riseForm();
-                                    // print(MediaQuery.of(context).viewInsets.bottom);
-                                  },
-                                  onChanged: (value) {
-                                    bookData.bookEdition = value;
-                                  },
-                                  validate: (value) {
-                                    if (value == null || value == '')
-                                      return 'This field cannot be empty';
-                                    return null;
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Expanded(
-                                  child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4.0),
-                                child: DropdownButtonFormField(
-                                  onTap: () {
-                                    riseForm();
-                                  },
-                                  validator: (value) {
-                                    if (value == null)
-                                      return 'This field cannot be empty';
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 17, horizontal: 8),
-                                    filled: true,
-                                    fillColor: Color(0xffffffff),
-                                    labelText: 'Want to',
-                                    hintText: 'Rent or Buy',
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xff001a54),
-                                      ),
-                                      borderRadius: BorderRadius.circular(14),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        width: 2.5,
-                                        color: Color(0xff6F00FF),
-                                      ),
-                                      borderRadius: BorderRadius.circular(14),
-                                    ),
-                                  ),
-                                  items: [
-                                    // DropdownMenuItem(
-                                    //   child: Text('For Share',
-                                    //       style: TextStyle(fontSize: 18)),
-                                    //   value: 'For Share',
-                                    // ),
-                                    DropdownMenuItem(
-                                      child: Text('Buy',
-                                          style: TextStyle(fontSize: 18)),
-                                      value: 'Buy',
-                                    ),
-                                    DropdownMenuItem(
-                                      child: Text('Rent ',
-                                          style: TextStyle(fontSize: 18)),
-                                      value: 'Rent',
-                                    ),
-                                  ],
-                                  onChanged: (value) {
-                                    setState(() {
-                                      bookData.bookFor = value;
-                                      if (value == 'Buy') {
-                                        forTime = false;
-                                        forPrice = true;
-                                      } else if (value == 'Rent') {
-                                        forPrice = true;
-                                        forTime = true;
-                                      } else {
-                                        forPrice = false;
-                                        forTime = false;
-                                      }
-                                    });
-                                  },
-                                ),
-                              ))
-                            ],
-                          ),
-                          AnimatedOpacity(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.easeInCubic,
-                            opacity: forPrice ? 1 : 0,
-                            child: Visibility(
-                              visible: forPrice,
-                              // child: BookFormField(
-                              //   lebel: 'Price',
-                              //   hintText: 'Enter fair amount',
-                              //   raiseForm: () {
-                              //     riseForm();
-                              //   },
-                              //   onChanged: (value) {
-                              //     bookData.bookPrice = value;
-                              //   },
-                              //   validate: (value) {
-                              //     if (value == null || value == '')
-                              //       return 'This field cannot be empty. Input 0 taka';
-                              //     return null;
-                              //   },
-                              // ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4.0),
-                                child: TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(fontSize: 18),
-                                  onTap: () {
-                                    riseForm();
-                                  },
-                                  onChanged: (value) {
-                                    bookData.bookPrice = value;
-                                  },
-                                  validator: (value) {
-                                    if (value == null || value == '')
-                                      return 'This field cannot be empty. Input 0 taka';
-                                    return null;
-                                  },
-                                  decoration: InputDecoration(
-                                    // contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                    filled: true,
-                                    fillColor: Color(0xffffffff),
-                                    labelText: 'Price',
-                                    hintText:
-                                        'Enter the amount you want to pay',
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xff001a54),
-                                      ),
-                                      borderRadius: BorderRadius.circular(14),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        width: 2,
-                                        color: Color(0xff6F00FF),
-                                      ),
-                                      borderRadius: BorderRadius.circular(14),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          AnimatedOpacity(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.easeInCubic,
-                            opacity: forTime ? 1 : 0,
-                            child: Visibility(
-                              visible: forTime,
-                              child: BookFormField(
-                                lebel: 'Time',
-                                hintText: 'Be specific about time and date',
-                                raiseForm: () {
-                                  riseForm();
-                                },
-                                onChanged: (value) {
-                                  bookData.bookTime = value;
-                                },
-                                validate: (value) {
-                                  if (value == null || value == '')
-                                    return 'This cannot be empty';
-                                  return null;
-                                },
-                              ),
-                            ),
-                          ),
-                          BookFormField(
-                              raiseForm: () {
-                                riseForm();
-                              },
-                              lebel: 'Description',
-                              hintText: 'Extra optional information',
-                              validate: (value) {
-                                return null;
-                              },
-                              onChanged: (value) {
-                                bookData.bookDes = value;
-                              }),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            '*Please read carefully.\n The following informations will be visible to all user.\n- Your name.\n- Your profile picture.\n- Your department, year and registration no.\n- Your email address.\n- Book\'s informations.',
-                            style: TextStyle(color: Colors.red),
-                          ),
-                          Row(
-                            children: [
-                              Checkbox(
-                                  value: agree,
-                                  onChanged: (val) {
-                                    FocusScope.of(context).unfocus();
-                                    riseForm();
-                                    setState(() {
-                                      agree = val;
-                                      // print(agree);
-                                    });
-                                  }),
-                              Text('I agree to share these information.')
-                            ],
-                          ),
-                          AnimatedOpacity(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.easeInCubic,
-                            opacity: agree ? 1 : 0,
-                            child: Visibility(
-                              visible: agree,
-                              child: RaisedButton(
-                                padding: EdgeInsets.symmetric(vertical: 12),
-                                onPressed: () {
-                                  FocusScope.of(context).unfocus();
-                                  setState(() {
-                                    valdated =
-                                        _formKeyBook.currentState.validate();
-                                  });
-
-                                  if (valdated && bookImgLink == null) {
-                                    Scaffold.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('Please upload an Image'),
-                                      ),
-                                    );
-                                    setState(() {
-                                      visible = true;
-                                      picHeight =
-                                          CommonThings.size.height * .60 + 20;
-                                      formTop = CommonThings.size.height * .60;
-                                    });
-                                  }
-                                  if (valdated && bookImgLink != null) {
-                                    Scaffold.of(context).showSnackBar(
-                                      SnackBar(
-                                        backgroundColor: Colors.green,
-                                        content: Text(
-                                            'Varified. Click the Add icon to upload'),
-                                      ),
-                                    );
-                                  }
-                                },
-                                child: Center(
-                                    child: Text('Verify',
-                                        style: GoogleFonts.aBeeZee(
-                                            fontSize: 18,
-                                            color: Colors.white))),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: CommonThings.size.height * .10,
-                          )
-                        ],
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(
+                              bottom: CommonThings.size.width * .03),
+                          height: 7,
+                          width: CommonThings.size.width * .2,
+                          decoration: BoxDecoration(
+                              color: Colors.black12,
+                              borderRadius: BorderRadius.circular(20)),
+                        ),
                       ),
-                    ),
+                      Expanded(
+                        child: IgnorePointer(
+                          ignoring: visible,
+                          child: SingleChildScrollView(
+                            // controller: controller,
+                            child: Form(
+                              key: _formKeyBook,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Center(
+                                  //   child: ClipRRect(
+                                  //     borderRadius: BorderRadius.circular(20),
+                                  //     child: Container(
+                                  //       color: Color(0x33001a54),
+                                  //       height: 5,
+                                  //       width: 40,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  Center(
+                                    child: Text(
+                                      'Request',
+                                      style: GoogleFonts.abrilFatface(
+                                        color: Color(0xff001a54),
+                                        fontSize: 38,
+                                        // fontWeight: FontWeight.w500,
+                                        // fontStyle: FontStyle.italic
+                                      ),
+                                    ),
+                                  ),
+                                  BookFormField(
+                                    lebel: 'Book\'s Name',
+                                    hintText: 'Please provide the right name',
+                                    raiseForm: () {
+                                      riseForm();
+                                    },
+                                    onChanged: (value) {
+                                      bookData.bookName = value;
+                                    },
+                                    validate: (value) {
+                                      if (value == null || value == '')
+                                        return 'This field cannot be empty';
+                                      return null;
+                                    },
+                                  ),
+                                  BookFormField(
+                                    lebel: 'Writer',
+                                    hintText: 'The main writer\'s name',
+                                    raiseForm: () {
+                                      riseForm();
+                                    },
+                                    onChanged: (value) {
+                                      bookData.bookWriter = value;
+                                    },
+                                    validate: (value) {
+                                      if (value == null || value == '')
+                                        return 'This field cannot be empty';
+                                      return null;
+                                    },
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: BookFormField(
+                                          lebel: 'Edition',
+                                          hintText: 'Edition or released year',
+                                          raiseForm: () {
+                                            riseForm();
+                                            // print(MediaQuery.of(context).viewInsets.bottom);
+                                          },
+                                          onChanged: (value) {
+                                            bookData.bookEdition = value;
+                                          },
+                                          validate: (value) {
+                                            if (value == null || value == '')
+                                              return 'This field cannot be empty';
+                                            return null;
+                                          },
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 4,
+                                      ),
+                                      Expanded(
+                                          child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 4.0),
+                                        child: DropdownButtonFormField(
+                                          onTap: () {
+                                            riseForm();
+                                          },
+                                          validator: (value) {
+                                            if (value == null)
+                                              return 'This field cannot be empty';
+                                            return null;
+                                          },
+                                          decoration: InputDecoration(
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 17,
+                                                    horizontal: 8),
+                                            filled: true,
+                                            fillColor: Color(0xffffffff),
+                                            labelText: 'Want to',
+                                            hintText: 'Rent or Buy',
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xff001a54),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(14),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                width: 2.5,
+                                                color: Color(0xff6F00FF),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(14),
+                                            ),
+                                          ),
+                                          items: [
+                                            // DropdownMenuItem(
+                                            //   child: Text('For Share',
+                                            //       style: TextStyle(fontSize: 18)),
+                                            //   value: 'For Share',
+                                            // ),
+                                            DropdownMenuItem(
+                                              child: Text('Buy',
+                                                  style:
+                                                      TextStyle(fontSize: 18)),
+                                              value: 'Buy',
+                                            ),
+                                            DropdownMenuItem(
+                                              child: Text('Rent ',
+                                                  style:
+                                                      TextStyle(fontSize: 18)),
+                                              value: 'Rent',
+                                            ),
+                                          ],
+                                          onChanged: (value) {
+                                            setState(() {
+                                              bookData.bookFor = value;
+                                              if (value == 'Buy') {
+                                                forTime = false;
+                                                forPrice = true;
+                                              } else if (value == 'Rent') {
+                                                forPrice = true;
+                                                forTime = true;
+                                              } else {
+                                                forPrice = false;
+                                                forTime = false;
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      ))
+                                    ],
+                                  ),
+                                  AnimatedOpacity(
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.easeInCubic,
+                                    opacity: forPrice ? 1 : 0,
+                                    child: Visibility(
+                                      visible: forPrice,
+                                      // child: BookFormField(
+                                      //   lebel: 'Price',
+                                      //   hintText: 'Enter fair amount',
+                                      //   raiseForm: () {
+                                      //     riseForm();
+                                      //   },
+                                      //   onChanged: (value) {
+                                      //     bookData.bookPrice = value;
+                                      //   },
+                                      //   validate: (value) {
+                                      //     if (value == null || value == '')
+                                      //       return 'This field cannot be empty. Input 0 taka';
+                                      //     return null;
+                                      //   },
+                                      // ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 4.0),
+                                        child: TextFormField(
+                                          keyboardType: TextInputType.number,
+                                          style: TextStyle(fontSize: 18),
+                                          onTap: () {
+                                            riseForm();
+                                          },
+                                          onChanged: (value) {
+                                            bookData.bookPrice = value;
+                                          },
+                                          validator: (value) {
+                                            if (value == null || value == '')
+                                              return 'This field cannot be empty. Input 0 taka';
+                                            return null;
+                                          },
+                                          decoration: InputDecoration(
+                                            // contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                            filled: true,
+                                            fillColor: Color(0xffffffff),
+                                            labelText: 'Price',
+                                            hintText:
+                                                'Enter the amount you want to pay',
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0xff001a54),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(14),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                width: 2,
+                                                color: Color(0xff6F00FF),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(14),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  AnimatedOpacity(
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.easeInCubic,
+                                    opacity: forTime ? 1 : 0,
+                                    child: Visibility(
+                                      visible: forTime,
+                                      child: BookFormField(
+                                        lebel: 'Time',
+                                        hintText:
+                                            'Be specific about time and date',
+                                        raiseForm: () {
+                                          riseForm();
+                                        },
+                                        onChanged: (value) {
+                                          bookData.bookTime = value;
+                                        },
+                                        validate: (value) {
+                                          if (value == null || value == '')
+                                            return 'This cannot be empty';
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  BookFormField(
+                                      raiseForm: () {
+                                        riseForm();
+                                      },
+                                      lebel: 'Description',
+                                      hintText: 'Extra optional information',
+                                      validate: (value) {
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                        bookData.bookDes = value;
+                                      }),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    '*Please read carefully.\n The following informations will be visible to all user.\n- Your name.\n- Your profile picture.\n- Your department, year and registration no.\n- Your email address.\n- Book\'s informations.',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Checkbox(
+                                          value: agree,
+                                          onChanged: (val) {
+                                            FocusScope.of(context).unfocus();
+                                            riseForm();
+                                            setState(() {
+                                              agree = val;
+                                              // print(agree);
+                                            });
+                                          }),
+                                      Text(
+                                          'I agree to share these information.')
+                                    ],
+                                  ),
+                                  AnimatedOpacity(
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.easeInCubic,
+                                    opacity: agree ? 1 : 0,
+                                    child: Visibility(
+                                      visible: agree,
+                                      child: RaisedButton(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 12),
+                                        onPressed: () {
+                                          FocusScope.of(context).unfocus();
+                                          setState(() {
+                                            valdated = _formKeyBook.currentState
+                                                .validate();
+                                          });
+
+                                          if (valdated && bookImgLink == null) {
+                                            Scaffold.of(context).showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    'Please upload an Image'),
+                                              ),
+                                            );
+                                            setState(() {
+                                              visible = true;
+                                              picHeight =
+                                                  CommonThings.size.height *
+                                                          .60 +
+                                                      20;
+                                              formTop =
+                                                  CommonThings.size.height *
+                                                      .60;
+                                            });
+                                          }
+                                          if (valdated && bookImgLink != null) {
+                                            Scaffold.of(context).showSnackBar(
+                                              SnackBar(
+                                                backgroundColor: Colors.green,
+                                                content: Text(
+                                                    'Varified. Click the Add icon to upload'),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                        child: Center(
+                                            child: Text('Verify',
+                                                style: GoogleFonts.aBeeZee(
+                                                    fontSize: 18,
+                                                    color: Colors.white))),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: CommonThings.size.height * .10,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

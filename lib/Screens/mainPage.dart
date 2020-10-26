@@ -21,7 +21,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   bool favVis = false;
-  int lim = 10;
+  int lim = 5;
 
   loadUser() async {
     String msg =
@@ -181,13 +181,11 @@ class _MainPageState extends State<MainPage> {
                     SizedBox(
                       height: CommonThings.size.height * .065,
                     ),
-                    Expanded(
-                      child: Center(
-                        child: Text('New Books'),
-                      ),
+                    Center(
+                      child: Text('New Books'),
                     ),
                     SizedBox(
-                      height: CommonThings.size.width * .70 * .9,
+                      height: CommonThings.size.width * .7,
                       child: StreamBuilder(
                         stream:
                             GetBookData.getRecentBookStream(lim, 'AllBooks'),
@@ -217,7 +215,7 @@ class _MainPageState extends State<MainPage> {
                                 InkWell(
                                   onTap: () {
                                     setState(() {
-                                      lim = lim + 10;
+                                      if (lim <= 30) lim = lim + 5;
                                     });
                                   },
                                   child: Center(
@@ -250,13 +248,11 @@ class _MainPageState extends State<MainPage> {
                         },
                       ),
                     ),
-                    Expanded(
-                      child: Center(
-                        child: Text('New Requests'),
-                      ),
+                    Center(
+                      child: Text('New Requests'),
                     ),
-                    Expanded(
-                      flex: 3,
+                    SizedBox(
+                      height: CommonThings.size.width * .6,
                       child: StreamBuilder(
                         stream: GetBookData.getRecentBookStream(20, 'Requests'),
                         builder: (context, AsyncSnapshot<QuerySnapshot> snp) {
@@ -275,7 +271,7 @@ class _MainPageState extends State<MainPage> {
                                 bookcard.add(Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: BookCard(
-                                    width: CommonThings.size.width * .7,
+                                    width: CommonThings.size.width * .6,
                                     bookData: bookData,
                                   ),
                                 ));
@@ -284,9 +280,10 @@ class _MainPageState extends State<MainPage> {
                               bookcard.add(Icon(Icons.add));
 
                               return ListView(
+                                // crossAxisCount: 2,
                                 shrinkWrap: true,
 
-                                // scrollDirection: Axis.horizontal,
+                                scrollDirection: Axis.horizontal,
                                 padding: EdgeInsets.all(8),
                                 // itemExtent: CommonThings.size.width * .40,
                                 children: bookcard,
