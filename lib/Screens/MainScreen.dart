@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
+
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import 'package:page_transition/page_transition.dart';
@@ -177,10 +177,10 @@ class _MainScreenState extends State<MainScreen> {
                           showSearch(
                               context: context, delegate: SearchPageTest());
                         }),
-                    Lottie.network(
-                      'https://assets1.lottiefiles.com/packages/lf20_rnszl1.json',
-                      // repeat: false,
-                    )
+                    // Lottie.network(
+                    //   'https://assets1.lottiefiles.com/packages/lf20_rnszl1.json',
+                    //   // repeat: false,
+                    // )
                   ],
 
                   backgroundColor: Color(0xff6F00FF),
@@ -343,7 +343,6 @@ class _MainScreenState extends State<MainScreen> {
                                     ));
                                   }
 
-                               
                                   return ListView(
                                     // crossAxisCount: 2,
                                     shrinkWrap: true,
