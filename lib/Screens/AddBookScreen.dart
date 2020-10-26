@@ -88,7 +88,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
   addBookInList() {
     showModalBottomSheet(
         context: context,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+
         enableDrag: true,
         isScrollControlled: true,
         builder: (context) {
@@ -387,13 +387,14 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                     ),
                                     onChanged: (value) {
                                       riseForm();
-                                      if (value != "Add A New Book") {
-                                        bookData.bookName = value;
-                                        // versityNameValidation = true;
+                                      addBookInList();
+                                      // if (value != "Add A New Book") {
+                                      //   bookData.bookName = value;
+                                      //   // versityNameValidation = true;
 
-                                      } else {
-                                        addBookInList();
-                                      }
+                                      // } else {
+
+                                      // }
                                     },
                                     selectedItem: bookData.bookName,
                                   ),

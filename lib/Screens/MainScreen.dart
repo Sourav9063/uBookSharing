@@ -9,6 +9,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
+import 'package:uBookSharing/Components/Search.dart';
 import 'package:uBookSharing/Components/favCustom.dart';
 import 'package:uBookSharing/Screens/AddBookScreen.dart';
 import 'package:uBookSharing/Screens/AddRequestScreen.dart';
@@ -162,6 +163,14 @@ class _MainScreenState extends State<MainScreen> {
                   pinned: true,
                   // snap: true,
                   // floating: true,
+                  actions: [
+                    IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () {
+                          showSearch(
+                              context: context, delegate: SearchPageTest());
+                        })
+                  ],
 
                   backgroundColor: Color(0xff6F00FF),
                   expandedHeight: CommonThings.size.height * .25,
@@ -190,15 +199,25 @@ class _MainScreenState extends State<MainScreen> {
 
                   child: SafeArea(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: CommonThings.size.height * .065,
+                          height: CommonThings.size.height * .075,
                         ),
-                        Center(
-                          child: Text('New Books'),
+                        Container(
+                          margin: EdgeInsets.all(4),
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                            color: Colors.blue.shade700,
+                            // borderRadius: BorderRadius.circular(40),
+                          ),
+                          child: Text(
+                            'New Books',
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
                         ),
                         SizedBox(
-                          height: CommonThings.size.width * .7,
+                          height: CommonThings.size.width * .6,
                           child: StreamBuilder(
                             stream: GetBookData.getRecentBookStream(
                                 lim, 'AllBooks'),
@@ -264,8 +283,14 @@ class _MainScreenState extends State<MainScreen> {
                             },
                           ),
                         ),
-                        Center(
-                          child: Text('New Requests'),
+                        Container(
+                          margin: EdgeInsets.all(4),
+                          padding: EdgeInsets.all(10),
+                          color: Color(0xfff01a54),
+                          child: Text(
+                            'New Requests',
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
                         ),
                         Expanded(
                           // height: CommonThings.size.width * .6,

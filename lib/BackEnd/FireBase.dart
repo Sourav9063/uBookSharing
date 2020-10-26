@@ -143,4 +143,14 @@ class GetBookData {
 
     return getBookDataFromDocumentSnapshot(dataRromRef);
   }
+
+  static Future<QuerySnapshot> bookDataSearch(
+      String field, String search) async {
+    return await FirebaseFirestore.instance
+        .collection(UserProfileData.tmVersity)
+        .doc('AllBooks')
+        .collection('AllBooks')
+        .where(field, isEqualTo: search)
+        .get();
+  }
 }

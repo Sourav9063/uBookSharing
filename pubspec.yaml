@@ -78,6 +78,7 @@ flutter:
     - assets/flr/sittingBook.flr
     - assets/flr/BookGive.flr
     - assets/flr/BookLoadingLottie.flr
+    - assets/flr/Not found.flr
     
     - assets/lottie/bookWritting.json
     - assets/lottie/AddLottie.json

@@ -8,8 +8,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
+import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Screens/BookDetailsScreen.dart';
 import 'package:uBookSharing/Screens/Homepage.dart';
+import 'package:uBookSharing/Screens/ListOfBooksScreen.dart';
 import 'package:uBookSharing/Screens/ProfileEditScreen.dart';
 
 class BookImg extends StatelessWidget {
@@ -326,7 +328,8 @@ class CustomDrawer extends StatelessWidget {
                     SizedBox(
                       width: 8,
                     ),
-                    Expanded(
+                    FittedBox(
+                      fit: BoxFit.fitWidth,
                       child: Text(
                         UserProfileData.name == null
                             ? 'Loading..'
@@ -341,7 +344,7 @@ class CustomDrawer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   RaisedButton(
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     color: Color(0x00000000),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0)),
@@ -356,7 +359,7 @@ class CustomDrawer extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Icon(
-                          Icons.account_circle,
+                          Icons.account_circle_outlined,
                           color: Colors.white,
                           // size: 30,
                         ),
@@ -369,7 +372,41 @@ class CustomDrawer extends StatelessWidget {
                     ),
                   ),
                   RaisedButton(
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                    color: Color(0x00000000),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0)),
+                    onPressed: () async {
+                      var snp = await GetBookData.bookDataSearch(
+                          AllKeys.bookUploaderEmailKey,
+                          FirebaseAuth.instance.currentUser.email);
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              child: ListOfBooksScreen(
+                                snapshot: snp,
+                                searchName: 'My Books',
+                              ),
+                              type: PageTransitionType.leftToRight));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.folder_open,
+                          color: Colors.white,
+                          // size: 30,
+                        ),
+                        SizedBox(width: 18),
+                        Text(
+                          'My Books',
+                          style: kDrawerTextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                  RaisedButton(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                     color: Color(0x00000000),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0)),

@@ -66,7 +66,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       Navigator.pushReplacement(
           context,
           PageTransition(
-              child: MainScreen(), type: PageTransitionType.rightToLeftWithFade));
+              child: MainScreen(),
+              type: PageTransitionType.rightToLeftWithFade));
       //  UserProfileData.name,  UserProfileData.versityName,
       // 'profilePicLink', 'admitted', 'dept', 'phoneNum', 'email'
 
@@ -148,7 +149,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   addVersity() {
     showModalBottomSheet(
         context: context,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         enableDrag: true,
         isScrollControlled: true,
         builder: (context) {

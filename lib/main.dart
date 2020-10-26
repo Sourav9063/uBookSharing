@@ -29,6 +29,14 @@ class MyAwesomeApp extends StatelessWidget {
       title: 'uBookSharing',
       theme: ThemeData(
           // brightness: Brightness.dark,
+
+          // scaffoldBackgroundColor: Color(0xff6F00FF),
+          
+          // cardColor: Colors.white,
+          bottomSheetTheme: BottomSheetThemeData(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18))),
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           accentColor: Color(0xfffb8b24),
