@@ -29,7 +29,7 @@ class GetUserData {
       if (UserProfileData.name == null) return 'empty';
       return 'done';
     } catch (e) {
-      return e.message;
+      return 'Error';
     }
     // return 'Something went wrong';
   }

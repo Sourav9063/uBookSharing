@@ -50,9 +50,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void signIn(String email, String password) async {
     spinnerState(true);
+    print('signIn start');
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
-
+      print('signIn done');
       // if (auth.currentUser != null) {
       //   await UserDataSavedEmailPassword.saveuidSharedPref(
       //       auth.currentUser.uid);
@@ -65,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           animationUnloack = true;
         });
-
+        print('signIn Unlock');
         // Future.delayed(Duration(milliseconds: 2000));
         // await UserDataSavedEmailPassword.saveuidSharedPref(
         //     auth.currentUser.uid);
@@ -74,6 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
         await auth.currentUser.sendEmailVerification();
 
         verifiedCheck();
+        print('signIn verification');
         showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -91,7 +93,8 @@ class _LoginScreenState extends State<LoginScreen> {
               );
             });
       }
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
+      print('signIn Error');
       spinnerState(false);
       showDialog(
         context: context,
@@ -99,8 +102,8 @@ class _LoginScreenState extends State<LoginScreen> {
           return AlertsCompound(
             msg: 'Something Wrong',
             color: Colors.red.shade200,
-            des: e.message,
-            buttonTxt: 'OK',
+            des: e.toString(),
+            buttonTxt: e.message,
             function: () {
               spinnerState(false);
               // spinner = false;

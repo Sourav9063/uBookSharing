@@ -82,7 +82,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           return AlertsCompound(
             msg: 'Something Wrong',
             color: Colors.red.shade200,
-            des: e.message,
+            des: "Couldn't upload data",
             buttonTxt: 'OK',
             function: () {
               // spinner = false;

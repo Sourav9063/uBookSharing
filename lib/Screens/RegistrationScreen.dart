@@ -110,7 +110,7 @@ class _RegScreenState extends State<RegScreen> {
           });
 
       // UserDataSavedEmailPassword.saveuidSharedPref(auth.currentUser.uid);
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       spinnerState(false);
       showDialog(
         context: context,
@@ -118,7 +118,7 @@ class _RegScreenState extends State<RegScreen> {
           return AlertsCompound(
             msg: 'Something Wrong',
             color: Colors.red.shade200,
-            des: e.message,
+            des:e.message,
             buttonTxt: 'OK',
             function: () {
               spinnerState(false);

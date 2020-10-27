@@ -33,14 +33,12 @@ class MyAwesomeApp extends StatelessWidget {
           // scaffoldBackgroundColor: Color(0xff6F00FF),
 
           // cardColor: Colors.white,
-          
 
           bottomSheetTheme: BottomSheetThemeData(
               backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18))),
           primarySwatch: Colors.purple,
-
           visualDensity: VisualDensity.adaptivePlatformDensity,
           accentColor: Color(0xfffb8b24),
           buttonTheme: ButtonTheme.of(context).copyWith(
@@ -77,7 +75,7 @@ class _FutureBuilderRouteFirebaseState
       setState(() {
         ini = true;
       });
-    } catch (e) {
+    }on FirebaseException catch (e) {
       setState(() {
         errorMsg = e.message;
         error = true;
