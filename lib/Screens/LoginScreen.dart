@@ -102,8 +102,8 @@ class _LoginScreenState extends State<LoginScreen> {
           return AlertsCompound(
             msg: 'Something Wrong',
             color: Colors.red.shade200,
-            des: e.toString(),
-            buttonTxt: e.message,
+            des: e.message,
+            buttonTxt: 'Ok',
             function: () {
               spinnerState(false);
               // spinner = false;
