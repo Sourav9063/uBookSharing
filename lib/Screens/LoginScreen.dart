@@ -150,6 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.pushReplacement(
                                 context,
                                 PageTransition(
+                                    settings: RouteSettings(name: "Foo"),
                                     curve: Curves.fastOutSlowIn,
                                     duration: Duration(milliseconds: 400),
                                     child: UserProfileData.tmVersity != null

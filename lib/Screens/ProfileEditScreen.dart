@@ -66,6 +66,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       Navigator.pushReplacement(
           context,
           PageTransition(
+              settings: RouteSettings(name: "Foo"),
               curve: Curves.fastOutSlowIn,
               child: MainScreen(),
               type: PageTransitionType.rightToLeftWithFade));
@@ -249,6 +250,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       Navigator.pushReplacement(
           context,
           PageTransition(
+              settings: RouteSettings(name: "Foo"),
               curve: Curves.fastOutSlowIn,
               child: MainScreen(),
               type: PageTransitionType.fade));
@@ -343,7 +345,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             try {
                               await UploadIMG().getUserPic();
                               final link = await UploadIMG().uploadUserPic(
-                                  FirebaseAuth.instance.currentUser.email,UsableData.id);
+                                  FirebaseAuth.instance.currentUser.email,
+                                  UsableData.id);
 
                               await FirebaseAuth.instance.currentUser
                                   .updateProfile(photoURL: link);
