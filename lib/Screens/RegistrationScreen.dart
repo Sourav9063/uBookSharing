@@ -118,7 +118,7 @@ class _RegScreenState extends State<RegScreen> {
           return AlertsCompound(
             msg: 'Something Wrong',
             color: Colors.red.shade200,
-            des:e.message,
+            des: e.message,
             buttonTxt: 'OK',
             function: () {
               spinnerState(false);
@@ -391,6 +391,7 @@ class _RegScreenState extends State<RegScreen> {
                                   onPressed: !verified
                                       ? null
                                       : () async {
+                                          UsableData.getSetMillisecondsId();
                                           // UserLogInData.uid =
                                           //     await UserDataSavedEmailPassword
                                           //         .getuidSharedPref();

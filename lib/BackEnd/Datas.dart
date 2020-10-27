@@ -34,7 +34,10 @@ class UsableData {
   static getMonthName(int n) {
     return monthName[n];
   }
-  static getMillisecondsId(){
+
+  static String id;
+  static getSetMillisecondsId() {
+   UsableData.id= DateTime.now().millisecondsSinceEpoch.toString();
     return new DateTime.now().millisecondsSinceEpoch.toString();
   }
 }
@@ -74,6 +77,7 @@ class AllKeys {
 }
 
 class BookData {
+  String docId;
   String bookName;
   String bookWriter;
   String bookEdition;

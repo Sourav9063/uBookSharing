@@ -349,6 +349,7 @@ class CustomDrawer extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0)),
                     onPressed: () {
+                      UsableData.getSetMillisecondsId();
                       Navigator.push(
                           context,
                           PageTransition(

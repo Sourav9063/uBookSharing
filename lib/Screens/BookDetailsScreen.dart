@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
+import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class BookDetailsScreen extends StatefulWidget {
@@ -319,53 +322,128 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                         SizedBox(
                           height: 2,
                         ),
-                        RaisedButton(
-                          padding: EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16)),
-                          elevation: 10,
-                          child: Center(
-                            child: Text(
-                              'Send Email',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
+                        FirebaseAuth.instance.currentUser.email ==
+                                widget.bookData.bookUploaderEmail
+                            ? RaisedButton(
+                                padding: EdgeInsets.symmetric(vertical: 14),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16)),
+                                elevation: 10,
+                                child: Center(
+                                  child: Text(
+                                    'Delete',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  showDialog(
+                                      context: (context),
+                                      builder: (context) => AlertDialog(
+                                            backgroundColor:
+                                                Colors.red.shade400,
+                                            title: Text('Are you sure?'),
+                                            content: Text(
+                                                'You are about to delete your book'),
+                                            actions: [
+                                              TextButton(
+                                                  onPressed: () async {
+                                                    await GetBookData.bookDataDelete(
+                                                        widget.bookData.docId,
+                                                        widget.bookData.bookFor ==
+                                                                    'Buy' ||
+                                                                widget.bookData
+                                                                        .bookFor ==
+                                                                    'Rent'
+                                                            ? 'Requests'
+                                                            : 'AllBooks');
+                                                    await StorageSettings
+                                                        .deleteImage(widget
+                                                            .bookData
+                                                            .bookImgLink);
+                                                    Navigator.popUntil(
+                                                        context,
+                                                        ModalRoute.withName(
+                                                            "Foo"));
+                                                  },
+                                                  child: Text('Yes')),
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text('No')),
+                                            ],
+                                          ));
+                                },
+                              )
+                            : RaisedButton(
+                                padding: EdgeInsets.symmetric(vertical: 14),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16)),
+                                elevation: 10,
+                                child: Center(
+                                  child: Text(
+                                    'Send Email',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  final Uri launchEmailData = Uri(
+                                      scheme: 'mailto',
+                                      path: widget.bookData.bookUploaderEmail,
+                                      query: widget.bookData.bookFor == 'Buy' ||
+                                              widget.bookData.bookFor == 'Rent'
+                                          ? 'subject=uBookSharing response&body=Hi ${widget.bookData.bookUploaderName},\n I\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
+                                              'You have requested for a book name \"${widget.bookData.bookName}\" to ${widget.bookData.bookFor.toLowerCase()}.\nI have the book' +
+                                              '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Contact me to get this book.\nThanks for your contribution.'
+                                          : 'subject=uBookSharing response&body=Hi ${widget.bookData.bookUploaderName},\n I\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
+                                              '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor.toLowerCase()}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me.' +
+                                              '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a mail or message containing your phone number and current address.\nThanks for your contribution.'
+
+                                      // queryParameters: {
+                                      //   'subject': 'uBookSharing+response ',
+                                      //   'body':
+                                      //       'Hi {lender name},\n I\'m ${UserProfileData.name}. I\'m a student of ${UserProfileData.versityName}, department ${UserProfileData.dept}, year${UserProfileData.admitted}. My registration no. ${UserProfileData.registrationNo}.\n Would you please share you book{book name}  with me. My personal phone No. ${UserProfileData.phoneNum}. I currently live in ${UserProfileData.address}. Thanks for your contribution'
+                                      // },
+
+                                      );
+                                  String launchEmailUrl =
+                                      launchEmailData.toString();
+                                  if (await canLaunch(launchEmailUrl)) {
+                                    await launch(launchEmailUrl);
+                                  } else {
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                        content: Text(
+                                            "Can\'t send automated email. Try sending manually")));
+                                  }
+                                },
                               ),
-                            ),
-                          ),
-                          onPressed: () async {
-                            final Uri launchEmailData = Uri(
-                                scheme: 'mailto',
-                                path: widget.bookData.bookUploaderEmail,
-                                query: widget.bookData.bookFor == 'Buy' ||
-                                        widget.bookData.bookFor == 'Rent'
-                                    ? 'subject=uBookSharing response&body=Hi ${widget.bookData.bookUploaderName},\n I\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
-                                        'You have requested for a book name \"${widget.bookData.bookName}\" to ${widget.bookData.bookFor.toLowerCase()}.\nI have the book' +
-                                        '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Contact me to get this book.\nThanks for your contribution.'
-                                    : 'subject=uBookSharing response&body=Hi ${widget.bookData.bookUploaderName},\n I\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
-                                        '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor.toLowerCase()}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me.' +
-                                        '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a mail or message containing your phone number and current address.\nThanks for your contribution.'
-
-                                // queryParameters: {
-                                //   'subject': 'uBookSharing+response ',
-                                //   'body':
-                                //       'Hi {lender name},\n I\'m ${UserProfileData.name}. I\'m a student of ${UserProfileData.versityName}, department ${UserProfileData.dept}, year${UserProfileData.admitted}. My registration no. ${UserProfileData.registrationNo}.\n Would you please share you book{book name}  with me. My personal phone No. ${UserProfileData.phoneNum}. I currently live in ${UserProfileData.address}. Thanks for your contribution'
-                                // },
-
-                                );
-                            String launchEmailUrl = launchEmailData.toString();
-                            if (await canLaunch(launchEmailUrl)) {
-                              await launch(launchEmailUrl);
-                            } else {
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text(
-                                      "Can\'t send automated email. Try sending manually")));
-                            }
-                          },
-                        ),
                         SizedBox(
                           height: 2,
-                        )
+                        ),
+                        // UserProfileData.email ==
+                        //         widget.bookData.bookUploaderEmail
+                        //     ?  RaisedButton(
+                        //         padding: EdgeInsets.symmetric(vertical: 14),
+                        //         shape: RoundedRectangleBorder(
+                        //             borderRadius: BorderRadius.circular(16)),
+                        //         elevation: 10,
+                        //         child: Center(
+                        //           child: Text(
+                        //             'Send Email',
+                        //             style: TextStyle(
+                        //               color: Colors.white,
+                        //               fontSize: 20,
+                        //             ),
+                        //           ),
+                        //         ),
+                        //         onPressed: () {},
+                        //       ):
                       ],
                     ),
                   ),

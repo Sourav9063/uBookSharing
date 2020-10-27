@@ -112,6 +112,7 @@ class _MainScreenState extends State<MainScreen> {
               FabMenuItem(
                   label: 'Upload Book',
                   ontap: () {
+                    UsableData.getSetMillisecondsId();
                     Navigator.push(
                       context,
                       PageTransition(
@@ -134,6 +135,7 @@ class _MainScreenState extends State<MainScreen> {
               FabMenuItem(
                 label: 'Add a request',
                 ontap: () {
+                  UsableData.getSetMillisecondsId();
                   Navigator.push(
                     context,
                     PageTransition(

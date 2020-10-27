@@ -21,7 +21,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
   // List<dynamic> bookNameList = [];
   String bookImgLink;
 
-  // String bookId =
+
   //     UserProfileData.email + UserProfileData.uploadedBookNo.toString();
   bool ignore = true;
   bool visible = true;
@@ -197,6 +197,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     // controller.addListener(() {
     //   scrlLstnr();
     // });
+    
     getBookNameList();
 
     super.initState();
@@ -753,7 +754,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               );
 
                               bookImgLink = await UploadIMG()
-                                  .uploadBookPic(UserProfileData.email);
+                                  .uploadBookPic(UserProfileData.email, UsableData.id);
                               if (bookImgLink != null) {
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(

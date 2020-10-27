@@ -88,9 +88,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 animation: animatee,
                 callback: (value) {
                   if (value == 'Give') {
+      UsableData.getSetMillisecondsId();
                     Navigator.push(
                         context,
                         MaterialPageRoute(
+                            settings: RouteSettings(name: "Foo"),
                             builder: (context) => navSignIn
                                 ? FirebaseAuth.instance.currentUser == null
                                     ? LoginScreen()

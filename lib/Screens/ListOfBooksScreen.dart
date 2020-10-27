@@ -65,6 +65,7 @@ class _ListOfBooksScreenState extends State<ListOfBooksScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: RaisedButton(
                         onPressed: () async {
+                          UsableData.getSetMillisecondsId();
                           Navigator.push(
                               context,
                               PageTransition(

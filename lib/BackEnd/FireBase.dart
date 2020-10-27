@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 
 class GetUserData {
@@ -116,6 +118,7 @@ class GetBookData {
     bookData.bookUploaderBatch = element.data()[AllKeys.bookUploaderBatchKey];
     bookData.bookUploaderDept = element.data()[AllKeys.bookUploaderDeptKey];
     bookData.bookUploaderImg = element.data()[AllKeys.bookUploaderImgKey];
+    bookData.docId = element.reference.id;
     return bookData;
   }
 
@@ -156,4 +159,49 @@ class GetBookData {
         // .where(field, isLessThanOrEqualTo: search)
         .get();
   }
+
+  static bookDataDelete(String docId,String folder) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(UserProfileData.tmVersity)
+          .doc(folder)
+          .collection(folder)
+          .doc(docId)
+          .delete();
+      // .where(field, isLessThanOrEqualTo: search)
+    } catch (e) {
+      print('Error deleting');
+    }
+  }
+}
+
+class StorageSettings {
+  static deleteImage(String url) async {
+    try {
+      StorageReference photoRef =
+          await FirebaseStorage.instance.getReferenceFromUrl(url);
+      await photoRef.delete();
+    } catch (e) {
+      print(e);
+      print('Error photo deleting');
+    }
+  }
+
+  // static void deleteFireBaseStorageItem(String fileUrl) {
+  //   String filePath = fileUrl.replaceAll(
+  //       new RegExp(
+  //           r'https://firebasestorage.googleapis.com/v0/b/dial-in-2345.appspot.com/o/'),
+  //       '');
+
+  //   filePath = filePath.replaceAll(new RegExp(r'%2F'), '/');
+
+  //   filePath = filePath.replaceAll(new RegExp(r'(\?alt).*'), '');
+
+  //   StorageReference storageReferance = FirebaseStorage.instance.ref();
+
+  //   storageReferance
+  //       .child(filePath)
+  //       .delete()
+  //       .then((_) => print('Successfully deleted $filePath storage item'));
+  // }
 }

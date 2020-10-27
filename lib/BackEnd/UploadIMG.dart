@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:uBookSharing/BackEnd/Datas.dart';
+
 
 class UploadIMG {
   static PickedFile pickedImage;
@@ -27,20 +27,19 @@ class UploadIMG {
     imageBook = File(pickedImage.path);
   }
 
-  uploadUserPic(String email) async {
+  uploadUserPic(String email, String id) async {
     // String id = UsableData.getMillisecondsId();
     StorageReference userPic = FirebaseStorage.instance
         .ref()
         .child('User')
         .child(email)
-        .child(UsableData.getMillisecondsId());
+        .child(id);
 
     await userPic.putFile(imageUser).onComplete;
     return await userPic.getDownloadURL();
   }
 
-  uploadBookPic(String email) async {
-    String id = UsableData.getMillisecondsId();
+  uploadBookPic(String email, String id) async {
     StorageReference bookPic = FirebaseStorage.instance
         .ref()
         .child('Books')
@@ -53,8 +52,7 @@ class UploadIMG {
     return await bookPic.getDownloadURL();
   }
 
-  uploadRequstPic(String email) async {
-    String id = UsableData.getMillisecondsId();
+  uploadRequstPic(String email, String id) async {
     StorageReference bookPic = FirebaseStorage.instance
         .ref()
         .child('Books')
