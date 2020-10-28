@@ -155,12 +155,21 @@ class GetBookData {
         .collection(UserProfileData.tmVersity)
         .doc('AllBooks')
         .collection('AllBooks')
-        .where(field, isGreaterThanOrEqualTo: search)
-        // .where(field, isLessThanOrEqualTo: search)
+        .where(field, isEqualTo: search)
         .get();
   }
 
-  static bookDataDelete(String docId,String folder) async {
+  static Future<QuerySnapshot> bookDataGrSearch(
+      String field, String search) async {
+    return await FirebaseFirestore.instance
+        .collection(UserProfileData.tmVersity)
+        .doc('AllBooks')
+        .collection('AllBooks')
+        .where(field, isGreaterThanOrEqualTo: search)
+        .get();
+  }
+
+  static bookDataDelete(String docId, String folder) async {
     try {
       await FirebaseFirestore.instance
           .collection(UserProfileData.tmVersity)

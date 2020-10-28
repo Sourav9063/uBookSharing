@@ -286,34 +286,29 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    FittedBox(
-                                      fit: BoxFit.fitWidth,
-                                      child: Text(
-                                        'Dept: ' +
-                                            widget.bookData.bookUploaderDept,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          // fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
+                                child: FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: Text(
+                                    'Dept: ' + widget.bookData.bookUploaderDept,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      // fontWeight: FontWeight.w700,
                                     ),
-                                    FittedBox(
-                                      fit: BoxFit.fitWidth,
-                                      child: Text(
-                                        'Batch: ' +
-                                            widget.bookData.bookUploaderBatch,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                        ),
-                                      ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: Text(
+                                    'Batch: ${widget.bookData.bookUploaderBatch}',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ],

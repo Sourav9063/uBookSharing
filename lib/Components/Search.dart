@@ -87,7 +87,7 @@ class SearchPageTest extends SearchDelegate {
                     padding: const EdgeInsets.all(8.0),
                     child: RaisedButton(
                       onPressed: () async {
-                        var data = await GetBookData.bookDataSearch(
+                        var data = await GetBookData.bookDataGrSearch(
                             AllKeys.bookNameKey, query);
 
                         Navigator.push(
