@@ -78,7 +78,7 @@ class GetBookData {
     if (UserProfileData.tmVersity != null)
       return FirebaseFirestore.instance
           .collection(UserProfileData.tmVersity)
-          .doc(req)
+          .doc('AllBooks')
           .collection(req)
           .orderBy(AllKeys.bookTimeUploadKey, descending: true)
           .limit(n)
@@ -213,4 +213,18 @@ class StorageSettings {
   //       .delete()
   //       .then((_) => print('Successfully deleted $filePath storage item'));
   // }
+}
+
+class Interactions {
+  static DocumentReference firestoreRef = FirebaseFirestore.instance
+      .collection(UserProfileData.tmVersity)
+      .doc('Interactions');
+
+  static writeMsg(String email, Map<String, dynamic> map) async {
+    await firestoreRef.collection(email).add(map);
+  }
+
+  static Stream<QuerySnapshot> getMsgStream(String email) {
+    return firestoreRef.collection(email).get().asStream();
+  }
 }

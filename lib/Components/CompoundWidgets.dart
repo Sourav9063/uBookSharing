@@ -11,6 +11,7 @@ import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Screens/BookDetailsScreen.dart';
 import 'package:uBookSharing/Screens/Homepage.dart';
+import 'package:uBookSharing/Screens/InteractionsScreen.dart';
 import 'package:uBookSharing/Screens/ListOfBooksScreen.dart';
 import 'package:uBookSharing/Screens/ProfileEditScreen.dart';
 
@@ -254,6 +255,7 @@ class IconAccount extends StatelessWidget {
           gradient: RadialGradient(colors: [
             // Colors.pinkAccent.shade100,
             // Colors.pinkAccent.shade100,
+            // Colors.pinkAccent.shade400,
             Colors.pinkAccent.shade400,
             Colors.indigoAccent.shade100
           ])),
@@ -266,7 +268,7 @@ class IconAccount extends StatelessWidget {
               color: Colors.white,
             )
           : Padding(
-              padding: const EdgeInsets.all(11.0),
+              padding: const EdgeInsets.all(8.0),
               child: ClipOval(
                 child: Image.network(
                   imglink,
@@ -368,6 +370,36 @@ class CustomDrawer extends StatelessWidget {
                         SizedBox(width: 18),
                         Text(
                           'Profile',
+                          style: kDrawerTextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                  RaisedButton(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                    color: Color(0x00000000),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0)),
+                    onPressed: () {
+                      UsableData.getSetMillisecondsId();
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              curve: Curves.fastOutSlowIn,
+                              child: InteractionsScreen(),
+                              type: PageTransitionType.leftToRight));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.notifications_on_outlined,
+                          color: Colors.white,
+                          // size: 30,
+                        ),
+                        SizedBox(width: 18),
+                        Text(
+                          'Notification',
                           style: kDrawerTextStyle,
                         ),
                       ],

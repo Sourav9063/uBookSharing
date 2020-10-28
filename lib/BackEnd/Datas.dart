@@ -15,6 +15,15 @@ class CommonThings {
 // }
 
 class UsableData {
+  static String timestampToString(Timestamp timestamp) {
+    String date = timestamp.toDate().day.toString() +
+        ' ' +
+        getMonthName(timestamp.toDate().month) +
+        ', ' +
+        timestamp.toDate().year.toString();
+    return date;
+  }
+
   static List<String> monthName = [
     'Not availabel',
     'Jan',
@@ -37,7 +46,7 @@ class UsableData {
 
   static String id;
   static getSetMillisecondsId() {
-   UsableData.id= DateTime.now().millisecondsSinceEpoch.toString();
+    UsableData.id = DateTime.now().millisecondsSinceEpoch.toString();
     return new DateTime.now().millisecondsSinceEpoch.toString();
   }
 }
@@ -161,68 +170,68 @@ class UserProfileData {
   }
 }
 
-class UserDataSavedEmailPassword {
-  static final String emailKey = 'UserEmail';
-  static final String passwordKey = 'UserPassword';
-  static final String isLoggedInKey = 'IsloggedIn';
-  static final String uidKey = 'uidKey';
+// class UserDataSavedEmailPassword {
+//   static final String emailKey = 'UserEmail';
+//   static final String passwordKey = 'UserPassword';
+//   static final String isLoggedInKey = 'IsloggedIn';
+//   static final String uidKey = 'uidKey';
 
-  // String getEmail() {
-  //   return _email;
-  // }
+//   // String getEmail() {
+//   //   return _email;
+//   // }
 
-  // String getPassword() {
-  //   return _password;
-  // }
+//   // String getPassword() {
+//   //   return _password;
+//   // }
 
-  static Future<bool> saveEmailSharedPref(String email) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+//   static Future<bool> saveEmailSharedPref(String email) async {
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return prefs.setString(emailKey, email);
-  }
+//     return prefs.setString(emailKey, email);
+//   }
 
-  static Future<String> getEmailSharedPref() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(emailKey);
-  }
+//   static Future<String> getEmailSharedPref() async {
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
+//     return prefs.getString(emailKey);
+//   }
 
-  // static Future<bool> saveuidSharedPref(String uid) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   // static Future<bool> saveuidSharedPref(String uid) async {
+//   //   SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  //   return prefs.setString(uidKey, uid);
-  // }
+//   //   return prefs.setString(uidKey, uid);
+//   // }
 
-  // static Future<String> getuidSharedPref() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   // static Future<String> getuidSharedPref() async {
+//   //   SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  //   return prefs.getString(uidKey);
-  // }
+//   //   return prefs.getString(uidKey);
+//   // }
 
-  // static Future<bool> clearuidSharedPref() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   // static Future<bool> clearuidSharedPref() async {
+//   //   SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  //   return prefs.remove(uidKey);
-  // }
+//   //   return prefs.remove(uidKey);
+//   // }
 
-  static Future<bool> savePasswordSharedPref(String password) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+//   static Future<bool> savePasswordSharedPref(String password) async {
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return prefs.setString(passwordKey, password);
-  }
+//     return prefs.setString(passwordKey, password);
+//   }
 
-  static Future<String> getPasswordSharedPref() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(passwordKey);
-  }
+//   static Future<String> getPasswordSharedPref() async {
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
+//     return prefs.getString(passwordKey);
+//   }
 
-  static Future<bool> saveIsLoggedInSharedPref(bool isLoggedIn) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+//   static Future<bool> saveIsLoggedInSharedPref(bool isLoggedIn) async {
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return prefs.setBool(isLoggedInKey, isLoggedIn);
-  }
+//     return prefs.setBool(isLoggedInKey, isLoggedIn);
+//   }
 
-  static Future<bool> getIsLoggedInSharedPref() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(isLoggedInKey);
-  }
-}
+//   static Future<bool> getIsLoggedInSharedPref() async {
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
+//     return prefs.getBool(isLoggedInKey);
+//   }
+// }

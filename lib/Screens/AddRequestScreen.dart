@@ -16,7 +16,6 @@ class AddRequestScreen extends StatefulWidget {
 }
 
 class _AddRequestScreenState extends State<AddRequestScreen> {
-  
   String bookImgLink;
 
   //     UserProfileData.email + UserProfileData.uploadedBookNo.toString();
@@ -595,7 +594,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                       try {
                         await FirebaseFirestore.instance
                             .collection(UserProfileData.tmVersity)
-                            .doc('Requests')
+                            .doc('AllBooks')
                             .collection('Requests')
                             .doc()
                             .set(bookData.getBookMap());

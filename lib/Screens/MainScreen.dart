@@ -68,6 +68,8 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffffffff),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
       // floatingActionButton: AnimatedOpacity(
       //   duration: Duration(milliseconds: 400),
       //   opacity: favVis ? 1 : 0,
@@ -149,7 +151,7 @@ class _MainScreenState extends State<MainScreen> {
                   );
                 },
                 icon: Icon(
-                  Icons.sentiment_satisfied_outlined,
+                  Icons.sentiment_satisfied_alt,
                   color: Colors.white,
                 ),
                 color: Color(0xff6F00FF),
