@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -59,6 +60,7 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
               itemCount: snapshot.data.documents.length,
               itemBuilder: (context, index) {
                 var dataSnapshot = snapshot.data.documents[index];
+                Timestamp timestamp = dataSnapshot['SentKey'];
                 return Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Row(
@@ -100,6 +102,17 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
                                     content: Text(
                                         'Email address copied to clipboard'),
                                   ));
+                                }),
+                            IconButton(
+                                icon: Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                                onPressed: () async {
+                                  String id = dataSnapshot.reference.id;
+                                  await Interactions.deleteDocWithId(
+                                      UserProfileData.email, id);
+                                  setState(() {});
                                 })
                           ],
                         ),
@@ -127,6 +140,15 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
                                 ),
                                 SizedBox(
                                   height: 9,
+                                ),
+                                Text('Sent: ' +
+                                    timestamp.toDate().hour.toString() +
+                                    ':' +
+                                    timestamp.toDate().minute.toString() +
+                                    ' ' +
+                                    UsableData.timestampToString(timestamp)),
+                                Divider(
+                                  thickness: 2,
                                 ),
                                 SelectableText(
                                     dataSnapshot[AllKeys.bookDesKey]),

@@ -143,11 +143,11 @@ class GetBookData {
     // print(bookNameList);
   }
 
-  static Future<BookData> bookDataFromRef(String ref) async {
-    var dataRromRef = await FirebaseFirestore.instance.doc(ref).get();
+  // static Future<BookData> bookDataFromRef(String ref) async {
+  //   var dataRromRef = await FirebaseFirestore.instance.doc(ref).get();
 
-    return getBookDataFromDocumentSnapshot(dataRromRef);
-  }
+  //   return getBookDataFromDocumentSnapshot(dataRromRef);
+  // }
 
   static Future<QuerySnapshot> bookDataSearch(
       String field, String search) async {
@@ -224,7 +224,16 @@ class Interactions {
     await firestoreRef.collection(email).add(map);
   }
 
+  static deleteDocWithId(String email, String id) async {
+    await firestoreRef.collection(email).doc(id).delete();
+  }
+
   static Stream<QuerySnapshot> getMsgStream(String email) {
-    return firestoreRef.collection(email).get().asStream();
+    return firestoreRef
+        .collection(email)
+        .orderBy('SentKey', descending: true)
+        .limit(15)
+        .get()
+        .asStream();
   }
 }

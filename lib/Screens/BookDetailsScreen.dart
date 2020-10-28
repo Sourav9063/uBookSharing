@@ -19,6 +19,12 @@ class BookDetailsScreen extends StatefulWidget {
 class _BookDetailsScreenState extends State<BookDetailsScreen> {
   double picHeight = CommonThings.size.width * 4 / 3;
   bool button = true;
+  buttonState(BuildContext context) {
+    setState(() {
+      button = false;
+    });
+  }
+
   void smallPic() {
     setState(() {
       picHeight = CommonThings.size.width * .61;
@@ -327,7 +333,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                       context: (context),
                                       builder: (context) => AlertDialog(
                                             backgroundColor:
-                                                Colors.red.shade400,
+                                                Colors.red.shade300,
                                             title: Text('Are you sure?'),
                                             content: Text(
                                                 'You are about to delete your book'),
@@ -429,64 +435,64 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                               BorderRadius.circular(16)),
                                       elevation: 10,
                                       child: Text(
-                                        'Send Message',
+                                        button
+                                            ? 'Send Message'
+                                            : 'Message sent',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 20,
                                         ),
                                       ),
                                       onPressed: button
-                                          ? () async {
-                                              String response = widget.bookData
-                                                              .bookFor ==
-                                                          'Buy' ||
-                                                      widget.bookData.bookFor ==
-                                                          'Rent'
-                                                  ? 'Hi ${widget.bookData.bookUploaderName},\n I\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
-                                                      'You have requested for a book name \"${widget.bookData.bookName}\" to ${widget.bookData.bookFor.toLowerCase()}.\nI have the book' +
-                                                      '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}.'
-                                                  : 'Hi ${widget.bookData.bookUploaderName},\n I\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
-                                                      '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor.toLowerCase()} on ${UsableData.timestampToString(widget.bookData.bookTimeUpload)}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me.' +
-                                                      '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a mail or message containing your phone number and current address.';
+                                          ? () {
+                                              showDialog(
+                                                  context: (context),
+                                                  builder:
+                                                      (context) => AlertDialog(
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .greenAccent,
+                                                            title: Text(
+                                                                'Are you sure?'),
+                                                            content: Text(widget
+                                                                    .bookData
+                                                                    .bookUploaderName +
+                                                                ' will receive a message containing your  email, phone number and address.'),
+                                                            actions: [
+                                                              TextButton(
+                                                                  onPressed:
+                                                                      button
+                                                                          ? () async {
+                                                                              String response = widget.bookData.bookFor == 'Buy' || widget.bookData.bookFor == 'Rent' ? 'Hi ${widget.bookData.bookUploaderName},\n I\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' + 'You have requested for a book name \"${widget.bookData.bookName}\" to ${widget.bookData.bookFor.toLowerCase()}.\nI have the book' + '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}.' : 'Hi ${widget.bookData.bookUploaderName},\n I\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' + '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor.toLowerCase()} on ${UsableData.timestampToString(widget.bookData.bookTimeUpload)}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me.' + '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a mail or message containing your phone number and current address.';
 
-                                              String responseFor = widget
-                                                              .bookData
-                                                              .bookFor ==
-                                                          'Buy' ||
-                                                      widget.bookData.bookFor ==
-                                                          'Rent'
-                                                  ? 'Response to request'
-                                                  : 'Interested about your book';
+                                                                              String responseFor = widget.bookData.bookFor == 'Buy' || widget.bookData.bookFor == 'Rent' ? 'Response to request' : 'Interested about your book';
 
-                                              Map<String, dynamic> map = {
-                                                AllKeys.emailKey:
-                                                    UserProfileData.email,
-                                                AllKeys.phnNumKey:
-                                                    UserProfileData.phoneNum,
-                                                AllKeys.profilePicLinkKey:
-                                                    UserProfileData
-                                                        .profilePicLink,
-                                                AllKeys.bookForKey:
-                                                    widget.bookData.bookFor,
-                                                AllKeys.bookDesKey: response,
-                                                'SentKey': DateTime.now(),
-                                                'Response For': responseFor
-                                              };
-                                              await Interactions.writeMsg(
-                                                  widget.bookData
-                                                      .bookUploaderEmail,
-                                                  map);
-                                              Scaffold.of(context).showSnackBar(
-                                                  SnackBar(
-                                                      onVisible: () {
-                                                        setState(() {
-                                                          button = false;
-                                                        });
-                                                      },
-                                                      backgroundColor:
-                                                          Colors.green,
-                                                      content: Text(
-                                                          'Message sent')));
+                                                                              Map<String, dynamic> map = {
+                                                                                AllKeys.emailKey: UserProfileData.email,
+                                                                                AllKeys.phnNumKey: UserProfileData.phoneNum,
+                                                                                AllKeys.profilePicLinkKey: UserProfileData.profilePicLink,
+                                                                                AllKeys.bookForKey: widget.bookData.bookFor,
+                                                                                AllKeys.bookDesKey: response,
+                                                                                'SentKey': DateTime.now(),
+                                                                                'Response For': responseFor
+                                                                              };
+                                                                              await Interactions.writeMsg(widget.bookData.bookUploaderEmail, map);
+                                                                              buttonState(context);
+                                                                              Navigator.pop(context);
+                                                                            }
+                                                                          : null,
+                                                                  child: Text(
+                                                                      'Yes')),
+                                                              TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  child: Text(
+                                                                      'No')),
+                                                            ],
+                                                          ));
                                             }
                                           : null,
                                     ),
