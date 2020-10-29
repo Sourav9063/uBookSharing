@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 class UploadIMG {
   static PickedFile pickedImage;
   static File imageUser;
@@ -13,7 +12,7 @@ class UploadIMG {
 
   getUserPic() async {
     pickedImage =
-        await _picker.getImage(source: ImageSource.gallery, imageQuality: 15);
+        await _picker.getImage(source: ImageSource.gallery, imageQuality: 10);
     imageUser = File(pickedImage.path);
 
     // String dir = (await getApplicationDocumentsDirectory()).path;
@@ -23,17 +22,14 @@ class UploadIMG {
 
   getBookPic() async {
     pickedImage =
-        await _picker.getImage(source: ImageSource.camera, imageQuality: 15);
+        await _picker.getImage(source: ImageSource.camera, imageQuality: 10);
     imageBook = File(pickedImage.path);
   }
 
   uploadUserPic(String email, String id) async {
     // String id = UsableData.getMillisecondsId();
-    StorageReference userPic = FirebaseStorage.instance
-        .ref()
-        .child('User')
-        .child(email)
-        .child(id);
+    StorageReference userPic =
+        FirebaseStorage.instance.ref().child('User').child(email).child(id);
 
     await userPic.putFile(imageUser).onComplete;
     return await userPic.getDownloadURL();
