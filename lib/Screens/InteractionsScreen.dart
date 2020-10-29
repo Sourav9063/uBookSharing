@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InteractionsScreen extends StatefulWidget {
   InteractionsScreen({Key key}) : super(key: key);
@@ -78,7 +79,7 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
                                   Icons.phone,
                                   color: Colors.green,
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
                                   Clipboard.setData(ClipboardData(
                                       text: dataSnapshot[AllKeys.phnNumKey]));
 
@@ -87,6 +88,12 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
                                     content: Text(
                                         'Phone number copied to clipboard'),
                                   ));
+
+                                  String url =
+                                      'tel:' + dataSnapshot[AllKeys.phnNumKey];
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  }
                                 }),
                             IconButton(
                                 icon: Icon(

@@ -236,13 +236,14 @@ class BookCard extends StatelessWidget {
 }
 
 class IconAccount extends StatelessWidget {
-  const IconAccount({
+  IconAccount({
     @required this.radious,
     Key key,
     this.imglink,
   }) : super(key: key);
   final double radious;
   final String imglink;
+  final id = UsableData.getSetMillisecondsId();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -268,36 +269,67 @@ class IconAccount extends StatelessWidget {
               color: Colors.white,
             )
           : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ClipOval(
-                child: Image.network(
-                  imglink,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Icon(
-                      Icons.error,
-                      color: Colors.white,
-                      size: radious / 1.5,
-                    );
-                  },
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        strokeWidth: 7,
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes
-                            : null,
-                      ),
-                    );
-                  },
-                  fit: BoxFit.cover,
-                  height: radious,
-                  width: radious,
+              padding: const EdgeInsets.all(10.0),
+              child: InkWell(
+                onTap: () {
+                  // print(id);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ImageFull(
+                                imgLink: imglink,
+                                id: id,
+                              )));
+                },
+                child: ClipOval(
+                  child: Hero(
+                    tag: id,
+                    child: Image.network(
+                      imglink,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Icon(
+                          Icons.error,
+                          color: Colors.white,
+                          size: radious / 1.5,
+                        );
+                      },
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            strokeWidth: 7,
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                      fit: BoxFit.cover,
+                      height: radious,
+                      width: radious,
+                    ),
+                  ),
                 ),
               ),
             ),
+    );
+  }
+}
+
+class ImageFull extends StatelessWidget {
+  final String imgLink;
+  final String id;
+  const ImageFull({Key key, this.imgLink, this.id}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: CommonThings.size.width * .80,
+      height: CommonThings.size.width * .80 * 4 / 3,
+      child: Hero(
+          tag: id, child: InteractiveViewer(child: Image.network(imgLink))),
     );
   }
 }

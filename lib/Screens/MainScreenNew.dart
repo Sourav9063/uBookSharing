@@ -261,6 +261,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                   padding: EdgeInsets.all(8),
                   child: SafeArea(
                     child: PageView(
+                      physics: BouncingScrollPhysics(),
                       controller: pagecontroller,
                       children: [
                         //New BOok

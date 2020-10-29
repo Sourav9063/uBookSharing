@@ -422,7 +422,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                     height: 10,
                                   ),
                                   Text(
-                                    '*Please read carefully.\n The following informations will be visible to all user.\n- Your name.\n- Your profile picture.\n- Your department, year and registration no.\n- Your email address.\n- Book\'s informations.\n ** Only latest 50 books will be visible.',
+                                    '*Please read carefully.\n The following informations will be visible to all user.\n- Your name.\n- Your profile picture.\n- Your department, year and registration no.\n- Your email address.\n- Book\'s informations.\n ** Only latest 50 requests will be visible.',
                                     style: TextStyle(color: Colors.red),
                                   ),
                                   Row(
