@@ -309,9 +309,10 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     var kDrawerTextStyle = TextStyle(color: Colors.tealAccent, fontSize: 14);
     return Drawer(
+      
       child: Container(
         height: CommonThings.size.height,
-        width: CommonThings.size.width * .80,
+        width: CommonThings.size.width * .70,
         color: Color(0xff000247),
         child: SafeArea(
           child: Column(
@@ -328,7 +329,8 @@ class CustomDrawer extends StatelessWidget {
                       radious: CommonThings.size.width * .35,
                       imglink: UserProfileData.profilePicLink,
                     ),
-                    Center(
+                    Align(
+                      alignment: Alignment.topRight,
                       child: FittedBox(
                         fit: BoxFit.fitWidth,
                         child: Text(

@@ -14,6 +14,7 @@ import 'package:uBookSharing/Components/Search.dart';
 import 'package:uBookSharing/Components/favCustom.dart';
 import 'package:uBookSharing/Screens/AddBookScreen.dart';
 import 'package:uBookSharing/Screens/AddRequestScreen.dart';
+import 'package:uBookSharing/Screens/MainPage2.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key key}) : super(key: key);
@@ -68,7 +69,26 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffffffff),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+      // bottomNavigationBar: BottomAppBar(
+      //   color: Color(0xff6F00FF),
+      //   shape: CircularNotchedRectangle(),
+      //   notchMargin: 4.0,
+      //   child: new Row(
+      //     mainAxisSize: MainAxisSize.max,
+      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     children: <Widget>[
+      //       IconButton(
+      //         icon: Icon(Icons.menu),
+      //         onPressed: () {},
+      //       ),
+      //       IconButton(
+      //         icon: Icon(Icons.search),
+      //         onPressed: () {},
+      //       ),
+      //     ],
+      //   ),
+      // ),
 
       // floatingActionButton: AnimatedOpacity(
       //   duration: Duration(milliseconds: 400),
@@ -168,9 +188,13 @@ class _MainScreenState extends State<MainScreen> {
                   //       color: Color(0xff02effc), fontSize: 25),
                   // ),
                   // floating: false,
-                  pinned: true,
+                  // pinned: true,
                   // snap: true,
-                  // floating: true,
+                  floating: true,
+                  actionsIconTheme: IconThemeData(color: Colors.black38),
+                  // elevation: 10,
+                  // stretch: true,
+
                   actions: [
                     IconButton(
                         icon: Icon(
@@ -181,10 +205,10 @@ class _MainScreenState extends State<MainScreen> {
                           showSearch(
                               context: context, delegate: SearchPageTest());
                         }),
-                    // Lottie.network(
-                    //   'https://assets1.lottiefiles.com/packages/lf20_rnszl1.json',
-                    //   // repeat: false,
-                    // )
+                    RaisedButton(onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => MainPage2()));
+                    })
                   ],
 
                   backgroundColor: Color(0xff6F00FF),
@@ -196,7 +220,7 @@ class _MainScreenState extends State<MainScreen> {
                     title: Text(
                       'uBookSharing',
                       style: GoogleFonts.abrilFatface(
-                          color: Color(0xff02effc), fontSize: 20),
+                          color: Color(0xff02effc), fontSize: 18),
                     ),
                     background: Padding(
                       padding: const EdgeInsets.only(bottom: 25.0, top: 8),
@@ -216,18 +240,21 @@ class _MainScreenState extends State<MainScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          height: CommonThings.size.height * .075,
-                        ),
+                        // SizedBox(
+                        //   height: CommonThings.size.height * .075,
+                        // ),
                         Container(
                           margin: EdgeInsets.all(4),
-                          padding: EdgeInsets.all(15),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                           decoration: BoxDecoration(
                             color: Colors.blue.shade700,
-                            // borderRadius: BorderRadius.circular(40),
+                            borderRadius: BorderRadius.circular(40),
                           ),
                           child: Text(
                             'New Books',
+                            // textScaleFactor: 1.4,
+
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                         ),
@@ -312,8 +339,11 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                         Container(
                           margin: EdgeInsets.all(4),
-                          padding: EdgeInsets.all(15),
-                          color: Color(0xfff01a54),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                          decoration: BoxDecoration(
+                              color: Color(0xfff01a54),
+                              borderRadius: BorderRadius.circular(300)),
                           child: Text(
                             'New Requests',
                             style: TextStyle(color: Colors.white, fontSize: 16),

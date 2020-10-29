@@ -152,6 +152,7 @@ class _FabMenuState extends State<FabMenu> with TickerProviderStateMixin {
       bottom: 10,
       right: 10,
       child: FloatingActionButton(
+        
         child: AnimatedIcon(
           icon: this.widget.icon ?? AnimatedIcons.menu_close,
           progress: _iconAnimationTween,
@@ -159,6 +160,7 @@ class _FabMenuState extends State<FabMenu> with TickerProviderStateMixin {
         ),
         backgroundColor: this.widget.fabColor ?? Theme.of(context).primaryColor,
         onPressed: _toggleMenu,
+        
       ),
     );
   }
