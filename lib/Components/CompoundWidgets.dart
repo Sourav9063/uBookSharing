@@ -195,7 +195,7 @@ class BookCard extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      color: Theme.of(context).accentColor,
+                      color: Colors.green,
                       child: Center(
                         child: FittedBox(
                           fit: BoxFit.fitWidth,
@@ -309,7 +309,6 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     var kDrawerTextStyle = TextStyle(color: Colors.tealAccent, fontSize: 14);
     return Drawer(
-      
       child: Container(
         height: CommonThings.size.height,
         width: CommonThings.size.width * .70,
@@ -383,7 +382,7 @@ class CustomDrawer extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0)),
                     onPressed: () {
-                      UsableData.getSetMillisecondsId();
+                      // UsableData.getSetMillisecondsId();
                       Navigator.push(
                           context,
                           PageTransition(

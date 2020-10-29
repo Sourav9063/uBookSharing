@@ -159,6 +159,16 @@ class GetBookData {
         .get();
   }
 
+  static Stream<QuerySnapshot> bookDataSearchStream(
+      String field, String search) {
+    return FirebaseFirestore.instance
+        .collection(UserProfileData.tmVersity)
+        .doc('AllBooks')
+        .collection('AllBooks')
+        .where(field, isEqualTo: search)
+        .snapshots();
+  }
+
   static Future<QuerySnapshot> bookDataGrSearch(
       String field, String search) async {
     return await FirebaseFirestore.instance
@@ -171,9 +181,11 @@ class GetBookData {
 
   static bookDataDelete(String docId, String folder) async {
     try {
+      // print(docId);
+      // print('\n');
       await FirebaseFirestore.instance
           .collection(UserProfileData.tmVersity)
-          .doc(folder)
+          .doc('AllBooks')
           .collection(folder)
           .doc(docId)
           .delete();

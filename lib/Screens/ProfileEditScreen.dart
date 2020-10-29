@@ -15,7 +15,8 @@ import 'package:uBookSharing/BackEnd/UploadIMG.dart';
 
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Constants.dart';
-import 'package:uBookSharing/Screens/MainScreen.dart';
+import 'package:uBookSharing/Screens/MainScreenNew.dart';
+// import 'package:uBookSharing/Screens/MainScreen.dart';
 import 'package:vibration/vibration.dart';
 
 class ProfileEditScreen extends StatefulWidget {
@@ -68,7 +69,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           PageTransition(
               settings: RouteSettings(name: "Foo"),
               curve: Curves.fastOutSlowIn,
-              child: MainScreen(),
+              child: MainScreenNew(),
               type: PageTransitionType.rightToLeftWithFade));
       //  UserProfileData.name,  UserProfileData.versityName,
       // 'profilePicLink', 'admitted', 'dept', 'phoneNum', 'email'
@@ -252,7 +253,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           PageTransition(
               settings: RouteSettings(name: "Foo"),
               curve: Curves.fastOutSlowIn,
-              child: MainScreen(),
+              child: MainScreenNew(),
               type: PageTransitionType.fade));
     }
   }

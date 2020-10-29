@@ -456,7 +456,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                             content: Text(widget
                                                                     .bookData
                                                                     .bookUploaderName +
-                                                                ' will receive a message containing your  email, phone number and address.'),
+                                                                ' will receive a message containing your email, phone number and address.'),
                                                             actions: [
                                                               TextButton(
                                                                   onPressed:

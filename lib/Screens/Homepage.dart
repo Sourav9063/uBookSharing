@@ -6,8 +6,9 @@ import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 
 import 'package:uBookSharing/Screens/LoginScreen.dart';
+import 'package:uBookSharing/Screens/MainScreenNew.dart';
 import 'package:uBookSharing/Screens/RegistrationScreen.dart';
-import 'package:uBookSharing/Screens/MainScreen.dart';
+// import 'package:uBookSharing/Screens/MainScreen.dart';
 import 'package:uBookSharing/Screens/ProfileEditScreen.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -28,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Future.delayed(Duration(seconds: 2));
     if (FirebaseAuth.instance.currentUser != null) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => MainScreen()));
+          context, MaterialPageRoute(builder: (context) => MainScreenNew()));
     }
   }
 
@@ -99,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     : FirebaseAuth
                                             .instance.currentUser.emailVerified
                                         ? UserProfileData.tmVersity != null
-                                            ? MainScreen()
+                                            ? MainScreenNew()
                                             : ProfileEditScreen()
                                         : LoginScreen()
                                 : RegScreen()));

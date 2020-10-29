@@ -11,7 +11,8 @@ import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 // import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Constants.dart';
-import 'package:uBookSharing/Screens/MainScreen.dart';
+import 'package:uBookSharing/Screens/MainScreenNew.dart';
+
 import 'package:uBookSharing/Screens/ProfileEditScreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -154,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     curve: Curves.fastOutSlowIn,
                                     duration: Duration(milliseconds: 400),
                                     child: UserProfileData.tmVersity != null
-                                        ? MainScreen()
+                                        ? MainScreenNew()
                                         : ProfileEditScreen(),
                                     type: PageTransitionType.bottomToTop));
                           }

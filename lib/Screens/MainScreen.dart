@@ -14,19 +14,20 @@ import 'package:uBookSharing/Components/Search.dart';
 import 'package:uBookSharing/Components/favCustom.dart';
 import 'package:uBookSharing/Screens/AddBookScreen.dart';
 import 'package:uBookSharing/Screens/AddRequestScreen.dart';
-import 'package:uBookSharing/Screens/MainPage2.dart';
+import 'package:uBookSharing/Screens/MainScreenNew.dart';
 
-class MainScreen extends StatefulWidget {
-  MainScreen({Key key}) : super(key: key);
+
+class MainScreenOld extends StatefulWidget {
+  MainScreenOld({Key key}) : super(key: key);
 
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _MainScreenOldState createState() => _MainScreenOldState();
 }
 
-class _MainScreenState extends State<MainScreen> {
-  bool favVis = false;
+class _MainScreenOldState extends State<MainScreenOld> {
   int lim = 5;
 
+  bool favVis = false;
   loadUser() async {
     await GetBookData.getBookNameListFirebase();
     // print(GetBookData.bookNameList);
@@ -207,7 +208,7 @@ class _MainScreenState extends State<MainScreen> {
                         }),
                     RaisedButton(onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => MainPage2()));
+                          MaterialPageRoute(builder: (context) => MainScreenNew()));
                     })
                   ],
 
