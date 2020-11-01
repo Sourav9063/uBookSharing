@@ -138,6 +138,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
   bool bl = false;
   checkVersity() async {
+    
     await FirebaseFirestore.instance
         .collection('uNiversityList')
         .where(AllKeys.tmVersityKey, isEqualTo: tmAddversity)
