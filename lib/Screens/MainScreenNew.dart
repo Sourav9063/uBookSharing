@@ -78,12 +78,13 @@ class _MainScreenNewState extends State<MainScreenNew> {
       onLaunch: (message) {
         print('OnLaunch');
         // print(message);
-        setState(() {
-          notiIcons = Icon(
-            Icons.notifications_active,
-            color: Colors.lightBlue,
-          );
-        });
+        // if (message != null)
+          setState(() {
+            notiIcons = Icon(
+              Icons.notifications_active,
+              color: Colors.lightBlue,
+            );
+          });
         return;
       },
       onMessage: (message) {
