@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,6 +30,11 @@ class _MainScreenNewState extends State<MainScreenNew> {
   int limReq = 5;
   var scaffoldKey = GlobalKey<ScaffoldState>();
   PageController pagecontroller = PageController();
+
+  Widget notiIcons = Icon(
+    Icons.notifications_outlined,
+    color: Colors.white,
+  );
 
   bool favVis = false;
   loadUser() async {
@@ -65,8 +71,52 @@ class _MainScreenNewState extends State<MainScreenNew> {
 
   @override
   void initState() {
-    super.initState();
     loadUser();
+    final fcm = FirebaseMessaging();
+    fcm.requestNotificationPermissions();
+    fcm.configure(
+      onLaunch: (message) {
+        print('OnLaunch');
+        // print(message);
+        setState(() {
+          notiIcons = Icon(
+            Icons.notifications_active,
+            color: Colors.lightBlue,
+          );
+        });
+        return;
+      },
+      onMessage: (message) {
+        print('message');
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => InteractionsScreen()));
+        setState(() {
+          notiIcons = Icon(
+            Icons.notifications_active,
+            color: Colors.lightBlue,
+          );
+        });
+        print(message);
+
+        return;
+      },
+      onResume: (message) {
+        print('resume');
+        setState(() {
+          notiIcons = Icon(
+            Icons.notifications_active,
+            color: Colors.lightBlue,
+          );
+        });
+        // print(message);
+
+        return;
+      },
+    );
+    // fcm.getToken();
+    fcm.subscribeToTopic(FirebaseAuth.instance.currentUser.email
+        .replaceAll(new RegExp(r'[^\w\s]+'), ''));
+    super.initState();
   }
 
   @override
@@ -169,11 +219,14 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                 }),
                             IconButton(
                                 splashColor: Theme.of(context).accentColor,
-                                icon: Icon(
-                                  Icons.notifications_outlined,
-                                  color: Colors.white,
-                                ),
+                                icon: notiIcons,
                                 onPressed: () {
+                                  setState(() {
+                                    notiIcons = Icon(
+                                      Icons.notifications_outlined,
+                                      color: Colors.white,
+                                    );
+                                  });
                                   Navigator.push(
                                       context,
                                       PageTransition(

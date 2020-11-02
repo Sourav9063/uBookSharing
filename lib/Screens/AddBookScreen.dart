@@ -120,6 +120,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               padding: const EdgeInsets.all(14.0),
                               child: TextFormField(
                                 keyboardType: TextInputType.name,
+                                textCapitalization: TextCapitalization.words,
                                 validator: (value) {
                                   if (value == null)
                                     return 'Enter Book\'s Name';

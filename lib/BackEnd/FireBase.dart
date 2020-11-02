@@ -248,4 +248,8 @@ class Interactions {
         .get()
         .asStream();
   }
+
+  static testWrite(String email, Map<String, dynamic> map) async {
+    await FirebaseFirestore.instance.collection('Interactions').doc().set(map);
+  }
 }
