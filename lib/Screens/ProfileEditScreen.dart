@@ -138,7 +138,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
   bool bl = false;
   checkVersity() async {
-    
     await FirebaseFirestore.instance
         .collection('uNiversityList')
         .where(AllKeys.tmVersityKey, isEqualTo: tmAddversity)
@@ -469,11 +468,30 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   popupTitle: Center(
                                       child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Listed University',
-                                      style: GoogleFonts.abrilFatface(
-                                        fontSize: 30,
-                                      ),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Listed University',
+                                          style: GoogleFonts.abrilFatface(
+                                            fontSize: 30,
+                                          ),
+                                        ),
+                                        RaisedButton(
+                                          onPressed: () {
+                                            addVersity();
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8),
+                                            child: Text(
+                                              'Add Your University',
+                                              style: GoogleFonts.aBeeZee(
+                                                  fontSize: 14,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   )),
                                   mode: Mode.BOTTOM_SHEET,
@@ -493,7 +511,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   searchBoxDecoration:
                                       kTextFieldDecoration.copyWith(
                                     labelText: 'Search',
-                                    hintText: 'If not listed, please Add',
+                                    hintText: 'If not listed, please add',
                                   ),
                                   onChanged: (value) {
                                     gredianAlign();
@@ -622,13 +640,12 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                           UserProfileData.dept = value;
                                         },
                                         onTap: () => gredianAlign(),
-                                        decoration: kTextFieldDecoration
-                                            .copyWith(
+                                        decoration:
+                                            kTextFieldDecoration.copyWith(
                                                 prefixIcon: Icon(Icons
                                                     .supervised_user_circle),
                                                 labelText: 'Department',
-                                                hintText:
-                                                    'Use the abbreviation'),
+                                                hintText: 'Abbreviation'),
                                       ),
                                     ),
                                   ),
@@ -673,6 +690,17 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       prefixIcon: Icon(Icons.phone),
                                       labelText: 'Phone',
                                       hintText: 'It\'s secured'),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 8.0, bottom: 8),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    '*No one will know unless you share it',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
                                 ),
                               ),
                               Padding(

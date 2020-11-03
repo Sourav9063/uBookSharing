@@ -213,17 +213,19 @@ class BookCard extends StatelessWidget {
                     ),
                     FittedBox(
                       fit: BoxFit.fitWidth,
-                      child: Text(
-                        'Uploaded: ' +
-                            bookData.bookTimeUpload.toDate().day.toString() +
-                            ' ' +
-                            UsableData.getMonthName(
-                                bookData.bookTimeUpload.toDate().month) +
-                            ', ' +
-                            bookData.bookTimeUpload.toDate().year.toString(),
-                        style: TextStyle(
-                            fontSize: width * .055, color: Colors.white),
-                      ),
+                      child: bookData.bookTimeUploadString == null
+                          ? Text(
+                              'Uploaded: ' +
+                                  UsableData.timestampToString(
+                                      bookData.bookTimeUpload),
+                              style: TextStyle(
+                                  fontSize: width * .055, color: Colors.white),
+                            )
+                          : Text(
+                              'Added: ' + bookData.bookTimeUploadString,
+                              style: TextStyle(
+                                  fontSize: width * .055, color: Colors.white),
+                            ),
                     ),
                   ],
                 ),
@@ -244,7 +246,7 @@ class IconAccount extends StatelessWidget {
   }) : super(key: key);
   final double radious;
   final String imglink;
-  final id = UsableData.getSetMillisecondsId();
+  // final id = UsableData.getSetMillisecondsId();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -274,43 +276,41 @@ class IconAccount extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   // print(id);
+                  // if (imglink != null)
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => ImageFull(
                                 imgLink: imglink,
-                                id: id,
+                                // id: id,
                               )));
                 },
                 child: ClipOval(
-                  child: Hero(
-                    tag: id,
-                    child: Image.network(
-                      imglink,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Icon(
-                          Icons.error,
-                          color: Colors.white,
-                          size: radious / 1.5,
-                        );
-                      },
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 7,
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
-                                : null,
-                          ),
-                        );
-                      },
-                      fit: BoxFit.cover,
-                      height: radious,
-                      width: radious,
-                    ),
+                  child: Image.network(
+                    imglink,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(
+                        Icons.error,
+                        color: Colors.white,
+                        size: radious / 1.5,
+                      );
+                    },
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          strokeWidth: 7,
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes
+                              : null,
+                        ),
+                      );
+                    },
+                    fit: BoxFit.cover,
+                    height: radious,
+                    width: radious,
                   ),
                 ),
               ),
@@ -321,16 +321,45 @@ class IconAccount extends StatelessWidget {
 
 class ImageFull extends StatelessWidget {
   final String imgLink;
-  final String id;
-  const ImageFull({Key key, this.imgLink, this.id}) : super(key: key);
+  // final String id;
+  const ImageFull({
+    Key key,
+    this.imgLink,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: CommonThings.size.width * .80,
-      height: CommonThings.size.width * .80 * 4 / 3,
-      child: Hero(
-          tag: id, child: InteractiveViewer(child: Image.network(imgLink))),
+    return Center(
+      child: Container(
+        width: CommonThings.size.width,
+        // height: CommonThings.size.width * .80 * 4 / 3,
+        child: InteractiveViewer(
+            maxScale: 5,
+            child: Image.network(
+              imgLink,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) {
+                return Icon(
+                  Icons.error,
+                  color: Colors.red,
+                  size: CommonThings.size.width * .25,
+                );
+              },
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 7,
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes
+                        : null,
+                  ),
+                );
+              },
+            )),
+      ),
     );
   }
 }

@@ -76,19 +76,19 @@ class _MainScreenNewState extends State<MainScreenNew> {
     fcm.requestNotificationPermissions();
     fcm.configure(
       onLaunch: (message) {
-        print('OnLaunch');
+        // print('OnLaunch');
         // print(message);
         // if (message != null)
-          setState(() {
-            notiIcons = Icon(
-              Icons.notifications_active,
-              color: Colors.lightBlue,
-            );
-          });
+        setState(() {
+          notiIcons = Icon(
+            Icons.notifications_active,
+            color: Colors.lightBlue,
+          );
+        });
         return;
       },
       onMessage: (message) {
-        print('message');
+        // print('message');
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => InteractionsScreen()));
         setState(() {
@@ -102,7 +102,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
         return;
       },
       onResume: (message) {
-        print('resume');
+        // print('resume');
         setState(() {
           notiIcons = Icon(
             Icons.notifications_active,
@@ -487,6 +487,8 @@ class _MainScreenNewState extends State<MainScreenNew> {
 
                                       return ListView(
                                         physics: BouncingScrollPhysics(),
+                                        // addAutomaticKeepAlives: true,
+                                        // cacheExtent: 50,
                                         children: bookcardList,
                                       );
                                     }

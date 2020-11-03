@@ -49,6 +49,15 @@ class UsableData {
     UsableData.id = DateTime.now().millisecondsSinceEpoch.toString();
     return new DateTime.now().millisecondsSinceEpoch.toString();
   }
+
+  static String timeToString(DateTime nowMil) {
+    String uploaded = nowMil.day.toString() +
+        ' ' +
+        UsableData.getMonthName(nowMil.month) +
+        ', ' +
+        nowMil.year.toString();
+    return uploaded;
+  }
 }
 
 class AllKeys {
@@ -78,6 +87,7 @@ class AllKeys {
   static const String bookTimeKey = 'TimeKey';
 
   static const String bookTimeUploadKey = 'UploadTimeKey';
+  static const String bookTimeUploadStringKey = 'UploadTimeStringKey';
   static const String bookUploaderNameKey = 'UploaderNameKey';
   static const String bookUploaderEmailKey = 'UploaderEmailKey';
   static const String bookUploaderBatchKey = 'UploaderBatchKey';
@@ -97,6 +107,7 @@ class BookData {
   String bookTime;
 
   Timestamp bookTimeUpload;
+  String bookTimeUploadString;
   String bookUploaderName;
   String bookUploaderEmail;
   String bookUploaderBatch;
@@ -115,6 +126,8 @@ class BookData {
     bookMapData[AllKeys.bookPriceKey] = bookPrice;
     bookMapData[AllKeys.bookTimeKey] = bookTime;
     bookMapData[AllKeys.bookTimeUploadKey] = DateTime.now();
+    bookMapData[AllKeys.bookTimeUploadStringKey] =
+        UsableData.timeToString(bookMapData[AllKeys.bookTimeUploadKey]);
     bookMapData[AllKeys.bookUploaderNameKey] = UserProfileData.name;
     bookMapData[AllKeys.bookUploaderDeptKey] = UserProfileData.dept;
     bookMapData[AllKeys.bookUploaderBatchKey] = UserProfileData.admitted;

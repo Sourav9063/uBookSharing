@@ -111,7 +111,10 @@ class GetBookData {
     bookData.bookPrice = element.data()[AllKeys.bookPriceKey];
     bookData.bookEdition = element.data()[AllKeys.bookEditionKey];
     bookData.bookTime = element.data()[AllKeys.bookTimeKey];
+
     bookData.bookTimeUpload = element.data()[AllKeys.bookTimeUploadKey];
+    bookData.bookTimeUploadString =
+        element.data()[AllKeys.bookTimeUploadStringKey];
 
     bookData.bookUploaderName = element.data()[AllKeys.bookUploaderNameKey];
     bookData.bookUploaderEmail = element.data()[AllKeys.bookUploaderEmailKey];

@@ -160,16 +160,28 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                 padding: const EdgeInsets.all(4.0),
                                 child: FittedBox(
                                   fit: BoxFit.fitWidth,
-                                  child: Text(
-                                    'Uploaded: ' +
-                                        UsableData.timestampToString(
-                                            widget.bookData.bookTimeUpload),
-                                    style: TextStyle(
-                                      color: Color(0xffFFFFFF),
-                                      fontSize: 16,
-                                      // fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
+                                  child: widget.bookData.bookTimeUploadString == null
+                                      ? Text(
+                                          'Uploaded: ' +
+                                              UsableData.timestampToString(
+                                                  widget
+                                                      .bookData.bookTimeUpload),
+                                          style: TextStyle(
+                                            color: Color(0xffFFFFFF),
+                                            fontSize: 16,
+                                            // fontWeight: FontWeight.w500,
+                                          ),
+                                        )
+                                      : Text(
+                                          'Added: ' +
+                                              widget.bookData
+                                                  .bookTimeUploadString,
+                                          style: TextStyle(
+                                            color: Color(0xffFFFFFF),
+                                            fontSize: 16,
+                                            // fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
                                 ),
                               ),
                               forWhat(widget.bookData.bookFor),
@@ -241,18 +253,16 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                 padding: const EdgeInsets.all(4.0),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Expanded(
-                                      child: FittedBox(
-                                        fit: BoxFit.fitWidth,
-                                        child: SelectableText(
-                                          'Email: ' +
-                                              widget.bookData.bookUploaderEmail,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16),
-                                        ),
+                                    FittedBox(
+                                      fit: BoxFit.fitWidth,
+                                      child: SelectableText(
+                                        'Email: ' +
+                                            widget.bookData.bookUploaderEmail,
+                                        // textScaleFactor: 1,
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
                                       ),
                                     ),
                                     IconButton(
@@ -566,10 +576,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                 'Price: ${widget.bookData.bookPrice}',
                 style: TextStyle(
                   color: Color(0xffFFFFFF),
-                  fontSize: 17,
+                  fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
               ),
+            ),
+            SizedBox(
+              height: 8,
             ),
             FittedBox(
               fit: BoxFit.fitWidth,
@@ -577,7 +590,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                 'Time: ${widget.bookData.bookTime}',
                 style: TextStyle(
                   color: Color(0xffFFFFFF),
-                  fontSize: 17,
+                  fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -594,7 +607,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
             'Time: ${widget.bookData.bookTime}',
             style: TextStyle(
               color: Color(0xffffffff),
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -609,7 +622,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
           'Price: ${widget.bookData.bookPrice}',
           style: TextStyle(
             color: Color(0xffffffff),
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
         ),

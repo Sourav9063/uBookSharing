@@ -16,7 +16,13 @@ exports.createUser = functions.firestore
    
 // console.log(snap.data());
 
-return admin.messaging().sendToTopic(snap.data().To,{notification:{body:'Check your notification in the app for more informations',title:snap.data().Name+' is interested about your book',clickAction:'FLUTTER_NOTIFICATION_CLICK',sound:'default'}});
+return admin.messaging().sendToTopic(snap.data().To,{notification:{body:'Check your notification in the app for more informations'
+,title:snap.data().Name+' is interested about your book'
+,clickAction:'FLUTTER_NOTIFICATION_CLICK'
+,sound:'default'
+,image:snap.data().ProfileLinkKey
+
+}});
 
 // admin.messaging().
  

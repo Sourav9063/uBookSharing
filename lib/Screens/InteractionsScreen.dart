@@ -152,7 +152,7 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
                                     timestamp.toDate().hour.toString() +
                                     ':' +
                                     timestamp.toDate().minute.toString() +
-                                    ' ' +
+                                    '   ' +
                                     UsableData.timestampToString(timestamp)),
                                 Divider(
                                   thickness: 2,
