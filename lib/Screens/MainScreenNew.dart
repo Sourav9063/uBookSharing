@@ -471,10 +471,10 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                           child: Center(
                                             child: Container(
                                               height:
-                                                  CommonThings.size.height * .3,
+                                                  CommonThings.size.height * .25,
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
+                                                padding: const EdgeInsets.symmetric(
+                                                        vertical: 36.0),
                                                 child: Text(
                                                   'Tap to see more',
                                                   textScaleFactor: 1.2,
@@ -488,7 +488,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                       return ListView(
                                         physics: BouncingScrollPhysics(),
                                         // addAutomaticKeepAlives: true,
-                                        // cacheExtent: 50,
+                                        cacheExtent: 9999,
                                         children: bookcardList,
                                       );
                                     }
@@ -577,10 +577,11 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                           child: Center(
                                             child: Container(
                                               height:
-                                                  CommonThings.size.height * .3,
+                                                  CommonThings.size.height * .25,
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsets.all(8.0),
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 36.0),
                                                 child: Text(
                                                   'Tap to see more',
                                                   textScaleFactor: 1,
@@ -592,6 +593,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                       );
 
                                       return ListView(
+                                        cacheExtent: 9999,
                                         physics: BouncingScrollPhysics(),
                                         // shrinkWrap: true,
 

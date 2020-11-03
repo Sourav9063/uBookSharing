@@ -159,6 +159,7 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
                                 ),
                                 SelectableText(
                                     dataSnapshot[AllKeys.bookDesKey]),
+                                    
                               ],
                             ),
                           ),

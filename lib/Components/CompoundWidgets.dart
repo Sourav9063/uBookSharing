@@ -332,7 +332,7 @@ class ImageFull extends StatelessWidget {
     return Center(
       child: Container(
         width: CommonThings.size.width,
-        // height: CommonThings.size.width * .80 * 4 / 3,
+        height: CommonThings.size.height,
         child: InteractiveViewer(
             maxScale: 5,
             child: Image.network(

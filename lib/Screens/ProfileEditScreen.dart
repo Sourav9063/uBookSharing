@@ -692,17 +692,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       hintText: 'It\'s secured'),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 8.0, bottom: 8),
-                                child: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    '*No one will know unless you share it',
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                ),
-                              ),
+
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: TextFormField(
@@ -722,6 +712,17 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       prefixIcon: Icon(Icons.home),
                                       labelText: 'Address',
                                       hintText: 'Use your current location'),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 8.0, bottom: 0),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    '*Your phone number and address are secured.\n No one will know unless you share it.',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
                                 ),
                               ),
                               Padding(
