@@ -17,7 +17,9 @@ class BookDetailsScreen extends StatefulWidget {
 }
 
 class _BookDetailsScreenState extends State<BookDetailsScreen> {
-  double picHeight = CommonThings.size.width * 4 / 3;
+  double picHeight = CommonThings.size.width * 4 / 2.5;
+  // double bottom=CommonThings.size.height
+  GlobalKey _bottomCard = GlobalKey();
   bool button = true;
   buttonState() {
     setState(() {
@@ -27,13 +29,15 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
 
   void smallPic() {
     setState(() {
-      picHeight = CommonThings.size.height * .30;
+      picHeight = CommonThings.size.height -
+          _bottomCard.currentContext.size.height * 1.1;
+      // picHeight = 0;
     });
   }
 
   void bigPic() {
     setState(() {
-      picHeight = CommonThings.size.width * 4 / 3;
+      picHeight = CommonThings.size.width * 4 / 2.5;
     });
   }
 
@@ -67,6 +71,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
               duration: Duration(milliseconds: 450),
               curve: Curves.fastOutSlowIn,
               top: picHeight - 20,
+              // bottom: picHeight + 20,
               child: GestureDetector(
                 onPanUpdate: (details) {
                   // print(details.delta.direction);
@@ -80,6 +85,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                   smallPic();
                 },
                 child: Container(
+                  key: _bottomCard,
                   decoration: BoxDecoration(
                     color: Color(0xffe8e8f8),
                     borderRadius: BorderRadius.circular(16),
@@ -160,7 +166,8 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                 padding: const EdgeInsets.all(4.0),
                                 child: FittedBox(
                                   fit: BoxFit.fitWidth,
-                                  child: widget.bookData.bookTimeUploadString == null
+                                  child: widget.bookData.bookTimeUploadString ==
+                                          null
                                       ? Text(
                                           'Uploaded: ' +
                                               UsableData.timestampToString(
