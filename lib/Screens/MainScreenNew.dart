@@ -470,10 +470,11 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                           },
                                           child: Center(
                                             child: Container(
-                                              height:
-                                                  CommonThings.size.height * .25,
+                                              height: CommonThings.size.height *
+                                                  .25,
                                               child: Padding(
-                                                padding: const EdgeInsets.symmetric(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
                                                         vertical: 36.0),
                                                 child: Text(
                                                   'Tap to see more',
@@ -486,6 +487,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                       );
 
                                       return ListView(
+                                        
                                         physics: BouncingScrollPhysics(),
                                         // addAutomaticKeepAlives: true,
                                         cacheExtent: 9999,
@@ -576,8 +578,8 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                           },
                                           child: Center(
                                             child: Container(
-                                              height:
-                                                  CommonThings.size.height * .25,
+                                              height: CommonThings.size.height *
+                                                  .25,
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.symmetric(
