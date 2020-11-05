@@ -58,6 +58,7 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
               );
             }
             return ListView.builder(
+              physics: BouncingScrollPhysics(),
               itemCount: snapshot.data.documents.length,
               itemBuilder: (context, index) {
                 var dataSnapshot = snapshot.data.documents[index];
@@ -159,7 +160,6 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
                                 ),
                                 SelectableText(
                                     dataSnapshot[AllKeys.bookDesKey]),
-                                    
                               ],
                             ),
                           ),
