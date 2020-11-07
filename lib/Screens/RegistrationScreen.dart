@@ -156,7 +156,8 @@ class _RegScreenState extends State<RegScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.blueAccent,
+      backgroundColor: Color(0xff324062),
+      
       body: ModalProgressHUD(
         inAsyncCall: spinner,
         opacity: .55,
