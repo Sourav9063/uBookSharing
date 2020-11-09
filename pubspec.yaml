@@ -23,7 +23,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  animations: ^1.1.2
   cloud_firestore: ^0.14.0+2
   cupertino_icons: ^0.1.3
   dropdown_search: ^0.4.4
