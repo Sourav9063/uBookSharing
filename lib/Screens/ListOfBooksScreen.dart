@@ -81,14 +81,15 @@ class _ListOfBooksScreenState extends State<ListOfBooksScreen> {
               ),
             )
           : Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
               child: ListView.builder(
                   cacheExtent: 9999,
                   itemCount: bookData.length,
                   itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 4),
                         child: BookCard(
-                          width: CommonThings.size.width * .78,
+                          width: CommonThings.size.width * .8,
                           bookData: bookData[index],
                         ),
                       )),

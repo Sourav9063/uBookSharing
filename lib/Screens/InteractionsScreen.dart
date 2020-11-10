@@ -22,8 +22,9 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Notification'),
+        backgroundColor: Color(0x00000000),
       ),
-      backgroundColor: Color(0xfffff1e6),
+      backgroundColor: Color(0xff3f1A54),
       body: StreamBuilder(
         stream: Interactions.getMsgStream(UserProfileData.email),
         builder: (context, snapshot) {

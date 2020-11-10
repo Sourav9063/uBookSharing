@@ -21,7 +21,6 @@ class _AddBookScreenState extends State<AddBookScreen> {
   // List<dynamic> bookNameList = [];
   String bookImgLink;
 
-
   //     UserProfileData.email + UserProfileData.uploadedBookNo.toString();
   bool ignore = true;
   bool visible = true;
@@ -198,7 +197,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
     // controller.addListener(() {
     //   scrlLstnr();
     // });
-    
+
     getBookNameList();
 
     super.initState();
@@ -280,8 +279,10 @@ class _AddBookScreenState extends State<AddBookScreen> {
                   padding:
                       EdgeInsets.only(top: 16, left: 12, right: 12, bottom: 12),
                   decoration: BoxDecoration(
-                      color: Color(0xffF8F4FF),
-                      borderRadius: BorderRadius.circular(16)),
+                      color: Color(0xff9bafd9),
+                      // gradient: ,
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(18))),
                   child: Column(
                     children: [
                       Center(
@@ -360,7 +361,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                             BorderRadius.circular(16)),
                                     validator: (value) {
                                       if (value == null || value == '') {
-                                        return 'Must Select your Book\'s name';
+                                        return 'Must select your Book\'s name';
                                       }
                                       return null;
                                     },
@@ -754,8 +755,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                 ),
                               );
 
-                              bookImgLink = await UploadIMG()
-                                  .uploadBookPic(UserProfileData.email, UsableData.id);
+                              bookImgLink = await UploadIMG().uploadBookPic(
+                                  UserProfileData.email, UsableData.id);
                               if (bookImgLink != null) {
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(

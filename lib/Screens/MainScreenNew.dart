@@ -74,7 +74,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
   @override
   void initState() {
     loadUser();
-  
+
     final fcm = FirebaseMessaging();
     fcm.requestNotificationPermissions();
     fcm.configure(
@@ -161,9 +161,9 @@ class _MainScreenNewState extends State<MainScreenNew> {
                     Icons.book,
                     color: Colors.white,
                   ),
-                  color: Color(0xff144552),
+                  color: Color(0xfff44552),
                   labelColor: Colors.white,
-                  labelBackgroundColor: Color(0xff144552)),
+                  labelBackgroundColor: Color(0xfff44552)),
               FabMenuItem(
                 label: 'Add a request',
                 ontap: () {
@@ -181,12 +181,12 @@ class _MainScreenNewState extends State<MainScreenNew> {
                   );
                 },
                 icon: Icon(
-                  Icons.sentiment_satisfied_alt,
+                  Icons.sentiment_dissatisfied,
                   color: Colors.white,
                 ),
-                color: Color(0xff6F00FF),
+                color: Color(0xff1445a2),
                 labelColor: Colors.white,
-                labelBackgroundColor: Color(0xff6F00FF),
+                labelBackgroundColor: Color(0xff1445a2),
               )
             ],
             body: Row(
@@ -254,7 +254,12 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                 child: Text(
                                   UserProfileData.versityName.toUpperCase(),
                                   textScaleFactor: 1,
+                                  // strutStyle: StrutStyle(
+
+                                  // ),
                                   style: GoogleFonts.lora(
+                                    // height: .1,
+
                                     color: Color(0xff001a54),
                                     // fontSize: 30,
                                     fontWeight: FontWeight.bold,
@@ -371,7 +376,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                           //
                           //
                           KeepAlivePage(
-                                                      child: Column(
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
@@ -417,7 +422,8 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                             textScaleFactor: 2.5,
                                             style: GoogleFonts.abrilFatface(
                                               color: Color(0xff003aa4),
-                                              // fontSize: 30,
+                                           
+    // fontSize: 30,
                                               // fontWeight: FontWeight.w500,
                                               // fontStyle: FontStyle.italic
                                             ),
@@ -438,7 +444,8 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                             children: [
                                               Container(
                                                 height:
-                                                    CommonThings.size.width * .50,
+                                                    CommonThings.size.width *
+                                                        .50,
                                                 // fit: BoxFit.contain,
                                                 child: FlareActor(
                                                   'assets/flr/Not found.flr',
@@ -465,8 +472,9 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                                         vertical: 4.0,
                                                         horizontal: 5),
                                                 child: BookCard(
-                                                  width: CommonThings.size.width *
-                                                      .7,
+                                                  width:
+                                                      CommonThings.size.width *
+                                                          .7,
                                                   bookData: bookData,
                                                 ),
                                               ),
@@ -522,7 +530,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                           //
                           //
                           KeepAlivePage(
-                                                      child: Column(
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
@@ -549,7 +557,8 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                             children: [
                                               Container(
                                                 height:
-                                                    CommonThings.size.width * .50,
+                                                    CommonThings.size.width *
+                                                        .50,
                                                 // fit: BoxFit.contain,
                                                 child: FlareActor(
                                                   'assets/flr/Not found.flr',
@@ -576,8 +585,9 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                                         vertical: 4.0,
                                                         horizontal: 5),
                                                 child: BookCard(
-                                                  width: CommonThings.size.width *
-                                                      .7,
+                                                  width:
+                                                      CommonThings.size.width *
+                                                          .7,
                                                   bookData: bookData,
                                                 ),
                                               ),
@@ -637,7 +647,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                           //My BOoks
                           //
                           KeepAlivePage(
-                                                      child: Column(
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
@@ -665,14 +675,16 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                             children: [
                                               Container(
                                                 height:
-                                                    CommonThings.size.width * .50,
+                                                    CommonThings.size.width *
+                                                        .50,
                                                 // fit: BoxFit.contain,
                                                 child: FlareActor(
                                                   'assets/flr/Not found.flr',
                                                   animation: 'idle',
                                                 ),
                                               ),
-                                              Text('You haven\'t added any book'),
+                                              Text(
+                                                  'You haven\'t added any book'),
                                             ],
                                           );
                                         } else {
@@ -692,8 +704,9 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                                         vertical: 4.0,
                                                         horizontal: 5),
                                                 child: BookCard(
-                                                  width: CommonThings.size.width *
-                                                      .7,
+                                                  width:
+                                                      CommonThings.size.width *
+                                                          .7,
                                                   bookData: bookData,
                                                 ),
                                               ),
@@ -735,9 +748,6 @@ class _MainScreenNewState extends State<MainScreenNew> {
     );
   }
 }
-
-
-
 
 class KeepAlivePage extends StatefulWidget {
   KeepAlivePage({

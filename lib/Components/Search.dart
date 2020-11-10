@@ -62,6 +62,7 @@ class SearchPageTest extends SearchDelegate {
                 .toLowerCase()
                 .startsWith(query.toLowerCase()))
             .toList();
+
     return tmpList.isEmpty
         ? Padding(
             padding: const EdgeInsets.all(8.0),
@@ -108,8 +109,9 @@ class SearchPageTest extends SearchDelegate {
             ),
           )
         : Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
             child: ListView.builder(
+                physics: BouncingScrollPhysics(),
                 itemCount: tmpList.length,
                 itemBuilder: (
                   context,
@@ -117,9 +119,12 @@ class SearchPageTest extends SearchDelegate {
                 ) {
                   return Card(
                     color: Colors.white,
-                    elevation: 8,
+                    elevation: 4,
                     child: ListTile(
-                      title: Text(tmpList[index]),
+                      title: Text(
+                        tmpList[index],
+                        overflow: TextOverflow.fade,
+                      ),
                       onTap: () async {
                         print(tmpList[index]);
                         var data = await GetBookData.bookDataSearch(
