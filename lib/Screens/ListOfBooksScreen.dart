@@ -66,12 +66,13 @@ class _ListOfBooksScreenState extends State<ListOfBooksScreen> {
                       child: RaisedButton(
                         onPressed: () async {
                           UsableData.getSetMillisecondsId();
-                          Navigator.push(
+                          Navigator.pushAndRemoveUntil(
                               context,
                               PageTransition(
                                   curve: Curves.fastOutSlowIn,
                                   child: AddRequestScreen(),
-                                  type: PageTransitionType.bottomToTop));
+                                  type: PageTransitionType.bottomToTop),
+                              ModalRoute.withName("Foo"));
                         },
                         child: Text('Add a request'),
                       ),

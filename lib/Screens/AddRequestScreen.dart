@@ -342,6 +342,9 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 4.0),
                                         child: TextFormField(
+                                          onEditingComplete: () =>
+                                              FocusScope.of(context)
+                                                  .nextFocus(),
                                           keyboardType: TextInputType.number,
                                           style: TextStyle(fontSize: 18),
                                           onTap: () {

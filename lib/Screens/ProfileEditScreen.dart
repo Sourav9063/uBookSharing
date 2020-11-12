@@ -574,6 +574,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: TextFormField(
+                                  onEditingComplete: () =>
+                                      FocusScope.of(context).nextFocus(),
                                   textCapitalization: TextCapitalization.words,
                                   style: TextStyle(fontSize: 18),
                                   validator: (value) {
@@ -599,6 +601,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: TextFormField(
+                                        onEditingComplete: () =>
+                                            FocusScope.of(context).nextFocus(),
                                         validator: (value) {
                                           if (value == null || value == '') {
                                             return 'This field cannot be empty!';
@@ -630,6 +634,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: TextFormField(
+                                        onEditingComplete: () =>
+                                            FocusScope.of(context).nextFocus(),
                                         validator: (value) {
                                           if (value == null || value == '')
                                             return 'This field cannot be empty!';
@@ -654,6 +660,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: TextFormField(
+                                  onEditingComplete: () =>
+                                      FocusScope.of(context).nextFocus(),
                                   validator: (value) {
                                     if (value == null || value == '')
                                       return 'This field cannot be empty!';
@@ -673,6 +681,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: TextFormField(
+                                  onEditingComplete: () =>
+                                      FocusScope.of(context).nextFocus(),
                                   validator: (value) {
                                     if (value == null || value == '')
                                       return 'This field cannot be empty!';
@@ -696,6 +706,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: TextFormField(
+                                  onEditingComplete: () =>
+                                      FocusScope.of(context).nextFocus(),
+                                  textCapitalization: TextCapitalization.words,
                                   validator: (value) {
                                     if (value == null || value == '')
                                       return 'This field cannot be empty!';
