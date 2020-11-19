@@ -65,7 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    CommonThings.size = CommonThings.size;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -89,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 animation: animatee,
                 callback: (value) {
                   if (value == 'Give') {
-      UsableData.getSetMillisecondsId();
+                    UsableData.getSetMillisecondsId();
                     Navigator.push(
                         context,
                         MaterialPageRoute(

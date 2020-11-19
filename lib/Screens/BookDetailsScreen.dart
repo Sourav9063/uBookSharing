@@ -45,6 +45,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: Colors.black,
+      
       body: Builder(
         builder: (context) => Stack(
           children: [

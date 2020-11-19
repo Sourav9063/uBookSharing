@@ -422,8 +422,8 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                             textScaleFactor: 2.5,
                                             style: GoogleFonts.abrilFatface(
                                               color: Color(0xff003aa4),
-                                           
-    // fontSize: 30,
+
+                                              // fontSize: 30,
                                               // fontWeight: FontWeight.w500,
                                               // fontStyle: FontStyle.italic
                                             ),
@@ -715,6 +715,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
 
                                           return ListView(
                                             physics: BouncingScrollPhysics(),
+                                            cacheExtent: 9999,
                                             // shrinkWrap: true,
 
                                             // scrollDirection: Axis.horizontal,
