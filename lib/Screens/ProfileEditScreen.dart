@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 // import 'package:dropdownfield/dropdownfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:page_transition/page_transition.dart';
 
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
@@ -16,8 +16,6 @@ import 'package:uBookSharing/BackEnd/UploadIMG.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Constants.dart';
 import 'package:uBookSharing/Screens/MainScreenNew.dart';
-// import 'package:uBookSharing/Screens/MainScreen.dart';
-import 'package:vibration/vibration.dart';
 
 class ProfileEditScreen extends StatefulWidget {
   ProfileEditScreen({Key key}) : super(key: key);
@@ -66,11 +64,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
       Navigator.pushReplacement(
           context,
-          PageTransition(
+          CupertinoPageRoute(
               settings: RouteSettings(name: "Foo"),
-              curve: Curves.fastOutSlowIn,
-              child: MainScreenNew(),
-              type: PageTransitionType.rightToLeftWithFade));
+              builder: (context) => MainScreenNew()));
       //  UserProfileData.name,  UserProfileData.versityName,
       // 'profilePicLink', 'admitted', 'dept', 'phoneNum', 'email'
 
@@ -251,11 +247,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     if (val == 'done') {
       Navigator.pushReplacement(
           context,
-          PageTransition(
+          CupertinoPageRoute(
               settings: RouteSettings(name: "Foo"),
-              curve: Curves.fastOutSlowIn,
-              child: MainScreenNew(),
-              type: PageTransitionType.fade));
+              builder: (context) => MainScreenNew()));
     }
   }
 
@@ -767,10 +761,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                               ),
                                             );
                                           }
-                                          validated
-                                              ? Vibration.vibrate(duration: 50)
-                                              : Vibration.vibrate(
-                                                  duration: 200);
+
                                           // print( UserProfileData.versityName);
                                         },
                                         child: Padding(

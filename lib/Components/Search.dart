@@ -1,7 +1,8 @@
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
+
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Screens/ListOfBooksScreen.dart';
@@ -93,13 +94,11 @@ class SearchPageTest extends SearchDelegate {
 
                         Navigator.push(
                             context,
-                            PageTransition(
-                                curve: Curves.fastOutSlowIn,
-                                child: ListOfBooksScreen(
-                                  snapshot: data,
-                                  searchName: query,
-                                ),
-                                type: PageTransitionType.rightToLeft));
+                            CupertinoPageRoute(
+                                builder: (context) => ListOfBooksScreen(
+                                      snapshot: data,
+                                      searchName: query,
+                                    )));
                       },
                       child: Text('Search entair database'),
                     ),
@@ -131,14 +130,14 @@ class SearchPageTest extends SearchDelegate {
                             AllKeys.bookNameKey, tmpList[index]);
 
                         Navigator.push(
-                            context,
-                            PageTransition(
-                                curve: Curves.fastOutSlowIn,
-                                child: ListOfBooksScreen(
-                                  snapshot: data,
-                                  searchName: tmpList[index],
-                                ),
-                                type: PageTransitionType.rightToLeft));
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => ListOfBooksScreen(
+                              snapshot: data,
+                              searchName: tmpList[index],
+                            ),
+                          ),
+                        );
                       },
                       leading: Icon(
                         Icons.folder_rounded,

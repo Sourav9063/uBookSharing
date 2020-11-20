@@ -4,7 +4,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:page_transition/page_transition.dart';
+
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 // import 'package:uBookSharing/BackEnd/Datas.dart';
@@ -150,14 +150,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (name == 'unlock') {
                             Navigator.pushReplacement(
                                 context,
-                                PageTransition(
-                                    settings: RouteSettings(name: "Foo"),
-                                    curve: Curves.fastOutSlowIn,
-                                    duration: Duration(milliseconds: 400),
-                                    child: UserProfileData.tmVersity != null
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return UserProfileData.tmVersity != null
                                         ? MainScreenNew()
-                                        : ProfileEditScreen(),
-                                    type: PageTransitionType.bottomToTop));
+                                        : ProfileEditScreen();
+                                  },
+                                  settings: RouteSettings(name: "Foo"),
+                                )
+                                // PageTransition(
+                                //     settings: RouteSettings(name: "Foo"),
+                                //     curve: Curves.fastOutSlowIn,
+                                //     duration: Duration(milliseconds: 400),
+                                //     child: UserProfileData.tmVersity != null
+                                //         ? MainScreenNew()
+                                //         : ProfileEditScreen(),
+                                //     type: PageTransitionType.bottomToTop),
+                                );
                           }
                         },
                       )),

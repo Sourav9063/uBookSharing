@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:page_transition/page_transition.dart';
+
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Components/Search.dart';
@@ -12,7 +13,6 @@ import 'package:uBookSharing/Components/favCustom.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/Screens/InteractionsScreen.dart';
 
-import 'package:vibration/vibration.dart';
 import 'AddBookScreen.dart';
 import 'AddRequestScreen.dart';
 
@@ -31,26 +31,34 @@ class _MainScreenNewState extends State<MainScreenNew> {
   double width = 0;
   var scaffoldKey = GlobalKey<ScaffoldState>();
   PageController pagecontroller = PageController();
-
+  bool srch = false;
   Widget notiIcons = Icon(
     Icons.notifications_outlined,
     color: Colors.white,
   );
 
   bool favVis = false;
+
   loadUser() async {
-    // await GetBookData.getBookNameListFirebase();
-    // print(GetBookData.bookNameList);
     if (UserProfileData.tmVersity != null) {
-      setState(() {
-        favVis = true;
-        width = CommonThings.size.width * .15;
-      });
+      var check = await GetBookData.getBookNameListFirebase();
+
+      if (check != null) {
+        srch = true;
+        setState(() {
+          favVis = true;
+          width = CommonThings.size.width * .15;
+        });
+      } else {
+        srch = false;
+      }
     } else {
       String msg = await GetUserData.getUserData(
           FirebaseAuth.instance.currentUser.email);
+      var check = await GetBookData.getBookNameListFirebase();
 
-      if (msg == 'done') {
+      if (msg == 'done' && check != null) {
+        srch = true;
         setState(() {
           favVis = true;
           width = CommonThings.size.width * .15;
@@ -153,16 +161,9 @@ class _MainScreenNewState extends State<MainScreenNew> {
                   ontap: () {
                     UsableData.getSetMillisecondsId();
                     Navigator.push(
-                      context,
-                      PageTransition(
-                        curve: Curves.fastOutSlowIn,
-                        // duration: Duration(seconds:),
-                        // settings: RouteSettings(),
-                        child: AddBookScreen(),
-                        type: PageTransitionType.rightToLeft,
-                        alignment: Alignment.bottomRight,
-                      ),
-                    );
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => AddBookScreen()));
                   },
                   icon: Icon(
                     Icons.book,
@@ -176,16 +177,9 @@ class _MainScreenNewState extends State<MainScreenNew> {
                 ontap: () {
                   UsableData.getSetMillisecondsId();
                   Navigator.push(
-                    context,
-                    PageTransition(
-                      curve: Curves.fastOutSlowIn,
-                      // duration: Duration(seconds:),
-                      // settings: RouteSettings(),
-                      child: AddRequestScreen(),
-                      type: PageTransitionType.rightToLeft,
-                      alignment: Alignment.bottomRight,
-                    ),
-                  );
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => AddRequestScreen()));
                 },
                 icon: Icon(
                   Icons.sentiment_dissatisfied,
@@ -227,17 +221,22 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                   color: Colors.white,
                                 ),
                                 onPressed: () async {
-                                  var check = await GetBookData
-                                      .getBookNameListFirebase();
-                                  if (check != null) {
+                                  if (srch == false) {
+                                    var check = await GetBookData
+                                        .getBookNameListFirebase();
+                                    if (check != null) {
+                                      showSearch(
+                                          context: context,
+                                          delegate: SearchPageTest());
+                                    } else
+                                      Scaffold.of(context).showSnackBar(SnackBar(
+                                          backgroundColor: Colors.red,
+                                          content: Text(
+                                              'Search is not available at this moment')));
+                                  } else
                                     showSearch(
                                         context: context,
                                         delegate: SearchPageTest());
-                                  } else
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                        backgroundColor: Colors.red,
-                                        content: Text(
-                                            'Search is not available at this moment')));
                                 }),
                             IconButton(
                                 splashColor: Theme.of(context).accentColor,
@@ -250,12 +249,11 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                     );
                                   });
                                   Navigator.push(
-                                      context,
-                                      PageTransition(
-                                          curve: Curves.fastOutSlowIn,
-                                          child: InteractionsScreen(),
-                                          type:
-                                              PageTransitionType.leftToRight));
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            InteractionsScreen()),
+                                  );
                                 })
                           ],
                         ),
@@ -298,8 +296,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                   // setState(() {
                                   //   pressed = 1;
                                   // });
-                                  if (await Vibration.hasVibrator())
-                                    Vibration.vibrate(duration: 30);
+
                                   pagecontroller.animateToPage(0,
                                       duration: Duration(milliseconds: 500),
                                       curve: Curves.fastOutSlowIn);
@@ -325,8 +322,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                     // setState(() {
                                     //   pressed = 2;
                                     // });
-                                    if (await Vibration.hasVibrator())
-                                      Vibration.vibrate(duration: 30);
+
                                     pagecontroller.animateToPage(1,
                                         duration: Duration(milliseconds: 500),
                                         curve: Curves.fastOutSlowIn);
@@ -349,8 +345,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                   // setState(() {
                                   //   pressed = 3;
                                   // });
-                                  if (await Vibration.hasVibrator())
-                                    Vibration.vibrate(duration: 30);
+
                                   pagecontroller.animateToPage(2,
                                       duration: Duration(milliseconds: 500),
                                       curve: Curves.fastOutSlowIn);
@@ -381,8 +376,6 @@ class _MainScreenNewState extends State<MainScreenNew> {
                         physics: BouncingScrollPhysics(),
                         controller: pagecontroller,
                         onPageChanged: (value) async {
-                          if (await Vibration.hasVibrator())
-                            Vibration.vibrate(duration: 30);
                           setState(() {
                             pressed = value + 1;
                           });

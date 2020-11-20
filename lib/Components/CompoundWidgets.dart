@@ -3,11 +3,11 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:page_transition/page_transition.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
+import 'package:uBookSharing/Components/spinkit.dart';
 
 import 'package:uBookSharing/Screens/BookDetailsScreen.dart';
 import 'package:uBookSharing/Screens/Homepage.dart';
@@ -105,7 +105,15 @@ class BookCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
+        Navigator.push(context,
+            // PageTransition(
+            //   curve: Curves.fastOutSlowIn,
+            //   child: BookDetailsScreen(bookData: bookData),
+            //   type: PageTransitionType.size,
+            //   alignment: Alignment.center,
+            // )
+
+            MaterialPageRoute(builder: (context) {
           return BookDetailsScreen(bookData: bookData);
         }));
       },
@@ -426,11 +434,11 @@ class CustomDrawer extends StatelessWidget {
                     onPressed: () {
                       UsableData.getSetMillisecondsId();
                       Navigator.push(
-                          context,
-                          PageTransition(
-                              curve: Curves.fastOutSlowIn,
-                              child: ProfileEditScreen(),
-                              type: PageTransitionType.leftToRight));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfileEditScreen(),
+                        ),
+                      );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -456,11 +464,11 @@ class CustomDrawer extends StatelessWidget {
                     onPressed: () {
                       // UsableData.getSetMillisecondsId();
                       Navigator.push(
-                          context,
-                          PageTransition(
-                              curve: Curves.fastOutSlowIn,
-                              child: InteractionsScreen(),
-                              type: PageTransitionType.leftToRight));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => InteractionsScreen(),
+                        ),
+                      );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -520,6 +528,7 @@ class CustomDrawer extends StatelessWidget {
                         borderRadius: BorderRadius.circular(0)),
                     onPressed: () {
                       FirebaseAuth.instance.signOut();
+                      UserProfileData.tmVersity = null;
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (context) => MyHomePage()),
                           (Route<dynamic> route) => false);

@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
+
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
@@ -56,7 +57,7 @@ class _ListOfBooksScreenState extends State<ListOfBooksScreen> {
                       child: FittedBox(
                         fit: BoxFit.fitWidth,
                         child: Text(
-                          'There are no books listed name "${widget.searchName}"',
+                          'There are no books listed named "${widget.searchName}"',
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
@@ -68,10 +69,8 @@ class _ListOfBooksScreenState extends State<ListOfBooksScreen> {
                           UsableData.getSetMillisecondsId();
                           Navigator.pushAndRemoveUntil(
                               context,
-                              PageTransition(
-                                  curve: Curves.fastOutSlowIn,
-                                  child: AddRequestScreen(),
-                                  type: PageTransitionType.bottomToTop),
+                              CupertinoPageRoute(
+                                  builder: (context) => AddRequestScreen()),
                               ModalRoute.withName("Foo"));
                         },
                         child: Text('Add a request'),

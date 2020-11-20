@@ -126,7 +126,7 @@ class GetBookData {
   }
 
   static List<dynamic> bookNameList;
-  static Future<List<dynamic>> getBookNameListFirebase() async {
+  static Future<bool> getBookNameListFirebase() async {
     try {
       await FirebaseFirestore.instance
           .collection(UserProfileData.tmVersity)
@@ -136,7 +136,7 @@ class GetBookData {
         bookNameList = value.data()['FullNameArray'];
       });
       bookNameList.sort();
-      return bookNameList;
+      return true;
     } catch (e) {
       bookNameList.add('No data');
 
