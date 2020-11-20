@@ -138,10 +138,9 @@ class GetBookData {
       bookNameList.sort();
       return bookNameList;
     } catch (e) {
-      // bookNameList.add('No data');
-      bookNameList = [];
+      bookNameList.add('No data');
 
-      return bookNameList;
+      return null;
     }
     // print(bookNameList);
   }

@@ -39,35 +39,42 @@ class _MainScreenNewState extends State<MainScreenNew> {
 
   bool favVis = false;
   loadUser() async {
-    await GetBookData.getBookNameListFirebase();
+    // await GetBookData.getBookNameListFirebase();
     // print(GetBookData.bookNameList);
-    String msg =
-        await GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
-
-    if (msg == 'done') {
+    if (UserProfileData.tmVersity != null) {
       setState(() {
         favVis = true;
         width = CommonThings.size.width * .15;
       });
     } else {
-      setState(() {
-        favVis = false;
-      });
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertsCompound(
-            msg: 'Something Wrong',
-            color: Colors.red.shade200,
-            des: 'Try again',
-            buttonTxt: 'OK',
-            function: () {
-              // spinner = false;
-              Navigator.pop(context);
-            },
-          );
-        },
-      );
+      String msg = await GetUserData.getUserData(
+          FirebaseAuth.instance.currentUser.email);
+
+      if (msg == 'done') {
+        setState(() {
+          favVis = true;
+          width = CommonThings.size.width * .15;
+        });
+      } else {
+        setState(() {
+          favVis = false;
+        });
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertsCompound(
+              msg: 'Something Wrong',
+              color: Colors.red.shade200,
+              des: 'Try again',
+              buttonTxt: 'OK',
+              function: () {
+                // spinner = false;
+                Navigator.pop(context);
+              },
+            );
+          },
+        );
+      }
     }
   }
 
@@ -219,10 +226,18 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                   Icons.search,
                                   color: Colors.white,
                                 ),
-                                onPressed: () {
-                                  showSearch(
-                                      context: context,
-                                      delegate: SearchPageTest());
+                                onPressed: () async {
+                                  var check = await GetBookData
+                                      .getBookNameListFirebase();
+                                  if (check != null) {
+                                    showSearch(
+                                        context: context,
+                                        delegate: SearchPageTest());
+                                  } else
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: Text(
+                                            'Search is not available at this moment')));
                                 }),
                             IconButton(
                                 splashColor: Theme.of(context).accentColor,
@@ -284,7 +299,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                   //   pressed = 1;
                                   // });
                                   if (await Vibration.hasVibrator())
-                                    Vibration.vibrate(duration: 50);
+                                    Vibration.vibrate(duration: 30);
                                   pagecontroller.animateToPage(0,
                                       duration: Duration(milliseconds: 500),
                                       curve: Curves.fastOutSlowIn);
@@ -311,7 +326,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                     //   pressed = 2;
                                     // });
                                     if (await Vibration.hasVibrator())
-                                      Vibration.vibrate(duration: 50);
+                                      Vibration.vibrate(duration: 30);
                                     pagecontroller.animateToPage(1,
                                         duration: Duration(milliseconds: 500),
                                         curve: Curves.fastOutSlowIn);
@@ -335,7 +350,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                   //   pressed = 3;
                                   // });
                                   if (await Vibration.hasVibrator())
-                                    Vibration.vibrate(duration: 50);
+                                    Vibration.vibrate(duration: 30);
                                   pagecontroller.animateToPage(2,
                                       duration: Duration(milliseconds: 500),
                                       curve: Curves.fastOutSlowIn);
@@ -365,8 +380,9 @@ class _MainScreenNewState extends State<MainScreenNew> {
                       child: PageView(
                         physics: BouncingScrollPhysics(),
                         controller: pagecontroller,
-                        onPageChanged: (value) {
-                          // print(value);
+                        onPageChanged: (value) async {
+                          if (await Vibration.hasVibrator())
+                            Vibration.vibrate(duration: 30);
                           setState(() {
                             pressed = value + 1;
                           });

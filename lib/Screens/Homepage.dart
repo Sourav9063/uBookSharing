@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void dispose() async {
-    if (FirebaseAuth.instance.currentUser != null)
+    if (UserProfileData.tmVersity == null)
       await GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
 
     super.dispose();

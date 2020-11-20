@@ -1,4 +1,3 @@
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -35,9 +34,11 @@ class MyAwesomeApp extends StatelessWidget {
           // cardColor: Colors.white,
 
           bottomSheetTheme: BottomSheetThemeData(
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18))),
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
+          ),
           primarySwatch: Colors.purple,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           accentColor: Color(0xfffb8b24),
@@ -75,7 +76,7 @@ class _FutureBuilderRouteFirebaseState
       setState(() {
         ini = true;
       });
-    }on FirebaseException catch (e) {
+    } on FirebaseException catch (e) {
       setState(() {
         errorMsg = e.message;
         error = true;
