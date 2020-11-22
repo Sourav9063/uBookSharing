@@ -195,6 +195,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: aPEmail, vertical: 0),
                             child: TextFormField(
+                              onEditingComplete: () =>
+                                      FocusScope.of(context).nextFocus(),
                               // autovalidate: true,
                               validator: (value) {
                                 if (value == '' || value == null)
@@ -235,6 +237,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: aPPassword, vertical: 8),
                             child: TextFormField(
+                              onEditingComplete: () =>
+                                      FocusScope.of(context).unfocus(),
                               onTap: () {
                                 setState(() {
                                   aPPassword = 10;

@@ -45,12 +45,12 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: Colors.black,
-      
+
       body: Builder(
         builder: (context) => Stack(
           children: [
             AnimatedPositioned(
-              duration: Duration(milliseconds: 650),
+              duration: Duration(milliseconds: 750),
               curve: Curves.fastOutSlowIn,
               top: 0,
               left: 0,
@@ -69,7 +69,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
               ),
             ),
             AnimatedPositioned(
-              duration: Duration(milliseconds: 450),
+              duration: Duration(milliseconds: 550),
               curve: Curves.fastOutSlowIn,
               top: picHeight - 20,
               // bottom: picHeight + 20,
@@ -138,7 +138,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                   fit: BoxFit.fitWidth,
                                   child: Text(
                                     widget.bookData.bookWriter,
-                                    style: TextStyle(
+                                    style: GoogleFonts.lora(
                                       color: Color(0xffFFFFFF),
                                       fontSize: 18,
                                       // fontWeight: FontWeight.w500,
@@ -249,7 +249,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                     fit: BoxFit.fitWidth,
                                     child: Text(
                                       widget.bookData.bookUploaderName,
-                                      style: TextStyle(
+                                      style: GoogleFonts.lora(
                                           color: Colors.white,
                                           fontSize: 20,
                                           fontWeight: FontWeight.w700),
@@ -273,25 +273,27 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                             color: Colors.white, fontSize: 18),
                                       ),
                                     ),
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.content_copy_rounded,
-                                        color: Colors.white,
-                                        size: 22,
-                                      ),
-                                      onPressed: () {
-                                        Clipboard.setData(ClipboardData(
-                                            text: widget
-                                                .bookData.bookUploaderEmail));
+                                    Expanded(
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.content_copy_rounded,
+                                          color: Colors.white,
+                                          size: 22,
+                                        ),
+                                        onPressed: () {
+                                          Clipboard.setData(ClipboardData(
+                                              text: widget
+                                                  .bookData.bookUploaderEmail));
 
-                                        Scaffold.of(context)
-                                            .showSnackBar(SnackBar(
-                                          backgroundColor:
-                                              Colors.blueAccent.shade700,
-                                          content: Text(
-                                              'Email address copied to clipboard'),
-                                        ));
-                                      },
+                                          Scaffold.of(context)
+                                              .showSnackBar(SnackBar(
+                                            backgroundColor:
+                                                Colors.blueAccent.shade700,
+                                            content: Text(
+                                                'Email address copied to clipboard'),
+                                          ));
+                                        },
+                                      ),
                                     )
                                   ],
                                 ),

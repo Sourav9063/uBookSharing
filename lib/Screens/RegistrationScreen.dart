@@ -157,7 +157,6 @@ class _RegScreenState extends State<RegScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xff324062),
-      
       body: ModalProgressHUD(
         inAsyncCall: spinner,
         opacity: .55,
@@ -236,7 +235,10 @@ class _RegScreenState extends State<RegScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: aPUsername, vertical: 8),
                           child: TextFormField(
+                            onEditingComplete: () =>
+                                FocusScope.of(context).nextFocus(),
                             // autovalidate: true,
+
                             validator: (value) {
                               if (value == '' || value == null)
                                 return 'Your name is required';
@@ -252,7 +254,7 @@ class _RegScreenState extends State<RegScreen> {
                                 aPPassword = 50;
                               });
                             },
-
+                            textCapitalization: TextCapitalization.words,
                             keyboardType: TextInputType.emailAddress,
                             textAlign: TextAlign.center,
                             onChanged: (value) {
@@ -269,6 +271,8 @@ class _RegScreenState extends State<RegScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: aPEmail, vertical: 4),
                           child: TextFormField(
+                            onEditingComplete: () =>
+                                FocusScope.of(context).nextFocus(),
                             // autovalidate: true,
                             validator: (value) {
                               if (value == '' || value == null)
@@ -304,6 +308,8 @@ class _RegScreenState extends State<RegScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: aPPassword, vertical: 8),
                           child: TextFormField(
+                            onEditingComplete: () =>
+                                FocusScope.of(context).unfocus(),
                             onTap: () {
                               setState(() {
                                 aPPassword = 10;
