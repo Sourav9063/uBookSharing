@@ -138,9 +138,9 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                   fit: BoxFit.fitWidth,
                                   child: Text(
                                     widget.bookData.bookWriter,
-                                    style: GoogleFonts.lora(
+                                    style: GoogleFonts.sacramento(
                                       color: Color(0xffFFFFFF),
-                                      fontSize: 18,
+                                      fontSize: 24,
                                       // fontWeight: FontWeight.w500,
                                     ),
                                   ),

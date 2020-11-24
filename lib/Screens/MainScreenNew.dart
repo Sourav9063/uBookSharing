@@ -29,6 +29,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
   int lim = 5;
   int limReq = 5;
   double width = 0;
+  String taptosee = 'Tap to see more';
   var scaffoldKey = GlobalKey<ScaffoldState>();
   PageController pagecontroller = PageController();
   bool srch = false;
@@ -141,7 +142,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Color(0xff082040),
       key: scaffoldKey,
       drawer: CustomDrawer(),
       body: ModalProgressHUD(
@@ -161,9 +162,11 @@ class _MainScreenNewState extends State<MainScreenNew> {
                   ontap: () {
                     UsableData.getSetMillisecondsId();
                     Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => AddBookScreen()));
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => AddBookScreen(),
+                      ),
+                    );
                   },
                   icon: Icon(
                     Icons.book,
@@ -494,7 +497,12 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                             InkWell(
                                               onTap: () {
                                                 setState(() {
-                                                  if (lim <= 30) lim = lim + 5;
+                                                  if (lim <= 30)
+                                                    lim = lim + 5;
+                                                  else {
+                                                    taptosee =
+                                                        'There are more books.\nUse search to find the needed one.';
+                                                  }
                                                 });
                                               },
                                               child: Center(
@@ -507,7 +515,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                                             .symmetric(
                                                         vertical: 36.0),
                                                     child: Text(
-                                                      'Tap to see more',
+                                                      taptosee,
                                                       textScaleFactor: 1.2,
                                                     ),
                                                   ),

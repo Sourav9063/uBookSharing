@@ -33,9 +33,10 @@ class BookImg extends StatelessWidget {
       width: width,
       child: imglink == null
           ?
-          //  Image.asset(
-          //     'assets/img/AddBookImgL.png',
-          //     fit: BoxFit.contain,
+          // Image.asset(
+          //     'assets/img/BookBack.jpg',
+          //     fit: BoxFit.cover,
+          //     alignment: Alignment.bottomLeft,
           //   )
           // Lottie.asset('assets/lottie/bookLoading.json', fit: BoxFit.contain)
           FlareActor(
@@ -132,43 +133,17 @@ class BookCard extends StatelessWidget {
                 height: width * .753,
                 width: width * .953,
                 decoration: BoxDecoration(
-                  color: Color(0xff001a5f),
-                  // color: Colors.pinkAccent.shade700,
+                  color: Color(0xff084040),
+                  // color: Colors.teal.shade700,
                   boxShadow: [
                     BoxShadow(
                       offset: Offset(3, 3),
                       blurRadius: 4,
-                      color: Color(0xaa000000),
+                      color: Color(0xcc1b4332),
                     ),
                   ],
                 ),
               ),
-            ),
-            Positioned(
-              top: width * .087 / 2,
-              width: width * .50,
-              height: width * .50 * 4 / 3,
-              child: Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xff6F00FF),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(3, 3),
-                        blurRadius: 4,
-                        color: Color(0xaa000000),
-                      ),
-                    ],
-                  ),
-                  child: BookImg(
-                    width: width * .50,
-                    imglink: bookData == null
-                        ?
-                        // ? 'https://firebasestorage.googleapis.com/v0/b/ubooksharing-ece40.appspot.com/o/Books%2Fsourav.ahmed5654%40gmail.com5%2Fsourav.ahmed5654%40gmail.com5?alt=media&token=d3482de0-ccb1-40f4-9848-4b8911a80ab6'
-                        null
-                        : bookData.bookImgLink,
-                    // imglink: UserProfileData.profilePicLink
-                    // 'https://firebasestorage.googleapis.com/v0/b/ubooksharing-ece40.appspot.com/o/Books%2Fsourav.ahmed5654%40gmail.com5%2Fsourav.ahmed5654%40gmail.com5?alt=media&token=d3482de0-ccb1-40f4-9848-4b8911a80ab6',
-                  )),
             ),
             Positioned(
               top: 0,
@@ -181,13 +156,12 @@ class BookCard extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                        bookData.bookName,
-                        style: GoogleFonts.abrilFatface(
-                            fontSize: width * .06, color: Colors.white),
-                      ),
+                    Text(
+                      bookData.bookFor == 'Buy' || bookData.bookFor == 'Rent'
+                          ? 'Requested By'
+                          : 'Owned by',
+                      style: GoogleFonts.abrilFatface(
+                          fontSize: width * .06, color: Colors.white),
                     ),
                     //   FittedBox(
                     //          fit: BoxFit.fitWidth,             child: Text(
@@ -198,8 +172,8 @@ class BookCard extends StatelessWidget {
                     FittedBox(
                       fit: BoxFit.fitWidth,
                       child: Text(
-                        bookData.bookWriter,
-                        style: TextStyle(
+                        bookData.bookUploaderName,
+                        style: GoogleFonts.lora(
                             fontSize: width * .05, color: Colors.white),
                       ),
                     ),
@@ -239,10 +213,209 @@ class BookCard extends StatelessWidget {
                 ),
               ),
             ),
+            Positioned(
+              top: width * .087 / 2,
+              width: width * .50,
+              height: width * .50 * 4 / 3,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Color(0x00082040),
+                  // color: Colors.grey.shade200,
+                  borderRadius:
+                      BorderRadius.only(bottomRight: Radius.circular(15)),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(4, 4),
+                      blurRadius: 4,
+                      color: Color(0xbb082040),
+                    ),
+                  ],
+                ),
+                child: CustomPaint(
+                  // decoration: BoxDecoration(
+                  //   color: Color(0xff082040),
+                  //   // color: Colors.grey.shade200,
+                  //   boxShadow: [
+                  //     BoxShadow(
+                  //       offset: Offset(4, 4),
+                  //       blurRadius: 4,
+                  //       color: Color(0xaa082040),
+                  //     ),
+                  //   ],
+                  // ),
+
+                  // size: Size(width * .60, width * .60 * 4 / 3),
+                  painter: RPSCustomPainter(),
+                  // child: BookImg(
+                  //   width: width * .50,
+                  //   imglink: bookData == null ? null : bookData.bookImgLink,
+                  //   // imglink: null,
+                  // ),
+                  child: Stack(
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Positioned(
+                        bottom: 0,
+                        left: width * .035,
+                        child: Text(
+                          bookData.bookName[0].toUpperCase(),
+                          style: GoogleFonts.abrilFatface(
+                            color: Colors.white12,
+                            fontSize: width * .4,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB((width * .055), 6, 4, 0),
+                        child: Text(
+                          bookData.bookName,
+                          style: GoogleFonts.abrilFatface(
+                              fontSize: width * .08,
+                              // fontWeight: FontWeight.bold,
+                              color: Colors.grey.shade200,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 4,
+                                  color: Colors.black54,
+                                  offset: Offset(2, 2),
+                                ),
+                              ]),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(
+                              (width * .055), 6, 4, width * .055),
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Text(
+                              bookData.bookWriter,
+                              style: GoogleFonts.sacramento(
+                                fontSize: width * .08,
+                                // fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+}
+
+class RPSCustomPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint_0 = new Paint()
+      ..color = Color.fromARGB(255, 27, 2, 87)
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 1.0;
+
+    Path path_0 = Path();
+    path_0.moveTo(size.width * 0.07, 0);
+    path_0.lineTo(size.width, 0);
+    path_0.lineTo(size.width, size.height * 0.95);
+    path_0.lineTo(size.width * 0.07, size.height * 0.95);
+    path_0.lineTo(size.width * 0.07, 0);
+    path_0.close();
+
+    canvas.drawPath(path_0, paint_0);
+
+    Paint paint_1 = new Paint()
+      ..color = Color.fromARGB(255, 90, 57, 170)
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 1.0;
+
+    Path path_1 = Path();
+    path_1.moveTo(size.width * 0.07, size.height * 0.00);
+    path_1.quadraticBezierTo(size.width * 0.00, size.height * 0.02,
+        size.width * 0.01, size.height * 0.05);
+    path_1.cubicTo(size.width * 0.01, size.height * 0.29, size.width * 0.02,
+        size.height * 0.76, size.width * 0.01, size.height * 0.99);
+    path_1.quadraticBezierTo(size.width * 0.07, size.height * 0.98,
+        size.width * 0.07, size.height * 0.95);
+    path_1.lineTo(size.width * 0.07, size.height * 0.00);
+    path_1.close();
+
+    canvas.drawPath(path_1, paint_1);
+
+    Paint paint_2 = new Paint()
+      ..color = Color.fromARGB(255, 27, 2, 87)
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 1.0;
+
+    Path path_2 = Path();
+    path_2.moveTo(size.width * 0.01, size.height * 0.99);
+    path_2.lineTo(size.width * 0.95, size.height * 0.99);
+    path_2.lineTo(size.width * 0.95, size.height * 0.98);
+    path_2.lineTo(size.width * 0.04, size.height * 0.98);
+
+    canvas.drawPath(path_2, paint_2);
+
+    Paint paint_3 = new Paint()
+      ..color = Color.fromARGB(255, 255, 243, 199)
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 1.0;
+
+    Path path_3 = Path();
+    path_3.moveTo(size.width * 0.99, size.height * 0.95);
+    path_3.quadraticBezierTo(size.width * 0.95, size.height * 0.97,
+        size.width * 0.95, size.height * 0.98);
+    path_3.cubicTo(size.width * 0.75, size.height * 0.98, size.width * 0.24,
+        size.height * 0.98, size.width * 0.04, size.height * 0.98);
+    path_3.cubicTo(size.width * 0.00, size.height * 0.99, size.width * 0.03,
+        size.height * 0.95, size.width * 0.07, size.height * 0.95);
+    path_3.quadraticBezierTo(size.width * 0.15, size.height * 0.95,
+        size.width * 0.47, size.height * 0.95);
+
+    canvas.drawPath(path_3, paint_3);
+
+    // Paint paint_4 = new Paint()
+    //   ..color = Color.fromARGB(255, 26, 1, 82)
+    //   ..style = PaintingStyle.stroke
+    //   ..strokeWidth = 5.0;
+
+    // Path path_4 = Path();
+    // path_4.moveTo(size.width * 0.13, size.height * 0.00);
+    // path_4.lineTo(size.width * 0.13, size.height * 0.94);
+
+    // canvas.drawPath(path_4, paint_4);
+
+    Paint paint_5 = new Paint()
+      ..color = Color.fromARGB(255, 0, 0, 0)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+
+    Path path_5 = Path();
+    path_5.moveTo(size.width * 0.95, size.height * 0.97);
+    path_5.lineTo(size.width * 0.52, size.height * 0.97);
+
+    canvas.drawPath(path_5, paint_5);
+
+    Paint paint_6 = new Paint()
+      ..color = Color.fromARGB(255, 0, 0, 0)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+
+    Path path_6 = Path();
+    path_6.moveTo(size.width * 0.96, size.height * 0.96);
+    path_6.lineTo(size.width * 0.47, size.height * 0.96);
+
+    canvas.drawPath(path_6, paint_6);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
 
