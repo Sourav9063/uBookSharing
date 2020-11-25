@@ -25,19 +25,15 @@ class _MyHomePageState extends State<MyHomePage> {
   double animatedPicContleft = 00;
   String buttonMsg = 'Sign In';
 
-  checkAuth() async {
-    Future.delayed(Duration(seconds: 2));
-    if (FirebaseAuth.instance.currentUser != null) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => MainScreenNew()));
-    }
-  }
+  // checkAuth() async {
+  //   Future.delayed(Duration(seconds: 2));
+  //   if (FirebaseAuth.instance.currentUser != null) {
+  //     Navigator.pushReplacement(
+  //         context, MaterialPageRoute(builder: (context) => MainScreenNew()));
+  //   }
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    // checkAuth();
-    // UserLogInData.updateUID();
+ void start() async {
     setState(() {
       animatee = 'Idle';
     });
@@ -47,12 +43,20 @@ class _MyHomePageState extends State<MyHomePage> {
         buttonMsg = 'Explore';
       });
 
-      GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
+      await GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
     } else {
       setState(() {
         buttonMsg = 'Sign In';
       });
     }
+  }
+
+  @override
+  void initState() {
+    start();
+    // checkAuth();
+    // UserLogInData.updateUID();
+    super.initState();
   }
 
   @override
@@ -88,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 animation: animatee,
                 callback: (value) {
                   if (value == 'Give') {
-                    UsableData.getSetMillisecondsId();
+                    // UsableData.getSetMillisecondsId();
                     Navigator.push(
                         context,
                         MaterialPageRoute(

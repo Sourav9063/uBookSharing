@@ -133,13 +133,13 @@ class BookCard extends StatelessWidget {
                 height: width * .753,
                 width: width * .953,
                 decoration: BoxDecoration(
-                  color: Color(0xff084040),
+                  color: Color(0xff089080),
                   // color: Colors.teal.shade700,
                   boxShadow: [
                     BoxShadow(
                       offset: Offset(3, 3),
                       blurRadius: 4,
-                      color: Color(0xcc1b4332),
+                      color: Color(0xcc087060),
                     ),
                   ],
                 ),

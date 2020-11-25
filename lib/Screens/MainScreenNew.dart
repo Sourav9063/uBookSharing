@@ -379,10 +379,11 @@ class _MainScreenNewState extends State<MainScreenNew> {
                         physics: BouncingScrollPhysics(),
                         controller: pagecontroller,
                         onPageChanged: (value) async {
-                          setState(() {
-                            pressed = value + 1;
-                          });
+                          //
+                          pressed = value + 1;
+                          setState(() {});
                         },
+                        // pageSnapping: false,
                         children: [
                           //New BOok
                           //
@@ -480,9 +481,8 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                             bookcardList.add(
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 4.0,
-                                                        horizontal: 5),
+                                                    const EdgeInsets.fromLTRB(
+                                                        4, 5, 8, 5),
                                                 child: BookCard(
                                                   width:
                                                       CommonThings.size.width *
@@ -598,9 +598,8 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                             bookcardList.add(
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 4.0,
-                                                        horizontal: 5),
+                                                    const EdgeInsets.fromLTRB(
+                                                        4, 5, 8, 5),
                                                 child: BookCard(
                                                   width:
                                                       CommonThings.size.width *
@@ -717,9 +716,8 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                             bookcardList.add(
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 4.0,
-                                                        horizontal: 5),
+                                                    const EdgeInsets.fromLTRB(
+                                                        4, 5, 8, 5),
                                                 child: BookCard(
                                                   width:
                                                       CommonThings.size.width *

@@ -198,7 +198,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             ),
                           ),
                           Text(
-                            '*This app is based on community.So, use the full name of your University which is known by all. Use your University website.\nWe will check and your ID will be banned if we find any duplicate or hoax name...',
+                            '*This app is based on community. So, use the full name of your University which is known by all.\nWe will check and your ID will be banned if we find any duplicate or hoax name...',
                             style: TextStyle(color: Colors.red),
                           ),
                           RaisedButton(
@@ -281,7 +281,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   Color(0xfffb8b24),
                   Color(0xff3c096c),
                   Color(0xff14213D),
-                  Colors.black,
+                  // Colors.black,
 
                   // Color(0xffa9418b),
                   // Color(0xffFCA311),
@@ -568,8 +568,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: TextFormField(
-                                  onEditingComplete: () =>
-                                      FocusScope.of(context).nextFocus(),
+                                  onEditingComplete: () {
+                                    FocusScope.of(context).nextFocus();
+                                    gredianAlign();
+                                  },
                                   textCapitalization: TextCapitalization.words,
                                   style: TextStyle(fontSize: 18),
                                   validator: (value) {
@@ -595,8 +597,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: TextFormField(
-                                        onEditingComplete: () =>
-                                            FocusScope.of(context).nextFocus(),
+                                        onEditingComplete: () {
+                                          FocusScope.of(context).nextFocus();
+                                          gredianAlign();
+                                        },
                                         validator: (value) {
                                           if (value == null || value == '') {
                                             return 'This field cannot be empty!';
@@ -628,8 +632,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: TextFormField(
-                                        onEditingComplete: () =>
-                                            FocusScope.of(context).nextFocus(),
+                                        onEditingComplete: () {
+                                          FocusScope.of(context).nextFocus();
+                                          gredianAlign();
+                                        },
                                         validator: (value) {
                                           if (value == null || value == '')
                                             return 'This field cannot be empty!';
@@ -654,8 +660,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: TextFormField(
-                                  onEditingComplete: () =>
-                                      FocusScope.of(context).nextFocus(),
+                                  onEditingComplete: () {
+                                    FocusScope.of(context).nextFocus();
+                                    gredianAlign();
+                                  },
                                   validator: (value) {
                                     if (value == null || value == '')
                                       return 'This field cannot be empty!';
@@ -675,8 +683,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: TextFormField(
-                                  onEditingComplete: () =>
-                                      FocusScope.of(context).nextFocus(),
+                                  onEditingComplete: () {
+                                    FocusScope.of(context).nextFocus();
+                                    gredianAlign();
+                                  },
                                   validator: (value) {
                                     if (value == null || value == '')
                                       return 'This field cannot be empty!';
@@ -700,8 +710,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: TextFormField(
-                                  onEditingComplete: () =>
-                                      FocusScope.of(context).nextFocus(),
+                                  onEditingComplete: () {
+                                    FocusScope.of(context).nextFocus();
+                                    gredianAlign();
+                                  },
                                   textCapitalization: TextCapitalization.words,
                                   validator: (value) {
                                     if (value == null || value == '')
@@ -727,7 +739,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    '*Your phone number and address are secured.\n No one will know unless you share it.',
+                                    '*Your phone number and address are secured.\n No one will know unless you share it with another user.',
                                     style: TextStyle(color: Colors.red),
                                   ),
                                 ),

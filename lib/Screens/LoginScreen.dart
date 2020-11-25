@@ -195,12 +195,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: aPEmail, vertical: 0),
                             child: TextFormField(
-                              onEditingComplete: () =>
-                                      FocusScope.of(context).nextFocus(),
+                              onEditingComplete: () {
+                                FocusScope.of(context).nextFocus();
+                                setState(() {
+                                  aPPassword = 10;
+                                  aPEmail = 50;
+                                  // aPPassword = 50;
+                                });
+                              },
                               // autovalidate: true,
                               validator: (value) {
                                 if (value == '' || value == null)
-                                  return 'Enter Email address';
+                                  return 'Enter email address';
                                 else if (!RegExp(
                                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                     .hasMatch(value)) return 'Invalid Email';
@@ -237,8 +243,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: aPPassword, vertical: 8),
                             child: TextFormField(
-                              onEditingComplete: () =>
-                                      FocusScope.of(context).unfocus(),
+                              onEditingComplete: () {
+                                FocusScope.of(context).unfocus();
+                                setState(() {
+                                  aPEmail = 50;
+                                  aPPassword = 50;
+                                });
+
+                                bool isAlright =
+                                    _formKey.currentState.validate();
+                                // print(auth.currentUser.uid);
+                                // auth.currentUser.uid != null
+                                //     ? signUn(_email, _password)
+                                //     : verifiedCheck();
+                                if (isAlright) signIn(_email, _password);
+                              },
                               onTap: () {
                                 setState(() {
                                   aPPassword = 10;
@@ -248,7 +267,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               validator: (value) {
                                 if (value.length < 6)
-                                  return 'Can\'t you read!? At least 6 characters';
+                                  return 'At least 6 characters';
 
                                 return null;
                               },
@@ -261,8 +280,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               decoration: kTextFieldDecoration.copyWith(
                                   // errorText: _email,
 
-                                  hintText:
-                                      'Enter your password(atleast 6 digits)',
+                                  hintText: 'Enter your password',
                                   labelText: 'Password'),
                             ),
                           ),

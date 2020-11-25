@@ -235,8 +235,15 @@ class _RegScreenState extends State<RegScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: aPUsername, vertical: 8),
                           child: TextFormField(
-                            onEditingComplete: () =>
-                                FocusScope.of(context).nextFocus(),
+                            onEditingComplete: () {
+                              FocusScope.of(context).nextFocus();
+                              setState(() {
+                                aPEmail = 10;
+                                //  aPEmail = 50;
+                                aPUsername = 50;
+                                aPPassword = 50;
+                              });
+                            },
                             // autovalidate: true,
 
                             validator: (value) {
@@ -271,8 +278,15 @@ class _RegScreenState extends State<RegScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: aPEmail, vertical: 4),
                           child: TextFormField(
-                            onEditingComplete: () =>
-                                FocusScope.of(context).nextFocus(),
+                            onEditingComplete: () {
+                              FocusScope.of(context).nextFocus();
+                              setState(() {
+                                aPEmail = 50;
+                                //  aPEmail = 50;
+                                aPUsername = 50;
+                                aPPassword = 10;
+                              });
+                            },
                             // autovalidate: true,
                             validator: (value) {
                               if (value == '' || value == null)
@@ -308,8 +322,15 @@ class _RegScreenState extends State<RegScreen> {
                           padding: EdgeInsets.symmetric(
                               horizontal: aPPassword, vertical: 8),
                           child: TextFormField(
-                            onEditingComplete: () =>
-                                FocusScope.of(context).unfocus(),
+                            onEditingComplete: () {
+                              FocusScope.of(context).unfocus();
+                              setState(() {
+                                aPEmail = 50;
+                                //  aPEmail = 50;
+                                aPUsername = 50;
+                                aPPassword = 50;
+                              });
+                            },
                             onTap: () {
                               setState(() {
                                 aPPassword = 10;
@@ -333,8 +354,7 @@ class _RegScreenState extends State<RegScreen> {
                             decoration: kTextFieldDecoration.copyWith(
                                 // errorText: _email,
 
-                                hintText:
-                                    'Enter your password(atleast 6 digits)',
+                                hintText: "Not less than 6 characters",
                                 labelText: 'Password'),
                           ),
                         ),
