@@ -100,7 +100,7 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
                             IconButton(
                                 icon: Icon(
                                   Icons.mail,
-                                  color: Colors.blueAccent.shade700,
+                                  color: Colors.white,
                                 ),
                                 onPressed: () {
                                   Clipboard.setData(ClipboardData(
@@ -140,7 +140,7 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
                                   20 -
                                   CommonThings.size.width * .2),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(10.0),
                             child: Column(
                               children: [
                                 Text(

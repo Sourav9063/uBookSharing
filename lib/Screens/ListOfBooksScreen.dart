@@ -36,7 +36,10 @@ class _ListOfBooksScreenState extends State<ListOfBooksScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff001a54),
-        title: Text(widget.searchName),
+        title: Text(
+          widget.searchName,
+          textScaleFactor: 1,
+        ),
       ),
       body: bookData.isEmpty
           ? Padding(
@@ -83,6 +86,7 @@ class _ListOfBooksScreenState extends State<ListOfBooksScreen> {
           : Padding(
               padding: const EdgeInsets.symmetric(vertical: 4.0),
               child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
                   cacheExtent: 9999,
                   itemCount: bookData.length,
                   itemBuilder: (context, index) => Padding(

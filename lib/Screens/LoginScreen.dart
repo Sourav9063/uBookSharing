@@ -119,6 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xffDACEBA),
       body: ModalProgressHUD(
         inAsyncCall: spinner,
@@ -128,7 +129,11 @@ class _LoginScreenState extends State<LoginScreen> {
         progressIndicator: SpinkitFading(
           msg: 'Checking...',
         ),
-        child: Container(
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 500),
+          height: CommonThings.size.height -
+              MediaQuery.of(context).viewInsets.bottom,
+          curve: Curves.fastOutSlowIn,
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('assets/img/BookBack.jpg'),
@@ -266,6 +271,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 });
                               },
                               validator: (value) {
+                                if (value == null || value == '')
+                                  return 'Enter your password';
                                 if (value.length < 6)
                                   return 'At least 6 characters';
 

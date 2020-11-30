@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flare_flutter/flare_actor.dart';
@@ -141,6 +142,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
 
   @override
   Widget build(BuildContext context) {
+    // print('build');
     return Scaffold(
       // backgroundColor: Color(0xff082040),
       key: scaffoldKey,
@@ -412,24 +414,6 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          // Center(
-                                          //   child: Padding(
-                                          //     padding: EdgeInsets.all(4),
-                                          //     child: FittedBox(
-                                          //       fit: BoxFit.fitWidth,
-                                          //       child: Text(
-                                          //         UserProfileData.versityName,
-                                          //         textScaleFactor: 1,
-                                          //         style: GoogleFonts.lora(
-                                          //           color: Color(0xff001a54),
-                                          //           // fontSize: 30,
-                                          //           fontWeight: FontWeight.bold,
-                                          //           // fontStyle: FontStyle.italic
-                                          //         ),
-                                          //       ),
-                                          //     ),
-                                          //   ),
-                                          // ),
                                           Text(
                                             '   NewBooks',
                                             textScaleFactor: 2.5,
@@ -530,6 +514,151 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                             cacheExtent: 9999,
                                             children: bookcardList,
                                           );
+//TODO:New Listview.builder
+                                          List<BookData> listItem = GetBookData
+                                              .getBookDataObjFromQuerySnapshot(
+                                                  snp.data);
+
+                                          // return ListView.builder(
+                                          //   cacheExtent: 9999,
+                                          //   physics: BouncingScrollPhysics(),
+                                          //   itemCount: snp.data.size + 1,
+                                          //   itemBuilder: (BuildContext context,
+                                          //       int index) {
+                                          //     // print();
+                                          //     if (index != lim &&
+                                          //         index < snp.data.size)
+                                          //       return Padding(
+                                          //         padding: EdgeInsets.fromLTRB(
+                                          //             4, 5, 8, 5),
+                                          //         child: Container(
+                                          //           width: CommonThings
+                                          //                   .size.width *
+                                          //               .7,
+                                          //           height: CommonThings
+                                          //                   .size.width *
+                                          //               .55,
+                                          //           child: Stack(
+                                          //             children: [
+                                          //               BookCard(
+                                          //                   width: CommonThings
+                                          //                           .size
+                                          //                           .width *
+                                          //                       .7,
+                                          //                   bookData: listItem[
+                                          //                       index]),
+                                          //               Positioned(
+                                          //                 bottom: CommonThings
+                                          //                         .size.width *
+                                          //                     .078,
+                                          //                 left: CommonThings
+                                          //                         .size.width *
+                                          //                     .025,
+                                          //                 width: CommonThings
+                                          //                         .size.width *
+                                          //                     .325,
+                                          //                 top: CommonThings
+                                          //                         .size.width *
+                                          //                     .03,
+                                          //                 child:
+                                          //                     CachedNetworkImage(
+                                          //                   imageUrl: listItem[
+                                          //                           index]
+                                          //                       .bookImgLink,
+                                          //                   // cacheHeight: 150,
+                                          //                   // cacheWidth: 110,
+                                          //                   // memCacheHeight: ,
+                                          //                   fit: BoxFit.cover,
+                                          //                   errorWidget:
+                                          //                       (context, error,
+                                          //                           stackTrace) {
+                                          //                     return Center(
+                                          //                       child: Icon(
+                                          //                         Icons.error,
+                                          //                         color: Colors
+                                          //                             .red,
+                                          //                         size: CommonThings
+                                          //                                 .size
+                                          //                                 .width *
+                                          //                             .2,
+                                          //                       ),
+                                          //                     );
+                                          //                   },
+                                          //                   progressIndicatorBuilder:
+                                          //                       (context, url,
+                                          //                               downloadProgress) =>
+                                          //                           Center(
+                                          //                     child: CircularProgressIndicator(
+                                          //                         value: downloadProgress
+                                          //                             .progress),
+                                          //                   ),
+
+                                          //                   // loadingBuilder:
+                                          //                   //     (BuildContext
+                                          //                   //             context,
+                                          //                   //         Widget
+                                          //                   //             child,
+                                          //                   //         ImageChunkEvent
+                                          //                   //             loadingProgress) {
+                                          //                   //   if (loadingProgress ==
+                                          //                   //       null)
+                                          //                   //     return child;
+                                          //                   //   return Center(
+                                          //                   //     child:
+                                          //                   //         CircularProgressIndicator(
+                                          //                   //       strokeWidth:
+                                          //                   //           4,
+                                          //                   //       value: loadingProgress
+                                          //                   //                   .expectedTotalBytes !=
+                                          //                   //               null
+                                          //                   //           ? loadingProgress
+                                          //                   //                   .cumulativeBytesLoaded /
+                                          //                   //               loadingProgress
+                                          //                   //                   .expectedTotalBytes
+                                          //                   //           : null,
+                                          //                   //     ),
+                                          //                   //   );
+                                          //                   // },
+                                          //                 ),
+                                          //               )
+                                          //             ],
+                                          //           ),
+                                          //         ),
+                                          //       );
+                                          //     else
+                                          //       return InkWell(
+                                          //         onTap: () {
+                                          //           // print(snp.data.toString());
+                                          //           setState(() {
+                                          //             if (lim <= snp.data.size)
+                                          //               lim = lim + 5;
+                                          //             else {
+                                          //               taptosee =
+                                          //                   'There are more books.\nSearch to find the needed one.';
+                                          //             }
+                                          //           });
+                                          //           // print(lim);
+                                          //         },
+                                          //         child: Center(
+                                          //           child: Container(
+                                          //             height: CommonThings
+                                          //                     .size.height *
+                                          //                 .25,
+                                          //             child: Padding(
+                                          //               padding:
+                                          //                   const EdgeInsets
+                                          //                           .symmetric(
+                                          //                       vertical: 36.0),
+                                          //               child: Text(
+                                          //                 taptosee,
+                                          //                 textScaleFactor: 1.2,
+                                          //               ),
+                                          //             ),
+                                          //           ),
+                                          //         ),
+                                          //       );
+                                          //   },
+                                          // );
                                         }
                                       } else if (snp.hasError) {
                                         return Text(

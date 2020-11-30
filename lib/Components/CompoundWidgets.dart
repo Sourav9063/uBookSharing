@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
@@ -55,38 +56,57 @@ class BookImg extends StatelessWidget {
               transformationController: transformationController,
               maxScale: 5,
               onInteractionEnd: (details) async {
-                await Future.delayed(Duration(seconds: 3));
+                await Future.delayed(Duration(seconds: 5));
 
                 transformationController.value = Matrix4.identity();
               },
-              child: Image.network(
-                imglink,
-                errorBuilder: (context, error, stackTrace) {
+              child: CachedNetworkImage(
+                imageUrl: imglink,
+                fit: BoxFit.cover,
+                errorWidget: (context, error, stackTrace) {
                   return Center(
                     child: Icon(
                       Icons.error,
                       color: Colors.red,
-                      size: width / 2,
+                      size: CommonThings.size.width * .2,
                     ),
                   );
                 },
-                loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(
-                      strokeWidth: 4,
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
-                          : null,
-                    ),
-                  );
-                },
-                fit: BoxFit.cover,
-                height: width,
-                width: width,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    Center(
+                  child: CircularProgressIndicator(
+                      value: downloadProgress.progress),
+                ),
               ),
+
+              // child: Image.network(
+              //   imglink,
+              //   errorBuilder: (context, error, stackTrace) {
+              //     return Center(
+              //       child: Icon(
+              //         Icons.error,
+              //         color: Colors.red,
+              //         size: width / 2,
+              //       ),
+              //     );
+              //   },
+              //   loadingBuilder: (BuildContext context, Widget child,
+              //       ImageChunkEvent loadingProgress) {
+              //     if (loadingProgress == null) return child;
+              //     return Center(
+              //       child: CircularProgressIndicator(
+              //         strokeWidth: 4,
+              //         value: loadingProgress.expectedTotalBytes != null
+              //             ? loadingProgress.cumulativeBytesLoaded /
+              //                 loadingProgress.expectedTotalBytes
+              //             : null,
+              //       ),
+              //     );
+              //   },
+              //   fit: BoxFit.cover,
+              //   height: width,
+              //   width: width,
+              // ),
             ),
     );
   }
@@ -156,6 +176,37 @@ class BookCard extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    // FittedBox(
+                    //   fit: BoxFit.fitWidth,
+                    //   child: Text(
+                    //     bookData.bookName,
+                    //     style: GoogleFonts.abrilFatface(
+                    //         fontSize: width * .08,
+                    //         // fontWeight: FontWeight.bold,
+                    //         color: Colors.grey.shade200,
+                    //         shadows: [
+                    //           Shadow(
+                    //             blurRadius: 4,
+                    //             color: Colors.black54,
+                    //             offset: Offset(2, 2),
+                    //           ),
+                    //         ]),
+                    //   ),
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    //   child: FittedBox(
+                    //     fit: BoxFit.fitWidth,
+                    //     child: Text(
+                    //       bookData.bookWriter,
+                    //       style: GoogleFonts.sacramento(
+                    //         fontSize: width * .08,
+                    //         // fontWeight: FontWeight.bold,
+                    //         color: Colors.white,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     Text(
                       bookData.bookFor == 'Buy' || bookData.bookFor == 'Rent'
                           ? 'Requested By'
@@ -469,32 +520,52 @@ class IconAccount extends StatelessWidget {
                 child: ClipOval(
                   child: Hero(
                     tag: id,
-                    child: Image.network(
-                      imglink,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Icon(
-                          Icons.error,
-                          color: Colors.white,
-                          size: radious / 1.5,
-                        );
-                      },
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
+                    child: CachedNetworkImage(
+                      imageUrl: imglink,
+                      height: radious,
+                      width: radious,
+                      fit: BoxFit.cover,
+                      errorWidget: (context, error, stackTrace) {
                         return Center(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 7,
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
-                                : null,
+                          child: Icon(
+                            Icons.error,
+                            color: Colors.white,
+                            size: CommonThings.size.width * .2,
                           ),
                         );
                       },
-                      fit: BoxFit.cover,
-                      height: radious,
-                      width: radious,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => Center(
+                        child: CircularProgressIndicator(
+                            value: downloadProgress.progress),
+                      ),
                     ),
+                    // child: Image.network(
+                    //   imglink,
+                    //   errorBuilder: (context, error, stackTrace) {
+                    //     return Icon(
+                    //       Icons.error,
+                    //       color: Colors.white,
+                    //       size: radious / 1.5,
+                    //     );
+                    //   },
+                    //   loadingBuilder: (BuildContext context, Widget child,
+                    //       ImageChunkEvent loadingProgress) {
+                    //     if (loadingProgress == null) return child;
+                    //     return Center(
+                    //       child: CircularProgressIndicator(
+                    //         strokeWidth: 7,
+                    //         value: loadingProgress.expectedTotalBytes != null
+                    //             ? loadingProgress.cumulativeBytesLoaded /
+                    //                 loadingProgress.expectedTotalBytes
+                    //             : null,
+                    //       ),
+                    //     );
+                    //   },
+                    //   fit: BoxFit.cover,
+                    //   height: radious,
+                    //   width: radious,
+                    // ),
                   ),
                 ),
               ),
@@ -522,30 +593,51 @@ class ImageFull extends StatelessWidget {
             maxScale: 5,
             child: Hero(
               tag: id,
-              child: Image.network(
-                imgLink,
+              child: CachedNetworkImage(
+                imageUrl: imgLink,
+                // height: radious,
+                // width: radious,
                 fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  return Icon(
-                    Icons.error,
-                    color: Colors.red,
-                    size: CommonThings.size.width * .25,
-                  );
-                },
-                loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent loadingProgress) {
-                  if (loadingProgress == null) return child;
+                errorWidget: (context, error, stackTrace) {
                   return Center(
-                    child: CircularProgressIndicator(
-                      strokeWidth: 7,
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
-                          : null,
+                    child: Icon(
+                      Icons.error,
+                      color: Colors.red,
+                      size: CommonThings.size.width * .2,
                     ),
                   );
                 },
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    Center(
+                  child: CircularProgressIndicator(
+                      value: downloadProgress.progress),
+                ),
               ),
+
+              // child: Image.network(
+              //   imgLink,
+              //   fit: BoxFit.contain,
+              //   errorBuilder: (context, error, stackTrace) {
+              //     return Icon(
+              //       Icons.error,
+              //       color: Colors.red,
+              //       size: CommonThings.size.width * .25,
+              //     );
+              //   },
+              //   loadingBuilder: (BuildContext context, Widget child,
+              //       ImageChunkEvent loadingProgress) {
+              //     if (loadingProgress == null) return child;
+              //     return Center(
+              //       child: CircularProgressIndicator(
+              //         strokeWidth: 7,
+              //         value: loadingProgress.expectedTotalBytes != null
+              //             ? loadingProgress.cumulativeBytesLoaded /
+              //                 loadingProgress.expectedTotalBytes
+              //             : null,
+              //       ),
+              //     );
+              //   },
+              // ),
             )),
       ),
     );
