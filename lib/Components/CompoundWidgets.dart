@@ -517,13 +517,21 @@ class BookCard extends StatelessWidget {
 
                   // size: Size(width * .60, width * .60 * 4 / 3),
                   painter: RPSCustomPainter(),
-                  child: Text(
-                    bookData.bookName[0].toUpperCase(),
-                    style: GoogleFonts.abrilFatface(
-                      color: Colors.white12,
-                      fontSize: width * .4,
-                    ),
-                  ),
+
+                  // child: Align(
+                  //   alignment: Alignment.centerRight,
+                  //   child: RotatedBox(
+                  //     quarterTurns: -1,
+                  //     child: Text(
+                  //       // bookData.bookName[0].toUpperCase(),
+                  //       'uBookSharing',
+                  //       style: GoogleFonts.abrilFatface(
+                  //         color: Colors.white12,
+                  //         fontSize: width * .1,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   // child: BookImg(
                   //   width: width * .50,
                   //   imglink: bookData == null ? null : bookData.bookImgLink,
@@ -583,33 +591,49 @@ class BookCard extends StatelessWidget {
                 ),
               ),
             ),
-            //TODO: check memory to fixed
+            // TODO: check memory to fixed
             Positioned(
-                left: width * .036,
-                top: width * .044,
-                // height: width * .8,
-                bottom: width * .08,
-                width: width * .465,
-                child: CachedNetworkImage(
-                  imageUrl: bookData.bookImgLink,
-                  // memCacheHeight: 400,
-                  memCacheWidth: 300,
-                  fit: BoxFit.cover,
-                  errorWidget: (context, error, stackTrace) {
-                    return Center(
-                      child: Icon(
-                        Icons.error,
-                        color: Colors.red,
-                        size: width * .2,
-                      ),
-                    );
-                  },
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      Center(
-                    child: CircularProgressIndicator(
-                        value: downloadProgress.progress),
+              left: width * .036,
+              top: width * .044,
+              // height: width * .8,
+              bottom: width * .08,
+              width: width * .465,
+              child: CachedNetworkImage(
+                imageUrl: bookData.bookImgLink,
+                // memCacheHeight: 400,
+                memCacheWidth: 300,
+                fit: BoxFit.cover,
+                errorWidget: (context, error, stackTrace) {
+                  return Center(
+                    child: Icon(
+                      Icons.error,
+                      color: Colors.red,
+                      size: width * .2,
+                    ),
+                  );
+                },
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    Center(
+                  child: CircularProgressIndicator(
+                      value: downloadProgress.progress),
+                ),
+              ),
+            ),
+            Positioned(
+              top: width * .06,
+              left: width * .38,
+              child: RotatedBox(
+                quarterTurns: -1,
+                child: Text(
+                  // bookData.bookName[0].toUpperCase(),
+                  'uBookSharing',
+                  style: GoogleFonts.abrilFatface(
+                    color: Colors.white12,
+                    fontSize: width * .1,
                   ),
-                ))
+                ),
+              ),
+            )
           ],
         ),
       ),
