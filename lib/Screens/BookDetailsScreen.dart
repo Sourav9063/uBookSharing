@@ -541,10 +541,10 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
               ),
             ),
             Positioned(
-                top: 0,
-                left: -40,
+                top: CommonThings.size.width * .15,
+                left: -CommonThings.size.width * .17,
                 height: CommonThings.size.width * .3,
-                width: CommonThings.size.width * .4,
+                width: CommonThings.size.width * .6,
                 child: Center(
                   child: Transform(
                     origin: Offset(CommonThings.size.width * .15, 0),

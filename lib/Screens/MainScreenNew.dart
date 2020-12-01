@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flare_flutter/flare_actor.dart';
@@ -31,6 +31,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
   int limReq = 5;
   double width = 0;
   String taptosee = 'Tap to see more';
+  String tapReq = 'Tap to see more';
   var scaffoldKey = GlobalKey<ScaffoldState>();
   PageController pagecontroller = PageController();
   bool srch = false;
@@ -474,18 +475,35 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                                   bookData: bookData,
                                                 ),
                                               ),
+                                              // Padding(
+                                              //   padding: EdgeInsets.symmetric(
+                                              //       horizontal: 8, vertical: 4),
+                                              //   child: BookcardWithImage(
+                                              //     bookData: bookData,
+                                              //     width:
+                                              //         CommonThings.size.width *
+                                              //             .8,
+                                              //     height:
+                                              //         CommonThings.size.width *
+                                              //             .8 *
+                                              //             .7,
+                                              //   ),
+                                              // ),
                                             );
                                           }
 
                                           bookcardList.add(
                                             InkWell(
                                               onTap: () {
+                                                // print(lim);
                                                 setState(() {
-                                                  if (lim <= 30)
-                                                    lim = lim + 5;
-                                                  else {
+                                                  if (lim > 30 ||
+                                                      lim >
+                                                          recentDataList.length)
                                                     taptosee =
-                                                        'There are more books.\nUse search to find the needed one.';
+                                                        'There are more books.\nSearch to find the needed one.';
+                                                  else {
+                                                    lim = lim + 5;
                                                   }
                                                 });
                                               },
@@ -500,7 +518,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                                         vertical: 36.0),
                                                     child: Text(
                                                       taptosee,
-                                                      textScaleFactor: 1.2,
+                                                      textScaleFactor: 1,
                                                     ),
                                                   ),
                                                 ),
@@ -515,9 +533,9 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                             children: bookcardList,
                                           );
 //TODO:New Listview.builder
-                                          List<BookData> listItem = GetBookData
-                                              .getBookDataObjFromQuerySnapshot(
-                                                  snp.data);
+                                          // List<BookData> listItem = GetBookData
+                                          // .getBookDataObjFromQuerySnapshot(
+                                          //     snp.data);
 
                                           // return ListView.builder(
                                           //   cacheExtent: 9999,
@@ -743,8 +761,14 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                             InkWell(
                                               onTap: () {
                                                 setState(() {
-                                                  if (limReq <= 30)
-                                                    limReq = limReq + 5;
+                                                  if (limReq > 30 ||
+                                                      limReq >
+                                                          recentDataList.length)
+                                                    tapReq =
+                                                        'Only latest 30 requests';
+                                                  else {
+                                                    lim = lim + 5;
+                                                  }
                                                 });
                                               },
                                               child: Center(
@@ -757,7 +781,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                                             .symmetric(
                                                         vertical: 36.0),
                                                     child: Text(
-                                                      'Tap to see more',
+                                                      tapReq,
                                                       textScaleFactor: 1,
                                                     ),
                                                   ),

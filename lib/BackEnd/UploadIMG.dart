@@ -11,8 +11,11 @@ class UploadIMG {
   final _picker = ImagePicker();
 
   getUserPic() async {
-    pickedImage =
-        await _picker.getImage(source: ImageSource.gallery, imageQuality: 10);
+    pickedImage = await _picker.getImage(
+        source: ImageSource.gallery,
+        imageQuality: 50,
+        maxHeight: 720,
+        maxWidth: 720);
     imageUser = File(pickedImage.path);
 
     // String dir = (await getApplicationDocumentsDirectory()).path;
@@ -21,8 +24,11 @@ class UploadIMG {
   }
 
   getBookPic() async {
-    pickedImage =
-        await _picker.getImage(source: ImageSource.camera, imageQuality: 10);
+    pickedImage = await _picker.getImage(
+        source: ImageSource.camera,
+        imageQuality: 50,
+        maxHeight: 1200,
+        maxWidth: 1200);
     imageBook = File(pickedImage.path);
   }
 

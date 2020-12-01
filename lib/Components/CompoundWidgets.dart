@@ -55,6 +55,7 @@ class BookImg extends StatelessWidget {
           : InteractiveViewer(
               transformationController: transformationController,
               maxScale: 5,
+
               onInteractionEnd: (details) async {
                 await Future.delayed(Duration(seconds: 5));
 
@@ -63,6 +64,8 @@ class BookImg extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: imglink,
                 fit: BoxFit.cover,
+                // memCacheHeight: 1200,
+                memCacheWidth: 900,
                 errorWidget: (context, error, stackTrace) {
                   return Center(
                     child: Icon(
@@ -112,10 +115,180 @@ class BookImg extends StatelessWidget {
   }
 }
 
+// GlobalKey key = GlobalKey();
+
+// class BookcardWithImage extends StatelessWidget {
+//   const BookcardWithImage(
+//       {Key key,
+//       @required this.width,
+//       @required this.bookData,
+//       @required this.height})
+//       : super(key: key);
+//   final double width;
+//   final BookData bookData;
+//   final double height;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return InkWell(
+//       onTap: () => Navigator.push(
+//         context,
+//         MaterialPageRoute(
+//           builder: (context) => TestWidget(
+//             widgets: BookcardWithImage(
+//               bookData: bookData,
+//               height: height,
+//               width: width,
+//             ),
+//           ),
+//         ),
+//       ),
+//       child: Container(
+//         // color: Colors.amber,
+//         width: width,
+//         height: height,
+//         child: Stack(
+//           children: [
+//             Positioned(
+//               // left:,
+//               right: 0,
+//               top: 0,
+//               child: Container(
+//                 color: Color(0xff001a54),
+//                 width: width * .80,
+//                 height: height,
+//               ),
+//             ),
+//             Positioned(
+//               right: 0,
+//               bottom: 0,
+//               width: width * .60,
+//               height: height,
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                 children: [
+//                   FittedBox(
+//                     fit: BoxFit.fitWidth,
+//                     child: Text(
+//                       bookData.bookName,
+//                       style: GoogleFonts.abrilFatface(
+//                           fontSize: width * .08,
+//                           // fontWeight: FontWeight.bold,
+//                           color: Colors.grey.shade200,
+//                           shadows: [
+//                             Shadow(
+//                               blurRadius: 4,
+//                               color: Colors.black54,
+//                               offset: Offset(2, 2),
+//                             ),
+//                           ]),
+//                     ),
+//                   ),
+//                   Padding(
+//                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
+//                     child: FittedBox(
+//                       fit: BoxFit.fitWidth,
+//                       child: Text(
+//                         bookData.bookWriter,
+//                         style: GoogleFonts.sacramento(
+//                           fontSize: width * .08,
+//                           // fontWeight: FontWeight.bold,
+//                           color: Colors.white,
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                   Text(
+//                     bookData.bookFor == 'Buy' || bookData.bookFor == 'Rent'
+//                         ? 'Requested By'
+//                         : 'Owned by',
+//                     style: GoogleFonts.abrilFatface(
+//                         fontSize: width * .06, color: Colors.white),
+//                   ),
+//                   //   FittedBox(
+//                   //          fit: BoxFit.fitWidth,             child: Text(
+//                   //     bookData.bookName,
+//                   //     style: TextStyle(fontSize: width * .075),
+//                   //   ),
+//                   // ),
+//                   FittedBox(
+//                     fit: BoxFit.fitWidth,
+//                     child: Text(
+//                       bookData.bookUploaderName,
+//                       style: GoogleFonts.lora(
+//                           fontSize: width * .05, color: Colors.white),
+//                     ),
+//                   ),
+//                   Container(
+//                     color: Colors.green,
+//                     child: Center(
+//                       child: FittedBox(
+//                         fit: BoxFit.fitWidth,
+//                         child: Padding(
+//                           padding: const EdgeInsets.all(4.0),
+//                           child: Text(
+//                             bookData.bookFor,
+//                             style: TextStyle(
+//                                 fontSize: width * .055, color: Colors.white),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                   FittedBox(
+//                     fit: BoxFit.fitWidth,
+//                     child: bookData.bookTimeUploadString == null
+//                         ? Text(
+//                             'Uploaded: ' +
+//                                 UsableData.timestampToString(
+//                                     bookData.bookTimeUpload),
+//                             style: TextStyle(
+//                                 fontSize: width * .055, color: Colors.white),
+//                           )
+//                         : Text(
+//                             'Added: ' + bookData.bookTimeUploadString,
+//                             style: TextStyle(
+//                                 fontSize: width * .055, color: Colors.white),
+//                           ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             Positioned(
+//                 left: 0,
+//                 top: (height - width * .4 * 3 / 2) / 2,
+//                 // width: 40,
+//                 // height: height,
+//                 child: CachedNetworkImage(
+//                   height: width * .4 * 3 / 2,
+//                   width: width * .4,
+//                   imageUrl: bookData.bookImgLink,
+//                   fit: BoxFit.cover,
+//                   // key: key,
+//                   memCacheHeight: 300,
+//                   memCacheWidth: 200,
+//                 ))
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class TestWidget extends StatelessWidget {
+//   const TestWidget({Key key, @required this.widgets}) : super(key: key);
+//   final Widget widgets;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(child: widgets),
+//     );
+//   }
+// }
+
 class BookCard extends StatelessWidget {
   final double width;
   final BookData bookData;
-
   const BookCard({
     Key key,
     @required this.bookData,
@@ -153,13 +326,14 @@ class BookCard extends StatelessWidget {
                 height: width * .753,
                 width: width * .953,
                 decoration: BoxDecoration(
-                  color: Color(0xff089080),
+                  // color: Color(0xff089080),
+                  color: Color(0xff001a5f),
                   // color: Colors.teal.shade700,
                   boxShadow: [
                     BoxShadow(
                       offset: Offset(3, 3),
                       blurRadius: 4,
-                      color: Color(0xcc087060),
+                      color: Color(0xcc001a5f),
                     ),
                   ],
                 ),
@@ -171,63 +345,107 @@ class BookCard extends StatelessWidget {
               width: width * .50 * 1.38,
               height: width * .753,
               child: Container(
-                padding: EdgeInsets.all(4),
+                // padding: EdgeInsets.symmetric(4),
                 // color: Colors.white10,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    SizedBox(
+                      height: width * .05,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          bookData.bookName,
+                          style: GoogleFonts.abrilFatface(
+                            fontSize: width * .07,
+                            // fontWeight: FontWeight.bold,
+                            color: Colors.grey.shade200,
+                            // shadows: [
+                            //   Shadow(
+                            //     blurRadius: 4,
+                            //     color: Colors.black54,
+                            //     offset: Offset(2, 2),
+                            //   ),
+                            // ]
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          bookData.bookWriter,
+                          style: GoogleFonts.sacramento(
+                            fontSize: width * .08,
+                            // fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: width * .06,
+                    ),
+                    Container(
+                      // color: Color(0xffc7d8ff),
+                      color: Colors.indigo.shade700,
+                      width: width * .7,
+                      padding: EdgeInsets.all(4),
+                      child: Column(
+                        children: [
+                          Text(
+                            bookData.bookFor == 'Buy' ||
+                                    bookData.bookFor == 'Rent'
+                                ? 'Requested By'
+                                : 'Owned by',
+                            style: GoogleFonts.abrilFatface(
+                                fontSize: width * .05, color: Colors.white),
+                          ),
+                          //   FittedBox(
+                          //          fit: BoxFit.fitWidth,             child: Text(
+                          //     bookData.bookName,
+                          //     style: TextStyle(fontSize: width * .075),
+                          //   ),
+                          // ),
+                          FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Text(
+                              bookData.bookUploaderName,
+                              style: GoogleFonts.lora(
+                                fontSize: width * .055,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Text(
+                    //   bookData.bookFor == 'Buy' || bookData.bookFor == 'Rent'
+                    //       ? 'Requested By'
+                    //       : 'Owned by',
+                    //   style: GoogleFonts.abrilFatface(
+                    //       fontSize: width * .05, color: Colors.white),
+                    // ),
+                    // //   FittedBox(
+                    // //          fit: BoxFit.fitWidth,             child: Text(
+                    // //     bookData.bookName,
+                    // //     style: TextStyle(fontSize: width * .075),
+                    // //   ),
+                    // // ),
                     // FittedBox(
                     //   fit: BoxFit.fitWidth,
                     //   child: Text(
-                    //     bookData.bookName,
-                    //     style: GoogleFonts.abrilFatface(
-                    //         fontSize: width * .08,
-                    //         // fontWeight: FontWeight.bold,
-                    //         color: Colors.grey.shade200,
-                    //         shadows: [
-                    //           Shadow(
-                    //             blurRadius: 4,
-                    //             color: Colors.black54,
-                    //             offset: Offset(2, 2),
-                    //           ),
-                    //         ]),
+                    //     bookData.bookUploaderName,
+                    //     style: GoogleFonts.lora(
+                    //         fontSize: width * .055, color: Colors.white),
                     //   ),
                     // ),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    //   child: FittedBox(
-                    //     fit: BoxFit.fitWidth,
-                    //     child: Text(
-                    //       bookData.bookWriter,
-                    //       style: GoogleFonts.sacramento(
-                    //         fontSize: width * .08,
-                    //         // fontWeight: FontWeight.bold,
-                    //         color: Colors.white,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    Text(
-                      bookData.bookFor == 'Buy' || bookData.bookFor == 'Rent'
-                          ? 'Requested By'
-                          : 'Owned by',
-                      style: GoogleFonts.abrilFatface(
-                          fontSize: width * .06, color: Colors.white),
-                    ),
-                    //   FittedBox(
-                    //          fit: BoxFit.fitWidth,             child: Text(
-                    //     bookData.bookName,
-                    //     style: TextStyle(fontSize: width * .075),
-                    //   ),
-                    // ),
-                    FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                        bookData.bookUploaderName,
-                        style: GoogleFonts.lora(
-                            fontSize: width * .05, color: Colors.white),
-                      ),
-                    ),
                     Container(
                       color: Colors.green,
                       child: Center(
@@ -244,6 +462,9 @@ class BookCard extends StatelessWidget {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: width * .07,
+                    ),
                     FittedBox(
                       fit: BoxFit.fitWidth,
                       child: bookData.bookTimeUploadString == null
@@ -252,12 +473,12 @@ class BookCard extends StatelessWidget {
                                   UsableData.timestampToString(
                                       bookData.bookTimeUpload),
                               style: TextStyle(
-                                  fontSize: width * .055, color: Colors.white),
+                                  fontSize: width * .05, color: Colors.white),
                             )
                           : Text(
                               'Added: ' + bookData.bookTimeUploadString,
                               style: TextStyle(
-                                  fontSize: width * .055, color: Colors.white),
+                                  fontSize: width * .05, color: Colors.white),
                             ),
                     ),
                   ],
@@ -270,7 +491,6 @@ class BookCard extends StatelessWidget {
               height: width * .50 * 4 / 3,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color(0x00082040),
                   // color: Colors.grey.shade200,
                   borderRadius:
                       BorderRadius.only(bottomRight: Radius.circular(15)),
@@ -297,65 +517,99 @@ class BookCard extends StatelessWidget {
 
                   // size: Size(width * .60, width * .60 * 4 / 3),
                   painter: RPSCustomPainter(),
+                  child: Text(
+                    bookData.bookName[0].toUpperCase(),
+                    style: GoogleFonts.abrilFatface(
+                      color: Colors.white12,
+                      fontSize: width * .4,
+                    ),
+                  ),
                   // child: BookImg(
                   //   width: width * .50,
                   //   imglink: bookData == null ? null : bookData.bookImgLink,
                   //   // imglink: null,
                   // ),
-                  child: Stack(
-                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Positioned(
-                        bottom: 0,
-                        left: width * .035,
-                        child: Text(
-                          bookData.bookName[0].toUpperCase(),
-                          style: GoogleFonts.abrilFatface(
-                            color: Colors.white12,
-                            fontSize: width * .4,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB((width * .055), 6, 4, 0),
-                        child: Text(
-                          bookData.bookName,
-                          style: GoogleFonts.abrilFatface(
-                              fontSize: width * .08,
-                              // fontWeight: FontWeight.bold,
-                              color: Colors.grey.shade200,
-                              shadows: [
-                                Shadow(
-                                  blurRadius: 4,
-                                  color: Colors.black54,
-                                  offset: Offset(2, 2),
-                                ),
-                              ]),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(
-                              (width * .055), 6, 4, width * .055),
-                          child: FittedBox(
-                            fit: BoxFit.fitWidth,
-                            child: Text(
-                              bookData.bookWriter,
-                              style: GoogleFonts.sacramento(
-                                fontSize: width * .08,
-                                // fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // child: Stack(
+                  //   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   children: [
+                  //     Positioned(
+                  //       bottom: 0,
+                  //       left: width * .035,
+                  //       child: Text(
+                  //         bookData.bookName[0].toUpperCase(),
+                  //         style: GoogleFonts.abrilFatface(
+                  //           color: Colors.white12,
+                  //           fontSize: width * .4,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     // Padding(
+                  //     //   padding: EdgeInsets.fromLTRB((width * .055), 6, 4, 0),
+                  //     //   child: Text(
+                  //     //     bookData.bookName,
+                  //     //     style: GoogleFonts.abrilFatface(
+                  //     //         fontSize: width * .08,
+                  //     //         // fontWeight: FontWeight.bold,
+                  //     //         color: Colors.grey.shade200,
+                  //     //         shadows: [
+                  //     //           Shadow(
+                  //     //             blurRadius: 4,
+                  //     //             color: Colors.black54,
+                  //     //             offset: Offset(2, 2),
+                  //     //           ),
+                  //     //         ]),
+                  //     //   ),
+                  //     // ),
+                  //     // Align(
+                  //     //   alignment: Alignment.bottomCenter,
+                  //     //   child: Padding(
+                  //     //     padding: EdgeInsets.fromLTRB(
+                  //     //         (width * .055), 6, 4, width * .055),
+                  //     //     child: FittedBox(
+                  //     //       fit: BoxFit.fitWidth,
+                  //     //       child: Text(
+                  //     //         bookData.bookWriter,
+                  //     //         style: GoogleFonts.sacramento(
+                  //     //           fontSize: width * .08,
+                  //     //           // fontWeight: FontWeight.bold,
+                  //     //           color: Colors.white,
+                  //     //         ),
+                  //     //       ),
+                  //     //     ),
+                  //     //   ),
+                  //     // ),
+                  //   ],
+                  // ),
                 ),
               ),
             ),
+            //TODO: check memory to fixed
+            Positioned(
+                left: width * .036,
+                top: width * .044,
+                // height: width * .8,
+                bottom: width * .08,
+                width: width * .465,
+                child: CachedNetworkImage(
+                  imageUrl: bookData.bookImgLink,
+                  // memCacheHeight: 400,
+                  memCacheWidth: 300,
+                  fit: BoxFit.cover,
+                  errorWidget: (context, error, stackTrace) {
+                    return Center(
+                      child: Icon(
+                        Icons.error,
+                        color: Colors.red,
+                        size: width * .2,
+                      ),
+                    );
+                  },
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Center(
+                    child: CircularProgressIndicator(
+                        value: downloadProgress.progress),
+                  ),
+                ))
           ],
         ),
       ),
@@ -524,6 +778,8 @@ class IconAccount extends StatelessWidget {
                       imageUrl: imglink,
                       height: radious,
                       width: radious,
+                      // memCacheHeight: 300,
+                      memCacheWidth: 300,
                       fit: BoxFit.cover,
                       errorWidget: (context, error, stackTrace) {
                         return Center(
@@ -597,6 +853,7 @@ class ImageFull extends StatelessWidget {
                 imageUrl: imgLink,
                 // height: radious,
                 // width: radious,
+                memCacheWidth: 480,
                 fit: BoxFit.contain,
                 errorWidget: (context, error, stackTrace) {
                   return Center(
@@ -966,23 +1223,23 @@ class SpinkitFading extends StatelessWidget {
   }
 }
 
-class Bookloading extends StatelessWidget {
-  const Bookloading({Key key}) : super(key: key);
+// class Bookloading extends StatelessWidget {
+//   const Bookloading({Key key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(38.0),
-        child: FlareActor(
-          'assets/flr/BookLoading.flr',
-          fit: BoxFit.contain,
-          animation: 'Loading',
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       child: Padding(
+//         padding: const EdgeInsets.all(38.0),
+//         child: FlareActor(
+//           'assets/flr/BookLoading.flr',
+//           fit: BoxFit.contain,
+//           animation: 'Loading',
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 // class ErrorState extends StatelessWidget {
 //   final String msg;
