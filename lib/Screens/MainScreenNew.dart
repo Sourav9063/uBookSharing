@@ -91,6 +91,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
 
   @override
   void initState() {
+    super.initState();
     loadUser();
 
     final fcm = FirebaseMessaging();
@@ -138,7 +139,8 @@ class _MainScreenNewState extends State<MainScreenNew> {
     // fcm.getToken();
     fcm.subscribeToTopic(FirebaseAuth.instance.currentUser.email
         .replaceAll(new RegExp(r'[^\w\s]+'), ''));
-    super.initState();
+
+
   }
 
   @override
