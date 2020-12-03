@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
@@ -1073,6 +1074,10 @@ class CustomDrawer extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0)),
                     onPressed: () {
+                      FirebaseMessaging().unsubscribeFromTopic(
+                        FirebaseAuth.instance.currentUser.email
+                            .replaceAll(new RegExp(r'[^\w\s]+'), ''),
+                      );
                       FirebaseAuth.instance.signOut();
                       UserProfileData.tmVersity = null;
                       Navigator.of(context).pushAndRemoveUntil(
