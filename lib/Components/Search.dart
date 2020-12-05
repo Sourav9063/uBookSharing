@@ -58,10 +58,8 @@ class SearchPageTest extends SearchDelegate {
     var tmpList = query == null || query == ''
         ? GetBookData.bookNameList
         : GetBookData.bookNameList
-            .where((element) => element
-                .toString()
-                .toLowerCase()
-                .startsWith(query.toLowerCase()))
+            .where((element) =>
+                element.toString().toLowerCase().contains(query.toLowerCase()))
             .toList();
 
     return tmpList.isEmpty
