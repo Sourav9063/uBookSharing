@@ -26,7 +26,9 @@ class MainScreenNew extends StatefulWidget {
 
 class _MainScreenNewState extends State<MainScreenNew> {
   // int _selectedIndex = 1;
-  int pressed = 1;
+  // int pressed = 1;
+  ValueNotifier<int> pressed = ValueNotifier<int>(1);
+
   int lim = 5;
   int limReq = 5;
   double width = 0;
@@ -142,10 +144,16 @@ class _MainScreenNewState extends State<MainScreenNew> {
   }
 
   @override
+  void dispose() {
+    pagecontroller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // print('build');
     return Scaffold(
-      // backgroundColor: Color(0xff082040),
+      // backgroundColor: Color(0xffF0E4D4),
       key: scaffoldKey,
       drawer: CustomDrawer(),
       body: ModalProgressHUD(
@@ -188,7 +196,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                           builder: (context) => AddRequestScreen()));
                 },
                 icon: Icon(
-                  Icons.sentiment_dissatisfied,
+                  Icons.sentiment_satisfied_rounded,
                   color: Colors.white,
                 ),
                 color: Color(0xff1445a2),
@@ -204,6 +212,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                   // curve: Cubic(0.7, .0, 0.7, 1.4),
                   width: width,
                   color: Color(0xffF01a54),
+
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -292,80 +301,90 @@ class _MainScreenNewState extends State<MainScreenNew> {
                         SizedBox(
                           height: 8,
                         ),
-                        Column(
-                          children: [
-                            RotatedBox(
-                              quarterTurns: -1,
-                              child: RaisedButton(
-                                color: pressed == 1 ? null : Color(0xAA24217a),
-                                onPressed: () async {
-                                  // setState(() {
-                                  //   pressed = 1;
-                                  // });
+                        ValueListenableBuilder(
+                          valueListenable: pressed,
+                          builder: (context, pressed, child) {
+                            return Column(
+                              children: [
+                                RotatedBox(
+                                  quarterTurns: -1,
+                                  child: RaisedButton(
+                                    color:
+                                        pressed == 1 ? null : Color(0xAA24217a),
+                                    onPressed: () async {
+                                      // setState(() {
+                                      //   pressed = 1;
+                                      // });
 
-                                  pagecontroller.animateToPage(0,
-                                      duration: Duration(milliseconds: 500),
-                                      curve: Curves.fastOutSlowIn);
-                                },
-                                child: Text(
-                                  'New Books',
-                                  textScaleFactor: .8,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 4.0),
-                              child: RotatedBox(
-                                quarterTurns: -1,
-                                child: RaisedButton(
-                                  color:
-                                      pressed == 2 ? null : Color(0xAA24217a),
-                                  onPressed: () async {
-                                    // setState(() {
-                                    //   pressed = 2;
-                                    // });
-
-                                    pagecontroller.animateToPage(1,
-                                        duration: Duration(milliseconds: 500),
-                                        curve: Curves.fastOutSlowIn);
-                                  },
-                                  child: Text(
-                                    'New Requests',
-                                    textScaleFactor: .8,
-                                    style: TextStyle(
-                                      color: Colors.white,
+                                      pagecontroller.animateToPage(0,
+                                          duration: Duration(milliseconds: 500),
+                                          curve: Curves.fastOutSlowIn);
+                                    },
+                                    child: Text(
+                                      'New Books',
+                                      textScaleFactor: .8,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ),
-                            RotatedBox(
-                              quarterTurns: -1,
-                              child: RaisedButton(
-                                color: pressed == 3 ? null : Color(0xAA24217a),
-                                onPressed: () async {
-                                  // setState(() {
-                                  //   pressed = 3;
-                                  // });
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 4.0),
+                                  child: RotatedBox(
+                                    quarterTurns: -1,
+                                    child: RaisedButton(
+                                      color: pressed == 2
+                                          ? null
+                                          : Color(0xAA24217a),
+                                      onPressed: () async {
+                                        // setState(() {
+                                        //   pressed = 2;
+                                        // });
 
-                                  pagecontroller.animateToPage(2,
-                                      duration: Duration(milliseconds: 500),
-                                      curve: Curves.fastOutSlowIn);
-                                },
-                                child: Text(
-                                  'My Books',
-                                  textScaleFactor: .8,
-                                  style: TextStyle(
-                                    color: Colors.white,
+                                        pagecontroller.animateToPage(1,
+                                            duration:
+                                                Duration(milliseconds: 500),
+                                            curve: Curves.fastOutSlowIn);
+                                      },
+                                      child: Text(
+                                        'New Requests',
+                                        textScaleFactor: .8,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )
-                          ],
+                                RotatedBox(
+                                    quarterTurns: -1,
+                                    child: RaisedButton(
+                                      color: pressed == 3
+                                          ? null
+                                          : Color(0xAA24217a),
+                                      onPressed: () async {
+                                        // setState(() {
+                                        //   pressed = 3;
+                                        // });
+
+                                        pagecontroller.animateToPage(2,
+                                            duration:
+                                                Duration(milliseconds: 500),
+                                            curve: Curves.fastOutSlowIn);
+                                      },
+                                      child: Text(
+                                        'My Books',
+                                        textScaleFactor: .8,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ))
+                              ],
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -383,8 +402,12 @@ class _MainScreenNewState extends State<MainScreenNew> {
                         controller: pagecontroller,
                         onPageChanged: (value) async {
                           //
-                          pressed = value + 1;
-                          setState(() {});
+                          // int pres = value + 1;
+                          // print(pres);
+                          pressed.value = value + 1;
+                          // pressed = ValueNotifier<int>(pres);
+                          // print(pressed);
+                          // setState(() {});
                         },
                         // pageSnapping: false,
                         children: [

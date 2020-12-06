@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
@@ -301,6 +301,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                           ignoring: ignore,
                           child: SingleChildScrollView(
                             // controller: controller,
+                            physics: BouncingScrollPhysics(),
                             child: Form(
                               key: _formKeyBook,
                               child: Column(
@@ -418,6 +419,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                   //   },
                                   // ),
                                   BookFormField(
+                                    cap: TextCapitalization.words,
                                     lebel: 'Writer',
                                     hintText: 'The main writer\'s name',
                                     raiseForm: () {
@@ -529,6 +531,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                                 forTime = false;
                                               }
                                             });
+                                            // FocusScope.of(context).nextFocus();
                                           },
                                         ),
                                       ))
@@ -628,6 +631,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                     ),
                                   ),
                                   BookFormField(
+                                      cap: TextCapitalization.sentences,
                                       raiseForm: () {
                                         riseForm();
                                       },
@@ -795,92 +799,93 @@ class _AddBookScreenState extends State<AddBookScreen> {
               ),
             ),
             Positioned(
-              bottom: CommonThings.size.width * .04,
+              bottom: 0,
               right: 0,
               height: CommonThings.size.width * .25,
               width: CommonThings.size.width * .25,
-              child: AnimatedOpacity(
-                duration: Duration(milliseconds: 600),
-                opacity: valdated && bookImgLink != null ? 1 : 0,
-                // opacity: 1,
-                child: Visibility(
-                  visible: valdated && bookImgLink != null,
-                  // visible: true,
-                  child: InkWell(
-                    child: Lottie.asset(
-                      'assets/lottie/AddLottie.json',
-                      fit: BoxFit.cover,
-                      repeat: false,
-                    ),
-                    onTap: () async {
-                      FocusScope.of(context).unfocus();
-
-                      if (bookData.bookPrice != null)
-                        bookData.bookPrice = bookData.bookPrice + ' Taka';
-                      // bookNameList.add(bookData.bookName);
-
-                      try {
-                        // await FirebaseFirestore.instance
-                        //     .collection(UserProfileData.tmVersity)
-                        //     .doc('AllBooks')
-                        //     .collection(bookData.bookName)
-                        //     .doc(bookId)
-                        //     .set(bookData.getBookMap());
-
-                        await FirebaseFirestore.instance
-                            .collection(UserProfileData.tmVersity)
-                            .doc('AllBooks')
-                            .collection('AllBooks')
-                            .doc()
-                            .set(bookData.getBookMap());
-
-                        // String bookPathFirestore = FirebaseFirestore.instance
-                        //     .collection(UserProfileData.tmVersity)
-                        //     .doc('AllBooks')
-                        //     .collection('AllBooks')
-                        //     .doc()
-                        //     .path;
-                        // print(bookPathFirestore);
-                        // UserProfileData.myBookList.add(bookPathFirestore);
-
-                        // String msg = await GetUserData.setUploadedBookNo();
-                        // print(msg);
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                            // width: CommonThings.size.width * .1,
-                            backgroundColor: Colors.teal.shade800,
-                            content: Text('Your book has been added'),
-                          ),
-                        );
-                        Navigator.pop(context);
-                        // Navigator.pushAndRemoveUntil(
-                        //     context,
-                        //     PageTransition(curve: Curves.fastOutSlowIn,
-                        //       // duration: Duration(seconds:),
-                        //       // settings: RouteSettings(),
-                        //       child: MainPage(),
-                        //       type: PageTransitionType.rightToLeftWithFade,
-                        //       alignment: Alignment.bottomRight,
-                        //       curve: Curves.fastOutSlowIn,
-                        //     ),
-                        //     (Route<dynamic> route) => false);
-                      } catch (e) {
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                            // width: CommonThings.size.width * .1,
-                            backgroundColor: Colors.redAccent.shade700,
-                            content:
-                                Text('Couldn\'t upload you book. Try again.'),
-                          ),
-                        );
-                      }
-                    }
-                    //  () async {
-                    //   print(UserProfileData.uploadedBookNo);
-                    //   GetUserData.setUploadedBookNo();
-                    // }
-                    ,
+              child: Visibility(
+                visible: valdated && bookImgLink != null,
+                // visible: true,
+                child: InkWell(
+                  // child: Lottie.asset(
+                  //   'assets/lottie/AddLottie.json',
+                  //   fit: BoxFit.cover,
+                  //   repeat: false,
+                  // ),
+                  child: FlareActor(
+                    'assets/flr/AddBookButton.flr',
+                    animation: 'AnimationsRep',
                   ),
+                  onTap: valdated && bookImgLink != null
+                      ? () async {
+                          FocusScope.of(context).unfocus();
+
+                          if (bookData.bookPrice != null)
+                            bookData.bookPrice = bookData.bookPrice + ' Taka';
+                          // bookNameList.add(bookData.bookName);
+
+                          try {
+                            // await FirebaseFirestore.instance
+                            //     .collection(UserProfileData.tmVersity)
+                            //     .doc('AllBooks')
+                            //     .collection(bookData.bookName)
+                            //     .doc(bookId)
+                            //     .set(bookData.getBookMap());
+
+                            await FirebaseFirestore.instance
+                                .collection(UserProfileData.tmVersity)
+                                .doc('AllBooks')
+                                .collection('AllBooks')
+                                .doc()
+                                .set(bookData.getBookMap());
+
+                            // String bookPathFirestore = FirebaseFirestore.instance
+                            //     .collection(UserProfileData.tmVersity)
+                            //     .doc('AllBooks')
+                            //     .collection('AllBooks')
+                            //     .doc()
+                            //     .path;
+                            // print(bookPathFirestore);
+                            // UserProfileData.myBookList.add(bookPathFirestore);
+
+                            // String msg = await GetUserData.setUploadedBookNo();
+                            // print(msg);
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                // width: CommonThings.size.width * .1,
+                                backgroundColor: Colors.teal.shade800,
+                                content: Text('Your book has been added'),
+                              ),
+                            );
+                            Navigator.pop(context);
+                            // Navigator.pushAndRemoveUntil(
+                            //     context,
+                            //     PageTransition(curve: Curves.fastOutSlowIn,
+                            //       // duration: Duration(seconds:),
+                            //       // settings: RouteSettings(),
+                            //       child: MainPage(),
+                            //       type: PageTransitionType.rightToLeftWithFade,
+                            //       alignment: Alignment.bottomRight,
+                            //       curve: Curves.fastOutSlowIn,
+                            //     ),
+                            //     (Route<dynamic> route) => false);
+                          } catch (e) {
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                // width: CommonThings.size.width * .1,
+                                backgroundColor: Colors.redAccent.shade700,
+                                content: Text(
+                                    'Couldn\'t upload you book. Try again.'),
+                              ),
+                            );
+                          }
+                        }
+                      : null
+                  //  () async {
+                  //   print(UserProfileData.uploadedBookNo);
+                  //   GetUserData.setUploadedBookNo();
+                  // }
+                  ,
                 ),
               ),
             ),

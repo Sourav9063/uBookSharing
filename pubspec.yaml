@@ -33,7 +33,7 @@ dependencies:
   flare_flutter: ^2.0.6
   google_fonts: ^1.1.0
   image_picker: ^0.6.7+7
-  lottie: ^0.6.0
+  # lottie: ^0.6.0
   modal_bottom_sheet: ^0.2.2
   modal_progress_hud: ^0.1.3
   url_launcher: ^5.7.2
@@ -64,14 +64,13 @@ flutter:
     - assets/img/BookBack.jpg
 
     - assets/flr/lockStates.flr
-
+    - assets/flr/AddBookButton.flr
+    - assets/flr/BookWritting.flr
     - assets/flr/sittingBook.flr
     - assets/flr/BookGive.flr
     - assets/flr/BookLoadingLottie.flr
     - assets/flr/Not found.flr
 
-    - assets/lottie/bookWritting.json
-    - assets/lottie/AddLottie.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

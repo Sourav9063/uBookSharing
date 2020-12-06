@@ -1078,8 +1078,9 @@ class CustomDrawer extends StatelessWidget {
                         FirebaseAuth.instance.currentUser.email
                             .replaceAll(new RegExp(r'[^\w\s]+'), ''),
                       );
-                      FirebaseAuth.instance.signOut();
+                      
                       UserProfileData.tmVersity = null;
+                      FirebaseAuth.instance.signOut();
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (context) => MyHomePage()),
                           (Route<dynamic> route) => false);
@@ -1112,6 +1113,7 @@ class BookFormField extends StatelessWidget {
   final Function validate;
   final Function onChanged;
   final Function raiseForm;
+  final TextCapitalization cap;
   const BookFormField({
     Key key,
     @required this.validate,
@@ -1119,6 +1121,7 @@ class BookFormField extends StatelessWidget {
     this.raiseForm,
     this.lebel,
     this.hintText,
+    this.cap = TextCapitalization.none,
   }) : super(key: key);
 
   @override
@@ -1126,6 +1129,7 @@ class BookFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: TextFormField(
+        textCapitalization: cap,
         onEditingComplete: () => FocusScope.of(context).nextFocus(),
         cursorColor: Theme.of(context).accentColor,
         onTap: raiseForm,

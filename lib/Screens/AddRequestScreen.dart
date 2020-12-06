@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 
 import 'package:uBookSharing/BackEnd/Datas.dart';
 // import 'package:uBookSharing/BackEnd/FireBase.dart';
@@ -160,6 +160,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                           ignoring: visible,
                           child: SingleChildScrollView(
                             // controller: controller,
+                            physics: BouncingScrollPhysics(),
                             child: Form(
                               key: _formKeyBook,
                               child: Column(
@@ -187,6 +188,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                     ),
                                   ),
                                   BookFormField(
+                                    cap: TextCapitalization.words,
                                     lebel: 'Book\'s Name',
                                     hintText: 'Please provide the right name',
                                     raiseForm: () {
@@ -202,6 +204,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                     },
                                   ),
                                   BookFormField(
+                                    cap: TextCapitalization.words,
                                     lebel: 'Writer',
                                     hintText: 'The main writer\'s name',
                                     raiseForm: () {
@@ -323,21 +326,6 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                     opacity: forPrice ? 1 : 0,
                                     child: Visibility(
                                       visible: forPrice,
-                                      // child: BookFormField(
-                                      //   lebel: 'Price',
-                                      //   hintText: 'Enter fair amount',
-                                      //   raiseForm: () {
-                                      //     riseForm();
-                                      //   },
-                                      //   onChanged: (value) {
-                                      //     bookData.bookPrice = value;
-                                      //   },
-                                      //   validate: (value) {
-                                      //     if (value == null || value == '')
-                                      //       return 'This field cannot be empty. Input 0 taka';
-                                      //     return null;
-                                      //   },
-                                      // ),
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 4.0),
@@ -392,6 +380,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                     child: Visibility(
                                       visible: forTime,
                                       child: BookFormField(
+                                        cap: TextCapitalization.words,
                                         lebel: 'Time',
                                         hintText:
                                             'Be specific about time and date',
@@ -410,6 +399,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                     ),
                                   ),
                                   BookFormField(
+                                      cap: TextCapitalization.sentences,
                                       raiseForm: () {
                                         riseForm();
                                       },
@@ -574,92 +564,94 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
               ),
             ),
             Positioned(
-              bottom: CommonThings.size.width * .04,
+              bottom: 0,
               right: 0,
               height: CommonThings.size.width * .25,
               width: CommonThings.size.width * .25,
-              child: AnimatedOpacity(
-                duration: Duration(milliseconds: 600),
-                opacity: valdated && bookImgLink != null ? 1 : 0,
-                child: Visibility(
-                  visible: valdated && bookImgLink != null,
-                  child: InkWell(
-                    child: Lottie.asset(
-                      'assets/lottie/AddLottie.json',
-                      fit: BoxFit.cover,
-                      repeat: false,
-                    ),
-                    onTap: () async {
-                      FocusScope.of(context).unfocus();
-                      if (bookData.bookPrice != null)
-                        bookData.bookPrice = bookData.bookPrice + ' Taka';
-                      // print(   bookData.bookName);
-                      try {
-                        await FirebaseFirestore.instance
-                            .collection(UserProfileData.tmVersity)
-                            .doc('AllBooks')
-                            .collection('Requests')
-                            .doc()
-                            .set(bookData.getBookMap());
-                        // String reqRef = FirebaseFirestore.instance
-                        //     .collection(UserProfileData.tmVersity)
-                        //     .doc('Requests')
-                        //     .collection('Requests')
-                        //     .doc()
-                        //     .path;
-
-                        // UserProfileData.myBookList.add(reqRef);
-
-                        // await FirebaseFirestore.instance
-                        //     .collection(UserProfileData.tmVersity)
-                        //     .doc('Requests')
-                        //     .collection('IINNDDEEXX')
-                        //     .doc()
-                        //     .set({
-                        //   'Name': bookData.bookName,
-                        //   'TmName': bookData.bookName
-                        //       .replaceAll(' ', '')
-                        //       .toUpperCase()
-                        // });
-
-                        // String msg = await GetUserData.setUploadedBookNo();
-                        // print(msg);
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                            // width: CommonThings.size.width * .1,
-                            backgroundColor: Colors.teal.shade800,
-                            content: Text('Your book has been added'),
-                          ),
-                        );
-                        Navigator.pop(context);
-                        // Navigator.pushAndRemoveUntil(
-                        //     context,
-                        //     PageTransition(curve: Curves.fastOutSlowIn,
-                        //       // duration: Duration(seconds:),
-                        //       // settings: RouteSettings(),
-                        //       child: MainPage(),
-                        //       type: PageTransitionType.rightToLeftWithFade,
-                        //       alignment: Alignment.bottomRight,
-                        //       curve: Curves.fastOutSlowIn,
-                        //     ),
-                        //     (Route<dynamic> route) => false);
-                      } catch (e) {
-                        Scaffold.of(context).showSnackBar(
-                          SnackBar(
-                            // width: CommonThings.size.width * .1,
-                            backgroundColor: Colors.redAccent.shade700,
-                            content:
-                                Text('Couldn\'t upload you book. Try again.'),
-                          ),
-                        );
-                      }
-                    }
-                    //  () async {
-                    //   print(UserProfileData.uploadedBookNo);
-                    //   GetUserData.setUploadedBookNo();
-                    // }
-                    ,
+              child: Visibility(
+                visible: valdated && bookImgLink != null,
+                child: InkWell(
+                  // child: Lottie.asset(
+                  //   'assets/lottie/AddLottie.json',
+                  //   fit: BoxFit.cover,
+                  //   repeat: false,
+                  // ),
+                  child: FlareActor(
+                    'assets/flr/AddBookButton.flr',
+                    animation: 'AnimationsRep',
                   ),
+                  onTap: valdated && bookImgLink != null
+                      ? () async {
+                          FocusScope.of(context).unfocus();
+                          if (bookData.bookPrice != null)
+                            bookData.bookPrice = bookData.bookPrice + ' Taka';
+                          // print(   bookData.bookName);
+                          try {
+                            await FirebaseFirestore.instance
+                                .collection(UserProfileData.tmVersity)
+                                .doc('AllBooks')
+                                .collection('Requests')
+                                .doc()
+                                .set(bookData.getBookMap());
+                            // String reqRef = FirebaseFirestore.instance
+                            //     .collection(UserProfileData.tmVersity)
+                            //     .doc('Requests')
+                            //     .collection('Requests')
+                            //     .doc()
+                            //     .path;
+
+                            // UserProfileData.myBookList.add(reqRef);
+
+                            // await FirebaseFirestore.instance
+                            //     .collection(UserProfileData.tmVersity)
+                            //     .doc('Requests')
+                            //     .collection('IINNDDEEXX')
+                            //     .doc()
+                            //     .set({
+                            //   'Name': bookData.bookName,
+                            //   'TmName': bookData.bookName
+                            //       .replaceAll(' ', '')
+                            //       .toUpperCase()
+                            // });
+
+                            // String msg = await GetUserData.setUploadedBookNo();
+                            // print(msg);
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                // width: CommonThings.size.width * .1,
+                                backgroundColor: Colors.teal.shade800,
+                                content: Text('Your book has been added'),
+                              ),
+                            );
+                            Navigator.pop(context);
+                            // Navigator.pushAndRemoveUntil(
+                            //     context,
+                            //     PageTransition(curve: Curves.fastOutSlowIn,
+                            //       // duration: Duration(seconds:),
+                            //       // settings: RouteSettings(),
+                            //       child: MainPage(),
+                            //       type: PageTransitionType.rightToLeftWithFade,
+                            //       alignment: Alignment.bottomRight,
+                            //       curve: Curves.fastOutSlowIn,
+                            //     ),
+                            //     (Route<dynamic> route) => false);
+                          } catch (e) {
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(
+                                // width: CommonThings.size.width * .1,
+                                backgroundColor: Colors.redAccent.shade700,
+                                content: Text(
+                                    'Couldn\'t upload you book. Try again.'),
+                              ),
+                            );
+                          }
+                        }
+                      : null
+                  //  () async {
+                  //   print(UserProfileData.uploadedBookNo);
+                  //   GetUserData.setUploadedBookNo();
+                  // }
+                  ,
                 ),
               ),
             ),

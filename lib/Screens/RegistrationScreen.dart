@@ -156,7 +156,7 @@ class _RegScreenState extends State<RegScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xff324062),
       body: ModalProgressHUD(
         inAsyncCall: spinner,
@@ -179,16 +179,13 @@ class _RegScreenState extends State<RegScreen> {
               //       image: AssetImage('assets/img/BookBack.jpg'),
               //       fit: BoxFit.cover),
               // ),
-              child: ColorFiltered(
-                colorFilter:
-                    ColorFilter.mode(Color(0xBB001a54), BlendMode.darken),
-                child: Image.asset(
-                  'assets/img/BookBack.jpg',
-                  fit: BoxFit.cover,
-                  alignment: Alignment.bottomLeft,
+              child: Image.asset(
+                'assets/img/BookBack.jpg',
+                fit: BoxFit.cover,
+                alignment: Alignment.bottomLeft,
+                color: Color(0xBB001a54), colorBlendMode: BlendMode.darken,
 
-                  // color: Colors.blue,
-                ),
+                // color: Colors.blue,
               ),
             ),
             // FlareActor(
@@ -198,6 +195,7 @@ class _RegScreenState extends State<RegScreen> {
             // ),
             SafeArea(
               child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 child: Form(
                   key: _formKey,
                   child: Padding(

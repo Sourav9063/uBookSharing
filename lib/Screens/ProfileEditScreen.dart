@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 // import 'package:dropdownfield/dropdownfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
@@ -294,21 +294,30 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
             ),
             child: SafeArea(
               child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: 30,
-                        ),
+                        // SizedBox(
+                        //   width: 30,
+                        // ),
                         Expanded(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Lottie.asset(
-                                'assets/lottie/bookWritting.json',
+                              // Lottie.asset(
+                              //   'assets/lottie/bookWritting.json',
+                              // ),
+                              Container(
+                                height: CommonThings.size.width * .4,
+                                width: CommonThings.size.width * .4,
+                                child: FlareActor(
+                                  'assets/flr/BookWritting.flr',
+                                  animation: 'Animations',
+                                ),
                               ),
                               Text(
                                 'Profile',
@@ -319,9 +328,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   // fontStyle: FontStyle.italic
                                 ),
                               ),
-                              SizedBox(
-                                height: CommonThings.size.width * .20,
-                              )
+                              // SizedBox(
+                              //   height: CommonThings.size.width * .20,
+                              // )
                             ],
                           ),
                         ),
@@ -520,51 +529,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   selectedItem: UserProfileData.versityName,
                                 ),
                               ),
-
-                              // Padding(
-                              //   padding: const EdgeInsets.all(8.0),
-                              //   //   // child: TextFormField(
-                              //   //   //   style: TextStyle(fontSize: 18),
-                              //   //   //   onChanged: (value) {
-                              //   //   //      UserProfileData.versityName = value;
-                              //   //   //   },
-                              //   //   //   onTap: () => gredianAlign(),
-                              //   //   //   decoration: kTextFieldDecoration.copyWith(
-                              //   //   //       prefixIcon: Icon(Icons.account_balance),
-                              //   //   //       labelText: 'University',
-                              //   //   //       hintText:
-                              //   //   //           'Abbreviation of your University name'),
-                              //   //   // ),
-                              //   child: Container(
-                              //     decoration: BoxDecoration(
-                              //         color: Colors.white,
-                              //         borderRadius: BorderRadius.circular(18),
-                              //         border: Border.all(
-                              //             color: Colors.purple, width: 4)),
-                              //     child: DropDownField(
-                              //       textStyle: TextStyle(fontSize: 18),
-                              //       itemsVisibleInDropdown: 4,
-                              //       // icon: Icon(Icons.account_balance),
-                              //       value: UserProfileData.versityName,
-                              //       required: true,
-
-                              //       labelText: 'University',
-                              //       hintText: 'If not listed, please Add',
-                              //       items: versity,
-
-                              //       onValueChanged: (value) {
-                              //         gredianAlign();
-                              //         if (value != 'Add your University') {
-                              //           UserProfileData.versityName = value;
-                              //           versityNameValidation = true;
-                              //         } else {
-                              //           addVersity();
-                              //         }
-                              //       },
-                              //     ),
-                              //   ),
-                              // ),
-
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: TextFormField(
@@ -706,7 +670,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       hintText: 'It\'s secured'),
                                 ),
                               ),
-
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: TextFormField(
@@ -826,12 +789,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               SizedBox(
                                 width: 8,
                               ),
-                              // RaisedButton(onPressed: () {
-                              //   Navigator.pushReplacement(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) => MainPage()));
-                              // })
                             ],
                           ),
                         ),

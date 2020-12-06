@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //   }
   // }
 
- void start() async {
+  void start() async {
     setState(() {
       animatee = 'Idle';
     });
@@ -70,21 +70,32 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
+      // backgroundColor: Color(0xffAf9884),
+      backgroundColor: Color(0xff001a54),
       body: Stack(
         overflow: Overflow.clip,
         children: [
           Positioned(
             top: 0,
             left: 0,
-            height: CommonThings.size.height * .80,
+            height: CommonThings.size.height * .82,
             width: CommonThings.size.width,
-            child: Material(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.elliptical(
-                      CommonThings.size.width, CommonThings.size.width * .30)),
-              color: Colors.lightBlue.shade700,
-              // color: Color(0xfff01a54),
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(-2, 3),
+                      blurRadius: 8,
+                      color: Color(0xaa000000))
+                ],
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.elliptical(CommonThings.size.width,
+                        CommonThings.size.width * .30)),
+                // color: Colors.lightBlue.shade700,
+                color: Color(0xffF0E4D4),
+                // color: Color(0xfff01a54),
+              ),
               child: FlareActor(
                 'assets/flr/BookGive.flr',
                 alignment: Alignment.topCenter,
@@ -108,8 +119,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                         : LoginScreen()
                                 : RegScreen()));
                     setState(() {
-                      animatee = 'Idle';
+                      animatee = 'Idle2';
                     });
+                  }
+                  if (value == 'Idle') {
+                    // print('Idle');
+                    if (FirebaseAuth.instance.currentUser != null &&
+                        UserProfileData.tmVersity != null)
+                      setState(() {
+                        navSignIn = true;
+                        animatee = 'Give';
+                      });
                   }
                 },
               ),
@@ -157,7 +177,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 Text(
                   'Welcome',
                   style: GoogleFonts.abrilFatface(
-                    color: Color(0xffffe066),
+                    // color: Color(0xffffe066),
+                    color: Color(0xff001a54),
                     fontSize: 48,
                     // fontWeight: FontWeight.w500,
                     // fontStyle: FontStyle.italic
@@ -165,7 +186,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Text(
                   'uBookSharing is a University based book sharing app',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  style: GoogleFonts.lora(
+                    // color: Colors.deepPurpleAccent.shade200,
+                    color: Color(0xff001a5f),
+                    fontSize: 18,
+                  ),
                 ),
                 // AnimatedIcon(
 
@@ -177,11 +202,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(
-                      0, 0, CommonThings.size.width * 0.3, 200),
+                      0,
+                      0,
+                      CommonThings.size.width * 0.3,
+                      CommonThings.size.height * .23),
                   child: RaisedButton(
                     // focusColor: Colors.pinkAccent.shade400,
 
                     // focusColor: Colors.pinkAccent.shade400,
+                    elevation: 0,
+
                     child: Text(
                       buttonMsg,
                       style: TextStyle(fontSize: 18, color: Colors.white),
