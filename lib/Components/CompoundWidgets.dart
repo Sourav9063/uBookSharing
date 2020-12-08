@@ -1003,6 +1003,30 @@ class CustomDrawer extends StatelessWidget {
                       ],
                     ),
                   ),
+                  //                   RaisedButton(
+                  //   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                  //   color: Color(0x00000000),
+                  //   shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(0)),
+                  //   onPressed: () {
+                  //    FirebaseAuth.instance.currentUser
+                  //   },
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.start,
+                  //     children: [
+                  //       Icon(
+                  //         Icons.account_circle_outlined,
+                  //         color: Colors.white,
+                  //         // size: 30,
+                  //       ),
+                  //       SizedBox(width: 18),
+                  //       Text(
+                  //         'Reset Password',
+                  //         style: kDrawerTextStyle,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   RaisedButton(
                     padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
                     color: Color(0x00000000),
@@ -1078,7 +1102,7 @@ class CustomDrawer extends StatelessWidget {
                         FirebaseAuth.instance.currentUser.email
                             .replaceAll(new RegExp(r'[^\w\s]+'), ''),
                       );
-                      
+
                       UserProfileData.tmVersity = null;
                       FirebaseAuth.instance.signOut();
                       Navigator.of(context).pushAndRemoveUntil(

@@ -528,7 +528,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                               );
 
                               bookImgLink = await UploadIMG().uploadRequstPic(
-                                  UserProfileData.email, UsableData.id);
+                                  UserProfileData.email, UsableData.id??UsableData.getSetMillisecondsId());
                               if (bookImgLink != null) {
                                 Scaffold.of(context).showSnackBar(
                                   SnackBar(

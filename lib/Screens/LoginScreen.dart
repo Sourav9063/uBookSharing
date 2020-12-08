@@ -144,6 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.white24,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
                       flex: 2,
@@ -153,6 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Colors.pinkAccent.shade400,
                         callback: (name) {
                           if (name == 'unlock') {
+                            UsableData.getSetMillisecondsId();
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -293,48 +295,53 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 50),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Expanded(
-                                  // duration: Duration(milliseconds: 200),
-                                  flex: 2,
-                                  child: RaisedButton(
-                                    // focusColor: Colors.pinkAccent.shade400,
+                            child: RaisedButton(
+                              // focusColor: Colors.pinkAccent.shade400,
 
-                                    // focusColor: Colors.pinkAccent.shade400,
+                              // focusColor: Colors.pinkAccent.shade400,
 
-                                    child: Center(
-                                      child: Text(
-                                        'Sign In',
-                                        style: GoogleFonts.aBeeZee(
-                                            fontSize: 18, color: Colors.white),
-                                      ),
-                                    ),
-
-                                    padding:
-                                        EdgeInsets.only(top: 15, bottom: 15),
-                                    onPressed: () {
-                                      FocusScope.of(context).unfocus();
-                                      setState(() {
-                                        aPEmail = 50;
-                                        aPPassword = 50;
-                                      });
-
-                                      bool isAlright =
-                                          _formKey.currentState.validate();
-                                      // print(auth.currentUser.uid);
-                                      // auth.currentUser.uid != null
-                                      //     ? signUn(_email, _password)
-                                      //     : verifiedCheck();
-                                      if (isAlright) signIn(_email, _password);
-                                    },
-                                  ),
+                              child: Center(
+                                child: Text(
+                                  'Sign In',
+                                  style: GoogleFonts.aBeeZee(
+                                      fontSize: 18, color: Colors.white),
                                 ),
-                              ],
+                              ),
+
+                              padding: EdgeInsets.only(top: 15, bottom: 15),
+                              onPressed: () {
+                                FocusScope.of(context).unfocus();
+                                setState(() {
+                                  aPEmail = 50;
+                                  aPPassword = 50;
+                                });
+
+                                bool isAlright =
+                                    _formKey.currentState.validate();
+                                // print(auth.currentUser.uid);
+                                // auth.currentUser.uid != null
+                                //     ? signUn(_email, _password)
+                                //     : verifiedCheck();
+                                if (isAlright) signIn(_email, _password);
+                              },
                             ),
                           ),
                         ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50.0, vertical: 10),
+                    child: TextButton(
+                      onPressed: () {
+                        // FirebaseAuth.instance.
+
+                      },
+                      child: Text(
+                        'Forgot password?',
+                        textScaleFactor: 1.1,
+                        style: TextStyle(color: Colors.red),
                       ),
                     ),
                   )
