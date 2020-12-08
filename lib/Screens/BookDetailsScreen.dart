@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
+import 'package:uBookSharing/Components/bluredDialog.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -349,42 +352,47 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                 ),
                                 onPressed: () {
                                   showDialog(
-                                      context: (context),
-                                      builder: (context) => AlertDialog(
-                                            backgroundColor:
-                                                Colors.red.shade300,
-                                            title: Text('Are you sure?'),
-                                            content: Text(
-                                                'You are about to delete your book'),
-                                            actions: [
-                                              TextButton(
-                                                  onPressed: () async {
-                                                    await GetBookData.bookDataDelete(
-                                                        widget.bookData.docId,
-                                                        widget.bookData.bookFor ==
-                                                                    'Buy' ||
-                                                                widget.bookData
-                                                                        .bookFor ==
-                                                                    'Rent'
-                                                            ? 'Requests'
-                                                            : 'AllBooks');
-                                                    await StorageSettings
-                                                        .deleteImage(widget
-                                                            .bookData
-                                                            .bookImgLink);
-                                                    Navigator.popUntil(
-                                                        context,
-                                                        ModalRoute.withName(
-                                                            "Foo"));
-                                                  },
-                                                  child: Text('Yes')),
-                                              TextButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Text('No')),
-                                            ],
-                                          ));
+                                    context: (context),
+                                    builder: (context) =>
+                                        // BlurredDialog(
+                                        //       height:
+                                        //           CommonThings.size.height * .4,
+                                        //       width:
+                                        //           CommonThings.size.width * .90,
+                                        //       blurColorWithOpacity:
+                                        //           Colors.white.withOpacity(.3),
+                                        //     )
+                                        AlertDialog(
+                                      backgroundColor: Colors.red.shade300,
+                                      title: Text("Are you sure?"),
+                                      content: Text(
+                                          'You are about to delete your book'),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () async {
+                                              await GetBookData.bookDataDelete(
+                                                  widget.bookData.docId,
+                                                  widget.bookData.bookFor ==
+                                                              'Buy' ||
+                                                          widget.bookData
+                                                                  .bookFor ==
+                                                              'Rent'
+                                                      ? 'Requests'
+                                                      : 'AllBooks');
+                                              await StorageSettings.deleteImage(
+                                                  widget.bookData.bookImgLink);
+                                              Navigator.popUntil(context,
+                                                  ModalRoute.withName("Foo"));
+                                            },
+                                            child: Text('Yes')),
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('No')),
+                                      ],
+                                    ),
+                                  );
                                 },
                               )
                             : Row(
