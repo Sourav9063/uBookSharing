@@ -330,19 +330,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 50.0, vertical: 10),
-                    child: TextButton(
-                      onPressed: () {
-                        // FirebaseAuth.instance.
-
-                      },
-                      child: Text(
-                        'Forgot password?',
-                        textScaleFactor: 1.1,
-                        style: TextStyle(color: Colors.red),
-                      ),
+                  TextButton(
+                    onPressed: () {
+                      // FirebaseAuth.instance.
+                    },
+                    child: Text(
+                      'Forgot password?',
+                      textScaleFactor: 1.1,
+                      style: TextStyle(color: Colors.red),
                     ),
                   )
                 ],

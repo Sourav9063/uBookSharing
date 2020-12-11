@@ -1,24 +1,10 @@
 import 'package:flutter/material.dart';
 
-// import 'package:google_fonts/google_fonts.dart';
+const kColorThemeAccent = Color(0xfffb8b24);
+const kColorNavyBlue = Color(0xff001a54);
+const kColorPink = Color(0xfff01a54);
 
-// const kMessageTextFieldDecoration = InputDecoration(
-
-//   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-//   hintText: 'Type your message here...',
-//   filled: true,
-//   fillColor: Colors.white,
-//   border:
-//       OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
-//   // focusedBorder: OutlineInputBorder(
-//   //   borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 4.0),
-//   //   borderRadius: BorderRadius.all(
-//   //     Radius.circular(50.0),
-//   //   ),
-//   // ),
-// );
-
-// const kButtonTextStyle = GoogleFonts.aBeeZee(fontSize: 18, color: Colors.white);
+const kDefaultWhiteTextStyle = TextStyle(color: Colors.white);
 
 const kMessageContainerDecoration = BoxDecoration(
     color: Color(0xfff85068),

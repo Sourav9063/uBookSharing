@@ -8,6 +8,7 @@ import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Components/bluredDialog.dart';
+import 'package:uBookSharing/Constants.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -352,47 +353,139 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                 ),
                                 onPressed: () {
                                   showDialog(
-                                    context: (context),
-                                    builder: (context) =>
-                                        // BlurredDialog(
-                                        //       height:
-                                        //           CommonThings.size.height * .4,
-                                        //       width:
-                                        //           CommonThings.size.width * .90,
-                                        //       blurColorWithOpacity:
-                                        //           Colors.white.withOpacity(.3),
-                                        //     )
-                                        AlertDialog(
-                                      backgroundColor: Colors.red.shade300,
-                                      title: Text("Are you sure?"),
-                                      content: Text(
-                                          'You are about to delete your book'),
-                                      actions: [
-                                        TextButton(
-                                            onPressed: () async {
-                                              await GetBookData.bookDataDelete(
-                                                  widget.bookData.docId,
-                                                  widget.bookData.bookFor ==
-                                                              'Buy' ||
-                                                          widget.bookData
-                                                                  .bookFor ==
-                                                              'Rent'
-                                                      ? 'Requests'
-                                                      : 'AllBooks');
-                                              await StorageSettings.deleteImage(
-                                                  widget.bookData.bookImgLink);
-                                              Navigator.popUntil(context,
-                                                  ModalRoute.withName("Foo"));
-                                            },
-                                            child: Text('Yes')),
-                                        TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text('No')),
-                                      ],
-                                    ),
-                                  );
+                                      // barrierColor: Colors.white12,
+                                      // child: Text('Hellow'),
+
+                                      context: (context),
+                                      builder: (context) => BlurredDialog(
+                                            height:
+                                                CommonThings.size.height * .2,
+                                            width:
+                                                CommonThings.size.width * .90,
+                                            blurColorWithOpacity:
+                                                Colors.white.withOpacity(.3),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'Are you sure',
+                                                      textScaleFactor: 1.4,
+                                                      style: GoogleFonts.lora(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                      '?',
+                                                      textScaleFactor: 1.45,
+                                                      style: GoogleFonts.lora(
+                                                          color: Colors.red,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Divider(
+                                                  color: Colors.white10,
+                                                  thickness: .5,
+                                                ),
+                                                Text(
+                                                  'You are about to delete your book.',
+                                                  textScaleFactor: 1.1,
+                                                  // style: GoogleFonts.lora(
+                                                  //   color: Colors.white,
+                                                  // ),
+                                                  style: kDefaultWhiteTextStyle,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    FlatButton(
+                                                        color: Colors.red,
+                                                        onPressed: () async {
+                                                          await GetBookData.bookDataDelete(
+                                                              widget.bookData
+                                                                  .docId,
+                                                              widget.bookData.bookFor ==
+                                                                          'Buy' ||
+                                                                      widget.bookData
+                                                                              .bookFor ==
+                                                                          'Rent'
+                                                                  ? 'Requests'
+                                                                  : 'AllBooks');
+                                                          await StorageSettings
+                                                              .deleteImage(widget
+                                                                  .bookData
+                                                                  .bookImgLink);
+                                                          Navigator.popUntil(
+                                                              context,
+                                                              ModalRoute
+                                                                  .withName(
+                                                                      "Foo"));
+                                                        },
+                                                        child: Text(
+                                                          'Yes',
+                                                          style:
+                                                              kDefaultWhiteTextStyle,
+                                                        )),
+                                                    SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    FlatButton(
+                                                        color: Colors.white38,
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child: Text(
+                                                          'No',
+                                                          style:
+                                                              kDefaultWhiteTextStyle,
+                                                        )),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          )
+                                      // AlertDialog(
+                                      //   backgroundColor: Colors.red.shade300,
+                                      //   title: Text("Are you sure?"),
+                                      //   content: Text(
+                                      //       'You are about to delete your book'),
+                                      //   actions: [
+                                      //     TextButton(
+                                      //         onPressed: () async {
+                                      //           await GetBookData.bookDataDelete(
+                                      //               widget.bookData.docId,
+                                      //               widget.bookData.bookFor ==
+                                      //                           'Buy' ||
+                                      //                       widget.bookData
+                                      //                               .bookFor ==
+                                      //                           'Rent'
+                                      //                   ? 'Requests'
+                                      //                   : 'AllBooks');
+                                      //           await StorageSettings.deleteImage(
+                                      //               widget.bookData.bookImgLink);
+                                      //           Navigator.popUntil(context,
+                                      //               ModalRoute.withName("Foo"));
+                                      //         },
+                                      //         child: Text('Yes')),
+                                      //     TextButton(
+                                      //         onPressed: () {
+                                      //           Navigator.pop(context);
+                                      //         },
+                                      //         child: Text('No')),
+                                      //   ],
+                                      // ),
+                                      );
                                 },
                               )
                             : Row(
@@ -475,54 +568,245 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                               showDialog(
                                                   context: (context),
                                                   builder:
-                                                      (context) => AlertDialog(
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .greenAccent,
-                                                            title: Text(
-                                                                'Are you sure?'),
-                                                            content: Text(widget
-                                                                    .bookData
-                                                                    .bookUploaderName +
-                                                                ' will receive a message containing your email, phone number and address.'),
-                                                            actions: [
-                                                              TextButton(
-                                                                  onPressed:
-                                                                      button
-                                                                          ? () async {
-                                                                              String response = widget.bookData.bookFor == 'Buy' || widget.bookData.bookFor == 'Rent' ? 'Hi ${widget.bookData.bookUploaderName},\nI\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' + 'You have requested for a book name \"${widget.bookData.bookName}\" to ${widget.bookData.bookFor.toLowerCase()}.\nI have the book' + '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}.' : 'Hi ${widget.bookData.bookUploaderName},\nI\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' + '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor.toLowerCase()} on ${UsableData.timestampToString(widget.bookData.bookTimeUpload)}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me.' + '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a mail or message containing your phone number and current address.';
+                                                      (context) =>
+                                                          BlurredDialog(
+                                                            height: CommonThings
+                                                                    .size
+                                                                    .height *
+                                                                .5,
+                                                            width: CommonThings
+                                                                    .size
+                                                                    .width *
+                                                                .90,
+                                                            blurColorWithOpacity:
+                                                                Colors.white
+                                                                    .withOpacity(
+                                                                        .3),
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceAround,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Expanded(
+                                                                  flex: 1,
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      Text(
+                                                                        'Are you sure',
+                                                                        textScaleFactor:
+                                                                            1.4,
+                                                                        style: GoogleFonts.lora(
+                                                                            color:
+                                                                                Colors.white,
+                                                                            fontWeight: FontWeight.bold),
+                                                                      ),
+                                                                      Text(
+                                                                        '?',
+                                                                        textScaleFactor:
+                                                                            1.45,
+                                                                        style: GoogleFonts.lora(
+                                                                            color:
+                                                                                Colors.red,
+                                                                            fontWeight: FontWeight.bold),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Divider(
+                                                                  color: Colors
+                                                                      .white10,
+                                                                  thickness: .5,
+                                                                ),
+                                                                Text(
+                                                                  widget.bookData
+                                                                          .bookUploaderName +
+                                                                      ' will receive the following message.',
+                                                                  textScaleFactor:
+                                                                      1.1,
+                                                                  // style: GoogleFonts.lora(
+                                                                  //   color: Colors.white,
+                                                                  // ),
+                                                                  style:
+                                                                      kDefaultWhiteTextStyle,
+                                                                ),
+                                                                Expanded(
+                                                                  flex: 3,
+                                                                  child:
+                                                                      SingleChildScrollView(
+                                                                    physics:
+                                                                        BouncingScrollPhysics(),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              8.0),
+                                                                      child:
+                                                                          Text(
+                                                                        widget.bookData.bookFor == 'Buy' || widget.bookData.bookFor == 'Rent'
+                                                                            ? '\"Hi ${widget.bookData.bookUploaderName},\nI\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
+                                                                                'You have requested for a book name \"${widget.bookData.bookName}\" to ${widget.bookData.bookFor.toLowerCase()}.\nI have the book' +
+                                                                                '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}.'
+                                                                            : '\"Hi ${widget.bookData.bookUploaderName},\nI\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
+                                                                                '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor.toLowerCase()} on ${UsableData.timestampToString(widget.bookData.bookTimeUpload)}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me.' +
+                                                                                '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a mail or message containing your phone number and current address.\"',
+                                                                        style: kDefaultWhiteTextStyle.copyWith(
+                                                                            color:
+                                                                                Colors.white70),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    FlatButton(
+                                                                        color: Colors
+                                                                            .blueAccent
+                                                                            .shade700,
+                                                                        onPressed: button
+                                                                            ? () async {
+                                                                                String response = widget.bookData.bookFor == 'Buy' || widget.bookData.bookFor == 'Rent' ? 'Hi ${widget.bookData.bookUploaderName},\nI\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' + 'You have requested for a book name \"${widget.bookData.bookName}\" to ${widget.bookData.bookFor.toLowerCase()}.\nI have the book' + '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}.' : 'Hi ${widget.bookData.bookUploaderName},\nI\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' + '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor.toLowerCase()} on ${UsableData.timestampToString(widget.bookData.bookTimeUpload)}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me.' + '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a mail or message containing your phone number and current address.';
 
-                                                                              String responseFor = widget.bookData.bookFor == 'Buy' || widget.bookData.bookFor == 'Rent' ? 'Response to request' : 'Interested about your book';
+                                                                                String responseFor = widget.bookData.bookFor == 'Buy' || widget.bookData.bookFor == 'Rent' ? 'Response to request' : 'Interested about your book';
 
-                                                                              Map<String, dynamic> map = {
-                                                                                AllKeys.emailKey: UserProfileData.email,
-                                                                                AllKeys.phnNumKey: UserProfileData.phoneNum,
-                                                                                AllKeys.profilePicLinkKey: UserProfileData.profilePicLink,
-                                                                                AllKeys.bookForKey: widget.bookData.bookFor,
-                                                                                AllKeys.bookDesKey: response,
-                                                                                'To': widget.bookData.bookUploaderEmail.replaceAll(new RegExp(r'[^\w\s]+'), ''),
-                                                                                'SentKey': DateTime.now(),
-                                                                                'Response For': responseFor,
-                                                                                'Name': UserProfileData.name,
-                                                                              };
-                                                                              await Interactions.writeMsg(widget.bookData.bookUploaderEmail, map);
+                                                                                Map<String, dynamic> map = {
+                                                                                  AllKeys.emailKey: UserProfileData.email,
+                                                                                  AllKeys.phnNumKey: UserProfileData.phoneNum,
+                                                                                  AllKeys.profilePicLinkKey: UserProfileData.profilePicLink,
+                                                                                  AllKeys.bookForKey: widget.bookData.bookFor,
+                                                                                  AllKeys.bookDesKey: response,
+                                                                                  'To': widget.bookData.bookUploaderEmail.replaceAll(new RegExp(r'[^\w\s]+'), ''),
+                                                                                  'SentKey': DateTime.now(),
+                                                                                  'Response For': responseFor,
+                                                                                  'Name': UserProfileData.name,
+                                                                                };
+                                                                                await Interactions.writeMsg(widget.bookData.bookUploaderEmail, map);
 
-                                                                              buttonState();
-                                                                              Navigator.pop(context);
-                                                                            }
-                                                                          : null,
-                                                                  child: Text(
-                                                                      'Yes')),
-                                                              TextButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  },
-                                                                  child: Text(
-                                                                      'No')),
-                                                            ],
-                                                          ));
+                                                                                buttonState();
+                                                                                Navigator.pop(context);
+                                                                              }
+                                                                            : null,
+                                                                        child: Text(
+                                                                          'Yes',
+                                                                          style:
+                                                                              kDefaultWhiteTextStyle,
+                                                                        )),
+                                                                    SizedBox(
+                                                                      width: 8,
+                                                                    ),
+                                                                    FlatButton(
+                                                                        color: Colors
+                                                                            .white38,
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        },
+                                                                        child:
+                                                                            Text(
+                                                                          'No',
+                                                                          style:
+                                                                              kDefaultWhiteTextStyle,
+                                                                        )),
+                                                                  ],
+                                                                )
+                                                              ],
+                                                            ),
+                                                          )
+
+                                                  //     AlertDialog(
+                                                  //   backgroundColor:
+                                                  //       Colors.greenAccent,
+                                                  //   title: Text('Are you sure?'),
+                                                  // content: Text(widget.bookData
+                                                  //         .bookUploaderName +
+                                                  //     ' will receive a message containing your email, phone number and address.'),
+                                                  //   actions: [
+                                                  //     TextButton(
+                                                  //         onPressed: button
+                                                  //             ? () async {
+                                                  //                 String response = widget.bookData.bookFor ==
+                                                  //                             'Buy' ||
+                                                  //                         widget.bookData.bookFor ==
+                                                  //                             'Rent'
+                                                  //                     ? 'Hi ${widget.bookData.bookUploaderName},\nI\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
+                                                  //                         'You have requested for a book name \"${widget.bookData.bookName}\" to ${widget.bookData.bookFor.toLowerCase()}.\nI have the book' +
+                                                  //                         '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}.'
+                                                  //                     : 'Hi ${widget.bookData.bookUploaderName},\nI\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
+                                                  //                         '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor.toLowerCase()} on ${UsableData.timestampToString(widget.bookData.bookTimeUpload)}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me.' +
+                                                  //                         '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a mail or message containing your phone number and current address.';
+
+                                                  //                 String responseFor = widget.bookData.bookFor ==
+                                                  //                             'Buy' ||
+                                                  //                         widget.bookData.bookFor ==
+                                                  //                             'Rent'
+                                                  //                     ? 'Response to request'
+                                                  //                     : 'Interested about your book';
+
+                                                  //                 Map<String,
+                                                  //                         dynamic>
+                                                  //                     map = {
+                                                  //                   AllKeys.emailKey:
+                                                  //                       UserProfileData
+                                                  //                           .email,
+                                                  //                   AllKeys.phnNumKey:
+                                                  //                       UserProfileData
+                                                  //                           .phoneNum,
+                                                  //                   AllKeys.profilePicLinkKey:
+                                                  //                       UserProfileData
+                                                  //                           .profilePicLink,
+                                                  //                   AllKeys.bookForKey:
+                                                  //                       widget
+                                                  //                           .bookData
+                                                  //                           .bookFor,
+                                                  //                   AllKeys.bookDesKey:
+                                                  //                       response,
+                                                  //                   'To': widget
+                                                  //                       .bookData
+                                                  //                       .bookUploaderEmail
+                                                  //                       .replaceAll(
+                                                  //                           new RegExp(
+                                                  //                               r'[^\w\s]+'),
+                                                  //                           ''),
+                                                  //                   'SentKey':
+                                                  //                       DateTime
+                                                  //                           .now(),
+                                                  //                   'Response For':
+                                                  //                       responseFor,
+                                                  //                   'Name':
+                                                  //                       UserProfileData
+                                                  //                           .name,
+                                                  //                 };
+                                                  //                 await Interactions
+                                                  //                     .writeMsg(
+                                                  //                         widget
+                                                  //                             .bookData
+                                                  //                             .bookUploaderEmail,
+                                                  //                         map);
+
+                                                  //                 buttonState();
+                                                  //                 Navigator.pop(
+                                                  //                     context);
+                                                  //               }
+                                                  //             : null,
+                                                  //         child: Text('Yes'),),
+                                                  //     TextButton(
+                                                  //         onPressed: () {
+                                                  //           Navigator.pop(
+                                                  //               context);
+                                                  //         },
+                                                  //         child: Text('No')),
+                                                  //   ],
+                                                  // ),
+                                                  );
                                             }
                                           : null,
                                     ),
