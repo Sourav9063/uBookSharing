@@ -30,6 +30,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   final _versityName = GlobalKey<FormState>();
   bool imgAdded = false;
   bool validated = false;
+
   // bool versityNameValidation = false;
   getVersityList() async {
     await FirebaseFirestore.instance
@@ -192,7 +193,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 },
                                 decoration: kTextFieldDecoration.copyWith(
                                   labelText: 'University',
-                                  hintText: 'Enter full name',
+                                  hintText: UserProfileData.versityName ??
+                                      'Enter full name',
                                 ),
                               ),
                             ),
@@ -351,7 +353,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               await UploadIMG().getUserPic();
                               final link = await UploadIMG().uploadUserPic(
                                   FirebaseAuth.instance.currentUser.email,
-                                  UsableData.id??UsableData.getSetMillisecondsId());
+                                  UsableData.id ??
+                                      UsableData.getSetMillisecondsId());
 
                               await FirebaseAuth.instance.currentUser
                                   .updateProfile(photoURL: link);
@@ -552,7 +555,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   decoration: kTextFieldDecoration.copyWith(
                                       prefixIcon: Icon(Icons.account_circle),
                                       labelText: 'Name',
-                                      hintText: 'Use your real name'),
+                                      hintText: UserProfileData.name ??
+                                          'Use your real name'),
                                 ),
                               ),
                               Row(
@@ -588,7 +592,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                                 prefixIcon:
                                                     Icon(Icons.calendar_today),
                                                 labelText: 'Year',
-                                                hintText: 'Admission year'),
+                                                hintText:
+                                                    UserProfileData.admitted ??
+                                                        'Admission year'),
                                       ),
                                     ),
                                   ),
@@ -615,7 +621,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                                 prefixIcon: Icon(Icons
                                                     .supervised_user_circle),
                                                 labelText: 'Department',
-                                                hintText: 'Abbreviation'),
+                                                hintText:
+                                                    UserProfileData.dept ??
+                                                        'Abbreviation'),
                                       ),
                                     ),
                                   ),
@@ -641,7 +649,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   decoration: kTextFieldDecoration.copyWith(
                                       prefixIcon: Icon(Icons.account_circle),
                                       labelText: 'Registration',
-                                      hintText: 'Enter your registration No'),
+                                      hintText:
+                                          UserProfileData.registrationNo ??
+                                              'Enter your registration No'),
                                 ),
                               ),
                               Padding(
@@ -667,7 +677,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   decoration: kTextFieldDecoration.copyWith(
                                       prefixIcon: Icon(Icons.phone),
                                       labelText: 'Phone',
-                                      hintText: 'It\'s secured'),
+                                      hintText: UserProfileData.phoneNum ??
+                                          'It\'s secured'),
                                 ),
                               ),
                               Padding(
@@ -693,7 +704,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   decoration: kTextFieldDecoration.copyWith(
                                       prefixIcon: Icon(Icons.home),
                                       labelText: 'Address',
-                                      hintText: 'Use your current location'),
+                                      hintText: UserProfileData.address ??
+                                          'Use your current location'),
                                 ),
                               ),
                               Padding(
