@@ -5,10 +5,11 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+// import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
+import 'package:uBookSharing/Components/ModalPeogressHub.dart';
 import 'package:uBookSharing/Components/Search.dart';
 import 'package:uBookSharing/Components/favCustom.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
