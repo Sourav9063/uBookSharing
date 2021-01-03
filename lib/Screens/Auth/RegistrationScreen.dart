@@ -12,7 +12,7 @@ import 'package:uBookSharing/Components/ModalPeogressHub.dart';
 
 import 'package:uBookSharing/Constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uBookSharing/Screens/ProfileEditScreen.dart';
+import 'package:uBookSharing/Screens/Auth/ProfileEditScreen.dart';
 
 class RegScreen extends StatefulWidget {
   RegScreen({Key key}) : super(key: key);

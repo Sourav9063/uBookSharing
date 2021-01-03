@@ -15,7 +15,7 @@ import 'package:uBookSharing/Screens/BookDetailsScreen.dart';
 import 'package:uBookSharing/Screens/Homepage.dart';
 import 'package:uBookSharing/Screens/InteractionsScreen.dart';
 
-import 'package:uBookSharing/Screens/ProfileEditScreen.dart';
+import 'package:uBookSharing/Screens/Auth/ProfileEditScreen.dart';
 
 class BookImg extends StatelessWidget {
   final String imglink;

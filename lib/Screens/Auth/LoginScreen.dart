@@ -10,11 +10,12 @@ import 'package:uBookSharing/BackEnd/FireBase.dart';
 // import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Components/ModalPeogressHub.dart';
+import 'package:uBookSharing/Components/bluredDialog.dart';
 // import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Constants.dart';
 import 'package:uBookSharing/Screens/MainScreenNew.dart';
 
-import 'package:uBookSharing/Screens/ProfileEditScreen.dart';
+import 'package:uBookSharing/Screens/Auth/ProfileEditScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -34,6 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   FirebaseAuth auth = FirebaseAuth.instance;
+
+  String passMsg = 'Forgot password?';
 
   spinnerState(bool value) {
     setState(() {
@@ -333,12 +336,82 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextButton(
                     onPressed: () {
-                      // FirebaseAuth.instance.
+                      showDialog(
+                          context: (context),
+                          builder: (context) => BlurredDialog(
+                                height: CommonThings.size.height * .35,
+                                width: CommonThings.size.width * .8,
+                                child: Column(
+                                  // crossAxisAlignment:
+                                  //     CrossAxisAlignment.stretch,
+                                  // mainAxisAlignment:
+                                  //     MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Expanded(
+                                      child: Center(
+                                          child: Text(
+                                        "Reset Password",
+                                        textScaleFactor: 1.5,
+                                        style: GoogleFonts.abrilFatface(
+                                          color: Color(0xff001a54),
+                                        ),
+                                      )),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        'To reset password enter your account\'s email. An email will be send to you with a link to set new password.',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    TextFormField(
+                                      keyboardType: TextInputType.emailAddress,
+                                      textAlign: TextAlign.center,
+                                      onChanged: (value) {
+                                        _email = value;
+                                      },
+                                      decoration: kTextFieldDecoration.copyWith(
+                                          hintText: 'Enter your email',
+                                          labelText: 'Email'),
+                                    ),
+                                    RaisedButton(
+                                      onPressed: () async {
+                                        try {
+                                          await FirebaseAuth.instance
+                                              .sendPasswordResetEmail(
+                                                  email: _email);
+                                          setState(() {
+                                            passMsg =
+                                                "Email sent. Check your inbox.";
+                                          });
+                                          Navigator.pop(context);
+                                        } catch (e) {
+                                          print(e.toString());
+                                          Navigator.pop(context);
+                                          setState(() {
+                                            passMsg = "An error occured.";
+                                          });
+                                        }
+                                      },
+                                      child: Text(
+                                        "Send Email",
+                                        style: TextStyle(
+                                          color: Color(0xffffffff),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ));
                     },
                     child: Text(
-                      'Forgot password?',
+                      passMsg,
                       textScaleFactor: 1.1,
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(
+                          color: Colors.red,
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.bold),
                     ),
                   )
                 ],

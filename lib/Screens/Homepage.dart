@@ -5,11 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 
-import 'package:uBookSharing/Screens/LoginScreen.dart';
+import 'package:uBookSharing/Screens/Auth/LoginScreen.dart';
 import 'package:uBookSharing/Screens/MainScreenNew.dart';
-import 'package:uBookSharing/Screens/RegistrationScreen.dart';
+import 'package:uBookSharing/Screens/Auth/RegistrationScreen.dart';
 // import 'package:uBookSharing/Screens/MainScreen.dart';
-import 'package:uBookSharing/Screens/ProfileEditScreen.dart';
+import 'package:uBookSharing/Screens/Auth/ProfileEditScreen.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
