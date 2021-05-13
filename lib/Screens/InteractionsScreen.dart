@@ -10,7 +10,7 @@ import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InteractionsScreen extends StatefulWidget {
-  InteractionsScreen({Key key}) : super(key: key);
+  InteractionsScreen({Key? key}) : super(key: key);
 
   @override
   _InteractionsScreenState createState() => _InteractionsScreenState();
@@ -25,11 +25,11 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
         backgroundColor: Color(0x00000000),
       ),
       backgroundColor: Color(0xff3f1A54),
-      body: StreamBuilder(
-        stream: Interactions.getMsgStream(UserProfileData.email),
+      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+        stream: Interactions.getMsgStream(UserProfileData.email!),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data.documents.length == 0) {
+            if (snapshot.data!.docs.length == 0) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
@@ -60,9 +60,9 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
             }
             return ListView.builder(
               physics: BouncingScrollPhysics(),
-              itemCount: snapshot.data.documents.length,
+              itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
-                var dataSnapshot = snapshot.data.documents[index];
+                var dataSnapshot = snapshot.data!.docs[index];
                 Timestamp timestamp = dataSnapshot['SentKey'];
                 return Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -85,7 +85,8 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
                                   Clipboard.setData(ClipboardData(
                                       text: dataSnapshot[AllKeys.phnNumKey]));
 
-                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
                                     backgroundColor: Colors.green,
                                     content: Text(
                                         'Phone number copied to clipboard'),
@@ -106,7 +107,8 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
                                   Clipboard.setData(ClipboardData(
                                       text: dataSnapshot[AllKeys.emailKey]));
 
-                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
                                     backgroundColor: Colors.blueAccent.shade700,
                                     content: Text(
                                         'Email address copied to clipboard'),
@@ -118,9 +120,9 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
                                   color: Colors.red,
                                 ),
                                 onPressed: () async {
-                                  String id = dataSnapshot.reference.id;
+                                  String? id = dataSnapshot.reference.id;
                                   await Interactions.deleteDocWithId(
-                                      UserProfileData.email, id);
+                                      UserProfileData.email!, id);
                                   setState(() {});
                                 })
                           ],

@@ -22,9 +22,8 @@ class SearchPageTest extends SearchDelegate {
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    assert(context != null);
     final ThemeData theme = Theme.of(context);
-    assert(theme != null);
+
     return theme.copyWith(
         primaryColor: Color(0xfff01a54),
         primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.white),
@@ -55,9 +54,9 @@ class SearchPageTest extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     // throw UnimplementedError();
 
-    var tmpList = query == null || query == ''
-        ? GetBookData.bookNameList
-        : GetBookData.bookNameList
+    var tmpList = query == ''
+        ? GetBookData.bookNameList!
+        : GetBookData.bookNameList!
             .where((element) =>
                 element.toString().toLowerCase().contains(query.toLowerCase()))
             .toList();
@@ -85,7 +84,7 @@ class SearchPageTest extends SearchDelegate {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       onPressed: () async {
                         var data = await GetBookData.bookDataGrSearch(
                             AllKeys.bookNameKey, query);
@@ -121,6 +120,7 @@ class SearchPageTest extends SearchDelegate {
                       title: Text(
                         tmpList[index],
                         overflow: TextOverflow.fade,
+                        style: TextStyle(color: Colors.black),
                       ),
                       onTap: () async {
                         print(tmpList[index]);

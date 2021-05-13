@@ -9,19 +9,19 @@ import 'package:uBookSharing/BackEnd/UploadIMG.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
 
 class AddRequestScreen extends StatefulWidget {
-  AddRequestScreen({Key key}) : super(key: key);
+  AddRequestScreen({Key? key}) : super(key: key);
 
   @override
   _AddRequestScreenState createState() => _AddRequestScreenState();
 }
 
 class _AddRequestScreenState extends State<AddRequestScreen> {
-  String bookImgLink;
+  String? bookImgLink;
 
   //     UserProfileData.email + UserProfileData.uploadedBookNo.toString();
   bool ignore = true;
   bool visible = true;
-  bool agree = false;
+  bool? agree = false;
   bool valdated = false;
   double picHeight = CommonThings.size.height * .60 + 20;
   double formTop = CommonThings.size.height * .60;
@@ -44,7 +44,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
     });
   }
 
-  ScrollController controller;
+  late ScrollController controller;
   scrlLstnr() {
     // print(controller.offset);
     if (controller.offset > 15) {
@@ -252,7 +252,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                           onTap: () {
                                             riseForm();
                                           },
-                                          validator: (value) {
+                                          validator: (dynamic value) {
                                             if (value == null)
                                               return 'This field cannot be empty';
                                             return null;
@@ -301,7 +301,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                               value: 'Rent',
                                             ),
                                           ],
-                                          onChanged: (value) {
+                                          onChanged: (dynamic value) {
                                             setState(() {
                                               bookData.bookFor = value;
                                               if (value == 'Buy') {
@@ -437,21 +437,25 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                   AnimatedOpacity(
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.easeInCubic,
-                                    opacity: agree ? 1 : 0,
+                                    opacity: agree! ? 1 : 0,
                                     child: Visibility(
-                                      visible: agree,
-                                      child: RaisedButton(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 12),
+                                      visible: agree!,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 12),
+                                        ),
                                         onPressed: () {
                                           FocusScope.of(context).unfocus();
                                           setState(() {
-                                            valdated = _formKeyBook.currentState
+                                            valdated = _formKeyBook
+                                                .currentState!
                                                 .validate();
                                           });
 
                                           if (valdated && bookImgLink == null) {
-                                            Scaffold.of(context).showSnackBar(
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
                                               SnackBar(
                                                 content: Text(
                                                     'Please upload an Image'),
@@ -469,7 +473,8 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                                             });
                                           }
                                           if (valdated && bookImgLink != null) {
-                                            Scaffold.of(context).showSnackBar(
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
                                               SnackBar(
                                                 backgroundColor: Colors.green,
                                                 content: Text(
@@ -520,7 +525,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                             FocusScope.of(context).unfocus();
                             try {
                               await UploadIMG().getUserPic();
-                              Scaffold.of(context).showSnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   duration: Duration(seconds: 1),
                                   content: Text('Image Uploading'),
@@ -528,9 +533,11 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                               );
 
                               bookImgLink = await UploadIMG().uploadRequstPic(
-                                  UserProfileData.email, UsableData.id??UsableData.getSetMillisecondsId());
+                                  UserProfileData.email!,
+                                  UsableData.id ??
+                                      UsableData.getSetMillisecondsId());
                               if (bookImgLink != null) {
-                                Scaffold.of(context).showSnackBar(
+                                ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     backgroundColor: Colors.teal.shade800,
                                     content:
@@ -544,7 +551,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                               });
                               bookData.bookImgLink = bookImgLink;
                             } catch (e) {
-                              Scaffold.of(context).showSnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   // width: CommonThings.size.width * .1,
                                   backgroundColor: Colors.redAccent.shade700,
@@ -584,11 +591,11 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                       ? () async {
                           FocusScope.of(context).unfocus();
                           if (bookData.bookPrice != null)
-                            bookData.bookPrice = bookData.bookPrice + ' Taka';
+                            bookData.bookPrice = bookData.bookPrice! + ' Taka';
                           // print(   bookData.bookName);
                           try {
                             await FirebaseFirestore.instance
-                                .collection(UserProfileData.tmVersity)
+                                .collection(UserProfileData.tmVersity!)
                                 .doc('AllBooks')
                                 .collection('Requests')
                                 .doc()
@@ -616,7 +623,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
 
                             // String msg = await GetUserData.setUploadedBookNo();
                             // print(msg);
-                            Scaffold.of(context).showSnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 // width: CommonThings.size.width * .1,
                                 backgroundColor: Colors.teal.shade800,
@@ -636,7 +643,7 @@ class _AddRequestScreenState extends State<AddRequestScreen> {
                             //     ),
                             //     (Route<dynamic> route) => false);
                           } catch (e) {
-                            Scaffold.of(context).showSnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 // width: CommonThings.size.width * .1,
                                 backgroundColor: Colors.redAccent.shade700,

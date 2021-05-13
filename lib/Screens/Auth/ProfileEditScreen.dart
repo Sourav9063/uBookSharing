@@ -18,7 +18,7 @@ import 'package:uBookSharing/Constants.dart';
 import 'package:uBookSharing/Screens/MainScreenNew.dart';
 
 class ProfileEditScreen extends StatefulWidget {
-  ProfileEditScreen({Key key}) : super(key: key);
+  ProfileEditScreen({Key? key}) : super(key: key);
 
   @override
   _ProfileEditScreenState createState() => _ProfileEditScreenState();
@@ -54,13 +54,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   upLoadData() async {
     // print(UserLogInData.uid);
     UserProfileData.tmVersity =
-        UserProfileData.versityName.replaceAll(' ', '').trim().toUpperCase();
-    UserProfileData.uid = FirebaseAuth.instance.currentUser.uid;
+        UserProfileData.versityName!.replaceAll(' ', '').trim().toUpperCase();
+    UserProfileData.uid = FirebaseAuth.instance.currentUser!.uid;
 
     try {
       await FirebaseFirestore.instance
           .collection(AllKeys.userCollectionKey)
-          .doc(FirebaseAuth.instance.currentUser.email)
+          .doc(FirebaseAuth.instance.currentUser!.email)
           .set(UserProfileData.getMap());
 
       Navigator.pushReplacement(
@@ -144,8 +144,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
             });
   }
 
-  String addversity;
-  String tmAddversity;
+  String? addversity;
+  String? tmAddversity;
   addVersity() {
     showModalBottomSheet(
         context: context,
@@ -203,13 +203,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             '*This app is based on community. So, use the full name of your University which is known by all.\nWe will check and your ID will be banned if we find any duplicate or hoax name...',
                             style: TextStyle(color: Colors.red),
                           ),
-                          RaisedButton(
+                          ElevatedButton(
                             onPressed: () async {
                               tmAddversity =
-                                  addversity.toUpperCase().replaceAll(' ', '');
+                                  addversity!.toUpperCase().replaceAll(' ', '');
                               // print(tmAddversity);
                               await checkVersity();
-                              bool vali = _versityName.currentState.validate();
+                              bool vali = _versityName.currentState!.validate();
 
                               if (vali) {
                                 await FirebaseFirestore.instance
@@ -219,7 +219,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   'Name': addversity,
                                   'TUname': tmAddversity,
                                   'AddedBy':
-                                      FirebaseAuth.instance.currentUser.email
+                                      FirebaseAuth.instance.currentUser!.email
                                 });
                                 // Navigator.pushReplacement(
                                 //     context,
@@ -245,7 +245,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
   isProfileComplete() async {
     String val =
-        await GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
+        await GetUserData.getUserData(FirebaseAuth.instance.currentUser!.email);
     if (val == 'done') {
       Navigator.pushReplacement(
           context,
@@ -264,7 +264,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       getVersityList();
       versity.add('Add your University');
       UserProfileData.profilePicLink =
-          FirebaseAuth.instance.currentUser.photoURL;
+          FirebaseAuth.instance.currentUser!.photoURL;
     });
   }
 
@@ -352,25 +352,25 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             try {
                               await UploadIMG().getUserPic();
                               final link = await UploadIMG().uploadUserPic(
-                                  FirebaseAuth.instance.currentUser.email,
+                                  FirebaseAuth.instance.currentUser!.email!,
                                   UsableData.id ??
                                       UsableData.getSetMillisecondsId());
 
-                              await FirebaseAuth.instance.currentUser
+                              await FirebaseAuth.instance.currentUser!
                                   .updateProfile(photoURL: link);
                               // FirebaseAuth.instance.currentUser.updateProfile(displayName: );
                               setState(() {
                                 UserProfileData.profilePicLink = link;
                                 imgAdded = true;
                               });
-                              Scaffold.of(context).showSnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   backgroundColor: Colors.teal.shade800,
                                   content: Text('Image Uploaded Successfully'),
                                 ),
                               );
                             } catch (e) {
-                              Scaffold.of(context).showSnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   backgroundColor: Colors.red,
                                   content:
@@ -429,8 +429,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             width: 4,
                           ),
                           Expanded(
-                            child: RaisedButton(
-                              color: Colors.purple.shade900,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.purple.shade900,
+                              ),
                               onPressed: () {
                                 addVersity();
                               },
@@ -471,35 +473,37 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: DropdownSearch<String>(
-                                  popupTitle: Center(
-                                      child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'Listed University',
-                                          style: GoogleFonts.abrilFatface(
-                                            fontSize: 30,
-                                          ),
-                                        ),
-                                        RaisedButton(
-                                          onPressed: () {
-                                            addVersity();
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 8),
-                                            child: Text(
-                                              'Add Your University',
-                                              style: GoogleFonts.aBeeZee(
-                                                  fontSize: 14,
-                                                  color: Colors.white),
+                                  popupTitle: Material(
+                                                                      child: Center(
+                                        child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            'Listed University',
+                                            style: GoogleFonts.abrilFatface(
+                                              fontSize: 30,
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  )),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              addVersity();
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  vertical: 8),
+                                              child: Text(
+                                                'Add Your University',
+                                                style: GoogleFonts.aBeeZee(
+                                                    fontSize: 14,
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                                  ),
                                   mode: Mode.BOTTOM_SHEET,
                                   popupShape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(16)),
@@ -548,7 +552,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   },
                                   onChanged: (value) {
                                     UserProfileData.name = value;
-                                    FirebaseAuth.instance.currentUser
+                                    FirebaseAuth.instance.currentUser!
                                         .updateProfile(displayName: value);
                                   },
                                   onTap: () => gredianAlign(),
@@ -726,20 +730,21 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   children: [
                                     Expanded(
                                       flex: 2,
-                                      child: RaisedButton(
+                                      child: ElevatedButton(
                                         onPressed: () {
                                           FocusScope.of(context).unfocus();
                                           UserProfileData.email = FirebaseAuth
-                                              .instance.currentUser.email;
+                                              .instance.currentUser!.email;
                                           gredianAlign();
                                           setState(() {
-                                            validated = _formKey.currentState
+                                            validated = _formKey.currentState!
                                                 .validate();
                                           });
                                           if (validated &&
                                               UserProfileData.profilePicLink ==
                                                   null) {
-                                            Scaffold.of(context).showSnackBar(
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
                                               SnackBar(
                                                 backgroundColor:
                                                     Colors.teal.shade800,
@@ -772,8 +777,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                                   null
                                           ? 2
                                           : 1,
-                                      child: RaisedButton(
-                                        color: Colors.green,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.green,
+                                        ),
                                         onPressed: validated &&
                                                 UserProfileData
                                                         .profilePicLink !=

@@ -15,7 +15,7 @@ import 'package:url_launcher/url_launcher.dart';
 class BookDetailsScreen extends StatefulWidget {
   final BookData bookData;
 
-  const BookDetailsScreen({Key key, @required this.bookData}) : super(key: key);
+  const BookDetailsScreen({Key? key, required this.bookData}) : super(key: key);
   @override
   _BookDetailsScreenState createState() => _BookDetailsScreenState();
 }
@@ -34,7 +34,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
   void smallPic() {
     setState(() {
       picHeight = CommonThings.size.height -
-          _bottomCard.currentContext.size.height * 1.1;
+          _bottomCard.currentContext!.size!.height * 1.1;
       // picHeight = 0;
     });
   }
@@ -127,7 +127,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                 child: FittedBox(
                                   fit: BoxFit.fitWidth,
                                   child: Text(
-                                    widget.bookData.bookName,
+                                    widget.bookData.bookName!,
                                     style: GoogleFonts.abrilFatface(
                                       color: Color(0xffFFFFFF),
                                       fontSize: 26,
@@ -141,7 +141,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                 child: FittedBox(
                                   fit: BoxFit.fitWidth,
                                   child: Text(
-                                    widget.bookData.bookWriter,
+                                    widget.bookData.bookWriter!,
                                     style: GoogleFonts.sacramento(
                                       color: Color(0xffFFFFFF),
                                       fontSize: 24,
@@ -176,8 +176,8 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                       ? Text(
                                           'Uploaded: ' +
                                               UsableData.timestampToString(
-                                                  widget
-                                                      .bookData.bookTimeUpload),
+                                                  widget.bookData
+                                                      .bookTimeUpload!),
                                           style: TextStyle(
                                             color: Color(0xffFFFFFF),
                                             fontSize: 16,
@@ -187,7 +187,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                       : Text(
                                           'Added: ' +
                                               widget.bookData
-                                                  .bookTimeUploadString,
+                                                  .bookTimeUploadString!,
                                           style: TextStyle(
                                             color: Color(0xffFFFFFF),
                                             fontSize: 16,
@@ -202,7 +202,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(4.0),
                                         child: Text(
-                                          widget.bookData.bookDes,
+                                          widget.bookData.bookDes!,
                                           style: TextStyle(
                                             color: Color(0xffFFFFFF),
                                           ),
@@ -252,7 +252,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                   child: FittedBox(
                                     fit: BoxFit.fitWidth,
                                     child: Text(
-                                      widget.bookData.bookUploaderName,
+                                      widget.bookData.bookUploaderName!,
                                       style: GoogleFonts.lora(
                                           color: Colors.white,
                                           fontSize: 20,
@@ -271,7 +271,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                       fit: BoxFit.fitWidth,
                                       child: SelectableText(
                                         'Email: ' +
-                                            widget.bookData.bookUploaderEmail,
+                                            widget.bookData.bookUploaderEmail!,
                                         // textScaleFactor: 1,
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 18),
@@ -289,7 +289,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                               text: widget
                                                   .bookData.bookUploaderEmail));
 
-                                          Scaffold.of(context)
+                                          ScaffoldMessenger.of(context)
                                               .showSnackBar(SnackBar(
                                             backgroundColor:
                                                 Colors.blueAccent.shade700,
@@ -307,7 +307,8 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                 child: FittedBox(
                                   fit: BoxFit.fitWidth,
                                   child: Text(
-                                    'Dept: ' + widget.bookData.bookUploaderDept,
+                                    'Dept: ' +
+                                        widget.bookData.bookUploaderDept!,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,
@@ -335,13 +336,15 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                         SizedBox(
                           height: 2,
                         ),
-                        FirebaseAuth.instance.currentUser.email ==
+                        FirebaseAuth.instance.currentUser!.email ==
                                 widget.bookData.bookUploaderEmail
-                            ? RaisedButton(
-                                padding: EdgeInsets.symmetric(vertical: 14),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16)),
-                                elevation: 10,
+                            ? ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.symmetric(vertical: 14),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16)),
+                                  elevation: 10,
+                                ),
                                 child: Center(
                                   child: Text(
                                     'Delete',
@@ -408,8 +411,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    FlatButton(
-                                                        color: Colors.red,
+                                                    TextButton(
+                                                        style: TextButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              Colors.red,
+                                                        ),
+                                                        // color: Colors.red,
                                                         onPressed: () async {
                                                           await GetBookData.bookDataDelete(
                                                               widget.bookData
@@ -424,7 +432,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                           await StorageSettings
                                                               .deleteImage(widget
                                                                   .bookData
-                                                                  .bookImgLink);
+                                                                  .bookImgLink!);
                                                           Navigator.popUntil(
                                                               context,
                                                               ModalRoute
@@ -439,8 +447,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                     SizedBox(
                                                       width: 8,
                                                     ),
-                                                    FlatButton(
-                                                        color: Colors.white38,
+                                                    TextButton(
+                                                        style: TextButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              Colors.white38,
+                                                        ),
+                                                        // color: Colors.white38,
                                                         onPressed: () {
                                                           Navigator.pop(
                                                               context);
@@ -491,13 +504,15 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             : Row(
                                 children: [
                                   Expanded(
-                                    child: RaisedButton(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 14),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(16)),
-                                      elevation: 10,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 14),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16)),
+                                        elevation: 10,
+                                      ),
                                       child: Center(
                                         child: Text(
                                           'Send Email',
@@ -517,10 +532,10 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                     widget.bookData.bookFor ==
                                                         'Rent'
                                                 ? 'subject=uBookSharing response&body=Hi ${widget.bookData.bookUploaderName},\n I\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
-                                                    'You have requested for a book name \"${widget.bookData.bookName}\" to ${widget.bookData.bookFor.toLowerCase()}.\nI have the book' +
+                                                    'You have requested for a book name \"${widget.bookData.bookName}\" to ${widget.bookData.bookFor!.toLowerCase()}.\nI have the book' +
                                                     '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Contact me to get this book.\nThanks for your contribution.'
                                                 : 'subject=uBookSharing response&body=Hi ${widget.bookData.bookUploaderName},\n I\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
-                                                    '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor.toLowerCase()} on ${UsableData.timestampToString(widget.bookData.bookTimeUpload)}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me.' +
+                                                    '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor!.toLowerCase()} on ${UsableData.timestampToString(widget.bookData.bookTimeUpload!)}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me.' +
                                                     '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a mail or message containing your phone number and current address.\nThanks for your contribution.'
 
                                             // queryParameters: {
@@ -535,8 +550,8 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                         if (await canLaunch(launchEmailUrl)) {
                                           await launch(launchEmailUrl);
                                         } else {
-                                          Scaffold.of(context).showSnackBar(
-                                              SnackBar(
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
                                                   content: Text(
                                                       "Can\'t send automated email. Try sending manually")));
                                         }
@@ -547,13 +562,15 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                     width: 2,
                                   ),
                                   Expanded(
-                                    child: RaisedButton(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 14),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(16)),
-                                      elevation: 10,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 14),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16)),
+                                        elevation: 10,
+                                      ),
                                       child: Text(
                                         button
                                             ? 'Send Message'
@@ -625,7 +642,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                                 ),
                                                                 Text(
                                                                   widget.bookData
-                                                                          .bookUploaderName +
+                                                                          .bookUploaderName! +
                                                                       ' will receive the following message.',
                                                                   textScaleFactor:
                                                                       1.1,
@@ -650,10 +667,10 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                                           Text(
                                                                         widget.bookData.bookFor == 'Buy' || widget.bookData.bookFor == 'Rent'
                                                                             ? '\"Hi ${widget.bookData.bookUploaderName},\nI\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
-                                                                                'You have requested for a book name \"${widget.bookData.bookName}\" to ${widget.bookData.bookFor.toLowerCase()}.\nI have the book' +
+                                                                                'You have requested for a book name \"${widget.bookData.bookName}\" to ${widget.bookData.bookFor!.toLowerCase()}.\nI have the book' +
                                                                                 '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}.'
                                                                             : '\"Hi ${widget.bookData.bookUploaderName},\nI\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' +
-                                                                                '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor.toLowerCase()} on ${UsableData.timestampToString(widget.bookData.bookTimeUpload)}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me.' +
+                                                                                '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor!.toLowerCase()} on ${UsableData.timestampToString(widget.bookData.bookTimeUpload!)}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me.' +
                                                                                 '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a mail or message containing your phone number and current address.\"',
                                                                         style: kDefaultWhiteTextStyle.copyWith(
                                                                             color:
@@ -667,13 +684,19 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                                       MainAxisAlignment
                                                                           .center,
                                                                   children: [
-                                                                    FlatButton(
-                                                                        color: Colors
-                                                                            .blueAccent
-                                                                            .shade700,
+                                                                    TextButton(
+                                                                        style: TextButton
+                                                                            .styleFrom(
+                                                                          backgroundColor: Colors
+                                                                              .blueAccent
+                                                                              .shade700,
+                                                                        ),
+                                                                        // color: Colors
+                                                                        //     .blueAccent
+                                                                        //     .shade700,
                                                                         onPressed: button
                                                                             ? () async {
-                                                                                String response = widget.bookData.bookFor == 'Buy' || widget.bookData.bookFor == 'Rent' ? 'Hi ${widget.bookData.bookUploaderName},\nI\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' + 'You have requested for a book name \"${widget.bookData.bookName}\" to ${widget.bookData.bookFor.toLowerCase()}.\nI have the book' + '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}.' : 'Hi ${widget.bookData.bookUploaderName},\nI\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' + '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor.toLowerCase()} on ${UsableData.timestampToString(widget.bookData.bookTimeUpload)}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me.' + '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a mail or message containing your phone number and current address.';
+                                                                                String response = widget.bookData.bookFor == 'Buy' || widget.bookData.bookFor == 'Rent' ? 'Hi ${widget.bookData.bookUploaderName},\nI\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' + 'You have requested for a book name \"${widget.bookData.bookName}\" to ${widget.bookData.bookFor!.toLowerCase()}.\nI have the book' + '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}.' : 'Hi ${widget.bookData.bookUploaderName},\nI\'m ${UserProfileData.name}. I\'m a student of\n${UserProfileData.versityName},\nDepartment ${UserProfileData.dept},\nBatch ${UserProfileData.admitted},\nRegistration number ${UserProfileData.registrationNo}.' + '\nYou have added a book name \"${widget.bookData.bookName}\" ${widget.bookData.bookFor!.toLowerCase()} on ${UsableData.timestampToString(widget.bookData.bookTimeUpload!)}. I am in need of that book. I have read your terms and I agree to fulfill those. Would you please share your book with me.' + '\nMy personal phone number is \n${UserProfileData.phoneNum}.\nI currently live in ${UserProfileData.address}. Please send me a mail or message containing your phone number and current address.';
 
                                                                                 String responseFor = widget.bookData.bookFor == 'Buy' || widget.bookData.bookFor == 'Rent' ? 'Response to request' : 'Interested about your book';
 
@@ -683,12 +706,12 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                                                   AllKeys.profilePicLinkKey: UserProfileData.profilePicLink,
                                                                                   AllKeys.bookForKey: widget.bookData.bookFor,
                                                                                   AllKeys.bookDesKey: response,
-                                                                                  'To': widget.bookData.bookUploaderEmail.replaceAll(new RegExp(r'[^\w\s]+'), ''),
+                                                                                  'To': widget.bookData.bookUploaderEmail!.replaceAll(new RegExp(r'[^\w\s]+'), ''),
                                                                                   'SentKey': DateTime.now(),
                                                                                   'Response For': responseFor,
                                                                                   'Name': UserProfileData.name,
                                                                                 };
-                                                                                await Interactions.writeMsg(widget.bookData.bookUploaderEmail, map);
+                                                                                await Interactions.writeMsg(widget.bookData.bookUploaderEmail!, map);
 
                                                                                 buttonState();
                                                                                 Navigator.pop(context);
@@ -702,9 +725,14 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                                     SizedBox(
                                                                       width: 8,
                                                                     ),
-                                                                    FlatButton(
-                                                                        color: Colors
-                                                                            .white38,
+                                                                    TextButton(
+                                                                        style: TextButton
+                                                                            .styleFrom(
+                                                                          backgroundColor:
+                                                                              Colors.white38,
+                                                                        ),
+                                                                        // color: Colors
+                                                                        //     .white38,
                                                                         onPressed:
                                                                             () {
                                                                           Navigator.pop(
@@ -849,7 +877,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                         child: FittedBox(
                           fit: BoxFit.fitWidth,
                           child: Text(
-                            widget.bookData.bookFor,
+                            widget.bookData.bookFor!,
                             style: GoogleFonts.aBeeZee(
                                 fontSize: 18, color: Colors.white),
                           ),
@@ -864,7 +892,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
     );
   }
 
-  Widget forWhat(String forWhat) {
+  Widget forWhat(String? forWhat) {
     if (forWhat == 'For Rent' || forWhat == 'Rent') {
       return Padding(
         padding: const EdgeInsets.all(4),
@@ -933,7 +961,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
   }
 }
 
-// RaisedButton(
+// ElevatedButton(
 //           elevation: 10,
 //           child: Icon(Icons.mail_outline),
 //           onPressed: () async {
@@ -954,7 +982,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
 //               await launch(launchEmailUrl);
 //             } else {
 //               print('hwwww');
-//               Scaffold.of(context).showSnackBar(SnackBar(
+//               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
 //                   content: Text(
 //                       "Can\'t send automated email. Try sending manually")));
 //             }

@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
         buttonMsg = 'Explore';
       });
 
-      await GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
+      await GetUserData.getUserData(FirebaseAuth.instance.currentUser!.email);
     } else {
       setState(() {
         buttonMsg = 'Sign In';
@@ -62,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() async {
     if (UserProfileData.tmVersity == null)
-      await GetUserData.getUserData(FirebaseAuth.instance.currentUser.email);
+      await GetUserData.getUserData(FirebaseAuth.instance.currentUser!.email);
 
     super.dispose();
   }
@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // backgroundColor: Color(0xffAf9884),
       backgroundColor: Color(0xff001a54),
       body: Stack(
-        overflow: Overflow.clip,
+        clipBehavior: Clip.antiAlias,
         children: [
           Positioned(
             top: 0,
@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ? FirebaseAuth.instance.currentUser == null
                                     ? LoginScreen()
                                     : FirebaseAuth
-                                            .instance.currentUser.emailVerified
+                                            .instance.currentUser!.emailVerified
                                         ? UserProfileData.tmVersity != null
                                             ? MainScreenNew()
                                             : ProfileEditScreen()
@@ -206,18 +206,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       0,
                       CommonThings.size.width * 0.3,
                       CommonThings.size.height * .23),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     // focusColor: Colors.pinkAccent.shade400,
 
                     // focusColor: Colors.pinkAccent.shade400,
-                    elevation: 0,
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      padding: EdgeInsets.only(top: 20, bottom: 20),
+                    ),
 
                     child: Text(
                       buttonMsg,
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
 
-                    padding: EdgeInsets.only(top: 20, bottom: 20),
                     onPressed: () {
                       navSignIn = true;
                       setState(() {

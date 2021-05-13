@@ -11,7 +11,7 @@ import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Constants.dart';
 
 class AddBookScreen extends StatefulWidget {
-  AddBookScreen({Key key}) : super(key: key);
+  AddBookScreen({Key? key}) : super(key: key);
 
   @override
   _AddBookScreenState createState() => _AddBookScreenState();
@@ -19,12 +19,12 @@ class AddBookScreen extends StatefulWidget {
 
 class _AddBookScreenState extends State<AddBookScreen> {
   // List<dynamic> bookNameList = [];
-  String bookImgLink;
+  String? bookImgLink;
 
   //     UserProfileData.email + UserProfileData.uploadedBookNo.toString();
   bool ignore = true;
   bool visible = true;
-  bool agree = false;
+  bool? agree = false;
   bool valdated = false;
   double picHeight = CommonThings.size.height * .60 + 20;
   double formTop = CommonThings.size.height * .60;
@@ -79,10 +79,10 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
   bool bl = false;
   checkBook() {
-    bl = GetBookData.bookNameList.contains(addBookNametoList);
+    bl = GetBookData.bookNameList!.contains(addBookNametoList);
   }
 
-  String addBookNametoList;
+  String? addBookNametoList;
 
   addBookInList() {
     showModalBottomSheet(
@@ -142,24 +142,24 @@ class _AddBookScreenState extends State<AddBookScreen> {
                             '*This app is based on community.So, use the full name of your Book which is known by all. Please be careful and do not use unnecessary spaces or punctuations.\nWe will check and your ID will be banned if we find any hoax name.',
                             style: TextStyle(color: Colors.red),
                           ),
-                          RaisedButton(
+                          ElevatedButton(
                             onPressed: () async {
                               // tmAddversity =
                               //     addversity.toUpperCase().replaceAll(' ', '');
                               // print(tmAddversity);
-                              addBookNametoList = addBookNametoList.trim();
+                              addBookNametoList = addBookNametoList!.trim();
                               await checkBook();
                               bool vali =
-                                  _bookNameListformKey.currentState.validate();
+                                  _bookNameListformKey.currentState!.validate();
 
                               if (vali) {
                                 setState(() {
-                                  GetBookData.bookNameList
+                                  GetBookData.bookNameList!
                                       .add(addBookNametoList);
                                 });
 
                                 await FirebaseFirestore.instance
-                                    .collection(UserProfileData.tmVersity)
+                                    .collection(UserProfileData.tmVersity!)
                                     .doc('AllBooks')
                                     .set({
                                   'FullNameArray': GetBookData.bookNameList
@@ -330,36 +330,41 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                   ),
 
                                   DropdownSearch<dynamic>(
-                                    popupTitle: Center(
-                                        child: Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            'Listed Books',
-                                            style: GoogleFonts.abrilFatface(
-                                              fontSize: 30,
-                                            ),
-                                          ),
-                                          RaisedButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                              addBookInList();
-                                            },
-                                            child: Text(
-                                              'Add a new Book',
-                                              style: GoogleFonts.aBeeZee(
-                                                  fontSize: 18,
-                                                  color: Colors.white),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    )),
-                                    mode: Mode.BOTTOM_SHEET,
+                                    // popupBackgroundColor: Colors.black,
                                     popupShape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(16)),
+                                    popupTitle: Material(
+                                      // borderRadius: BorderRadius.circular(160),
+                                      child: Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                'Listed Books',
+                                                style: GoogleFonts.abrilFatface(
+                                                  fontSize: 30,
+                                                ),
+                                              ),
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                  addBookInList();
+                                                },
+                                                child: Text(
+                                                  'Add a new Book',
+                                                  style: GoogleFonts.aBeeZee(
+                                                      fontSize: 18,
+                                                      color: Colors.white),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    mode: Mode.BOTTOM_SHEET,
                                     validator: (value) {
                                       if (value == null || value == '') {
                                         return 'Must select your Book\'s name';
@@ -467,7 +472,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                           onTap: () {
                                             riseForm();
                                           },
-                                          validator: (value) {
+                                          validator: (dynamic value) {
                                             if (value == null)
                                               return 'This field cannot be empty';
                                             return null;
@@ -517,7 +522,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                               value: 'For Rent',
                                             ),
                                           ],
-                                          onChanged: (value) {
+                                          onChanged: (dynamic value) {
                                             setState(() {
                                               bookData.bookFor = value;
                                               if (value == 'For Share') {
@@ -669,21 +674,25 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                   AnimatedOpacity(
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.easeInCubic,
-                                    opacity: agree ? 1 : 0,
+                                    opacity: agree! ? 1 : 0,
                                     child: Visibility(
-                                      visible: agree,
-                                      child: RaisedButton(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 12),
+                                      visible: agree!,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 12),
+                                        ),
                                         onPressed: () {
                                           FocusScope.of(context).unfocus();
                                           setState(() {
-                                            valdated = _formKeyBook.currentState
+                                            valdated = _formKeyBook
+                                                .currentState!
                                                 .validate();
                                           });
 
                                           if (valdated && bookImgLink == null) {
-                                            Scaffold.of(context).showSnackBar(
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
                                               SnackBar(
                                                 content: Text(
                                                     'Please upload an Image'),
@@ -701,7 +710,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                             });
                                           }
                                           if (valdated && bookImgLink != null) {
-                                            Scaffold.of(context).showSnackBar(
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
                                               SnackBar(
                                                 backgroundColor: Colors.green,
                                                 content: Text(
@@ -755,7 +765,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                             FocusScope.of(context).unfocus();
                             try {
                               await UploadIMG().getBookPic();
-                              Scaffold.of(context).showSnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   duration: Duration(seconds: 1),
                                   content: Text('Image Uploading'),
@@ -763,9 +773,11 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               );
 
                               bookImgLink = await UploadIMG().uploadBookPic(
-                                  UserProfileData.email, UsableData.id??UsableData.getSetMillisecondsId());
+                                  UserProfileData.email!,
+                                  UsableData.id ??
+                                      UsableData.getSetMillisecondsId());
                               if (bookImgLink != null) {
-                                Scaffold.of(context).showSnackBar(
+                                ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     backgroundColor: Colors.teal.shade800,
                                     content:
@@ -779,7 +791,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               });
                               bookData.bookImgLink = bookImgLink;
                             } catch (e) {
-                              Scaffold.of(context).showSnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   // width: CommonThings.size.width * .1,
                                   backgroundColor: Colors.redAccent.shade700,
@@ -821,7 +833,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                           FocusScope.of(context).unfocus();
 
                           if (bookData.bookPrice != null)
-                            bookData.bookPrice = bookData.bookPrice + ' Taka';
+                            bookData.bookPrice = bookData.bookPrice! + ' Taka';
                           // bookNameList.add(bookData.bookName);
 
                           try {
@@ -833,7 +845,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                             //     .set(bookData.getBookMap());
 
                             await FirebaseFirestore.instance
-                                .collection(UserProfileData.tmVersity)
+                                .collection(UserProfileData.tmVersity!)
                                 .doc('AllBooks')
                                 .collection('AllBooks')
                                 .doc()
@@ -850,7 +862,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
                             // String msg = await GetUserData.setUploadedBookNo();
                             // print(msg);
-                            Scaffold.of(context).showSnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 // width: CommonThings.size.width * .1,
                                 backgroundColor: Colors.teal.shade800,
@@ -870,7 +882,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                             //     ),
                             //     (Route<dynamic> route) => false);
                           } catch (e) {
-                            Scaffold.of(context).showSnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 // width: CommonThings.size.width * .1,
                                 backgroundColor: Colors.redAccent.shade700,

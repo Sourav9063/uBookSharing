@@ -10,9 +10,9 @@ import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Screens/AddRequestScreen.dart';
 
 class ListOfBooksScreen extends StatefulWidget {
-  final QuerySnapshot snapshot;
-  final String searchName;
-  ListOfBooksScreen({Key key, @required this.snapshot, this.searchName})
+  final QuerySnapshot<Map<String, dynamic>> snapshot;
+  final String? searchName;
+  ListOfBooksScreen({Key? key, required this.snapshot, this.searchName})
       : super(key: key);
 
   @override
@@ -20,7 +20,7 @@ class ListOfBooksScreen extends StatefulWidget {
 }
 
 class _ListOfBooksScreenState extends State<ListOfBooksScreen> {
-  List<BookData> bookData;
+  late List<BookData> bookData;
   loadBook() async {
     bookData = GetBookData.getBookDataObjFromQuerySnapshot(widget.snapshot);
   }
@@ -37,7 +37,7 @@ class _ListOfBooksScreenState extends State<ListOfBooksScreen> {
       appBar: AppBar(
         backgroundColor: Color(0xff001a54),
         title: Text(
-          widget.searchName,
+          widget.searchName!,
           textScaleFactor: 1,
         ),
       ),
@@ -67,7 +67,7 @@ class _ListOfBooksScreenState extends State<ListOfBooksScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: RaisedButton(
+                      child: ElevatedButton(
                         onPressed: () async {
                           UsableData.getSetMillisecondsId();
                           Navigator.pushAndRemoveUntil(
