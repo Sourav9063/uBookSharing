@@ -215,15 +215,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                 });
                               },
                               // autovalidate: true,
-                              validator: (value) {
-                                if (value == '' || value == null)
-                                  return 'Enter email address';
-                                else if (!RegExp(
-                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                    .hasMatch(value)) return 'Invalid Email';
+                              // validator: (value) {
+                              //   if (value == '' || value == null)
+                              //     return 'Enter email address';
+                              //   else if (!RegExp(
+                              //           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              //       .hasMatch(value)) return 'Invalid Email';
 
-                                return null;
-                              },
+                              //   return null;
+                              // },
+                              validator: EmailValidator.validator,
                               onTap: () {
                                 setState(() {
                                   aPEmail = 10;
@@ -276,14 +277,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                   // aPPassword = 50;
                                 });
                               },
-                              validator: (value) {
-                                if (value == null || value == '')
-                                  return 'Enter your password';
-                                if (value.length < 6)
-                                  return 'At least 6 characters';
+                              // validator: (value) {
+                              //   if (value == null || value == '')
+                              //     return 'Enter your password';
+                              //   if (value.length < 6)
+                              //     return 'At least 6 characters';
 
-                                return null;
-                              },
+                              //   return null;
+                              // },
+                              validator: PasswordValidator.validator,
                               keyboardType: TextInputType.visiblePassword,
                               obscureText: true,
                               textAlign: TextAlign.center,
@@ -421,5 +423,26 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+}
+
+class EmailValidator {
+  static String validator(value) {
+    if (value == '' || value == null)
+      return 'Enter email address';
+    else if (!RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(value)) return 'Invalid Email';
+
+    return null;
+  }
+}
+
+class PasswordValidator {
+  static String validator(value) {
+    if (value == null || value == '') return 'Enter your password';
+    if (value.length < 6) return 'At least 6 characters';
+
+    return null;
   }
 }
