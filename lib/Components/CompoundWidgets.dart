@@ -18,11 +18,11 @@ import 'package:uBookSharing/Screens/InteractionsScreen.dart';
 import 'package:uBookSharing/Screens/Auth/ProfileEditScreen.dart';
 
 class BookImg extends StatelessWidget {
-  final String imglink;
+  final String? imglink;
   final double width;
   final TransformationController transformationController =
       TransformationController();
-  BookImg({Key key, this.imglink, @required this.width}) : super(key: key);
+  BookImg({Key? key, this.imglink, required this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class BookImg extends StatelessWidget {
                 transformationController.value = Matrix4.identity();
               },
               child: CachedNetworkImage(
-                imageUrl: imglink,
+                imageUrl: imglink!,
                 fit: BoxFit.cover,
                 // memCacheHeight: 1200,
                 memCacheWidth: 900,
@@ -291,9 +291,9 @@ class BookCard extends StatelessWidget {
   final double width;
   final BookData bookData;
   const BookCard({
-    Key key,
-    @required this.bookData,
-    @required this.width,
+    Key? key,
+    required this.bookData,
+    required this.width,
   }) : super(key: key);
 
   @override
@@ -359,7 +359,7 @@ class BookCard extends StatelessWidget {
                       child: FittedBox(
                         fit: BoxFit.fitWidth,
                         child: Text(
-                          bookData.bookName,
+                          bookData.bookName!,
                           style: GoogleFonts.abrilFatface(
                             fontSize: width * .07,
                             // fontWeight: FontWeight.bold,
@@ -380,7 +380,7 @@ class BookCard extends StatelessWidget {
                       child: FittedBox(
                         fit: BoxFit.fitWidth,
                         child: Text(
-                          bookData.bookWriter,
+                          bookData.bookWriter!,
                           style: GoogleFonts.sacramento(
                             fontSize: width * .08,
                             // fontWeight: FontWeight.bold,
@@ -416,7 +416,7 @@ class BookCard extends StatelessWidget {
                           FittedBox(
                             fit: BoxFit.fitWidth,
                             child: Text(
-                              bookData.bookUploaderName,
+                              bookData.bookUploaderName!,
                               style: GoogleFonts.lora(
                                 fontSize: width * .055,
                                 color: Colors.white,
@@ -455,7 +455,7 @@ class BookCard extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: Text(
-                              bookData.bookFor,
+                              bookData.bookFor!,
                               style: TextStyle(
                                   fontSize: width * .055, color: Colors.white),
                             ),
@@ -472,12 +472,12 @@ class BookCard extends StatelessWidget {
                           ? Text(
                               'Uploaded: ' +
                                   UsableData.timestampToString(
-                                      bookData.bookTimeUpload),
+                                      bookData.bookTimeUpload!),
                               style: TextStyle(
                                   fontSize: width * .05, color: Colors.white),
                             )
                           : Text(
-                              'Added: ' + bookData.bookTimeUploadString,
+                              'Added: ' + bookData.bookTimeUploadString!,
                               style: TextStyle(
                                   fontSize: width * .05, color: Colors.white),
                             ),
@@ -592,7 +592,7 @@ class BookCard extends StatelessWidget {
                 ),
               ),
             ),
-            // TODO: check memory to fixed
+           
             Positioned(
               left: width * .036,
               top: width * .044,
@@ -600,7 +600,7 @@ class BookCard extends StatelessWidget {
               bottom: width * .08,
               width: width * .465,
               child: CachedNetworkImage(
-                imageUrl: bookData.bookImgLink,
+                imageUrl: bookData.bookImgLink!,
                 // memCacheHeight: 400,
                 memCacheWidth: 300,
                 fit: BoxFit.cover,
@@ -751,12 +751,12 @@ class RPSCustomPainter extends CustomPainter {
 
 class IconAccount extends StatelessWidget {
   IconAccount({
-    @required this.radious,
-    Key key,
+    required this.radious,
+    Key? key,
     this.imglink,
   }) : super(key: key);
   final double radious;
-  final String imglink;
+  final String? imglink;
   final id = UsableData.getSetMillisecondsId();
   @override
   Widget build(BuildContext context) {
@@ -800,7 +800,7 @@ class IconAccount extends StatelessWidget {
                   child: Hero(
                     tag: id,
                     child: CachedNetworkImage(
-                      imageUrl: imglink,
+                      imageUrl: imglink!,
                       height: radious,
                       width: radious,
                       // memCacheHeight: 300,
@@ -856,10 +856,10 @@ class IconAccount extends StatelessWidget {
 }
 
 class ImageFull extends StatelessWidget {
-  final String imgLink;
-  final String id;
+  final String? imgLink;
+  final String? id;
   const ImageFull({
-    Key key,
+    Key? key,
     this.imgLink,
     this.id,
   }) : super(key: key);
@@ -873,9 +873,9 @@ class ImageFull extends StatelessWidget {
         child: InteractiveViewer(
             maxScale: 5,
             child: Hero(
-              tag: id,
+              tag: id!,
               child: CachedNetworkImage(
-                imageUrl: imgLink,
+                imageUrl: imgLink!,
                 // height: radious,
                 // width: radious,
                 memCacheWidth: 480,
@@ -927,7 +927,7 @@ class ImageFull extends StatelessWidget {
 }
 
 class CustomDrawer extends StatelessWidget {
-  const CustomDrawer({Key key}) : super(key: key);
+  const CustomDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -961,7 +961,7 @@ class CustomDrawer extends StatelessWidget {
                           child: Text(
                             UserProfileData.name == null
                                 ? 'Loading..'
-                                : UserProfileData.name,
+                                : UserProfileData.name!,
                             style: kDrawerTextStyle.copyWith(fontSize: 22),
                           ),
                         ),
@@ -973,11 +973,15 @@ class CustomDrawer extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  RaisedButton(
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
-                    color: Color(0x00000000),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0)),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                    
+                      padding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                      primary: Color(0x00000000),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0)),
+                    ),
                     onPressed: () {
                       UsableData.getSetMillisecondsId();
                       Navigator.push(
@@ -1003,7 +1007,7 @@ class CustomDrawer extends StatelessWidget {
                       ],
                     ),
                   ),
-                  //                   RaisedButton(
+                  //                   ElevatedButton(
                   //   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
                   //   color: Color(0x00000000),
                   //   shape: RoundedRectangleBorder(
@@ -1027,11 +1031,16 @@ class CustomDrawer extends StatelessWidget {
                   //     ],
                   //   ),
                   // ),
-                  RaisedButton(
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
-                    color: Color(0x00000000),
+                  ElevatedButton(
+                     style: ElevatedButton.styleFrom( padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                    primary: Color(0x00000000),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0)),
+                    ),
+                    // padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                    // color: Color(0x00000000),
+                    // shape: RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.circular(0)),
                     onPressed: () {
                       // UsableData.getSetMillisecondsId();
                       Navigator.push(
@@ -1057,7 +1066,7 @@ class CustomDrawer extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // RaisedButton(
+                  // ElevatedButton(
                   //   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
                   //   color: Color(0x00000000),
                   //   shape: RoundedRectangleBorder(
@@ -1092,14 +1101,16 @@ class CustomDrawer extends StatelessWidget {
                   //     ],
                   //   ),
                   // ),
-                  RaisedButton(
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
-                    color: Color(0x00000000),
+                  ElevatedButton(
+                     style: ElevatedButton.styleFrom(  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                    primary: Color(0x00000000),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0)),
+                    ),
+                  
                     onPressed: () {
-                      FirebaseMessaging().unsubscribeFromTopic(
-                        FirebaseAuth.instance.currentUser.email
+                      FirebaseMessaging.instance.unsubscribeFromTopic(
+                        FirebaseAuth.instance.currentUser!.email!
                             .replaceAll(new RegExp(r'[^\w\s]+'), ''),
                       );
 
@@ -1132,16 +1143,16 @@ class CustomDrawer extends StatelessWidget {
 }
 
 class BookFormField extends StatelessWidget {
-  final String lebel;
-  final String hintText;
+  final String? lebel;
+  final String? hintText;
   final Function validate;
   final Function onChanged;
-  final Function raiseForm;
+  final Function? raiseForm;
   final TextCapitalization cap;
   const BookFormField({
-    Key key,
-    @required this.validate,
-    @required this.onChanged,
+    Key? key,
+    required this.validate,
+    required this.onChanged,
     this.raiseForm,
     this.lebel,
     this.hintText,
@@ -1156,9 +1167,9 @@ class BookFormField extends StatelessWidget {
         textCapitalization: cap,
         onEditingComplete: () => FocusScope.of(context).nextFocus(),
         cursorColor: Theme.of(context).accentColor,
-        onTap: raiseForm,
-        onChanged: onChanged,
-        validator: validate,
+        onTap: raiseForm as void Function()?,
+        onChanged: onChanged as void Function(String)?,
+        validator: validate as String? Function(String?)?,
         style: TextStyle(fontSize: 18),
         decoration: InputDecoration(
           // contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -1186,17 +1197,17 @@ class BookFormField extends StatelessWidget {
 }
 
 class AlertsCompound extends StatelessWidget {
-  final Color color;
+  final Color? color;
   final String msg;
-  final String des;
+  final String? des;
   final String buttonTxt;
-  final Function function;
+  final Function? function;
   const AlertsCompound(
-      {Key key,
-      @required this.msg,
-      @required this.des,
+      {Key? key,
+      required this.msg,
+      required this.des,
       this.function,
-      @required this.buttonTxt,
+      required this.buttonTxt,
       this.color})
       : super(key: key);
 
@@ -1205,11 +1216,11 @@ class AlertsCompound extends StatelessWidget {
     return AlertDialog(
       backgroundColor: color,
       title: Text(msg),
-      content: Text(des),
+      content: Text(des!),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           child: Text(buttonTxt),
-          onPressed: function,
+          onPressed: function as void Function()?,
         )
       ],
     );
@@ -1217,9 +1228,9 @@ class AlertsCompound extends StatelessWidget {
 }
 
 class SpinkitFading extends StatelessWidget {
-  final String msg;
+  final String? msg;
 
-  const SpinkitFading({Key key, this.msg}) : super(key: key);
+  const SpinkitFading({Key? key, this.msg}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -1264,7 +1275,7 @@ class SpinkitFading extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    msg == null ? 'Loading...' : msg,
+                    msg == null ? 'Loading...' : msg!,
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,

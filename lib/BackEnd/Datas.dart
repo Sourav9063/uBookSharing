@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class CommonThings {
-  static Size size;
+  static late Size size;
 }
 
 // class UserLogInData {
@@ -44,7 +44,7 @@ class UsableData {
     return monthName[n];
   }
 
-  static String id;
+  static String? id;
   static getSetMillisecondsId() {
     UsableData.id = DateTime.now().millisecondsSinceEpoch.toString();
     return new DateTime.now().millisecondsSinceEpoch.toString();
@@ -96,23 +96,23 @@ class AllKeys {
 }
 
 class BookData {
-  String docId;
-  String bookName;
-  String bookWriter;
-  String bookEdition;
-  String bookFor;
-  String bookDes;
-  String bookImgLink;
-  String bookPrice;
-  String bookTime;
+  String? docId;
+  String? bookName;
+  String? bookWriter;
+  String? bookEdition;
+  String? bookFor;
+  String? bookDes;
+  String? bookImgLink;
+  String? bookPrice;
+  String? bookTime;
 
-  Timestamp bookTimeUpload;
-  String bookTimeUploadString;
-  String bookUploaderName;
-  String bookUploaderEmail;
-  String bookUploaderBatch;
-  String bookUploaderDept;
-  String bookUploaderImg;
+  Timestamp? bookTimeUpload;
+  String? bookTimeUploadString;
+  String? bookUploaderName;
+  String? bookUploaderEmail;
+  String? bookUploaderBatch;
+  String? bookUploaderDept;
+  String? bookUploaderImg;
 
   Map<String, dynamic> getBookMap() {
     Map bookMapData = Map<String, dynamic>();
@@ -135,23 +135,23 @@ class BookData {
     bookMapData[AllKeys.bookUploaderImgKey] = UserProfileData.profilePicLink;
 
     // print(bookMapData);
-    return bookMapData;
+    return bookMapData as Map<String, dynamic>;
   }
 }
 
 class UserProfileData {
-  static String name;
-  static String versityName;
-  static String tmVersity;
-  static String profilePicLink;
-  static String admitted;
-  static String dept;
-  static String phoneNum;
-  static String email;
-  static String address;
-  static String registrationNo;
-  static String uploadedBookNo;
-  static String uid;
+  static String? name;
+  static String? versityName;
+  static String? tmVersity;
+  static String? profilePicLink;
+  static String? admitted;
+  static String? dept;
+  static String? phoneNum;
+  static String? email;
+  static String? address;
+  static String? registrationNo;
+  static String? uploadedBookNo;
+  static String? uid;
   // static List<dynamic> myBookList;
 
   static Map<String, dynamic> getMap() {
@@ -179,7 +179,7 @@ class UserProfileData {
       userMapData[AllKeys.upLoadedBookNoKey] = uploadedBookNo;
 
     print(userMapData);
-    return userMapData;
+    return userMapData as Map<String, dynamic>;
   }
 }
 

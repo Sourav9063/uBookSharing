@@ -15,7 +15,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uBookSharing/Screens/Auth/ProfileEditScreen.dart';
 
 class RegScreen extends StatefulWidget {
-  RegScreen({Key key}) : super(key: key);
+  RegScreen({Key? key}) : super(key: key);
 
   @override
   _RegScreenState createState() => _RegScreenState();
@@ -49,7 +49,7 @@ class _RegScreenState extends State<RegScreen> {
   //     title: Text('Error'),
   //     content: Text(error),
   //     actions: <Widget>[
-  //       FlatButton(
+  //       TextButton(
   //         child: Text('OK'),
   //         onPressed: () {
   //           spinnerState(false);
@@ -67,7 +67,7 @@ class _RegScreenState extends State<RegScreen> {
   //     title: Text('Email Verification'),
   //     content: Text('Check your email and click the link to verify'),
   //     actions: <Widget>[
-  //       FlatButton(
+  //       TextButton(
   //         child: Text('Check'),
   //         onPressed: () async {
   //           spinnerState(false);
@@ -87,9 +87,9 @@ class _RegScreenState extends State<RegScreen> {
       await auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
-      await auth.currentUser.updateProfile(displayName: _userName);
+      await auth.currentUser!.updateProfile(displayName: _userName);
 
-      await auth.currentUser.sendEmailVerification();
+      await auth.currentUser!.sendEmailVerification();
 
       verifiedCheck();
       spinnerState(false);
@@ -134,9 +134,9 @@ class _RegScreenState extends State<RegScreen> {
   }
 
   void verifiedCheck() async {
-    await auth.currentUser.reload();
+    await auth.currentUser!.reload();
     setState(() {
-      verified = auth.currentUser.emailVerified;
+      verified = auth.currentUser!.emailVerified;
 
       if (verified) {
         verifyButtonText = 'Email verified';
@@ -340,7 +340,7 @@ class _RegScreenState extends State<RegScreen> {
                               });
                             },
                             validator: (value) {
-                              if (value.length < 6)
+                              if (value!.length < 6)
                                 return 'Can\'t you read!? At least 6 characters';
 
                               return null;
@@ -366,7 +366,7 @@ class _RegScreenState extends State<RegScreen> {
                               Expanded(
                                 // duration: Duration(milliseconds: 200),
                                 flex: 2,
-                                child: RaisedButton(
+                                child: ElevatedButton(
                                   // focusColor: Colors.pinkAccent.shade400,
 
                                   // focusColor: Colors.pinkAccent.shade400,
@@ -378,8 +378,11 @@ class _RegScreenState extends State<RegScreen> {
                                           fontSize: 18, color: Colors.white),
                                     ),
                                   ),
+                                  style: ElevatedButton.styleFrom(
+                                    padding:
+                                        EdgeInsets.only(top: 15, bottom: 15),
+                                  ),
 
-                                  padding: EdgeInsets.only(top: 15, bottom: 15),
                                   onPressed: verified
                                       ? null
                                       : () {
@@ -389,7 +392,7 @@ class _RegScreenState extends State<RegScreen> {
                                             aPPassword = 50;
                                           });
                                           bool isAlright =
-                                              _formKey.currentState.validate();
+                                              _formKey.currentState!.validate();
                                           // print(auth.currentUser.uid);
                                           // auth.currentUser.uid != null
                                           //     ? signUn(_email, _password)
@@ -402,7 +405,7 @@ class _RegScreenState extends State<RegScreen> {
                               Expanded(
                                 flex: verified ? 2 : 1,
                                 // duration: Duration(milliseconds: 200),
-                                child: RaisedButton(
+                                child: ElevatedButton(
                                   // focusColor: Colors.pinkAccent.shade400,
 
                                   // focusColor: Colors.pinkAccent.shade400,
@@ -412,9 +415,11 @@ class _RegScreenState extends State<RegScreen> {
                                     style: GoogleFonts.aBeeZee(
                                         fontSize: 18, color: Colors.white),
                                   ),
-                                  color: Colors.green,
+                                   style: ElevatedButton.styleFrom(    primary: Colors.green,
 
                                   padding: EdgeInsets.only(top: 15, bottom: 15),
+                    ),
+                              
                                   onPressed: !verified
                                       ? null
                                       : () async {

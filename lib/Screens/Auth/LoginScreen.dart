@@ -18,7 +18,7 @@ import 'package:uBookSharing/Screens/MainScreenNew.dart';
 import 'package:uBookSharing/Screens/Auth/ProfileEditScreen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -26,8 +26,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool animationUnloack = false;
-  String _email;
-  String _password;
+  late String _email;
+  late String _password;
   bool spinner = false;
   double aPEmail = 50;
   double aPPassword = 50;
@@ -45,9 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void verifiedCheck() async {
-    await auth.currentUser.reload();
+    await auth.currentUser!.reload();
     setState(() {
-      verified = auth.currentUser.emailVerified;
+      verified = auth.currentUser!.emailVerified;
 
       // print(verified);
     });
@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
       //   await UserDataSavedEmailPassword.saveuidSharedPref(
       //       auth.currentUser.uid);
       //   animationUnloack = true;
-      if (auth.currentUser.emailVerified && auth.currentUser != null) {
+      if (auth.currentUser!.emailVerified && auth.currentUser != null) {
         spinnerState(false);
         await GetUserData.getUserData(email);
         // await UserDataSavedEmailPassword.saveuidSharedPref(
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
         //     auth.currentUser.uid);
         // UserLogInData.updateUID();
       } else {
-        await auth.currentUser.sendEmailVerification();
+        await auth.currentUser!.sendEmailVerification();
 
         verifiedCheck();
         print('signIn verification');
@@ -263,7 +263,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 });
 
                                 bool isAlright =
-                                    _formKey.currentState.validate();
+                                    _formKey.currentState!.validate();
                                 // print(auth.currentUser.uid);
                                 // auth.currentUser.uid != null
                                 //     ? signUn(_email, _password)
@@ -301,7 +301,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 50),
-                            child: RaisedButton(
+                            child: ElevatedButton(
                               // focusColor: Colors.pinkAccent.shade400,
 
                               // focusColor: Colors.pinkAccent.shade400,
@@ -314,7 +314,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
 
-                              padding: EdgeInsets.only(top: 15, bottom: 15),
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.only(top: 15, bottom: 15),
+                              ),
+
                               onPressed: () {
                                 FocusScope.of(context).unfocus();
                                 setState(() {
@@ -323,7 +326,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 });
 
                                 bool isAlright =
-                                    _formKey.currentState.validate();
+                                    _formKey.currentState!.validate();
                                 // print(auth.currentUser.uid);
                                 // auth.currentUser.uid != null
                                 //     ? signUn(_email, _password)
@@ -377,7 +380,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           hintText: 'Enter your email',
                                           labelText: 'Email'),
                                     ),
-                                    RaisedButton(
+                                    ElevatedButton(
                                       onPressed: () async {
                                         try {
                                           await FirebaseAuth.instance
@@ -427,7 +430,7 @@ class _LoginScreenState extends State<LoginScreen> {
 }
 
 class EmailValidator {
-  static String validator(value) {
+  static String? validator(value) {
     if (value == '' || value == null)
       return 'Enter email address';
     else if (!RegExp(
@@ -439,7 +442,7 @@ class EmailValidator {
 }
 
 class PasswordValidator {
-  static String validator(value) {
+  static String? validator(value) {
     if (value == null || value == '') return 'Enter your password';
     if (value.length < 6) return 'At least 6 characters';
 

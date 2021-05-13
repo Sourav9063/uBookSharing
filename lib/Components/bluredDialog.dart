@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 
 class BlurredDialog extends StatelessWidget {
   const BlurredDialog(
-      {Key key,
-      @required this.height,
-      @required this.width,
+      {Key? key,
+      required this.height,
+      required this.width,
       this.blurColorWithOpacity = Colors.white30,
       this.child})
       : super(key: key);
   final double height;
   final double width;
   final Color blurColorWithOpacity;
-  final Widget child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {

@@ -205,7 +205,7 @@
 //                           showSearch(
 //                               context: context, delegate: SearchPageTest());
 //                         }),
-//                     RaisedButton(onPressed: () {
+//                     ElevatedButton(onPressed: () {
 //                       Navigator.push(context,
 //                           MaterialPageRoute(builder: (context) => MainScreenNew()));
 //                     })
@@ -264,7 +264,7 @@
 //                             stream: GetBookData.getRecentBookStream(
 //                                 lim, 'AllBooks'),
 //                             builder:
-//                                 (context, AsyncSnapshot<QuerySnapshot> snp) {
+//                                 (context, AsyncSnapshot<QuerySnapshot<Map<String,dynamic>>>  snp) {
 //                               if (snp.hasData) {
 //                                 if (snp.data.size == 0) {
 //                                   return Column(
@@ -355,7 +355,7 @@
 //                             stream:
 //                                 GetBookData.getRecentBookStream(20, 'Requests'),
 //                             builder:
-//                                 (context, AsyncSnapshot<QuerySnapshot> snp) {
+//                                 (context, AsyncSnapshot<QuerySnapshot<Map<String,dynamic>>>  snp) {
 //                               if (snp.hasData) {
 //                                 if (snp.data.size == 0) {
 //                                   return Text('There are no requests');
@@ -409,7 +409,7 @@
 //   }
 // }
 
-// // RaisedButton(
+// // ElevatedButton(
 // //                   elevation: 10,
 // //                   child: Icon(Icons.mail_outline),
 // //                   onPressed: () async {
@@ -430,7 +430,7 @@
 // //                       await launch(launchEmailUrl);
 // //                     } else {
 // //                       print('hwwww');
-// //                       Scaffold.of(context).showSnackBar(SnackBar(
+// //                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
 // //                           content: Text(
 // //                               "Can\'t send automated email. Try sending manually")));
 // //                     }

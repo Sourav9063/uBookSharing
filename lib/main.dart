@@ -19,7 +19,7 @@ void main() {
 }
 
 class MyAwesomeApp extends StatelessWidget {
-  const MyAwesomeApp({Key key}) : super(key: key);
+  const MyAwesomeApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +42,13 @@ class MyAwesomeApp extends StatelessWidget {
           primarySwatch: Colors.purple,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           accentColor: Color(0xfffb8b24),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+                primary: Color(0xfffb8b24),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                )),
+          ),
           buttonTheme: ButtonTheme.of(context).copyWith(
             buttonColor: Color(0xfffb8b24),
             shape: RoundedRectangleBorder(
@@ -55,7 +62,7 @@ class MyAwesomeApp extends StatelessWidget {
 }
 
 class FutureBuilderRouteFirebase extends StatefulWidget {
-  FutureBuilderRouteFirebase({Key key}) : super(key: key);
+  FutureBuilderRouteFirebase({Key? key}) : super(key: key);
 
   @override
   _FutureBuilderRouteFirebaseState createState() =>
@@ -68,7 +75,7 @@ class _FutureBuilderRouteFirebaseState
   bool ini = false;
   bool error = false;
   bool connected = true;
-  String errorMsg;
+  String? errorMsg;
   void intFirebase() async {
     try {
       await Firebase.initializeApp();
@@ -138,7 +145,7 @@ class _FutureBuilderRouteFirebaseState
 }
 
 class LoadingState extends StatelessWidget {
-  const LoadingState({Key key}) : super(key: key);
+  const LoadingState({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -155,8 +162,8 @@ class LoadingState extends StatelessWidget {
 }
 
 class SomethingWentWrong extends StatelessWidget {
-  final String errorMsg;
-  const SomethingWentWrong({Key key, this.errorMsg}) : super(key: key);
+  final String? errorMsg;
+  const SomethingWentWrong({Key? key, this.errorMsg}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +192,7 @@ class SomethingWentWrong extends StatelessWidget {
             Text(
               errorMsg == null
                   ? 'Something Went Wrong. Restart the App.'
-                  : errorMsg,
+                  : errorMsg!,
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
             IconButton(

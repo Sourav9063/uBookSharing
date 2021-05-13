@@ -1,4 +1,5 @@
 // import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flare_flutter/flare_actor.dart';
@@ -19,7 +20,7 @@ import 'AddBookScreen.dart';
 import 'AddRequestScreen.dart';
 
 class MainScreenNew extends StatefulWidget {
-  MainScreenNew({Key key}) : super(key: key);
+  MainScreenNew({Key? key}) : super(key: key);
 
   @override
   _MainScreenNewState createState() => _MainScreenNewState();
@@ -60,7 +61,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
       }
     } else {
       String msg = await GetUserData.getUserData(
-          FirebaseAuth.instance.currentUser.email);
+          FirebaseAuth.instance.currentUser!.email);
       var check = await GetBookData.getBookNameListFirebase();
 
       if (msg == 'done' && check != null) {
@@ -97,50 +98,59 @@ class _MainScreenNewState extends State<MainScreenNew> {
     super.initState();
     loadUser();
 
-    final fcm = FirebaseMessaging();
-    fcm.requestNotificationPermissions();
-    fcm.configure(
-      onLaunch: (message) {
-        // print('OnLaunch');
-        // print(message);
-        // if (message != null)
-        setState(() {
-          notiIcons = Icon(
-            Icons.notifications_active,
-            color: Colors.lightBlue,
-          );
-        });
-        return;
-      },
-      onMessage: (message) {
-        // print('message');
-        // Navigator.push(context,
-        //     MaterialPageRoute(builder: (context) => InteractionsScreen()));
-        setState(() {
-          notiIcons = Icon(
-            Icons.notifications_active,
-            color: Colors.lightBlue,
-          );
-        });
-        print(message);
+    final fcm = FirebaseMessaging.instance;
+    fcm.requestPermission();
+    FirebaseMessaging.onMessage.listen((event) {
+      setState(() {
+        notiIcons = Icon(
+          Icons.notifications_active,
+          color: Colors.lightBlue,
+        );
+      });
+    });
 
-        return;
-      },
-      onResume: (message) {
-        // print('resume');
-        setState(() {
-          notiIcons = Icon(
-            Icons.notifications_active,
-            color: Colors.lightBlue,
-          );
-        });
-        // print(message);
+    // fcm.conigure(
+    //   onLaunch: (message) {
+    //     // print('OnLaunch');
+    //     // print(message);
+    //     // if (message != null)
+    //     setState(() {
+    //       notiIcons = Icon(
+    //         Icons.notifications_active,
+    //         color: Colors.lightBlue,
+    //       );
+    //     });
+    //     return;
+    //   },
+    //   onMessage: (message) {
+    //     // print('message');
+    //     // Navigator.push(context,
+    //     //     MaterialPageRoute(builder: (context) => InteractionsScreen()));
+    //     setState(() {
+    //       notiIcons = Icon(
+    //         Icons.notifications_active,
+    //         color: Colors.lightBlue,
+    //       );
+    //     });
+    //     print(message);
 
-        return;
-      },
-    );
+    //     return;
+    //   },
+    //   onResume: (message) {
+    //     // print('resume');
+    //     setState(() {
+    //       notiIcons = Icon(
+    //         Icons.notifications_active,
+    //         color: Colors.lightBlue,
+    //       );
+    //     });
+    //     // print(message);
+
+    //     return;
+    //   },
+    // );
     // fcm.getToken();
-    fcm.subscribeToTopic(FirebaseAuth.instance.currentUser.email
+    fcm.subscribeToTopic(FirebaseAuth.instance.currentUser!.email!
         .replaceAll(new RegExp(r'[^\w\s]+'), ''));
   }
 
@@ -229,7 +239,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                 color: Colors.white,
                               ),
                               onPressed: () =>
-                                  scaffoldKey.currentState.openDrawer(),
+                                  scaffoldKey.currentState!.openDrawer(),
                             ),
                             IconButton(
                                 icon: Icon(
@@ -245,10 +255,11 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                           context: context,
                                           delegate: SearchPageTest());
                                     } else
-                                      Scaffold.of(context).showSnackBar(SnackBar(
-                                          backgroundColor: Colors.red,
-                                          content: Text(
-                                              'Search is not available at this moment')));
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              backgroundColor: Colors.red,
+                                              content: Text(
+                                                  'Search is not available at this moment')));
                                   } else
                                     showSearch(
                                         context: context,
@@ -281,7 +292,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
                               child: FittedBox(
                                 fit: BoxFit.fitHeight,
                                 child: Text(
-                                  UserProfileData.versityName.toUpperCase(),
+                                  UserProfileData.versityName!.toUpperCase(),
                                   textScaleFactor: 1,
                                   // strutStyle: StrutStyle(
 
@@ -304,14 +315,17 @@ class _MainScreenNewState extends State<MainScreenNew> {
                         ),
                         ValueListenableBuilder(
                           valueListenable: pressed,
-                          builder: (context, pressed, child) {
+                          builder: (context, dynamic pressed, child) {
                             return Column(
                               children: [
                                 RotatedBox(
                                   quarterTurns: -1,
-                                  child: RaisedButton(
-                                    color:
-                                        pressed == 1 ? null : Color(0xAA24217a),
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: pressed == 1
+                                          ? null
+                                          : Color(0xAA24217a),
+                                    ),
                                     onPressed: () async {
                                       // setState(() {
                                       //   pressed = 1;
@@ -335,10 +349,15 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                       const EdgeInsets.symmetric(vertical: 4.0),
                                   child: RotatedBox(
                                     quarterTurns: -1,
-                                    child: RaisedButton(
-                                      color: pressed == 2
-                                          ? null
-                                          : Color(0xAA24217a),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: pressed == 2
+                                            ? null
+                                            : Color(0xAA24217a),
+                                      ),
+                                      // color: pressed == 2
+                                      //     ? null
+                                      //     : Color(0xAA24217a),
                                       onPressed: () async {
                                         // setState(() {
                                         //   pressed = 2;
@@ -361,10 +380,12 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                 ),
                                 RotatedBox(
                                     quarterTurns: -1,
-                                    child: RaisedButton(
-                                      color: pressed == 3
-                                          ? null
-                                          : Color(0xAA24217a),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: pressed == 3
+                                            ? null
+                                            : Color(0xAA24217a),
+                                      ),
                                       onPressed: () async {
                                         // setState(() {
                                         //   pressed = 3;
@@ -456,12 +477,13 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                   ),
                                 ),
                                 Expanded(
-                                  child: StreamBuilder(
+                                  child: StreamBuilder<
+                                      QuerySnapshot<Map<String, dynamic>>>(
                                     stream: GetBookData.getRecentBookStream(
                                         lim, 'AllBooks'),
                                     builder: (context, snp) {
                                       if (snp.hasData) {
-                                        if (snp.data.size == 0) {
+                                        if (snp.data!.size == 0) {
                                           return Column(
                                             children: [
                                               Container(
@@ -482,7 +504,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
 
                                           recentDataList = GetBookData
                                               .getBookDataObjFromQuerySnapshot(
-                                                  snp.data);
+                                                  snp.data!);
 
                                           List<Widget> bookcardList = [];
                                           for (BookData bookData
@@ -655,12 +677,13 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                   height: 20,
                                 ),
                                 Expanded(
-                                  child: StreamBuilder(
+                                  child: StreamBuilder<
+                                      QuerySnapshot<Map<String, dynamic>>>(
                                     stream: GetBookData.getRecentBookStream(
                                         limReq, 'Requests'),
                                     builder: (context, snp) {
                                       if (snp.hasData) {
-                                        if (snp.data.size == 0) {
+                                        if (snp.data!.size == 0) {
                                           return Column(
                                             children: [
                                               Container(
@@ -681,7 +704,7 @@ class _MainScreenNewState extends State<MainScreenNew> {
 
                                           recentDataList = GetBookData
                                               .getBookDataObjFromQuerySnapshot(
-                                                  snp.data);
+                                                  snp.data!);
 
                                           List<Widget> bookcardList = [];
                                           for (BookData bookData
@@ -777,13 +800,14 @@ class _MainScreenNewState extends State<MainScreenNew> {
                                   height: 20,
                                 ),
                                 Expanded(
-                                  child: StreamBuilder(
+                                  child: StreamBuilder<
+                                      QuerySnapshot<Map<String, dynamic>>>(
                                     stream: GetBookData.bookDataSearchStream(
                                         AllKeys.bookUploaderEmailKey,
-                                        UserProfileData.email),
+                                        UserProfileData.email!),
                                     builder: (context, snp) {
                                       if (snp.hasData) {
-                                        if (snp.data.size == 0) {
+                                        if (snp.data!.size == 0) {
                                           return Column(
                                             children: [
                                               Container(
@@ -805,25 +829,39 @@ class _MainScreenNewState extends State<MainScreenNew> {
 
                                           recentDataList = GetBookData
                                               .getBookDataObjFromQuerySnapshot(
-                                                  snp.data);
+                                                  snp.data!);
 
-                                          List<Widget> bookcardList = [];
-                                          for (BookData bookData
-                                              in recentDataList) {
-                                            bookcardList.add(
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        4, 5, 8, 5),
-                                                child: BookCard(
-                                                  width:
-                                                      CommonThings.size.width *
-                                                          .7,
-                                                  bookData: bookData,
-                                                ),
-                                              ),
-                                            );
-                                          }
+                                          List<Widget> bookcardList =
+                                              recentDataList
+                                                  .map(
+                                                    (e) => Padding(
+                                                      padding: const EdgeInsets
+                                                          .fromLTRB(4, 5, 8, 5),
+                                                      child: BookCard(
+                                                        width: CommonThings
+                                                                .size.width *
+                                                            .7,
+                                                        bookData: e,
+                                                      ),
+                                                    ),
+                                                  )
+                                                  .toList();
+                                          // for (BookData bookData
+                                          //     in recentDataList) {
+                                          //   bookcardList.add(
+                                          //     Padding(
+                                          //       padding:
+                                          //           const EdgeInsets.fromLTRB(
+                                          //               4, 5, 8, 5),
+                                          //       child: BookCard(
+                                          //         width:
+                                          //             CommonThings.size.width *
+                                          //                 .7,
+                                          //         bookData: bookData,
+                                          //       ),
+                                          //     ),
+                                          //   );
+                                          // }
 
                                           return ListView(
                                             physics: BouncingScrollPhysics(),
@@ -864,8 +902,8 @@ class _MainScreenNewState extends State<MainScreenNew> {
 
 class KeepAlivePage extends StatefulWidget {
   KeepAlivePage({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
   }) : super(key: key);
 
   final Widget child;
