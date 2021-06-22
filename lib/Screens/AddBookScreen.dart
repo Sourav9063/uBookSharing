@@ -331,6 +331,16 @@ class _AddBookScreenState extends State<AddBookScreen> {
 
                                   DropdownSearch<dynamic>(
                                     // popupBackgroundColor: Colors.black,
+                                    maxHeight: CommonThings.size.height * .6,
+                                    emptyBuilder: (context, searchEntry) =>
+                                        Material(
+                                      child: Center(
+                                        child: Text(
+                                          "\"$searchEntry\" is not listed. Please enlist.",
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      ),
+                                    ),
                                     popupShape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(16)),
@@ -373,6 +383,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                     },
                                     label: 'Book\'s Name',
                                     items: GetBookData.bookNameList,
+
                                     dropdownSearchDecoration: InputDecoration(
                                       filled: true,
                                       fillColor: Color(0xffffffff),
@@ -396,6 +407,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                       labelText: 'Search',
                                       hintText: 'If not listed, please Add',
                                     ),
+
                                     onChanged: (value) {
                                       riseForm();
                                       // addBookInList();

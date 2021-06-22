@@ -357,7 +357,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       UsableData.getSetMillisecondsId());
 
                               await FirebaseAuth.instance.currentUser!
-                                  .updateProfile(photoURL: link);
+                                  .updatePhotoURL(link);
                               // FirebaseAuth.instance.currentUser.updateProfile(displayName: );
                               setState(() {
                                 UserProfileData.profilePicLink = link;
@@ -473,8 +473,18 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: DropdownSearch<String>(
+                                  maxHeight: CommonThings.size.height * .6,
+                                  emptyBuilder: (context, searchEntry) =>
+                                      Material(
+                                    child: Center(
+                                      child: Text(
+                                        "\"$searchEntry\" is not listed. Please enlist.",
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                    ),
+                                  ),
                                   popupTitle: Material(
-                                                                      child: Center(
+                                    child: Center(
                                         child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Column(
@@ -490,8 +500,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                               addVersity();
                                             },
                                             child: Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  vertical: 8),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 8),
                                               child: Text(
                                                 'Add Your University',
                                                 style: GoogleFonts.aBeeZee(
@@ -553,7 +564,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   onChanged: (value) {
                                     UserProfileData.name = value;
                                     FirebaseAuth.instance.currentUser!
-                                        .updateProfile(displayName: value);
+                                        .updateDisplayName(value);
                                   },
                                   onTap: () => gredianAlign(),
                                   decoration: kTextFieldDecoration.copyWith(

@@ -416,6 +416,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                             .styleFrom(
                                                           backgroundColor:
                                                               Colors.red,
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        14),
+                                                          ),
                                                         ),
                                                         // color: Colors.red,
                                                         onPressed: () async {
@@ -452,6 +459,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                             .styleFrom(
                                                           backgroundColor:
                                                               Colors.white38,
+                                                               shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        14),
+                                                          ),
                                                         ),
                                                         // color: Colors.white38,
                                                         onPressed: () {
@@ -690,6 +704,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                                           backgroundColor: Colors
                                                                               .blueAccent
                                                                               .shade700,
+                                                                               shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        14),
+                                                          ),
                                                                         ),
                                                                         // color: Colors
                                                                         //     .blueAccent
@@ -730,6 +751,13 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                                             .styleFrom(
                                                                           backgroundColor:
                                                                               Colors.white38,
+                                                                               shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        14),
+                                                          ),
                                                                         ),
                                                                         // color: Colors
                                                                         //     .white38,

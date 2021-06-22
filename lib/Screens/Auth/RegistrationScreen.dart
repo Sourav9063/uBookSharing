@@ -87,7 +87,7 @@ class _RegScreenState extends State<RegScreen> {
       await auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
-      await auth.currentUser!.updateProfile(displayName: _userName);
+      await auth.currentUser!.updateDisplayName( _userName);
 
       await auth.currentUser!.sendEmailVerification();
 
