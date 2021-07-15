@@ -44,6 +44,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.9.0
+  lint: ^1.5.3
 
 flutter_icons:
   android: true
@@ -72,7 +73,6 @@ flutter:
     - assets/flr/BookGive.flr
     - assets/flr/BookLoadingLottie.flr
     - assets/flr/Not found.flr
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
