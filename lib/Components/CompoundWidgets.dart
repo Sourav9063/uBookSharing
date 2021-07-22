@@ -592,7 +592,6 @@ class BookCard extends StatelessWidget {
                 ),
               ),
             ),
-           
             Positioned(
               left: width * .036,
               top: width * .044,
@@ -975,7 +974,6 @@ class CustomDrawer extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                    
                       padding:
                           EdgeInsets.symmetric(vertical: 12, horizontal: 30),
                       primary: Color(0x00000000),
@@ -1032,10 +1030,12 @@ class CustomDrawer extends StatelessWidget {
                   //   ),
                   // ),
                   ElevatedButton(
-                     style: ElevatedButton.styleFrom( padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
-                    primary: Color(0x00000000),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0)),
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                      primary: Color(0x00000000),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0)),
                     ),
                     // padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
                     // color: Color(0x00000000),
@@ -1061,6 +1061,43 @@ class CustomDrawer extends StatelessWidget {
                         SizedBox(width: 18),
                         Text(
                           'Notification',
+                          style: kDrawerTextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                      primary: Color(0x00000000),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0)),
+                    ),
+                    // padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                    // color: Color(0x00000000),
+                    // shape: RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.circular(0)),
+                    onPressed: () {
+                      // UsableData.getSetMillisecondsId();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => InteractionsScreen(),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.chat_bubble_outline,
+                          color: Colors.white,
+                          // size: 30,
+                        ),
+                        SizedBox(width: 18),
+                        Text(
+                          'Responses',
                           style: kDrawerTextStyle,
                         ),
                       ],
@@ -1102,12 +1139,13 @@ class CustomDrawer extends StatelessWidget {
                   //   ),
                   // ),
                   ElevatedButton(
-                     style: ElevatedButton.styleFrom(  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
-                    primary: Color(0x00000000),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0)),
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                      primary: Color(0x00000000),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0)),
                     ),
-                  
                     onPressed: () {
                       FirebaseMessaging.instance.unsubscribeFromTopic(
                         FirebaseAuth.instance.currentUser!.email!

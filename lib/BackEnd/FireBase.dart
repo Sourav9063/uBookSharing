@@ -60,7 +60,8 @@ class GetBookData {
   static Future<List<BookData>> getRecent10Books() async {
     List<BookData> recentDataList = [];
 
-    QuerySnapshot<Map<String,dynamic>> querySnapshot = await FirebaseFirestore.instance
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore
+        .instance
         .collection(UserProfileData.tmVersity!)
         .doc('AllBooks')
         .collection('AllBooks')
@@ -255,5 +256,25 @@ class Interactions {
 
   static testWrite(String email, Map<String, dynamic> map) async {
     await FirebaseFirestore.instance.collection('Interactions').doc().set(map);
+  }
+}
+
+class ChatsFirebase {
+  CollectionReference firestoreColRef = FirebaseFirestore.instance
+      .collection(UserProfileData.tmVersity!)
+      .doc('Interactions')
+      .collection(UserProfileData.email!);
+
+  fromMe(String docID, Map<String, dynamic> map) async {
+    await firestoreColRef.doc(docID).collection(docID).add(map);
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getStream(String docID) {
+    return firestoreColRef
+        .doc(docID)
+        .collection(docID)
+        .orderBy('time', descending: true)
+        .limitToLast(20)
+        .snapshots();
   }
 }
