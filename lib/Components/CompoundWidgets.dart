@@ -12,6 +12,7 @@ import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/Components/spinkit.dart';
 
 import 'package:uBookSharing/Screens/BookDetailsScreen.dart';
+import 'package:uBookSharing/Screens/FriendListScreen.dart';
 import 'package:uBookSharing/Screens/Homepage.dart';
 import 'package:uBookSharing/Screens/InteractionsScreen.dart';
 
@@ -592,7 +593,6 @@ class BookCard extends StatelessWidget {
                 ),
               ),
             ),
-           
             Positioned(
               left: width * .036,
               top: width * .044,
@@ -750,12 +750,10 @@ class RPSCustomPainter extends CustomPainter {
 }
 
 class IconAccount extends StatelessWidget {
-  IconAccount({
-    required this.radious,
-    Key? key,
-    this.imglink,
-  }) : super(key: key);
+  IconAccount({required this.radious, Key? key, this.imglink, this.pad = 10})
+      : super(key: key);
   final double radious;
+  final double pad;
   final String? imglink;
   final id = UsableData.getSetMillisecondsId();
   @override
@@ -783,7 +781,7 @@ class IconAccount extends StatelessWidget {
               color: Colors.white,
             )
           : Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(pad),
               child: InkWell(
                 onTap: () {
                   // print(id);
@@ -975,7 +973,6 @@ class CustomDrawer extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                    
                       padding:
                           EdgeInsets.symmetric(vertical: 12, horizontal: 30),
                       primary: Color(0x00000000),
@@ -1032,10 +1029,12 @@ class CustomDrawer extends StatelessWidget {
                   //   ),
                   // ),
                   ElevatedButton(
-                     style: ElevatedButton.styleFrom( padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
-                    primary: Color(0x00000000),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0)),
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                      primary: Color(0x00000000),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0)),
                     ),
                     // padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
                     // color: Color(0x00000000),
@@ -1061,6 +1060,43 @@ class CustomDrawer extends StatelessWidget {
                         SizedBox(width: 18),
                         Text(
                           'Notification',
+                          style: kDrawerTextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                      primary: Color(0x00000000),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0)),
+                    ),
+                    // padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                    // color: Color(0x00000000),
+                    // shape: RoundedRectangleBorder(
+                    //     borderRadius: BorderRadius.circular(0)),
+                    onPressed: () {
+                      // UsableData.getSetMillisecondsId();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FriendListScreen(),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.chat_bubble_outline,
+                          color: Colors.white,
+                          // size: 30,
+                        ),
+                        SizedBox(width: 18),
+                        Text(
+                          'Responses',
                           style: kDrawerTextStyle,
                         ),
                       ],
@@ -1102,12 +1138,13 @@ class CustomDrawer extends StatelessWidget {
                   //   ),
                   // ),
                   ElevatedButton(
-                     style: ElevatedButton.styleFrom(  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
-                    primary: Color(0x00000000),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0)),
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                      primary: Color(0x00000000),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0)),
                     ),
-                  
                     onPressed: () {
                       FirebaseMessaging.instance.unsubscribeFromTopic(
                         FirebaseAuth.instance.currentUser!.email!

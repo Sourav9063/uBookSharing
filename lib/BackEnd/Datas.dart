@@ -58,6 +58,11 @@ class UsableData {
         nowMil.year.toString();
     return uploaded;
   }
+  static String getIDFromEmails(String toEmail,String fromEmail){
+      return toEmail.compareTo(fromEmail) > 0
+                              ? toEmail + fromEmail
+                              : fromEmail + toEmail;
+  }
 }
 
 class AllKeys {

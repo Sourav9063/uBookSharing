@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
 import 'package:uBookSharing/Components/CompoundWidgets.dart';
+import 'package:uBookSharing/Screens/ChatScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InteractionsScreen extends StatefulWidget {
@@ -112,6 +114,24 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
                                     backgroundColor: Colors.blueAccent.shade700,
                                     content: Text(
                                         'Email address copied to clipboard'),
+                                  ));
+                                }),
+                            IconButton(
+                                icon: Icon(
+                                  Icons.message,
+                                  color: Colors.blue,
+                                ),
+                                onPressed: () async {
+                                  // String id = dataSnapshot.reference.id;
+
+                                  Navigator.of(context).push(CupertinoPageRoute(
+                                    builder: (context) => ChatScreen(
+                                      msgID: UsableData.getIDFromEmails(
+                                          dataSnapshot[AllKeys.emailKey],
+                                          UserProfileData.email!),
+                                      name: dataSnapshot["Name"],
+                                      queryDocumentSnapshot: dataSnapshot,
+                                    ),
                                   ));
                                 }),
                             IconButton(

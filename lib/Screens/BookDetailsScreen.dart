@@ -459,7 +459,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                             .styleFrom(
                                                           backgroundColor:
                                                               Colors.white38,
-                                                               shape:
+                                                          shape:
                                                               RoundedRectangleBorder(
                                                             borderRadius:
                                                                 BorderRadius
@@ -704,13 +704,11 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                                           backgroundColor: Colors
                                                                               .blueAccent
                                                                               .shade700,
-                                                                               shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        14),
-                                                          ),
+                                                                          shape:
+                                                                              RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(14),
+                                                                          ),
                                                                         ),
                                                                         // color: Colors
                                                                         //     .blueAccent
@@ -751,13 +749,11 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                                             .styleFrom(
                                                                           backgroundColor:
                                                                               Colors.white38,
-                                                                               shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        14),
-                                                          ),
+                                                                          shape:
+                                                                              RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(14),
+                                                                          ),
                                                                         ),
                                                                         // color: Colors
                                                                         //     .white38,

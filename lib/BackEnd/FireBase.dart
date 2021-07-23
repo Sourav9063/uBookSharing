@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:uBookSharing/BackEnd/Datas.dart';
+import 'package:uBookSharing/Screens/ChatScreen.dart';
 
 class GetUserData {
   static Future<String> getUserData(email) async {
@@ -60,7 +61,8 @@ class GetBookData {
   static Future<List<BookData>> getRecent10Books() async {
     List<BookData> recentDataList = [];
 
-    QuerySnapshot<Map<String,dynamic>> querySnapshot = await FirebaseFirestore.instance
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore
+        .instance
         .collection(UserProfileData.tmVersity!)
         .doc('AllBooks')
         .collection('AllBooks')
@@ -255,5 +257,48 @@ class Interactions {
 
   static testWrite(String email, Map<String, dynamic> map) async {
     await FirebaseFirestore.instance.collection('Interactions').doc().set(map);
+  }
+}
+
+class ChatsFirebase {
+  static CollectionReference firestoreColRef =
+      FirebaseFirestore.instance.collection("Chats");
+  static accept(String toEmail, String fromEmail, AcceptReq acc) async {
+    await firestoreColRef
+        .doc("FList")
+        .collection(toEmail)
+        .doc(fromEmail)
+        .set(acc.toMap());
+    AcceptReq tmp = acc.copyWith(
+        toEmail: acc.fromEmail,
+        fromEmail: acc.toEmail,
+        toName: UserProfileData.name,
+        fromPic: acc.toPic,
+        toPic: acc.fromPic);
+
+    await firestoreColRef
+        .doc("FList")
+        .collection(fromEmail)
+        .doc(toEmail)
+        .set(tmp.toMap());
+  }
+
+  static fromMe(String docID, Map<String, dynamic> map) async {
+    await firestoreColRef.doc(docID).collection(docID).add(map);
+  }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getStreamMsg(
+      String docID) {
+    return firestoreColRef
+        .doc(docID)
+        .collection(docID)
+        .orderBy('time', descending: true)
+        .limitToLast(20)
+        .snapshots();
+  }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> friendStream(
+      String email) {
+    return firestoreColRef.doc("FList").collection(email).snapshots();
   }
 }
