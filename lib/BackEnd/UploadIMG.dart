@@ -4,19 +4,26 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UploadIMG {
-  static PickedFile? pickedImage;
+  // static PickedFile? pickedImage;
+ static XFile? xFile;
   static late File imageUser;
   static late File imageBook;
 
   final _picker = ImagePicker();
 
   getUserPic() async {
-    pickedImage = await _picker.getImage(
+    // pickedImage = await _picker.getImage(
+    //     source: ImageSource.gallery,
+    //     imageQuality: 50,
+    //     maxHeight: 720,
+    //     maxWidth: 720);
+       xFile =await _picker.pickImage(
         source: ImageSource.gallery,
         imageQuality: 50,
         maxHeight: 720,
         maxWidth: 720);
-    imageUser = File(pickedImage!.path);
+        
+    imageUser = File(xFile!.path);
 
     // String dir = (await getApplicationDocumentsDirectory()).path;
     // String newPath = path.join(dir, 'case01wd03id01.jpg');
@@ -24,12 +31,12 @@ class UploadIMG {
   }
 
   getBookPic() async {
-    pickedImage = await _picker.getImage(
+    xFile = await _picker.pickImage(
         source: ImageSource.camera,
         imageQuality: 50,
         maxHeight: 1200,
         maxWidth: 1200);
-    imageBook = File(pickedImage!.path);
+    imageBook = File(xFile!.path);
   }
 
   uploadUserPic(String email, String id) async {
