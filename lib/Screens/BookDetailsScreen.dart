@@ -725,7 +725,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                                                                                   AllKeys.profilePicLinkKey: UserProfileData.profilePicLink,
                                                                                   AllKeys.bookForKey: widget.bookData.bookFor,
                                                                                   AllKeys.bookDesKey: response,
-                                                                                  'To': widget.bookData.bookUploaderEmail,
+                                                                                  'To': widget.bookData.bookUploaderEmail!.replaceAll(new RegExp(r'[^\w\s]+'), ''),
                                                                                   'SentKey': DateTime.now(),
                                                                                   'Response For': responseFor,
                                                                                   'Name': UserProfileData.name,

@@ -122,12 +122,15 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
                                   color: Colors.blue,
                                 ),
                                 onPressed: () async {
-                                  String id = dataSnapshot.reference.id;
+                                  // String id = dataSnapshot.reference.id;
 
                                   Navigator.of(context).push(CupertinoPageRoute(
                                     builder: (context) => ChatScreen(
-                                      docID: id,
-                                      name:dataSnapshot["Name"]
+                                      msgID: UsableData.getIDFromEmails(
+                                          dataSnapshot[AllKeys.emailKey],
+                                          UserProfileData.email!),
+                                      name: dataSnapshot["Name"],
+                                      queryDocumentSnapshot: dataSnapshot,
                                     ),
                                   ));
                                 }),

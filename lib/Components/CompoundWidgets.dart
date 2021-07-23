@@ -12,6 +12,7 @@ import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/Components/spinkit.dart';
 
 import 'package:uBookSharing/Screens/BookDetailsScreen.dart';
+import 'package:uBookSharing/Screens/FriendListScreen.dart';
 import 'package:uBookSharing/Screens/Homepage.dart';
 import 'package:uBookSharing/Screens/InteractionsScreen.dart';
 
@@ -749,12 +750,10 @@ class RPSCustomPainter extends CustomPainter {
 }
 
 class IconAccount extends StatelessWidget {
-  IconAccount({
-    required this.radious,
-    Key? key,
-    this.imglink,
-  }) : super(key: key);
+  IconAccount({required this.radious, Key? key, this.imglink, this.pad = 10})
+      : super(key: key);
   final double radious;
+  final double pad;
   final String? imglink;
   final id = UsableData.getSetMillisecondsId();
   @override
@@ -782,7 +781,7 @@ class IconAccount extends StatelessWidget {
               color: Colors.white,
             )
           : Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(pad),
               child: InkWell(
                 onTap: () {
                   // print(id);
@@ -1083,7 +1082,7 @@ class CustomDrawer extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => InteractionsScreen(),
+                          builder: (context) => FriendListScreen(),
                         ),
                       );
                     },
