@@ -271,8 +271,10 @@ class ChatsFirebase {
         .set(acc.toMap());
     AcceptReq tmp = acc.copyWith(
         toEmail: acc.fromEmail,
+        to: acc.fromEmail.replaceAll(new RegExp(r'[^\w\s]+'), ''),
         fromEmail: acc.toEmail,
-        toName: UserProfileData.name,
+        toName: acc.fromName,
+        fromName: acc.toName,
         fromPic: acc.toPic,
         toPic: acc.fromPic);
 

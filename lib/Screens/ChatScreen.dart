@@ -60,6 +60,7 @@ class ChatScreen extends StatelessWidget {
                             chatID: id,
                             fromEmail: fromEmail,
                             toEmail: toEmail,
+                            to: toEmail.replaceAll(new RegExp(r'[^\w\s]+'), ''),
                             fromName: UserProfileData.name!,
                             toName: queryDocumentSnapshot!["Name"],
                             fromPic: UserProfileData.profilePicLink!,
@@ -92,7 +93,8 @@ class ChatScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 8),
+                      padding:
+                          const EdgeInsets.only(left: 8.0, right: 8, top: 4),
                       child: ListView.builder(
                         reverse: true,
                         // shrinkWrap: true,
@@ -100,33 +102,93 @@ class ChatScreen extends StatelessWidget {
                         physics: BouncingScrollPhysics(),
                         itemCount: msgList.length,
                         itemBuilder: (context, index) {
-                          return Align(
-                              alignment:
-                                  msgList[index].from == UserProfileData.email!
-                                      ? Alignment.centerRight
-                                      : Alignment.centerLeft,
-                              child: Container(
-                                  margin: EdgeInsets.all(2),
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white70,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
-                                      bottomLeft: msgList[index].from ==
-                                              UserProfileData.email!
-                                          ? Radius.circular(20)
-                                          : Radius.circular(0),
-                                      bottomRight: msgList[index].from ==
-                                              UserProfileData.email!
-                                          ? Radius.circular(0)
-                                          : Radius.circular(20),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    msgList[index].msg,
-                                    style: TextStyle(fontSize: 16),
-                                  )));
+                          bool showTime = false;
+                          if (index == msgList.length - 1)
+                            showTime = true;
+                          else {
+                            if ((msgList[index].time.millisecondsSinceEpoch -
+                                        msgList[index + 1]
+                                            .time
+                                            .millisecondsSinceEpoch)
+                                    .abs() >
+                                600000) showTime = true;
+                          }
+
+                          return Column(
+                            children: [
+                              // Text(
+                              //     msgList[index].time.toDate().hour.toString() +
+                              //         ':' +
+                              //         msgList[index]
+                              //             .time
+                              //             .toDate()
+                              //             .minute
+                              //             .toString() +
+                              //         '   ' +
+                              //         UsableData.timestampToString(
+                              //             msgList[index].time)),
+                              // if (index > 0)
+                              //   Text(msgList[index - 1]
+                              //           .time
+                              //           .toDate()
+                              //           .hour
+                              //           .toString() +
+                              //       ':' +
+                              //       msgList[index - 1]
+                              //           .time
+                              //           .toDate()
+                              //           .minute
+                              //           .toString() +
+                              //       '   ' +
+                              //       UsableData.timestampToString(
+                              //           msgList[index].time)),
+                              showTime
+                                  ? Text(msgList[index]
+                                          .time
+                                          .toDate()
+                                          .toString()
+                                          .substring(10, 16) +
+                                      "      " +
+                                      UsableData.timestampToString(
+                                          msgList[index].time))
+                                  : SizedBox(),
+                              Align(
+                                alignment: msgList[index].from ==
+                                        UserProfileData.email!
+                                    ? Alignment.centerRight
+                                    : Alignment.centerLeft,
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                      maxWidth: CommonThings.size.width * .77),
+                                  child: Container(
+                                      margin: EdgeInsets.all(2),
+                                      padding: EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: msgList[index].from ==
+                                                UserProfileData.email!
+                                            ? Colors.white70
+                                            : Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(20),
+                                          bottomLeft: msgList[index].from ==
+                                                  UserProfileData.email!
+                                              ? Radius.circular(20)
+                                              : Radius.circular(0),
+                                          bottomRight: msgList[index].from ==
+                                                  UserProfileData.email!
+                                              ? Radius.circular(0)
+                                              : Radius.circular(20),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        msgList[index].msg + index.toString(),
+                                        style: TextStyle(fontSize: 16),
+                                      )),
+                                ),
+                              ),
+                            ],
+                          );
                         },
                       ),
                     ),
@@ -141,7 +203,7 @@ class ChatScreen extends StatelessWidget {
                             controller: textEditingController,
                             textCapitalization: TextCapitalization.sentences,
                             decoration: kTextFieldDecoration,
-                            onSubmitted: (value) {
+                            onEditingComplete: () {
                               sendMsg();
                             },
                             // onTap: () {
@@ -243,6 +305,7 @@ class Msg {
 }
 
 class AcceptReq {
+  String to;
   String interactionId;
   String chatID;
   String fromEmail;
@@ -254,6 +317,7 @@ class AcceptReq {
   String toPic;
   Timestamp time;
   AcceptReq({
+    required this.to,
     required this.interactionId,
     required this.chatID,
     required this.fromEmail,
@@ -267,6 +331,7 @@ class AcceptReq {
   });
 
   AcceptReq copyWith({
+    String? to,
     String? interactionId,
     String? chatID,
     String? fromEmail,
@@ -279,6 +344,7 @@ class AcceptReq {
     Timestamp? time,
   }) {
     return AcceptReq(
+      to: to ?? this.to,
       interactionId: interactionId ?? this.interactionId,
       chatID: chatID ?? this.chatID,
       fromEmail: fromEmail ?? this.fromEmail,
@@ -294,6 +360,7 @@ class AcceptReq {
 
   Map<String, dynamic> toMap() {
     return {
+      'to': to,
       'interactionId': interactionId,
       'chatID': chatID,
       'fromEmail': fromEmail,
@@ -309,6 +376,7 @@ class AcceptReq {
 
   factory AcceptReq.fromMap(Map<String, dynamic> map) {
     return AcceptReq(
+      to: map['to'] ?? '',
       interactionId: map['interactionId'] ?? '',
       chatID: map['chatID'] ?? '',
       fromEmail: map['fromEmail'] ?? '',
@@ -329,7 +397,7 @@ class AcceptReq {
 
   @override
   String toString() {
-    return 'AcceptReq(interactionId: $interactionId, chatID: $chatID, fromEmail: $fromEmail, toEmail: $toEmail, fromName: $fromName, toName: $toName, bookName: $bookName, fromPic: $fromPic, toPic: $toPic, time: $time)';
+    return 'AcceptReq(to: $to, interactionId: $interactionId, chatID: $chatID, fromEmail: $fromEmail, toEmail: $toEmail, fromName: $fromName, toName: $toName, bookName: $bookName, fromPic: $fromPic, toPic: $toPic, time: $time)';
   }
 
   @override
@@ -337,6 +405,7 @@ class AcceptReq {
     if (identical(this, other)) return true;
 
     return other is AcceptReq &&
+        other.to == to &&
         other.interactionId == interactionId &&
         other.chatID == chatID &&
         other.fromEmail == fromEmail &&
@@ -351,7 +420,8 @@ class AcceptReq {
 
   @override
   int get hashCode {
-    return interactionId.hashCode ^
+    return to.hashCode ^
+        interactionId.hashCode ^
         chatID.hashCode ^
         fromEmail.hashCode ^
         toEmail.hashCode ^

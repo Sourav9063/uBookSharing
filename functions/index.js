@@ -30,7 +30,7 @@ return admin.messaging().sendToTopic(snap.data().To,{notification:{body:'Check y
     });
 exports.msg =functions.firestore.document('Chats/FList/{colID}/{docID}').onCreate((snap,context)=>{
 
-return admin.messaging().sendToTopic(snap.data().toEmail,{
+return admin.messaging().sendToTopic(snap.data().to,{
     notification:{body:'Check your responses list in the app for more informations'
 ,title:snap.data().fromName+' is willing to hand you the book'
 ,clickAction:'FLUTTER_NOTIFICATION_CLICK'
