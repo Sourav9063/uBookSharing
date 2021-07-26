@@ -301,6 +301,10 @@ class ChatsFirebase {
 
   static Stream<QuerySnapshot<Map<String, dynamic>>> friendStream(
       String email) {
-    return firestoreColRef.doc("FList").collection(email).snapshots();
+    return firestoreColRef
+        .doc("FList")
+        .collection(email)
+        .orderBy("time", descending: true)
+        .snapshots();
   }
 }

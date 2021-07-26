@@ -43,7 +43,15 @@ class FriendListScreen extends StatelessWidget {
                       ));
                     },
                     title: Text(friendsList[index].fromName),
-                    subtitle: Text(friendsList[index].fromEmail),
+                    subtitle: Text(friendsList[index].fromEmail +
+                        "\n" +
+                        friendsList[index]
+                            .time
+                            .toDate()
+                            .toString()
+                            .substring(10, 16) +
+                        "  " +
+                        UsableData.timestampToString(friendsList[index].time)),
                     contentPadding: EdgeInsets.all(8),
                     leading: IconAccount(
                       pad: 1,
