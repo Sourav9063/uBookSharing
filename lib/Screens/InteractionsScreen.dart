@@ -126,6 +126,8 @@ class _InteractionsScreenState extends State<InteractionsScreen> {
 
                                   Navigator.of(context).push(CupertinoPageRoute(
                                     builder: (context) => ChatScreen(
+                                      link: dataSnapshot[
+                                          AllKeys.profilePicLinkKey],
                                       msgID: UsableData.getIDFromEmails(
                                           dataSnapshot[AllKeys.emailKey],
                                           UserProfileData.email!),

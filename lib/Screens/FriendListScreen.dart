@@ -35,6 +35,7 @@ class FriendListScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(CupertinoPageRoute(
                         builder: (context) => ChatScreen(
+                          link: friendsList[index].fromPic,
                           msgID: friendsList[index].chatID,
                           name: friendsList[index].fromName,
                           // queryDocumentSnapshot: dataSnapshot,

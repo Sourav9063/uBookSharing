@@ -7,11 +7,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:uBookSharing/BackEnd/Datas.dart';
 import 'package:uBookSharing/BackEnd/FireBase.dart';
+import 'package:uBookSharing/Components/CompoundWidgets.dart';
 import 'package:uBookSharing/Constants.dart';
 
 class ChatScreen extends StatelessWidget {
   final String msgID;
   final String name;
+  final String link;
   final QueryDocumentSnapshot? queryDocumentSnapshot;
   final TextEditingController textEditingController = TextEditingController();
   // final ScrollController scrollController = ScrollController();
@@ -19,7 +21,8 @@ class ChatScreen extends StatelessWidget {
       {Key? key,
       required this.msgID,
       required this.name,
-      this.queryDocumentSnapshot})
+      this.queryDocumentSnapshot,
+      required this.link})
       : super(key: key);
 
   @override
@@ -28,6 +31,16 @@ class ChatScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.cyan.shade900,
         title: Text(name),
+        actions: [
+          IconAccount(
+            radious: CommonThings.size.height * .075,
+            imglink: link,
+            pad: 1,
+          ),
+          SizedBox(
+            width: 4,
+          )
+        ],
       ),
       backgroundColor: Colors.cyan.shade700,
       body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -169,20 +182,20 @@ class ChatScreen extends StatelessWidget {
                                             ? Colors.white70
                                             : Colors.white,
                                         borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20),
-                                          bottomLeft: msgList[index].from ==
+                                          bottomLeft: Radius.circular(20),
+                                          bottomRight: Radius.circular(20),
+                                          topLeft: msgList[index].from ==
                                                   UserProfileData.email!
                                               ? Radius.circular(20)
                                               : Radius.circular(0),
-                                          bottomRight: msgList[index].from ==
+                                          topRight: msgList[index].from ==
                                                   UserProfileData.email!
                                               ? Radius.circular(0)
                                               : Radius.circular(20),
                                         ),
                                       ),
                                       child: Text(
-                                        msgList[index].msg + index.toString(),
+                                        msgList[index].msg,
                                         style: TextStyle(fontSize: 16),
                                       )),
                                 ),
