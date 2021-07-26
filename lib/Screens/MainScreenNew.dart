@@ -306,11 +306,12 @@ class _MainScreenNewState extends State<MainScreenNew> {
                           child: RotatedBox(
                             quarterTurns: -1,
                             child: Padding(
-                              padding: EdgeInsets.all(0),
+                              padding: EdgeInsets.symmetric(vertical: 8),
                               child: FittedBox(
                                 fit: BoxFit.fitHeight,
                                 child: Text(
                                   UserProfileData.versityName!.toUpperCase(),
+                                  // "Dhaka University",
                                   // textScaleFactor: 1,
                                   // strutStyle: StrutStyle(
 
@@ -435,490 +436,480 @@ class _MainScreenNewState extends State<MainScreenNew> {
                     ),
                   ),
                 ),
-                SafeArea(
-                  child: Expanded(
-                    child: Container(
-                      // duration: Duration(milliseconds: 400),
-                      // curve: Curves.easeInOut,
-                      width: CommonThings.size.width - width,
-                      // padding: EdgeInsets.all(8),
-                      child: SafeArea(
-                        child: PageView(
-                          physics: BouncingScrollPhysics(),
-                          controller: pagecontroller,
-                          onPageChanged: (value) async {
-                            //
-                            // int pres = value + 1;
-                            // print(pres);
-                            pressed.value = value + 1;
-                            // pressed = ValueNotifier<int>(pres);
-                            // print(pressed);
-                            // setState(() {});
-                          },
-                          // pageSnapping: false,
-                          children: [
-                            //New BOok
-                            //
-                            //
-                            KeepAlivePage(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: CommonThings.size.height * .22,
-                                    width: CommonThings.size.width * .85,
-                                    child: Stack(
-                                      children: [
-                                        Positioned(
-                                          height:
-                                              CommonThings.size.height * .20,
-                                          width: CommonThings.size.height * .25,
-                                          bottom: 0,
-                                          right: 0,
-                                          child: FlareActor(
-                                            'assets/flr/sittingBook.flr',
-                                            fit: BoxFit.contain,
-                                            animation: 'Untitled',
-                                          ),
+                Expanded(
+                  child: Container(
+                    // duration: Duration(milliseconds: 400),
+                    // curve: Curves.easeInOut,
+                    width: CommonThings.size.width - width,
+                    // padding: EdgeInsets.all(8),
+                    child: SafeArea(
+                      child: PageView(
+                        physics: BouncingScrollPhysics(),
+                        controller: pagecontroller,
+                        onPageChanged: (value) async {
+                          //
+                          // int pres = value + 1;
+                          // print(pres);
+                          pressed.value = value + 1;
+                          // pressed = ValueNotifier<int>(pres);
+                          // print(pressed);
+                          // setState(() {});
+                        },
+                        // pageSnapping: false,
+                        children: [
+                          //New BOok
+                          //
+                          //
+                          KeepAlivePage(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: CommonThings.size.height * .22,
+                                  width: CommonThings.size.width * .85,
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        height: CommonThings.size.height * .20,
+                                        width: CommonThings.size.height * .25,
+                                        bottom: 0,
+                                        right: 0,
+                                        child: FlareActor(
+                                          'assets/flr/sittingBook.flr',
+                                          fit: BoxFit.contain,
+                                          animation: 'Untitled',
                                         ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              '   NewBooks',
-                                              textScaleFactor: 2.5,
-                                              style: GoogleFonts.abrilFatface(
-                                                color: Color(0xff003aa4),
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '   NewBooks',
+                                            textScaleFactor: 2.5,
+                                            style: GoogleFonts.abrilFatface(
+                                              color: Color(0xff003aa4),
 
-                                                // fontSize: 30,
-                                                // fontWeight: FontWeight.w500,
-                                                // fontStyle: FontStyle.italic
+                                              // fontSize: 30,
+                                              // fontWeight: FontWeight.w500,
+                                              // fontStyle: FontStyle.italic
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: StreamBuilder<
+                                      QuerySnapshot<Map<String, dynamic>>>(
+                                    stream: GetBookData.getRecentBookStream(
+                                        lim, 'AllBooks'),
+                                    builder: (context, snp) {
+                                      if (snp.hasData) {
+                                        if (snp.data!.size == 0) {
+                                          return Column(
+                                            children: [
+                                              Container(
+                                                height:
+                                                    CommonThings.size.width *
+                                                        .50,
+                                                // fit: BoxFit.contain,
+                                                child: FlareActor(
+                                                  'assets/flr/Not found.flr',
+                                                  animation: 'idle',
+                                                ),
+                                              ),
+                                              Text('There are no Books'),
+                                            ],
+                                          );
+                                        } else {
+                                          List<BookData> recentDataList;
+
+                                          recentDataList = GetBookData
+                                              .getBookDataObjFromQuerySnapshot(
+                                                  snp.data!);
+
+                                          List<Widget> bookcardList = [];
+                                          for (BookData bookData
+                                              in recentDataList) {
+                                            bookcardList.add(
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        4, 5, 8, 5),
+                                                child: BookCard(
+                                                  width:
+                                                      CommonThings.size.width *
+                                                          .7,
+                                                  bookData: bookData,
+                                                ),
+                                              ),
+                                              // Padding(
+                                              //   padding: EdgeInsets.symmetric(
+                                              //       horizontal: 8, vertical: 4),
+                                              //   child: BookcardWithImage(
+                                              //     bookData: bookData,
+                                              //     width:
+                                              //         CommonThings.size.width *
+                                              //             .8,
+                                              //     height:
+                                              //         CommonThings.size.width *
+                                              //             .8 *
+                                              //             .7,
+                                              //   ),
+                                              // ),
+                                            );
+                                          }
+
+                                          bookcardList.add(
+                                            InkWell(
+                                              onTap: () {
+                                                // print(lim);
+                                                setState(() {
+                                                  if (lim > 30 ||
+                                                      lim >
+                                                          recentDataList.length)
+                                                    taptosee =
+                                                        'There are more books.\nSearch to find the needed one.';
+                                                  else {
+                                                    lim = lim + 5;
+                                                  }
+                                                });
+                                              },
+                                              child: Center(
+                                                child: Container(
+                                                  height:
+                                                      CommonThings.size.height *
+                                                          .25,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 36.0),
+                                                    child: Text(
+                                                      taptosee,
+                                                      textScaleFactor: 1,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                                          );
+
+                                          return ListView(
+                                            physics: BouncingScrollPhysics(),
+                                            // addAutomaticKeepAlives: true,
+                                            cacheExtent: 9999,
+                                            children: bookcardList,
+                                          );
+                                          // List<BookData> listItem = GetBookData
+                                          //     .getBookDataObjFromQuerySnapshot(
+                                          //         snp.data);
+
+                                          // return AnimatedList(
+                                          //   // cacheExtent: 9999,
+
+                                          //   physics: BouncingScrollPhysics(),
+                                          //   initialItemCount: snp.data.size + 1,
+                                          //   itemBuilder: (BuildContext context,
+                                          //       int index, animation) {
+                                          //     // print();
+                                          //     if (index != lim &&
+                                          //         index < snp.data.size)
+                                          //       return SlideTransition(
+                                          //         position: Tween<Offset>(
+                                          //           begin: const Offset(-1, 0),
+                                          //           end: Offset(0, 0),
+                                          //         ).animate(animation),
+                                          //         child: Padding(
+                                          //           padding: const EdgeInsets
+                                          //               .fromLTRB(4, 5, 8, 5),
+                                          //           child: BookCard(
+                                          //               width: CommonThings
+                                          //                       .size.width *
+                                          //                   .7,
+                                          //               bookData:
+                                          //                   listItem[index]),
+                                          //         ),
+                                          //       );
+                                          //     else
+                                          //       return InkWell(
+                                          //         onTap: () {
+                                          //           // print(snp.data.toString());
+                                          //           setState(() {
+                                          //             if (lim <= snp.data.size)
+                                          //               lim = lim + 5;
+                                          //             else {
+                                          //               taptosee =
+                                          //                   'There are more books.\nSearch to find the needed one.';
+                                          //             }
+                                          //           });
+                                          //           // print(lim);
+                                          //         },
+                                          //         child: Center(
+                                          //           child: Container(
+                                          //             height: CommonThings
+                                          //                     .size.height *
+                                          //                 .25,
+                                          //             child: Padding(
+                                          //               padding:
+                                          //                   const EdgeInsets
+                                          //                           .symmetric(
+                                          //                       vertical: 36.0),
+                                          //               child: Text(
+                                          //                 taptosee,
+                                          //                 textScaleFactor: 1.2,
+                                          //               ),
+                                          //             ),
+                                          //           ),
+                                          //         ),
+                                          //       );
+                                          //   },
+                                          // );
+                                        }
+                                      } else if (snp.hasError) {
+                                        return Text(
+                                            'Something went wrong. Restart the app');
+                                      } else
+                                        return Center(
+                                            child: CircularProgressIndicator());
+                                    },
                                   ),
-                                  Expanded(
-                                    child: StreamBuilder<
-                                        QuerySnapshot<Map<String, dynamic>>>(
-                                      stream: GetBookData.getRecentBookStream(
-                                          lim, 'AllBooks'),
-                                      builder: (context, snp) {
-                                        if (snp.hasData) {
-                                          if (snp.data!.size == 0) {
-                                            return Column(
-                                              children: [
-                                                Container(
-                                                  height:
-                                                      CommonThings.size.width *
-                                                          .50,
-                                                  // fit: BoxFit.contain,
-                                                  child: FlareActor(
-                                                    'assets/flr/Not found.flr',
-                                                    animation: 'idle',
-                                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          //New req
+                          //
+                          //
+                          KeepAlivePage(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '   NewRequest',
+                                  textScaleFactor: 2.5,
+                                  style: GoogleFonts.abrilFatface(
+                                    color: Color(0xff003aa4),
+                                    // fontSize: 30,
+                                    // fontWeight: FontWeight.w500,
+                                    // fontStyle: FontStyle.italic
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Expanded(
+                                  child: StreamBuilder<
+                                      QuerySnapshot<Map<String, dynamic>>>(
+                                    stream: GetBookData.getRecentBookStream(
+                                        limReq, 'Requests'),
+                                    builder: (context, snp) {
+                                      if (snp.hasData) {
+                                        if (snp.data!.size == 0) {
+                                          return Column(
+                                            children: [
+                                              Container(
+                                                height:
+                                                    CommonThings.size.width *
+                                                        .50,
+                                                // fit: BoxFit.contain,
+                                                child: FlareActor(
+                                                  'assets/flr/Not found.flr',
+                                                  animation: 'idle',
                                                 ),
-                                                Text('There are no Books'),
-                                              ],
-                                            );
-                                          } else {
-                                            List<BookData> recentDataList;
+                                              ),
+                                              Text('There are no Requests'),
+                                            ],
+                                          );
+                                        } else {
+                                          List<BookData> recentDataList;
 
-                                            recentDataList = GetBookData
-                                                .getBookDataObjFromQuerySnapshot(
-                                                    snp.data!);
+                                          recentDataList = GetBookData
+                                              .getBookDataObjFromQuerySnapshot(
+                                                  snp.data!);
 
-                                            List<Widget> bookcardList = [];
-                                            for (BookData bookData
-                                                in recentDataList) {
-                                              bookcardList.add(
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          4, 5, 8, 5),
-                                                  child: BookCard(
-                                                    width: CommonThings
-                                                            .size.width *
-                                                        .7,
-                                                    bookData: bookData,
-                                                  ),
-                                                ),
-                                                // Padding(
-                                                //   padding: EdgeInsets.symmetric(
-                                                //       horizontal: 8, vertical: 4),
-                                                //   child: BookcardWithImage(
-                                                //     bookData: bookData,
-                                                //     width:
-                                                //         CommonThings.size.width *
-                                                //             .8,
-                                                //     height:
-                                                //         CommonThings.size.width *
-                                                //             .8 *
-                                                //             .7,
-                                                //   ),
-                                                // ),
-                                              );
-                                            }
-
+                                          List<Widget> bookcardList = [];
+                                          for (BookData bookData
+                                              in recentDataList) {
                                             bookcardList.add(
-                                              InkWell(
-                                                onTap: () {
-                                                  // print(lim);
-                                                  setState(() {
-                                                    if (lim > 30 ||
-                                                        lim >
-                                                            recentDataList
-                                                                .length)
-                                                      taptosee =
-                                                          'There are more books.\nSearch to find the needed one.';
-                                                    else {
-                                                      lim = lim + 5;
-                                                    }
-                                                  });
-                                                },
-                                                child: Center(
-                                                  child: Container(
-                                                    height: CommonThings
-                                                            .size.height *
-                                                        .25,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 36.0),
-                                                      child: Text(
-                                                        taptosee,
-                                                        textScaleFactor: 1,
-                                                      ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        4, 5, 8, 5),
+                                                child: BookCard(
+                                                  width:
+                                                      CommonThings.size.width *
+                                                          .7,
+                                                  bookData: bookData,
+                                                ),
+                                              ),
+                                            );
+                                          }
+
+                                          bookcardList.add(
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  if (limReq > 30 ||
+                                                      limReq >
+                                                          recentDataList.length)
+                                                    tapReq =
+                                                        'Only latest 30 requests';
+                                                  else {
+                                                    lim = lim + 5;
+                                                  }
+                                                });
+                                              },
+                                              child: Center(
+                                                child: Container(
+                                                  height:
+                                                      CommonThings.size.height *
+                                                          .25,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 36.0),
+                                                    child: Text(
+                                                      tapReq,
+                                                      textScaleFactor: 1,
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            );
+                                            ),
+                                          );
 
-                                            return ListView(
-                                              physics: BouncingScrollPhysics(),
-                                              // addAutomaticKeepAlives: true,
-                                              cacheExtent: 9999,
-                                              children: bookcardList,
-                                            );
-                                            // List<BookData> listItem = GetBookData
-                                            //     .getBookDataObjFromQuerySnapshot(
-                                            //         snp.data);
+                                          return ListView(
+                                            cacheExtent: 9999,
+                                            physics: BouncingScrollPhysics(),
+                                            // shrinkWrap: true,
 
-                                            // return AnimatedList(
-                                            //   // cacheExtent: 9999,
-
-                                            //   physics: BouncingScrollPhysics(),
-                                            //   initialItemCount: snp.data.size + 1,
-                                            //   itemBuilder: (BuildContext context,
-                                            //       int index, animation) {
-                                            //     // print();
-                                            //     if (index != lim &&
-                                            //         index < snp.data.size)
-                                            //       return SlideTransition(
-                                            //         position: Tween<Offset>(
-                                            //           begin: const Offset(-1, 0),
-                                            //           end: Offset(0, 0),
-                                            //         ).animate(animation),
-                                            //         child: Padding(
-                                            //           padding: const EdgeInsets
-                                            //               .fromLTRB(4, 5, 8, 5),
-                                            //           child: BookCard(
-                                            //               width: CommonThings
-                                            //                       .size.width *
-                                            //                   .7,
-                                            //               bookData:
-                                            //                   listItem[index]),
-                                            //         ),
-                                            //       );
-                                            //     else
-                                            //       return InkWell(
-                                            //         onTap: () {
-                                            //           // print(snp.data.toString());
-                                            //           setState(() {
-                                            //             if (lim <= snp.data.size)
-                                            //               lim = lim + 5;
-                                            //             else {
-                                            //               taptosee =
-                                            //                   'There are more books.\nSearch to find the needed one.';
-                                            //             }
-                                            //           });
-                                            //           // print(lim);
-                                            //         },
-                                            //         child: Center(
-                                            //           child: Container(
-                                            //             height: CommonThings
-                                            //                     .size.height *
-                                            //                 .25,
-                                            //             child: Padding(
-                                            //               padding:
-                                            //                   const EdgeInsets
-                                            //                           .symmetric(
-                                            //                       vertical: 36.0),
-                                            //               child: Text(
-                                            //                 taptosee,
-                                            //                 textScaleFactor: 1.2,
-                                            //               ),
-                                            //             ),
-                                            //           ),
-                                            //         ),
-                                            //       );
-                                            //   },
-                                            // );
-                                          }
-                                        } else if (snp.hasError) {
-                                          return Text(
-                                              'Something went wrong. Restart the app');
-                                        } else
-                                          return Center(
-                                              child:
-                                                  CircularProgressIndicator());
-                                      },
-                                    ),
+                                            // scrollDirection: Axis.horizontal,
+                                            // padding: EdgeInsets.all(8),
+                                            // itemExtent: CommonThings.size.width * .40,
+                                            children: bookcardList,
+                                          );
+                                        }
+                                      } else if (snp.hasError) {
+                                        return Text(
+                                            'Something went wrong. Restart the app');
+                                      } else
+                                        return Center(
+                                            child: CircularProgressIndicator());
+                                    },
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            //New req
-                            //
-                            //
-                            KeepAlivePage(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '   NewRequest',
-                                    textScaleFactor: 2.5,
-                                    style: GoogleFonts.abrilFatface(
-                                      color: Color(0xff003aa4),
-                                      // fontSize: 30,
-                                      // fontWeight: FontWeight.w500,
-                                      // fontStyle: FontStyle.italic
-                                    ),
+                          ),
+                          //My BOoks
+                          //
+                          KeepAlivePage(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '   MyBooks',
+                                  textScaleFactor: 2.5,
+                                  style: GoogleFonts.abrilFatface(
+                                    color: Color(0xff003aa4),
+                                    // fontSize: 30,
+                                    // fontWeight: FontWeight.w500,
+                                    // fontStyle: FontStyle.italic
                                   ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Expanded(
-                                    child: StreamBuilder<
-                                        QuerySnapshot<Map<String, dynamic>>>(
-                                      stream: GetBookData.getRecentBookStream(
-                                          limReq, 'Requests'),
-                                      builder: (context, snp) {
-                                        if (snp.hasData) {
-                                          if (snp.data!.size == 0) {
-                                            return Column(
-                                              children: [
-                                                Container(
-                                                  height:
-                                                      CommonThings.size.width *
-                                                          .50,
-                                                  // fit: BoxFit.contain,
-                                                  child: FlareActor(
-                                                    'assets/flr/Not found.flr',
-                                                    animation: 'idle',
-                                                  ),
-                                                ),
-                                                Text('There are no Requests'),
-                                              ],
-                                            );
-                                          } else {
-                                            List<BookData> recentDataList;
-
-                                            recentDataList = GetBookData
-                                                .getBookDataObjFromQuerySnapshot(
-                                                    snp.data!);
-
-                                            List<Widget> bookcardList = [];
-                                            for (BookData bookData
-                                                in recentDataList) {
-                                              bookcardList.add(
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          4, 5, 8, 5),
-                                                  child: BookCard(
-                                                    width: CommonThings
-                                                            .size.width *
-                                                        .7,
-                                                    bookData: bookData,
-                                                  ),
-                                                ),
-                                              );
-                                            }
-
-                                            bookcardList.add(
-                                              InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    if (limReq > 30 ||
-                                                        limReq >
-                                                            recentDataList
-                                                                .length)
-                                                      tapReq =
-                                                          'Only latest 30 requests';
-                                                    else {
-                                                      lim = lim + 5;
-                                                    }
-                                                  });
-                                                },
-                                                child: Center(
-                                                  child: Container(
-                                                    height: CommonThings
-                                                            .size.height *
-                                                        .25,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 36.0),
-                                                      child: Text(
-                                                        tapReq,
-                                                        textScaleFactor: 1,
-                                                      ),
-                                                    ),
-                                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Expanded(
+                                  child: StreamBuilder<
+                                      QuerySnapshot<Map<String, dynamic>>>(
+                                    stream: GetBookData.bookDataSearchStream(
+                                        AllKeys.bookUploaderEmailKey,
+                                        UserProfileData.email!),
+                                    builder: (context, snp) {
+                                      if (snp.hasData) {
+                                        if (snp.data!.size == 0) {
+                                          return Column(
+                                            children: [
+                                              Container(
+                                                height:
+                                                    CommonThings.size.width *
+                                                        .50,
+                                                // fit: BoxFit.contain,
+                                                child: FlareActor(
+                                                  'assets/flr/Not found.flr',
+                                                  animation: 'idle',
                                                 ),
                                               ),
-                                            );
+                                              Text(
+                                                  'You haven\'t added any book'),
+                                            ],
+                                          );
+                                        } else {
+                                          List<BookData> recentDataList;
 
-                                            return ListView(
-                                              cacheExtent: 9999,
-                                              physics: BouncingScrollPhysics(),
-                                              // shrinkWrap: true,
+                                          recentDataList = GetBookData
+                                              .getBookDataObjFromQuerySnapshot(
+                                                  snp.data!);
 
-                                              // scrollDirection: Axis.horizontal,
-                                              // padding: EdgeInsets.all(8),
-                                              // itemExtent: CommonThings.size.width * .40,
-                                              children: bookcardList,
-                                            );
-                                          }
-                                        } else if (snp.hasError) {
-                                          return Text(
-                                              'Something went wrong. Restart the app');
-                                        } else
-                                          return Center(
-                                              child:
-                                                  CircularProgressIndicator());
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            //My BOoks
-                            //
-                            KeepAlivePage(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '   MyBooks',
-                                    textScaleFactor: 2.5,
-                                    style: GoogleFonts.abrilFatface(
-                                      color: Color(0xff003aa4),
-                                      // fontSize: 30,
-                                      // fontWeight: FontWeight.w500,
-                                      // fontStyle: FontStyle.italic
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Expanded(
-                                    child: StreamBuilder<
-                                        QuerySnapshot<Map<String, dynamic>>>(
-                                      stream: GetBookData.bookDataSearchStream(
-                                          AllKeys.bookUploaderEmailKey,
-                                          UserProfileData.email!),
-                                      builder: (context, snp) {
-                                        if (snp.hasData) {
-                                          if (snp.data!.size == 0) {
-                                            return Column(
-                                              children: [
-                                                Container(
-                                                  height:
-                                                      CommonThings.size.width *
-                                                          .50,
-                                                  // fit: BoxFit.contain,
-                                                  child: FlareActor(
-                                                    'assets/flr/Not found.flr',
-                                                    animation: 'idle',
-                                                  ),
-                                                ),
-                                                Text(
-                                                    'You haven\'t added any book'),
-                                              ],
-                                            );
-                                          } else {
-                                            List<BookData> recentDataList;
-
-                                            recentDataList = GetBookData
-                                                .getBookDataObjFromQuerySnapshot(
-                                                    snp.data!);
-
-                                            List<Widget> bookcardList =
-                                                recentDataList
-                                                    .map(
-                                                      (e) => Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .fromLTRB(
-                                                                4, 5, 8, 5),
-                                                        child: BookCard(
-                                                          width: CommonThings
-                                                                  .size.width *
-                                                              .7,
-                                                          bookData: e,
-                                                        ),
+                                          List<Widget> bookcardList =
+                                              recentDataList
+                                                  .map(
+                                                    (e) => Padding(
+                                                      padding: const EdgeInsets
+                                                          .fromLTRB(4, 5, 8, 5),
+                                                      child: BookCard(
+                                                        width: CommonThings
+                                                                .size.width *
+                                                            .7,
+                                                        bookData: e,
                                                       ),
-                                                    )
-                                                    .toList();
-                                            // for (BookData bookData
-                                            //     in recentDataList) {
-                                            //   bookcardList.add(
-                                            //     Padding(
-                                            //       padding:
-                                            //           const EdgeInsets.fromLTRB(
-                                            //               4, 5, 8, 5),
-                                            //       child: BookCard(
-                                            //         width:
-                                            //             CommonThings.size.width *
-                                            //                 .7,
-                                            //         bookData: bookData,
-                                            //       ),
-                                            //     ),
-                                            //   );
-                                            // }
+                                                    ),
+                                                  )
+                                                  .toList();
+                                          // for (BookData bookData
+                                          //     in recentDataList) {
+                                          //   bookcardList.add(
+                                          //     Padding(
+                                          //       padding:
+                                          //           const EdgeInsets.fromLTRB(
+                                          //               4, 5, 8, 5),
+                                          //       child: BookCard(
+                                          //         width:
+                                          //             CommonThings.size.width *
+                                          //                 .7,
+                                          //         bookData: bookData,
+                                          //       ),
+                                          //     ),
+                                          //   );
+                                          // }
 
-                                            return ListView(
-                                              physics: BouncingScrollPhysics(),
-                                              cacheExtent: 9999,
-                                              // shrinkWrap: true,
+                                          return ListView(
+                                            physics: BouncingScrollPhysics(),
+                                            cacheExtent: 9999,
+                                            // shrinkWrap: true,
 
-                                              // scrollDirection: Axis.horizontal,
-                                              // padding: EdgeInsets.all(8),
-                                              // itemExtent: CommonThings.size.width * .40,
-                                              children: bookcardList,
-                                            );
-                                          }
-                                        } else if (snp.hasError) {
-                                          return Text(
-                                              'Something went wrong. Restart the app');
-                                        } else
-                                          return Center(
-                                              child:
-                                                  CircularProgressIndicator());
-                                      },
-                                    ),
+                                            // scrollDirection: Axis.horizontal,
+                                            // padding: EdgeInsets.all(8),
+                                            // itemExtent: CommonThings.size.width * .40,
+                                            children: bookcardList,
+                                          );
+                                        }
+                                      } else if (snp.hasError) {
+                                        return Text(
+                                            'Something went wrong. Restart the app');
+                                      } else
+                                        return Center(
+                                            child: CircularProgressIndicator());
+                                    },
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

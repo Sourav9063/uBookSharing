@@ -864,61 +864,64 @@ class ImageFull extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: CommonThings.size.width,
-        height: CommonThings.size.height,
-        child: InteractiveViewer(
-            maxScale: 5,
-            child: Hero(
-              tag: id!,
-              child: CachedNetworkImage(
-                imageUrl: imgLink!,
-                // height: radious,
-                // width: radious,
-                memCacheWidth: 480,
-                fit: BoxFit.contain,
-                errorWidget: (context, error, stackTrace) {
-                  return Center(
-                    child: Icon(
-                      Icons.error,
-                      color: Colors.red,
-                      size: CommonThings.size.width * .2,
-                    ),
-                  );
-                },
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                  child: CircularProgressIndicator(
-                      value: downloadProgress.progress),
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Container(
+          width: CommonThings.size.width,
+          height: CommonThings.size.height,
+          child: InteractiveViewer(
+              maxScale: 5,
+              child: Hero(
+                tag: id!,
+                child: CachedNetworkImage(
+                  imageUrl: imgLink!,
+                  // height: radious,
+                  // width: radious,
+                  memCacheWidth: 480,
+                  fit: BoxFit.contain,
+                  errorWidget: (context, error, stackTrace) {
+                    return Center(
+                      child: Icon(
+                        Icons.error,
+                        color: Colors.red,
+                        size: CommonThings.size.width * .2,
+                      ),
+                    );
+                  },
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Center(
+                    child: CircularProgressIndicator(
+                        value: downloadProgress.progress),
+                  ),
                 ),
-              ),
 
-              // child: Image.network(
-              //   imgLink,
-              //   fit: BoxFit.contain,
-              //   errorBuilder: (context, error, stackTrace) {
-              //     return Icon(
-              //       Icons.error,
-              //       color: Colors.red,
-              //       size: CommonThings.size.width * .25,
-              //     );
-              //   },
-              //   loadingBuilder: (BuildContext context, Widget child,
-              //       ImageChunkEvent loadingProgress) {
-              //     if (loadingProgress == null) return child;
-              //     return Center(
-              //       child: CircularProgressIndicator(
-              //         strokeWidth: 7,
-              //         value: loadingProgress.expectedTotalBytes != null
-              //             ? loadingProgress.cumulativeBytesLoaded /
-              //                 loadingProgress.expectedTotalBytes
-              //             : null,
-              //       ),
-              //     );
-              //   },
-              // ),
-            )),
+                // child: Image.network(
+                //   imgLink,
+                //   fit: BoxFit.contain,
+                //   errorBuilder: (context, error, stackTrace) {
+                //     return Icon(
+                //       Icons.error,
+                //       color: Colors.red,
+                //       size: CommonThings.size.width * .25,
+                //     );
+                //   },
+                //   loadingBuilder: (BuildContext context, Widget child,
+                //       ImageChunkEvent loadingProgress) {
+                //     if (loadingProgress == null) return child;
+                //     return Center(
+                //       child: CircularProgressIndicator(
+                //         strokeWidth: 7,
+                //         value: loadingProgress.expectedTotalBytes != null
+                //             ? loadingProgress.cumulativeBytesLoaded /
+                //                 loadingProgress.expectedTotalBytes
+                //             : null,
+                //       ),
+                //     );
+                //   },
+                // ),
+              )),
+        ),
       ),
     );
   }
@@ -942,9 +945,9 @@ class CustomDrawer extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     IconAccount(
                       radious: CommonThings.size.width * .35,
@@ -956,11 +959,28 @@ class CustomDrawer extends StatelessWidget {
                         fit: BoxFit.fitWidth,
                         child: Padding(
                           padding: const EdgeInsets.only(right: 8.0),
-                          child: Text(
-                            UserProfileData.name == null
-                                ? 'Loading..'
-                                : UserProfileData.name!,
-                            style: kDrawerTextStyle.copyWith(fontSize: 22),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  UsableData.getSetMillisecondsId();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProfileEditScreen(),
+                                    ),
+                                  );
+                                },
+                                icon: Icon(Icons.edit, color: Colors.white),
+                              ),
+                              Text(
+                                UserProfileData.name == null
+                                    ? 'Loading..'
+                                    : UserProfileData.name!,
+                                style: kDrawerTextStyle.copyWith(fontSize: 22),
+                              ),
+                            ],
                           ),
                         ),
                       ),
