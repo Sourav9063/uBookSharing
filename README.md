@@ -1,10 +1,5 @@
 # uBookSharing
- University based Book sharing app.
- Users are divided according to their Universities. Anyone can upload details of his/her book for sell/rent/share and anyone can request them for that book providing their contact informations. Individual's contact informations is not publicly available. Only when someone requests to get a book then and only then the owener of the book will get the contact informations.
-If you want to try it out here is an auth credential 
-Email: sourav.ahmed5654@gmail.com
-Password: 12345678
-
+University based Book sharing app. Users are divided according to their Universities. Anyone can upload details of his/her book for sell/rent/share and anyone can request them for that book providing their contact information. Individual's contact information is not publicly available. Only when someone requests to get a book then and only then the owner of the book will get the contact information. If you want to try it out here is an auth credential Email: sourav.ahmed5654@gmail.com Password: 12345678
 
 
 https://user-images.githubusercontent.com/53114581/208036045-c13bdbf0-aacb-4b09-af9b-c8f61685230a.mp4
